@@ -1,5 +1,13 @@
-<h2>Minecraft Bedrock 橘猫的资源下载中心</h2>
-<span>Jumao</span>
-<br>
-<span>Bilibili@橘猫sama</span>
-<a class="url-text" href="https://Jumao15071.github.io/" target="_blank">访问下载站</a>
+# 橘猫的资源下载中心
+
+提供附加包、资源包等内容的下载服务
+
+## 功能
+
+- 护眼大补丸基岩版移植
+- 橘猫空岛
+- 石中世界
+
+## 使用
+
+从[这里](https://Jumao15071.github.io/)进入下载站
