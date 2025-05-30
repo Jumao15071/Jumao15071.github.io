@@ -1,0 +1,130 @@
+/* 基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+}
+
+body {
+    background-color: #9ea9d1;
+    background-image: url("images/panorama_0.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: #e4f2ff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.root-panel {
+    max-width: 800px;
+    width: 100%;
+}
+
+.title-img {
+    width: auto;
+    height: 200px;
+    margin: 20px 0;
+}
+
+.hello-label {
+    font-size: 50px;
+    letter-spacing: 5px;
+    text-shadow: 0 0 4px #000;
+    color: #fff;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.laber-box-panel {
+    background-color: rgba(91, 184, 255, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.laber-box {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.top-text {
+    color: #5bb8ff;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.icon-info {
+    display: flex;
+    flex-direction: column;
+    align-items: normal;
+    justify-self: center;
+}
+
+.icon-info h2 {
+
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.icon-info p {
+    line-height: 2em;
+}
+
+.contont-text {
+    color: #e4f2ff;
+    line-height: 1.6;
+}
+
+.url-text {
+    color: #5bb8ff;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.url-text:hover {
+    text-decoration: underline;
+}
+
+.item-mcpack {
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.item-icon {
+    width: 64px;
+    height: 64px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    margin-right: 15px;
+}
+
+footer {
+    background-color: #000000;
+    color: #B7B7B7;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    line-height: 1.8em;
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+    .hello-label {
+        font-size: 40px;
+    }
+    
+    .title-img {
+        height: 150px;
+    }
+}

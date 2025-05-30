@@ -6,104 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>橘猫的文件下载站</title>
-    <style>
-        /* 基础样式 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Microsoft YaHei', Arial, sans-serif;
-        }
-        
-        body {
-            background-color: #1a1a1a;
-            color: #e4f2ff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .root-panel {
-            max-width: 800px;
-            width: 100%;
-        }
-        
-        .title-img {
-            width: auto;
-            height: 200px;
-            margin: 20px 0;
-        }
-        
-        .hello-label {
-            font-size: 60px;
-            letter-spacing: 5px;
-            text-shadow: 0 0 4px #000;
-            color: #fff;
-            text-align: center;
-            margin: 20px 0;
-        }
-        
-        .laber-box-panel {
-            background-color: rgba(91, 184, 255, 0.3);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .laber-box {
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-            padding: 15px;
-        }
-        
-        .top-text {
-            color: #5bb8ff;
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .contont-text {
-            color: #e4f2ff;
-            line-height: 1.6;
-        }
-        
-        .url-text {
-            color: #5bb8ff;
-            text-decoration: none;
-            margin-left: 5px;
-        }
-        
-        .url-text:hover {
-            text-decoration: underline;
-        }
-        
-        .item-mcpack {
-            display: flex;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .item-icon {
-            width: 64px;
-            height: 64px;
-            margin-right: 15px;
-        }
-        
-        /* 响应式设计 */
-        @media (max-width: 600px) {
-            .hello-label {
-                font-size: 40px;
-            }
-            
-            .title-img {
-                height: 150px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -112,97 +15,95 @@
         <div style="display: flex; align-items: center; justify-content: center;">
             <div class="title-img">
                 <a href="<!-- 替换为您的首页链接 -->">
-                    <img style="width: auto; height: 200px;" src="<!-- 替换为您的Logo图片路径 -->" alt="网站Logo">
+                    <img style="width: auto; height: 200px;" src="images/JumaoTNT.png" alt="网站Logo">
                 </a>
             </div>
         </div>
         
-        <!-- 欢迎标题 -->
         <h1 class="hello-label">欢迎你，冒险家！</h1>
-        
-        <!-- 欢迎面板 -->
-        <div class="laber-box-panel" style="background-color: rgba(91, 184, 255, 0.3);">
-            <div class="laber-box">
-                <h1 class="top-text">欢迎来到首页</h1>
+        <section>
+            <div class="laber-box-panel" style="background-color: rgba(91, 184, 255, 0.3);">
+                <div class="laber-box">
+                    <h1 class="top-text">欢迎来到首页～(∠・ω< )⌒★</h1>
+                            <span &nbsp;>这里是up主<a class="url-text" href="https://space.bilibili.com/37691488">@橘猫sama</a></span>
+                            的下载站</span>
+                            <br>
+                            <span &nbsp;>你可以在这里获取我制作&移植&搬运的各类Minecraft资源包与附加包</span>
+                            <br>
+                            <span &nbsp;>你也可以获取一些常见的网址、文章和地图资源作为参考资料</span>
+                            <br>
+                            <span &nbsp;>希望这些内容能够帮你更好地探索游戏深层的乐趣！</span>
+                </div>
             </div>
-        </div>
-        
+        </section>
         <br>
         
-        <!-- 热门模组列表 -->
-        <div class="laber-box-panel">
-            <div class="laber-box">
+        <section>
+            <div class="item-mcpack">
+                <img src="images/DabuBE1.21v9.png" class="item-icon" alt="护眼大补丸">
                 <div>
-                    <span class="top-text">
-                        最受欢迎的模组：
-                    </span>
-                    <div class="contont-text">
-                        <!-- 替换为您的模组列表 -->
-                        <span>&nbsp; 1.模组名称1<a class="url-text"
-                                href="<!-- 替换为下载链接1 -->">下载</a></span>
-                        <br>
-                        <span>&nbsp; 2.模组名称2<a class="url-text"
-                                href="<!-- 替换为下载链接2 -->">下载</a></span>
-                        <br>
-                        <span>&nbsp; 3.模组名称3<a class="url-text"
-                                href="<!-- 替换为下载链接3 -->">下载</a></span>
+                    <div class="icon-info">
+                        <h2>护眼大补丸BE移植</h2>
+                        <p>Java版同款资源包的移植作。新增了实用基础功能全家桶，改善了游戏各方面体验。<a class="url-text" href="<!-- 替换为下载链接 -->" target="_blank">下载</a>
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <br>
-        
-        <!-- 模组展示区 -->
-        <!-- 模组1 -->
-        <div class="item-mcpack">
-            <img src="<!-- 替换为模组图标1 -->" class="item-icon" alt="模组图标">
-            <div>
+            <div class="item-mcpack">
+                <img src="images/HuTao.jpg" class="item-icon" alt="橘猫空岛">
                 <div>
-                    <h2 style="line-height: 1px; color: #e4f2ff;">模组名称1</h2>
-                    <div style="line-height: 1px;"></div>
-                    <p class="contont-text">模组描述内容<a class="url-text" href="<!-- 替换为下载链接 -->"
-                            target="_blank">下载</a>or<a class="url-text" href="<!-- 替换为授权链接 -->">授权</a>
-                    </p>
+                    <div class="icon-info">
+                        <h2>橘猫空岛</h2>
+                        <p>经典的类李芒果空岛模式，带有原版全部群系和结构点位，从零创造你的世界！<a class="url-text" href="<!-- 替换为下载链接 -->" target="_blank">下载</a>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- 模组2 -->
-        <div class="item-mcpack">
-            <img src="<!-- 替换为模组图标2 -->" class="item-icon" alt="模组图标">
-            <div>
+            <div class="item-mcpack">
+                <img src="images/StoneWorld.png" class="item-icon" alt="石中世界">
                 <div>
-                    <h2 style="line-height: 1px; color: #e4f2ff;">模组名称2</h2>
-                    <div style="line-height: 1px;"></div>
-                    <p class="contont-text">模组描述内容<a class="url-text" href="<!-- 替换为下载链接 -->"
-                            target="_blank">下载</a>
-                    </p>
+                    <div class="icon-info">
+                        <h2>石中世界</h2>
+                        <p>全世界都是石头的空岛！通过你的游戏理解来通关末地吧！可以玩极限模式！<a class="url-text" href="<!-- 替换为下载链接 -->" target="_blank">下载</a>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
         
         <br>
-        
-        <!-- 查看全部资源 -->
-        <div class="laber-box-panel" style="height: 30px;">
-            <div class="laber-box">
-                <h2 style="text-align: center;">
-                    <a class="url-text" href="<!-- 替换为全部资源页面链接 -->" target="_blank">查看全部资源项目</a>
-                </h2>
-            </div>
-        </div>
-        
-        <br>
-        
-        <!-- 服务器信息 -->
-        <div class="laber-box-panel">
-            <div class="laber-box">
-                <span class="top-text">加入 Realms 服务器</span>
+
+        <!-- 热门模组列表 -->
+        <div class="laber-box">
+            <div>
+                <span class="top-text">
+                    热门资源列表（即将到来）：
+                </span>
                 <div class="contont-text">
-                    <span>&nbsp; 最新正式版<a class="url-text" href="<!-- 替换为服务器链接1 -->">资源发布预览</a> 10人</span>
+                    <!-- 替换为您的模组列表 -->
+                    <span>&nbsp; 1.更好的快乐恶魂<a class="url-text" href="<!-- 替换为下载链接1 -->">下载</a></span>
                     <br>
-                    <span>&nbsp; 最新测试版<a class="url-text" href="<!-- 替换为服务器链接2 -->">限时活动</a> 10人</span>
+                    <span>&nbsp; 2.模组名称2<a class="url-text" href="<!-- 替换为下载链接2 -->">下载</a></span>
+                    <br>
+                    <span>&nbsp; 3.模组名称3<a class="url-text" href="<!-- 替换为下载链接3 -->">下载</a></span>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="laber-box">
+            <div>
+                <span class="top-text">
+                    热门网站列表（即将到来）：
+                </span>
+                <div class="contont-text">
+                    <!-- 替换为您的模组列表 -->
+                    <span>&nbsp; 1.网站名称1<a class="url-text" href="<!-- 替换为下载链接1 -->">下载</a></span>
+                    <br>
+                    <span>&nbsp; 2.网站名称2<a class="url-text" href="<!-- 替换为下载链接2 -->">下载</a></span>
+                    <br>
+                    <span>&nbsp; 3.网站名称3<a class="url-text" href="<!-- 替换为下载链接3 -->">下载</a></span>
                 </div>
             </div>
         </div>
@@ -212,13 +113,13 @@
         <!-- 社群信息 -->
         <div class="laber-box-panel">
             <div class="laber-box">
-                <span class="top-text">企鹅群聊：</span>
+                <span class="top-text">QQ群聊：</span>
                 <div class="contont-text">
-                    <span>&nbsp; 主群 <!-- 替换为QQ群号 --> - 空闲</span>
+                    <span>&nbsp; 主群 628312559 - 繁忙，需要认证</span>
                     <br>
-                    <span>&nbsp; 二群 <!-- 替换为QQ群号 --> - 空闲</span>
+                    <span>&nbsp; 二群 974425950 - 空闲，需要认证</span>
                     <br>
-                    <span>&nbsp; 内群 <!-- 替换为QQ群号 --> - 需要认证</span>
+                    <span>&nbsp; 三群 723965074 - 空闲，需要认证</span>
                 </div>
                 <span class="top-text">其他：</span>
                 <div class="contont-text">
@@ -235,7 +136,7 @@
         <div style="display: flex; align-items: center; justify-content: center;">
             <div class="title-img" style="height: 100px;">
                 <a href="<!-- 替换为首页链接 -->">
-                    <img style="width: auto; height: 100px;" src="<!-- 替换为页脚图标 -->" alt="页脚图标">
+                    <img style="width: auto; height: 100px;" src="images/Ryo.gif" alt="页脚图标">
                 </a>
             </div>
         </div>
