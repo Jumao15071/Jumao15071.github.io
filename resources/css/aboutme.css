@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    font-family: 'Roboto', 'Roboto Flex', 'Noto Sans CJK SC', 'HarmonyOSHans', 'Noto Sans SC', 'Segoe UI Variable Text', 'Roboto Flex', 'Roboto', 'Segoe UI', 'Inter', 'Sarasa UI SC', 'PingFang SC', 'Microsoft Yahei UI', 'Noto Sans CJK SC', 'Noto Sans SC', sans-serif;
+}
+
+#top-bar {
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(30px) saturate(200%);
+}
+
+#what-can-i-do {
+    background: linear-gradient(120deg, #EA5455 0, #FEB692 140%);
+}
+
+#pdtp {
+    padding-top: 6rem !important;
+}
+
+#music-favorite {
+    background-image: url("../../resources/img/panorama_0.jpg");
+    background-size: 100%;
+    background-repeat: space;
+}
+
+#game-favorite {
+    background-image: url("../../resources/img/panorama_0.jpg");
+    background-size: 100%;
+    background-repeat: space;
+}
+
+#focus-favorite {
+    background: linear-gradient(120deg, #b62dbb 0, #e3599e 150%);
+}
+
+#my-isp {
+    background: linear-gradient(120deg, #1f7d45 0, #0bab46 150%);
+}
+
+.btn-primary {
+    background-color: #e3599e;
+    border: #e3599e;
+}
+
+.btn-primary:hover {
+    background-color: #7f1b83;
+    border: #7f1b83;
+}

@@ -1,154 +1,208 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>橘猫的文件下载站</title>
-    <link rel="stylesheet" href="style.css">
+    <title>橘猫 Sama 的下载站</title>
+    <meta name="viewport" content="width=device-width, initial-scale=0.88">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="resources/css/index.css">
+    <script src="js/bootstrap.js"></script>
+    <link rel="icon" href="resources/img/JumaoTNT.png" type="image/x-icon">
 </head>
 
 <body>
-    <div class="root-panel">
-        <!-- 网站Logo -->
-        <div style="display: flex; align-items: center; justify-content: center;">
-            <div class="title-img">
-                <a href="<!-- 替换为您的首页链接 -->">
-                    <img style="width: auto; height: 200px;" src="images/JumaoTNT.png" alt="网站Logo">
+<main>
+    <div class="container py-4">
+        <!--
+        <header class="pb-3 mb-4 border-bottom">
+            <a class="d-flex align-items-center text-body-emphasis text-decoration-none" href="/">
+                <img src="resources/img/JumaoTNT.png" alt="橘猫头像" width="30" height="30" class="me-2">
+                <span class="fs-4 fw-bold">橘猫 Sama 的下载站</span> </a>
+        </header>
+        -->
+
+        <!-- 顶栏 -->
+        <nav id="top-bar"
+             class="navbar navbar-expand-lg rounded shadow-sm ps-3 pe-3 fixed-top d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom"
+             aria-label="Thirteenth navbar example">
+            <div class="container-fluid">
+                <img class="ms-3" src="resources/img/JumaoTNT.png" width="25" height="25" alt="">
+                <a class="fw-bold navbar-brand col-lg-4 ps-1">橘猫 Sama 的下载站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarsExample11" aria-controls="navbarsExample11" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
+                    <ul class="navbar-nav col-lg-6 justify-content-md-center fw-bold pe-5">
+                        <li class="nav-item">
+                            <!-- 这里！把 href 里的链接，改成你的 Discord 聊天室链接 -->
+                            <a class="nav-link text-black" aria-current="page"
+                               href="https://marshmallowlands.github.io">Discord</a>
+                        </li>
+
+                        <li class="nav-item pe-5">
+                            <!-- 这里！同样的，把 href 里的链接，改成你的推特主页链接 -->
+                            <a class="nav-link text-black"
+                               href="https://marshmallowlands.github.io/HeoMusic/">推特</a>
+                        </li>
+                    </ul>
+                    <div class="d-lg-flex pe-3 col-lg-6 justify-content-lg-end">
+                        <!-- 关于橘猫的网页文件 -->
+                        <a href="aboutme.html" class="btn fw-bold btn-primary">关于橘猫</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+        <!-- 欢迎内容框 -->
+        <div style="margin-top: 5em;" id="main-1" class="p-5 mb-4 rounded-3">
+            <div class="container-fluid py-5 ps-2 text-white">
+                <h1 class="display-5 fw-bold mb-4">欢迎，冒险家</h1>
+                <p class="col-md-8 fs-5">
+                    这是哔哩哔哩 UP 主 <a class="fw-bold text-web-success" href="https://space.bilibili.com/37691488">@橘猫sama</a> 的下载站，<br>
+                    在这里获取我<span class="fw-bold text-success">制作、移植和搬运</span>的各类 Minecraft 资源包与附加包，<br>
+                    也可获取常见的<span class="fw-bold text-success">网址、文章和地图资源</span>作参考资料，<br>
+                    希望这些内容能够帮你更好探索游戏深层乐趣！
+                </p>
+                <!-- 欢迎内容框的按钮，想多加几个可以复制整个 a 标签 -->
+                <a target="_blank" href="https://space.bilibili.com/37691488/" class="btn btn-success btn-md mt-4" type="button">
+                    橘猫的哔哩主页
+                </a>
+                <!--
+                <a class="btn btn-success btn-md mt-4" type="button">
+                    橘猫的哔哩主页
+                </a>
+                -->
+                <a target="_blank" href="https://github.com/jumao15071" class="btn btn-outline-light btn-md mt-4 ms-2" type="button">
+                    橘猫 Github
                 </a>
             </div>
         </div>
-        
-        <h1 class="hello-label">欢迎你，冒险家！</h1>
-        <section>
-            <div class="laber-box-panel" style="background-color: rgba(91, 184, 255, 0.3);">
-                <div class="laber-box">
-                    <h1 class="top-text">欢迎来到首页～(∠・ω< )⌒★</h1>
-                            <span &nbsp;>这里是up主<a class="url-text" href="https://space.bilibili.com/37691488">@橘猫sama</a></span>
-                            的下载站</span>
-                            <br>
-                            <span &nbsp;>你可以在这里获取我制作&移植&搬运的各类Minecraft资源包与附加包</span>
-                            <br>
-                            <span &nbsp;>你也可以获取一些常见的网址、文章和地图资源作为参考资料</span>
-                            <br>
-                            <span &nbsp;>希望这些内容能够帮你更好地探索游戏深层的乐趣！</span>
-                </div>
-            </div>
-        </section>
-        <br>
-        
-        <section>
-            <div class="item-mcpack">
-                <img src="images/DabuBE1.21v9.png" class="item-icon" alt="护眼大补丸">
-                <div>
-                    <div class="icon-info">
-                        <h2>护眼大补丸BE移植</h2>
-                        <p>Java版同款资源包的移植作。新增了实用基础功能全家桶，改善了游戏各方面体验。<a class="url-text" href="<!-- 替换为下载链接 -->" target="_blank">下载</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="item-mcpack">
-                <img src="images/HuTao.jpg" class="item-icon" alt="橘猫空岛">
-                <div>
-                    <div class="icon-info">
-                        <h2>橘猫空岛</h2>
-                        <p>经典的类李芒果空岛模式，带有原版全部群系和结构点位，从零创造你的世界！<a class="url-text" href="<!-- 替换为下载链接 -->" target="_blank">下载</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="item-mcpack">
-                <img src="images/StoneWorld.png" class="item-icon" alt="石中世界">
-                <div>
-                    <div class="icon-info">
-                        <h2>石中世界</h2>
-                        <p>全世界都是石头的空岛！通过你的游戏理解来通关末地吧！可以玩极限模式！<a class="url-text" href="<!-- 替换为下载链接 -->" target="_blank">下载</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <br>
 
-        <!-- 热门模组列表 -->
-        <div class="laber-box">
-            <div>
-                <span class="top-text">
-                    热门资源列表（即将到来）：
-                </span>
-                <div class="contont-text">
-                    <!-- 替换为您的模组列表 -->
-                    <span>&nbsp; 1.更好的快乐恶魂<a class="url-text" href="<!-- 替换为下载链接1 -->">下载</a></span>
-                    <br>
-                    <span>&nbsp; 2.模组名称2<a class="url-text" href="<!-- 替换为下载链接2 -->">下载</a></span>
-                    <br>
-                    <span>&nbsp; 3.模组名称3<a class="url-text" href="<!-- 替换为下载链接3 -->">下载</a></span>
+        <!-- 你做的项目 - 代码起始 -->
+        <hr>
+        <div class="row align-items-md-stretch">
+            <div class="col-md-7 mt-3">
+                <div class="h-100 p-5 text-bg-dark rounded-3">
+                    <img src="resources/img/DabuBE1.21v9.png" width="60" height="60" alt="护眼大补丸" class="mb-3"
+                         style="border-radius: 5px;">
+                    <h2 class="fw-bold mb-1">护眼大补丸基岩版</h2>
+                    <p class="mt-3">
+                        Java版同款资源包的移植作。
+                        <br>
+                        新增了实用基础功能全家桶，改善了游戏各方面体验。
+                    </p>
+                    <a
+                            class="btn btn-outline-light" type="button" href="resources/download/护眼大补丸BE/护眼大补丸1.21夏季v9.mcpack">去下载
+                        <!-- href 那里，替换成你的下载链接 -->
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-5 mt-3">
+                <div class="h-100 p-5 bg-pink text-white border rounded-3">
+                    <img src="resources/img/HuTao.jpg" width="60" height="60" alt="橘猫空岛" class="mb-3"
+                         style="border-radius: 5px;">
+                    <h2 class="fw-bold mb-1">橘猫空岛</h2>
+                    <p class="mt-3">
+                        经典类李芒果空岛。
+                        <br>
+                        带有原版全部群系和结构点位，从零创造你的世界！
+                    </p>
+                    <a
+                            class="btn btn-outline-light" type="button" href="resources/download/橘猫空岛/橘猫空岛v2.5.mcaddon">去下载
+                        <!-- href 那里，替换成你的下载链接 -->
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-12 mt-3">
+                <div class="h-100 p-5 bg-light border border-dark rounded-3">
+                    <img src="resources/img/StoneWorld.png" width="60" height="60" alt="石中世界" class="mb-3"
+                         style="border-radius: 5px;">
+                    <h2 class="fw-bold mb-1">石中世界</h2>
+                    <p class="mt-3">
+                        全世界都是石头的空岛！
+                        <br>
+                        通过你的游戏理解来通关末地吧！可以玩极限模式！
+                    </p>
+                    <a
+                            class="btn btn-outline-dark" type="button" href="resources/download/石中世界/橘猫石中世界(困难版)v1.2.mcpack">去下载
+                    </a>
                 </div>
             </div>
         </div>
 
-        <br>
+        <hr>
+        <h1 class="mt-5 mb-2 ps-3 fw-bold">热门网络资源列表</h1>
+        <p class="lead mb-4 ps-3 fw-normal">
+            即将到来，敬请期待！
+        </p>
+        <div class="row">
+            <div class="col-lg-4 mt-4 ps-5">
+                <svg aria-label="StoneWorld" class="bd-placeholder-img rounded-circle" height="140" preserveAspectRatio="xMidYMid slice"
+                    role="img" width="140" xmlns="http://www.w3.org/2000/svg">
+                    <title>StoneWorld</title>
+                    <image href="resources/img/CuteGhast.png" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" />
+                </svg>
+                <h2 class="fw-bold mt-3 mb-2">更好的快乐恶魂</h2>
+                <p>
+                    快乐恶魂萌化<br>
+                    血量低于30%展示半心创可贴
+                </p>
+                <p><a class="btn btn-secondary" href="resources/download/自制迷你附加包/资源包/更可爱的快乐恶魂.mcpack">了解更多 »</a></p></div><!-- /.col-lg-4 -->
+            <div class="col-lg-4 mt-4 ps-5">
+                <svg aria-label="StoneWorld" class="bd-placeholder-img rounded-circle" height="140" preserveAspectRatio="xMidYMid slice"
+                    role="img" width="140" xmlns="http://www.w3.org/2000/svg">
+                    <title>StoneWorld</title>
+                    <image href="resources/img/NoBuffParticle.png" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" />
+                </svg>
+                <h2 class="fw-bold mt-3 mb-2">去除卡顿粒子</h2>
+                <p>
+                    清除了常见的卡顿粒子<br>
+                    降低雨雪效果以降低视频录制码率
+                </p>
+                <p><a class="btn btn-secondary" href="resources/download/自制迷你附加包/资源包/去除药水粒子2.mcpack">了解更多 »</a></p></div><!-- /.col-lg-4 -->
+            <div class="col-lg-4 mt-4 ps-5">
+                <svg aria-label="StoneWorld" class="bd-placeholder-img rounded-circle" height="140" preserveAspectRatio="xMidYMid slice"
+                    role="img" width="140" xmlns="http://www.w3.org/2000/svg">
+                    <title>StoneWorld</title>
+                    <image href="resources/img/render_dragon.png" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" />
+                </svg>
+                <h2 class="fw-bold mt-3 mb-2">渲染龙启动器</h2>
+                <p>
+                    资源包读取着色器代码<br>
+                    安卓手机无需改包即可启动光影
+                </p>
+                <p><a class="btn btn-secondary" href="resources/download/网络资源/安卓安装包/RDLoader_1.4.2(1.19.20-1.21.70+).APK">了解更多 »</a></p></div><!-- /.col-lg-4 --> </div>
 
-        <div class="laber-box">
-            <div>
-                <span class="top-text">
-                    热门网站列表（即将到来）：
-                </span>
-                <div class="contont-text">
-                    <!-- 替换为您的模组列表 -->
-                    <span>&nbsp; 1.网站名称1<a class="url-text" href="<!-- 替换为下载链接1 -->">下载</a></span>
-                    <br>
-                    <span>&nbsp; 2.网站名称2<a class="url-text" href="<!-- 替换为下载链接2 -->">下载</a></span>
-                    <br>
-                    <span>&nbsp; 3.网站名称3<a class="url-text" href="<!-- 替换为下载链接3 -->">下载</a></span>
+        <div class="container my-5">
+            <!-- 加 QQ 群内容框 -->
+            <div class="bg-body-tertiary rounded border border-secondary">
+                <div class="col-sm-8 py-5 px-5 mx-auto"><h2 class="fw-bold">QQ 群</h2>
+                    <p class="fs-5">
+                        有什么想说的，进来聊！
+                    </p>
+                    <ul>
+                        <li>主群 628312559 - 繁忙，需认证</li>
+                        <li>二群 974425950 - 空闲，需认证</li>
+                        <li>三群 723965074 - 空闲，需认证</li>
+                    </ul>
                 </div>
             </div>
-        </div>
-        
-        <br>
-        
-        <!-- 社群信息 -->
-        <div class="laber-box-panel">
-            <div class="laber-box">
-                <span class="top-text">QQ群聊：</span>
-                <div class="contont-text">
-                    <span>&nbsp; 主群 628312559 - 繁忙，需要认证</span>
-                    <br>
-                    <span>&nbsp; 二群 974425950 - 空闲，需要认证</span>
-                    <br>
-                    <span>&nbsp; 三群 723965074 - 空闲，需要认证</span>
-                </div>
-                <span class="top-text">其他：</span>
-                <div class="contont-text">
-                    <span>&nbsp; <a class="url-text" href="<!-- 替换为Discord链接 -->">Discord</a></span>
-                    <br>
-                    <span>&nbsp; <a class="url-text" href="<!-- 替换为Twitter链接 -->">推特/X</a></span>
-                </div>
-            </div>
-        </div>
-        
-        <br>
-        
-        <!-- 页脚 -->
-        <div style="display: flex; align-items: center; justify-content: center;">
-            <div class="title-img" style="height: 100px;">
-                <a href="<!-- 替换为首页链接 -->">
-                    <img style="width: auto; height: 100px;" src="images/Ryo.gif" alt="页脚图标">
-                </a>
-            </div>
-        </div>
-        
-        <div class="laber-box-panel" style="height: 30px; background-color: rgba(91, 184, 255, 0.3);">
-            <h2 style="text-align: center; color: #2991f2;"> 
-                <a href="<!-- 替换为关于页面链接 -->" target="_blank" style="color: #2991f2;">关于我们</a>
-                &nbsp; 
-                <a href="<!-- 替换为GitHub链接 -->" target="_blank" style="color: #2991f2;">Github</a>
-            </h2>
+
+            <footer class="pt-5 mt-5 text-body-secondary border-top">
+                © 2025 橘猫 Sama 下载站。<br>
+                页面由塔兰达尔设计（Github：Marshmallowlands ），使用了开源项目：Bootstrap。
+                <br>
+                开源项目官网：<a class="text-success text-decoration-none" href="https://getbootstrap.com/">https://getbootstrap.com/</a>
+                <br><br>
+                已多端适配
+            </footer>
         </div>
     </div>
+</main>
 </body>
 
 </html>
