@@ -1,22 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
-/*
-    来自塔兰达尔的留言：
-    橘猫，如果你对字体的设置不满意，你可以在下面修改。
-    我的联系方式：QQ 号 3266681669，地址：河北张家口市。
-*/
-
 /* 页面字体样式设置 */
 * {
     font-family: 'Roboto', 'HarmonyOSHans', 'Noto Sans CJK SC', 'Noto Sans SC', 'Segoe UI Variable Text', 'Roboto Flex', 'Roboto', 'Segoe UI', 'Inter', 'Sarasa UI SC', 'PingFang SC', 'Microsoft Yahei UI', 'Noto Sans CJK SC', 'Noto Sans SC', sans-serif;
 }
 
-
 /* 顶栏样式定制 */
 #top-bar {
-    background-color: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(30px) saturate(200%);
+    background-color: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(40px) saturate(200%);
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    border-color: #4d5154;
 }
 
 /* 页头 */
@@ -24,21 +20,18 @@
     background: url("../../resources/img/panorama_0.jpg");
 }
 
+/* 浅色模式 - 起始*/
+.btn-pink{
+    background-color: #fb7299 !important;
+    border: none;
+}
 
-/*
-    来自塔兰达尔的留言：
-    橘猫，如果你对我目前搞出来的样式不算满意，你可以在下面
-    修改这些样式定制代码，定制成你喜欢的样子。
-    我的联系方式：QQ 号 3266681669，地址：河北张家口市。
-*/
-
-/* 定制样式代码 - 起始*/
 .text-success {
     color: #e685b5 !important;
 }
 
 .text-web-success {
-    color: #e685b5 !important;
+    color: #e894be !important;
     text-decoration: none;
 }
 
@@ -48,13 +41,13 @@
 }
 
 .btn-success,.btn-primary {
-    background-color: #f069ac !important;
-    border-color: #e3599e !important;
+    background-color: #fb7299 !important;
+    border-color: #fc85a7 !important;
 }
 
 .btn-success:hover {
-    background-color: #b94d87 !important;
-    border-color: #a63b74 !important;
+    background-color: #fc8bab !important;
+    border-color: #fc93b1 !important;
 }
 
 .bg-pink {
@@ -62,4 +55,8 @@
     border-radius: 5px;
 }
 
-/* 定制样式代码 - 末尾*/
+#about-jumao {
+    color: white;
+}
+
+/* 浅色模式 - 末尾*/

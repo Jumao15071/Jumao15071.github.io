@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="zh">
 
 <head>
     <meta charset="UTF-8">
@@ -7,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=0.88">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="resources/css/index.css">
+    <link rel="stylesheet" href="resources/css/index_dark.css">
     <script src="js/bootstrap.js"></script>
     <link rel="icon" href="resources/img/JumaoTNT.png" type="image/x-icon">
 </head>
@@ -14,56 +14,67 @@
 <body>
 <main>
     <div class="container py-4">
-        <!--
-        <header class="pb-3 mb-4 border-bottom">
-            <a class="d-flex align-items-center text-body-emphasis text-decoration-none" href="/">
-                <img src="resources/img/JumaoTNT.png" alt="橘猫头像" width="30" height="30" class="me-2">
-                <span class="fs-4 fw-bold">橘猫 Sama 的下载站</span> </a>
-        </header>
-        -->
-
         <!-- 顶栏 -->
         <nav id="top-bar"
-             class="navbar navbar-expand-lg rounded shadow-sm ps-3 pe-3 fixed-top d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom"
+             class="navbar navbar-expand-lg rounded shadow-sm ps-3 pe-3 fixed-top d-flex flex-wrap justify-content-center py-3 mb-4"
              aria-label="Thirteenth navbar example">
             <div class="container-fluid">
-                <img class="ms-3" src="resources/img/JumaoTNT.png" width="25" height="25" alt="">
-                <a class="fw-bold navbar-brand col-lg-4 ps-1">橘猫 sama 的下载站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                <img class="ms-4" src="resources/img/JumaoTNT.png" width="25" height="25" alt="">
+                <a class="fw-bold navbar-brand col-lg-2 ps-4">橘猫 sama 的下载站</a>
+                <button class="btn-pink text-white navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarsExample11" aria-controls="navbarsExample11" aria-expanded="false"
                         aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <span class="fs-2 px-3 py-5">=</span>
                 </button>
                 <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
-                    <ul class="navbar-nav col-lg-6 justify-content-md-center fw-bold pe-5">
-
+                    <ul class="navbar-nav col-lg-9 text-center fw-bold">
                         <li class="nav-item">
-                            <!-- 这里！同样的，把 href 里的链接，改成你的推特主页链接 -->
-                            <a class="nav-link text-black"
+                            <a class="nav-link" aria-current="page"
                                href="https://music.163.com/#/playlist?id=13660558374">一起听歌</a>
                         </li>
 
                         <li class="nav-item">
-                            <!-- 这里！把 href 里的链接，改成你的 Discord 聊天室链接 -->
-                            <a class="nav-link text-black" aria-current="page"
+                            <a class="nav-link" aria-current="page"
+                               href="https://learn.microsoft.com/en-us/minecraft/creator/">微软文档</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page"
+                               href="https://wiki.bedrock.dev/">开发wiki</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page"
+                               href="https://zh.minecraft.wiki/">中文wiki</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page"
+                               href="https://www.chunkbase.com/apps/seed-map">种子地图</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page"
                                href="https://mcbedl.com/">MC下载</a>
                         </li>
 
                         <li class="nav-item">
-                            <!-- 这里！把 href 里的链接，改成你的 Discord 聊天室链接 -->
-                            <a class="nav-link text-black" aria-current="page"
+                            <a class="nav-link" aria-current="page"
+                               href="https://minegraph.cn/be/shaderpacks/">MGC光影站</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page"
                                href="https://www.minebbs.com/">MineBBS</a>
                         </li>
 
                         <li class="nav-item">
-                            <!-- 这里！把 href 里的链接，改成你的 Discord 聊天室链接 -->
-                            <a class="nav-link text-black" aria-current="page"
+                            <a class="nav-link" aria-current="page"
                                href="https://klpbbs.com/">苦力怕论坛</a>
                         </li>
                     </ul>
-                    <div class="d-lg-flex pe-3 col-lg-6 justify-content-lg-end">
-                        <!-- 关于橘猫的网页文件 -->
-                        <a href="aboutme.html" class="btn fw-bold btn-primary">关于橘猫</a>
+                    <div class="d-lg-flex col-lg-3 justify-content-lg-end">
+                        <a id="about-jumao" href="aboutme.html" class="btn fw-bold btn-success text-white">关于橘猫</a>
                     </div>
                 </div>
             </div>
@@ -75,21 +86,19 @@
             <div class="container-fluid py-5 ps-2 text-white">
                 <h1 class="display-5 fw-bold mb-4">欢迎，冒险家！</h1>
                 <p class="col-md-8 fs-5">
-                    这是哔哩哔哩 UP 主 <a class="fw-bold text-web-success" href="https://space.bilibili.com/37691488">@橘猫sama</a> 的下载站，<br>
+                    这是哔哩哔哩 UP 主 <a class="fw-bold text-web-success" href="https://space.bilibili.com/37691488">@橘猫sama</a>
+                    的下载站，<br>
                     在这里获取我<span class="fw-bold text-success">制作、移植和搬运</span>的各类 Minecraft 资源包与附加包，<br>
                     也可获取常见的<span class="fw-bold text-success">网址、文章和地图资源</span>作参考资料，<br>
                     希望这些内容能够帮你更好探索游戏深层乐趣！
                 </p>
                 <!-- 欢迎内容框的按钮，想多加几个可以复制整个 a 标签 -->
-                <a target="_blank" href="https://space.bilibili.com/37691488/" class="btn btn-success btn-md mt-4" type="button">
+                <a target="_blank" href="https://space.bilibili.com/37691488/" class="btn text-white btn-success btn-md mt-4"
+                   type="button">
                     橘猫的哔哩主页
                 </a>
-                <!--
-                <a class="btn btn-success btn-md mt-4" type="button">
-                    橘猫的哔哩主页
-                </a>
-                -->
-                <a target="_blank" href="https://github.com/jumao15071" class="btn btn-outline-light btn-md mt-4 ms-2" type="button">
+                <a target="_blank" href="https://github.com/jumao15071" class="btn btn-secondary text-white btn-md mt-4 ms-2"
+                   type="button">
                     橘猫 Github
                 </a>
             </div>
@@ -104,18 +113,20 @@
                          style="border-radius: 5px;">
                     <h2 class="fw-bold mb-1">护眼大补丸基岩版</h2>
                     <p class="mt-3">
-                        Java版 <a class="fw-bold text-web-success" href="https://space.bilibili.com/19428259/">@黑山大叔</a> 同款资源包的移植作。
+                        Java版 <a class="fw-bold text-web-success"
+                                  href="https://space.bilibili.com/19428259/">@黑山大叔</a> 同款资源包的移植作。
                         <br>
                         新增了实用基础功能全家桶，改善了游戏各方面体验。
                     </p>
                     <a
-                            class="btn btn-outline-light" type="button" href="resources/download/护眼大补丸BE/护眼大补丸1.21夏季v9.mcpack">去下载
+                            class="btn btn-secondary" type="button"
+                            href="resources/download/护眼大补丸BE/护眼大补丸1.21夏季v9.mcpack">去下载
                         <!-- href 那里，替换成你的下载链接 -->
                     </a>
                 </div>
             </div>
             <div class="col-md-5 mt-3">
-                <div class="h-100 p-5 bg-pink text-white border rounded-3">
+                <div class="h-100 p-5 bg-pink text-white rounded-3">
                     <img src="resources/img/HuTao.jpg" width="60" height="60" alt="橘猫空岛" class="mb-3"
                          style="border-radius: 5px;">
                     <h2 class="fw-bold mb-1">橘猫空岛</h2>
@@ -125,13 +136,14 @@
                         带有原版全部群系和结构点位，从零创造你的世界！
                     </p>
                     <a
-                            class="btn btn-outline-light" type="button" href="resources/download/橘猫空岛/橘猫空岛v2.5.mcaddon">去下载
+                            class="btn btn-light text-black" type="button"
+                            href="resources/download/橘猫空岛/橘猫空岛v2.5.mcaddon">去下载
                         <!-- href 那里，替换成你的下载链接 -->
                     </a>
                 </div>
             </div>
             <div class="col-md-12 mt-3">
-                <div class="h-100 p-5 bg-light border border-dark rounded-3">
+                <div id="stone-world" class="h-100 p-5 border border-dark rounded-3">
                     <img src="resources/img/StoneWorld.png" width="60" height="60" alt="石中世界" class="mb-3"
                          style="border-radius: 5px;">
                     <h2 class="fw-bold mb-1">石中世界</h2>
@@ -141,7 +153,8 @@
                         通过你的游戏理解来通关末地吧！可以玩极限模式！
                     </p>
                     <a
-                            class="btn btn-outline-dark" type="button" href="resources/download/石中世界/橘猫石中世界(困难版)v1.2.mcpack">去下载
+                            class="stone-world-download btn btn-light border-dark text-dark" type="button"
+                            href="resources/download/石中世界/橘猫石中世界(困难版)v1.2.mcpack">去下载
                     </a>
                 </div>
             </div>
@@ -154,90 +167,111 @@
         </p>
         <div class="row">
             <div class="col-lg-4 mt-4 ps-5">
-                <svg aria-label="渲染龙工具大全" class="bd-placeholder-img rounded-circle" height="140" preserveAspectRatio="xMidYMid slice"
-                    role="img" width="140" xmlns="http://www.w3.org/2000/svg">
+                <svg aria-label="渲染龙工具大全" class="bd-placeholder-img rounded" height="140"
+                     preserveAspectRatio="xMidYMid slice"
+                     role="img" width="140" xmlns="http://www.w3.org/2000/svg">
                     <title>渲染龙工具大全</title>
-                    <image href="resources/img/render_dragon2.png" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" />
+                    <image href="resources/img/render_dragon2.png" width="100%" height="100%"
+                           preserveAspectRatio="xMidYMid slice"/>
                 </svg>
                 <h2 class="fw-bold mt-3 mb-2">渲染龙工具大全</h2>
                 <p>
                     资源包读取着色器代码<br>
                     无需改包即可启动红显&光影
                 </p>
-                <p><a class="btn btn-secondary" href="weblist.html">了解更多 »</a></p>
-            </div><!-- /.col-lg-4 --> 
+                <p><a class="btn btn-secondary text-white" href="weblist_0.html">了解更多 »</a></p>
+            </div>
             <div class="col-lg-4 mt-4 ps-5">
-                <svg aria-label="快乐恶魂萌化" class="bd-placeholder-img rounded-circle" height="140" preserveAspectRatio="xMidYMid slice"
-                    role="img" width="140" xmlns="http://www.w3.org/2000/svg">
+                <svg aria-label="快乐恶魂萌化" class="bd-placeholder-img rounded" height="140"
+                     preserveAspectRatio="xMidYMid slice"
+                     role="img" width="140" xmlns="http://www.w3.org/2000/svg">
                     <title>快乐恶魂萌化</title>
-                    <image href="resources/img/CuteGhast.png" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" />
+                    <image href="resources/img/CuteGhast.png" width="100%" height="100%"
+                           preserveAspectRatio="xMidYMid slice"/>
                 </svg>
                 <h2 class="fw-bold mt-3 mb-2">更好的快乐恶魂</h2>
                 <p>
                     快乐恶魂萌化<br>
                     血量低于30%展示半心创可贴
                 </p>
-                <p><a class="btn btn-secondary" href="resources/download/自制迷你附加包/资源包/更可爱的快乐恶魂.mcpack">下载资源 »</a></p>
+                <p><a class="btn btn-secondary text-white" href="resources/download/自制迷你附加包/资源包/更可爱的快乐恶魂.mcpack">下载资源
+                    »</a></p>
             </div><!-- /.col-lg-4 -->
             <div class="col-lg-4 mt-4 ps-5">
-                <svg aria-label="去除卡顿粒子" class="bd-placeholder-img rounded-circle" height="140" preserveAspectRatio="xMidYMid slice"
-                    role="img" width="140" xmlns="http://www.w3.org/2000/svg">
+                <svg aria-label="去除卡顿粒子" class="bd-placeholder-img rounded" height="140"
+                     preserveAspectRatio="xMidYMid slice"
+                     role="img" width="140" xmlns="http://www.w3.org/2000/svg">
                     <title>去除卡顿粒子</title>
-                    <image href="resources/img/NoBuffParticle.png" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" />
+                    <image href="resources/img/NoBuffParticle.png" width="100%" height="100%"
+                           preserveAspectRatio="xMidYMid slice"/>
                 </svg>
                 <h2 class="fw-bold mt-3 mb-2">去除卡顿粒子</h2>
                 <p>
                     清除了常见的卡顿粒子<br>
                     降低雨雪效果以降低视频录制码率
                 </p>
-                <p><a class="btn btn-secondary" href="resources/download/自制迷你附加包/资源包/去除药水粒子2.mcpack">下载资源 »</a></p>
-            </div><!-- /.col-lg-4 -->
+                <p><a class="btn btn-secondary text-white" href="resources/download/自制迷你附加包/资源包/去除药水粒子2.mcpack">下载资源
+                    »</a></p>
+                </div><!-- /.col-lg-4 -->
             <div class="col-lg-4 mt-4 ps-5">
-                <svg aria-label="建筑结构迁移器" class="bd-placeholder-img rounded-circle" height="140" preserveAspectRatio="xMidYMid slice"
-                    role="img" width="140" xmlns="http://www.w3.org/2000/svg">
+                <svg aria-label="建筑结构迁移器" class="bd-placeholder-img rounded" height="140"
+                     preserveAspectRatio="xMidYMid slice"
+                     role="img" width="140" xmlns="http://www.w3.org/2000/svg">
                     <title>建筑结构迁移器</title>
-                    <image href="resources/img/Building_for_PE_launcher.png" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" />
+                    <image href="resources/img/Building_for_PE_launcher.png" width="100%" height="100%"
+                           preserveAspectRatio="xMidYMid slice"/>
                 </svg>
                 <h2 class="fw-bold mt-3 mb-2">建筑结构迁移器</h2>
                 <p>
                     Building for Minecraft PE汉化去广告版<br>
                     Android手机跨存档迁移大型结构（含32k）
                 </p>
-                <p><a class="btn btn-secondary" href="https://pan.baidu.com/s/1nkVk6J5E3_FIhtfItp515w?pwd=jumo">下载资源 »</a></p>
-            </div><!-- /.col-lg-4 --> 
+                <p><a class="btn btn-secondary text-white" href="https://pan.baidu.com/s/1nkVk6J5E3_FIhtfItp515w?pwd=jumo">下载资源
+                    »</a></p>
+            </div><!-- /.col-lg-4 -->
             <div class="col-lg-4 mt-4 ps-5">
-                <svg aria-label="网易存档解密器" class="bd-placeholder-img rounded-circle" height="140" preserveAspectRatio="xMidYMid slice"
-                    role="img" width="140" xmlns="http://www.w3.org/2000/svg">
+                <svg aria-label="网易存档解密器" class="bd-placeholder-img rounded" height="140"
+                     preserveAspectRatio="xMidYMid slice"
+                     role="img" width="140" xmlns="http://www.w3.org/2000/svg">
                     <title>网易存档解密器</title>
-                    <image href="resources/img/NEhexinchun.png" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" />
+                    <image href="resources/img/NEhexinchun.png" width="100%" height="100%"
+                           preserveAspectRatio="xMidYMid slice"/>
                 </svg>
                 <h2 class="fw-bold mt-3 mb-2">网易存档解密器</h2>
                 <p>
-                    解密网易db文件（网吧特供）<br>
+                    解密 db 文件（网吧电脑特供）<br>
                     解密后使用国际版同版本打开一次即可
                 </p>
-                <p><a class="btn btn-secondary" href="resources/download/网络资源/Windows程序/NeteaseMcDencrypter.exe">下载资源 »</a></p>
-            </div><!-- /.col-lg-4 --> 
+                <p>
+                    <a class="btn btn-secondary text-white" href="resources/download/网络资源/Windows程序/NeteaseMcDencrypter.exe">下载资源 »</a>
+                    <a class="btn btn-secondary" href="https://mc.163.com/dev/mcmanual/mc-dev/mcdocs/1-ModAPI-beta/%E6%9B%B4%E6%96%B0%E4%BF%A1%E6%81%AF/3.4.html">版本信息 »</a>
+                </p>
+            </div><!-- /.col-lg-4 -->
             <div class="col-lg-4 mt-4 ps-5">
-                <svg aria-label="云梦假人" class="bd-placeholder-img rounded-circle" height="140" preserveAspectRatio="xMidYMid slice"
-                    role="img" width="140" xmlns="http://www.w3.org/2000/svg">
+                <svg aria-label="云梦假人" class="bd-placeholder-img rounded" height="140"
+                     preserveAspectRatio="xMidYMid slice"
+                     role="img" width="140" xmlns="http://www.w3.org/2000/svg">
                     <title>云梦假人</title>
-                    <image href="resources/img/Yun.jpg" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" />
+                    <image href="resources/img/Yun.jpg" width="100%" height="100%"
+                           preserveAspectRatio="xMidYMid slice"/>
                 </svg>
                 <h2 class="fw-bold mt-3 mb-2">云梦假人</h2>
                 <p>
                     国际版脚本假人项目<br>
-                    请前往github下载
+                    请前往 github 下载
                 </p>
-                <p><a class="btn btn-secondary" href="https://github.com/xBoyMinemc/FlashFakePlayerPack/releases">下载资源 »</a> <a
-                        class="btn btn-secondary" href="https://bgithub.xyz/xBoyMinemc/FlashFakePlayerPack/releases">备用线路 »</a></p>
-                </div><!-- /.col-lg-4 -->
+                <p>
+                    <a class="btn btn-secondary" href="https://github.com/xBoyMinemc/FlashFakePlayerPack/releases">下载资源 »</a>
+                     <a class="btn btn-secondary" href="https://bgithub.xyz/xBoyMinemc/FlashFakePlayerPack/releases">备用线路 »</a>
+                </p>
+            </div><!-- /.col-lg-4 -->
         </div>
 
         <div class="container my-5">
             <!-- 加 QQ 群内容框 -->
-            <div class="bg-body-tertiary rounded border border-secondary">
-                <div class="col-sm-8 py-5 px-5 mx-auto"><h2 class="fw-bold">QQ 群</h2>
+            <div class="rounded border border-secondary">
+                <div class="col-sm-8 py-5 px-4 mx-auto">
+                    <h2 class="fw-bold">QQ 群</h2>
                     <p class="fs-5">
                         有什么想说的，进来聊！
                     </p>
@@ -250,11 +284,12 @@
                 </div>
             </div>
 
-            <footer class="pt-5 mt-5 text-body-secondary border-top">
-                © 2025 橘猫 Sama 下载站。<br>
-                页面由塔兰达尔设计（Github：Marshmallowlands ），使用了开源项目：Bootstrap。
+            <footer class="pt-5 mt-5 border-top">
+                © 2025 橘猫 sama 下载站。<br>
+                页面由<a class="fw-bold text-web-success"
+                href="https://marshmallowlands.github.io">塔兰达尔</a>设计（Github：Marshmallowlands ），使用了开源项目：Bootstrap。
                 <br>
-                开源项目官网：<a class="text-success text-decoration-none" href="https://getbootstrap.com/">https://getbootstrap.com/</a>
+                开源项目官网：<a class="fw-bold text-web-success" href="https://getbootstrap.com/">https://getbootstrap.com/</a>
                 <br><br>
                 已多端适配
             </footer>

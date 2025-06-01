@@ -10,6 +10,11 @@
     backdrop-filter: blur(30px) saturate(200%);
 }
 
+.btn-pink{
+    background-color: #f069ac !important;
+    border: none;
+}
+
 #what-can-i-do {
     background: linear-gradient(120deg, #EA5455 0, #FEB692 140%);
 }
@@ -28,6 +33,10 @@
     background-image: url("../../resources/img/panorama_0.jpg");
     background-size: 100%;
     background-repeat: space;
+}
+
+.text-pink {
+    color: #e3599e;
 }
 
 #focus-favorite {
