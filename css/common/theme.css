@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* 页面字体样式设置 */
+* {
+    font-family: 'Roboto', 'Noto Sans CJK SC', 'Noto Sans SC', 'Segoe UI Variable Text', 'Roboto Flex', 'Roboto', 'Segoe UI', 'Inter', 'Sarasa UI SC', 'PingFang SC', 'Microsoft Yahei UI', 'Noto Sans CJK SC', 'Noto Sans SC', sans-serif;
+}
+
+/* 自定义样式 */
+
+.text-pink {
+    color: rgb(255, 162, 208);
+}
+
+.hero {
+    border-radius: 1rem;
+}
+
+.navbar {
+    border-color: #1f2229;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    animation-duration: 0.4s;
+}
+
+.navbar-burger span {
+    background-color: hotpink;
+}
+
+.navbar-link:not(.is-arrowless)::after {
+    border-color: hotpink;
+}
+
+.btn-pink {
+    background-color: hotpink;
+    border: none;
+    color: white;
+}
+
+.btn-pink:hover {
+    background-color: #c1387b;
+    border: none;
+}
+
+.btn-pink:active {
+    background-color: #8c2945;
+    border: none;
+}
+
+.bg-pink {
+    background-color: rgb(155, 55, 105) !important;
+    color: white;
+}
+
+.mt-4rem {
+    margin-top: 4rem !important;
+}
+
+.footer {
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+}
+
+.has-dropdown a[class="navbar-link"]::after {
+	transform: rotate(-135deg);
+	transition: transform 0.2s;
+}
+.has-dropdown a[class="navbar-link is-active"]::after {
+	transform: rotate(-45deg);
+	transition: transform 0.2s;
+}
+
+/* 自定义深色模式样式 */
+@media (prefers-color-scheme: dark){
+    .message-body-text {
+        color: white !important;
+    }
+    .message-body {
+        background-color: #ff4b6f8d;
+    }
+}
