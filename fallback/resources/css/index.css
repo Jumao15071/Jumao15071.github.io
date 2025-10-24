@@ -3,7 +3,7 @@
 
 /* 页面字体样式设置 */
 * {
-    font-family: 'Roboto', 'HarmonyOSHans', 'Noto Sans CJK SC', 'Noto Sans SC', 'Segoe UI Variable Text', 'Roboto Flex', 'Roboto', 'Segoe UI', 'Inter', 'Sarasa UI SC', 'PingFang SC', 'Microsoft Yahei UI', 'Noto Sans CJK SC', 'Noto Sans SC', sans-serif;
+    font-family: 'Roboto', 'Noto Sans CJK SC', 'Noto Sans SC', 'Segoe UI Variable Text', 'Roboto Flex', 'Roboto', 'Segoe UI', 'Inter', 'Sarasa UI SC', 'PingFang SC', 'Microsoft Yahei UI', 'Noto Sans CJK SC', 'Noto Sans SC', sans-serif;
 }
 
 /* 顶栏样式定制 */
