@@ -267,7 +267,10 @@
     height: auto;
     border-radius: 0.5rem;
     border: 1px solid rgba(128, 128, 128, 0.35);
-    display: inline-block;
+    /* block + auto 居中：inline-block 会在图片底下留出行框基线空隙（约 10px），
+       让图片与下方图注显得离得远 */
+    display: block;
+    margin: 0 auto;
 }
 
 /* 图注（B 站专栏里图片下方的灰色小字） */
@@ -275,7 +278,7 @@
     text-align: center;
     color: #9d9d9d;
     font-size: 0.88rem;
-    margin: -0.6rem 0 1.4rem;
+    margin: -0.8rem 0 1.4rem;
 }
 
 .article-foot {

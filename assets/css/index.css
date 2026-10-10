@@ -29,3 +29,11 @@ a.navbar-item.is-active, a.navbar-item.is-selected, .navbar-link.is-active, .nav
     box-shadow: none !important;
     border: 1px solid #393939 !important;
 }
+
+/* 窄屏修复：Bulma 的 .grid.is-col-min-16 要求每列至少 24rem（384px），
+   手机可用宽不足 384px 时整块会横向溢出，页面右边就冒出一条拖动条
+   （首页「橘猫的作品」「热门游戏资源」等区块）。这里把最小列宽夹到容器宽度以内。
+   注意保持 Bulma 原本的 auto-fit 语义（.grid.is-auto-fill 仍由 Bulma 规则接管）。 */
+.grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--bulma-grid-column-min), 100%), 1fr));
+}

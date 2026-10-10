@@ -90,3 +90,54 @@
         background-color: #ff4b6f8d;
     }
 }
+
+/* ---------- 卡片右侧冒出「上下拖动条」的问题 ----------
+   Bulma 给 .media-content 设了 overflow-x: auto，按规范另一轴 visible 会被计算成 auto；
+   竖屏下卡片标题换行后，内容比容器高出 1px，右侧就出现一条可上下拖动的滚动条
+   （点箭头只挪 1px）。内容本身会正常换行，不需要这里的内部滚动，直接放开。 */
+.media-content {
+    overflow: visible;
+}
+
+/* 卡片里的长链接 / 长英文串允许断行（不再依赖内部滚动条兜底） */
+.card-content,
+.media-content {
+    overflow-wrap: anywhere;
+}
+
+/* ---------- 手机竖屏：卡片内容防溢出（整体兜底） ----------
+   背景：Bulma 的 .button 是 inline-flex + white-space:nowrap，长文案按钮（如
+   「26.30 - 26.45 光影清单 »」）在窄屏不会折行，会顶出卡片右边缘；
+   卡片里的长英文串/长链接同理。这里在窄屏放宽这些限制，
+   保证无论字体如何（Google Fonts 加载失败时回退字体更宽）卡片都不会顶出去。 */
+@media screen and (max-width: 768px) {
+    /* 按钮：允许换行、限制在容器内、高度自适应 */
+    .button {
+        max-width: 100%;
+        height: auto;
+        white-space: normal;
+        text-align: center;
+    }
+
+    /* 按钮组 / 分组控件允许折行 */
+    .buttons,
+    .field.is-grouped {
+        flex-wrap: wrap;
+    }
+
+    /* 卡片内的标题与正文：长英文串、长链接允许断行 */
+    .card-content,
+    .card-content .title,
+    .card-content .subtitle,
+    .media-content {
+        min-width: 0;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    /* 卡片内的图片不超宽 */
+    .card-content img {
+        max-width: 100%;
+        height: auto;
+    }
+}
