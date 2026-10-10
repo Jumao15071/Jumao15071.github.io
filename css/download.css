@@ -1,0 +1,66 @@
+/* ===== 版本下载页共用样式（dabu.html / redzone.html） ===== */
+
+/* 带图标的下载按钮（网盘、CurseForge、MediaFire 等） */
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.55rem 1rem;
+    margin: 0 0.4rem 0.6rem 0;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    border-radius: 0.6rem;
+    background-color: #ffffff;
+    color: #363636;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.icon-button:hover {
+    border-color: #eb4a6a;
+    color: #eb4a6a;
+    box-shadow: 0 3px 10px rgba(235, 74, 106, 0.22);
+    transform: translateY(-1px);
+}
+
+.icon-button img {
+    width: 1.4rem;
+    height: 1.4rem;
+    flex: none;
+    display: block;
+}
+
+.icon-button .icon-note {
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: #7a7a7a;
+}
+
+.icon-button:hover .icon-note {
+    color: #eb4a6a;
+}
+
+/* 版本卡片 */
+.version-card .version-meta {
+    color: #7a7a7a;
+    font-size: 0.85rem;
+    line-height: 1.8;
+}
+
+.version-card .version-meta .tag {
+    vertical-align: middle;
+}
+
+@media (prefers-color-scheme: dark) {
+    .icon-button {
+        background-color: #2b2b2b;
+        color: #f5f5f5;
+        border-color: rgba(255, 255, 255, 0.28);
+    }
+
+    .icon-button .icon-note,
+    .version-card .version-meta {
+        color: #b5b5b5;
+    }
+}

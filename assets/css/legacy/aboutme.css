@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    font-family: 'Roboto', 'Roboto Flex', 'Noto Sans CJK SC', 'HarmonyOSHans', 'Noto Sans SC', 'Segoe UI Variable Text', 'Roboto Flex', 'Roboto', 'Segoe UI', 'Inter', 'Sarasa UI SC', 'PingFang SC', 'Microsoft Yahei UI', 'Noto Sans CJK SC', 'Noto Sans SC', sans-serif;
+}
+
+#top-bar {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(30px) saturate(200%);
+}
+
+.btn-pink{
+    background-color: #f069ac !important;
+    border: none;
+}
+
+#what-can-i-do {
+    background: linear-gradient(120deg, #EA5455 0, #FEB692 140%);
+}
+
+#pdtp {
+    padding-top: 6rem !important;
+}
+
+#music-favorite {
+    background-image: url("../../img/bg_music.jpg");
+    background-size: 100%;
+    background-repeat: space;
+}
+
+#game-favorite {
+    background-image: url("../../img/panorama_0_legacy.jpg");
+    background-size: 100%;
+    background-repeat: space;
+}
+
+.text-pink {
+    color: #e3599e;
+}
+
+#focus-favorite {
+    background: linear-gradient(120deg, #2d6fbb 0, #4fd1ff 150%);
+}
+
+#my-isp {
+    background: linear-gradient(120deg, #1f7d45 0, #38c16a 120%);
+}
+
+.btn-primary {
+    background-color: #e3599e;
+    border: #e3599e;
+}
+
+.btn-primary:hover {
+    background-color: #7f1b83;
+    border: #7f1b83;
+}
+
+/* 「表情包与皮肤包」卡片里的皮肤预览：
+   源图是 64×64 的皮肤贴图，放大 2 倍并做像素化渲染，放大后依然清晰不糊。 */
+#skin-preview {
+    width: 128px;
+    height: 128px;
+    flex: none;
+    image-rendering: pixelated;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 0.6rem;
+    box-shadow: 0 1px 5px rgba(26, 29, 32, 0.2);
+}

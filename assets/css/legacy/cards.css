@@ -1,0 +1,315 @@
+/* ==========================================================================
+   Bulma 卡片模板 —— 旧版（Bootstrap）页面专用
+   --------------------------------------------------------------------------
+   来源：assets/lib/bulma/css/bulma.css（Bulma 1.x）
+   目的：让 pages/shaderlist.html（Bootstrap 5 布局）使用与根目录 index.html
+         完全相同的卡片类名与外观：
+
+           <div class="grid mt-4 ml-2 mr-2 is-col-min-16 is-gap-2">
+             <div class="cell">
+               <div class="card p-2">
+                 <div class="card-content">
+                   <div class="media">
+                     <div class="media-left">
+                       <figure class="image is-48x48">
+                         <img class="has-radius-normal" src="…" alt="" />
+                       </figure>
+                     </div>
+                     <div class="media-content">
+                       <p class="title is-5">标题</p>
+                       <p class="subtitle is-5">副标题</p>
+                     </div>
+                   </div>
+                   <div class="content">描述</div>
+                   <a class="button is-danger has-text-white" href="…">按钮 »</a>
+                 </div>
+               </div>
+             </div>
+           </div>
+
+   为什么不直接引入全量 bulma.css：见 buttons.css 顶部说明（Bootstrap 的
+   .container / .navbar / .p-5 / .mt-4 等同名类取值不同，整体引入会改乱现有排版）。
+
+   与 Bootstrap 的冲突面（本页加载 Bootstrap 5.3.6）：
+     .grid / .cell / .media / .image / .title / .subtitle / .content —— Bootstrap 没有，安全
+     .card —— Bootstrap 有（1px 实线边框 + flex 布局），下面已显式抵消
+   所有 Bulma 变量已静态化，取值来自 bulma.css 的 :root（浅色模式）。
+   ========================================================================== */
+
+:root {
+    --bulma-scheme-h: 221;
+    --bulma-scheme-s: 14%;
+    --bulma-scheme-main-l: 100%;
+    --bulma-scheme-invert-l: 4%;
+    --bulma-border-l: 86%;
+    --bulma-text-h: 221deg;
+    --bulma-text-s: 14%;
+    --bulma-text-l: 29%;
+    --bulma-text-strong-l: 21%;
+    --bulma-shadow-h: 221deg;
+    --bulma-shadow-s: 14%;
+    --bulma-shadow-l: 4%;
+    --bulma-radius: 0.375rem;
+    --bulma-radius-rounded: 9999px;
+    --bulma-weight-semibold: 600;
+    --bulma-weight-bold: 700;
+    --bulma-weight-extrabold: 800;
+    --bulma-block-spacing: 1.5rem;
+    --bulma-size-3: 2rem;
+    --bulma-size-5: 1.25rem;
+
+    --bulma-scheme-main: hsl(var(--bulma-scheme-h), var(--bulma-scheme-s), var(--bulma-scheme-main-l));
+    --bulma-border: hsl(var(--bulma-scheme-h), var(--bulma-scheme-s), var(--bulma-border-l));
+    --bulma-text: hsl(var(--bulma-text-h), var(--bulma-text-s), var(--bulma-text-l));
+    --bulma-text-strong: hsl(var(--bulma-text-h), var(--bulma-text-s), var(--bulma-text-strong-l));
+    --bulma-shadow: 0 0.5em 1em -0.125em hsla(var(--bulma-shadow-h), var(--bulma-shadow-s), var(--bulma-shadow-l), 0.1), 0 0px 0 1px hsla(var(--bulma-shadow-h), var(--bulma-shadow-s), var(--bulma-shadow-l), 0.02);
+}
+
+/* ============================ 卡片 ============================ */
+
+.card {
+    --bulma-card-color: var(--bulma-text);
+    --bulma-card-background-color: var(--bulma-scheme-main);
+    --bulma-card-shadow: var(--bulma-shadow);
+    --bulma-card-radius: 0.75rem;
+    --bulma-card-content-background-color: transparent;
+    --bulma-card-content-padding: 1.5rem;
+    --bulma-card-media-margin: var(--bulma-block-spacing);
+
+    background-color: var(--bulma-card-background-color);
+    border-radius: var(--bulma-card-radius);
+    box-shadow: var(--bulma-card-shadow);
+    color: var(--bulma-card-color);
+    max-width: 100%;
+    position: relative;
+
+    /* 本页适配：抵消 Bootstrap 的 .card（1px 实线边框 / flex 布局），
+       让外观与 index.html 的 Bulma 卡片一致（Bulma 用 box-shadow 表现边框） */
+    border: none;
+    display: block;
+}
+
+.card-footer:first-child, .card-content:first-child, .card-header:first-child {
+    border-start-start-radius: var(--bulma-card-radius);
+    border-start-end-radius: var(--bulma-card-radius);
+}
+.card-footer:last-child, .card-content:last-child, .card-header:last-child {
+    border-end-start-radius: var(--bulma-card-radius);
+    border-end-end-radius: var(--bulma-card-radius);
+}
+
+.card-content {
+    background-color: var(--bulma-card-content-background-color);
+    padding: var(--bulma-card-content-padding);
+}
+
+.card .media:not(:last-child) {
+    margin-bottom: var(--bulma-card-media-margin);
+}
+
+/* ========================== 媒体对象 ========================== */
+
+.media {
+    --bulma-media-border-color: hsla(var(--bulma-scheme-h), var(--bulma-scheme-s), var(--bulma-border-l), 0.5);
+    --bulma-media-border-size: 1px;
+    --bulma-media-spacing: 1rem;
+    --bulma-media-content-spacing: 0.75rem;
+
+    align-items: flex-start;
+    display: flex;
+    text-align: inherit;
+}
+
+.media .content:not(:last-child) {
+    margin-bottom: var(--bulma-media-content-spacing);
+}
+
+.media-left,
+.media-right {
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.media-left {
+    margin-inline-end: var(--bulma-media-spacing);
+}
+
+.media-right {
+    margin-inline-start: var(--bulma-media-spacing);
+}
+
+.media-content {
+    flex-basis: auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+    text-align: inherit;
+}
+
+@media screen and (max-width: 768px) {
+    .media-content {
+        overflow-x: auto;
+    }
+}
+
+/* 工具卡片排版：图标在上、名称独占下一行（配合 120×120 图标） */
+.media.is-icon-top {
+    flex-direction: column;
+    /* 注：align-items 没有 left 这个值（写了整条声明会被浏览器忽略），左对齐要写 flex-start */
+    align-items: flex-start;
+    text-align: left;
+}
+
+.media.is-icon-top .media-left {
+    margin-inline-end: 0;
+    margin-bottom: 0.1rem;
+}
+
+/* 纵向排列后宽度改由内容决定，长名称要能换行而不是溢出卡片 */
+.media.is-icon-top .media-content {
+    max-width: 100%;
+}
+
+.media.is-icon-top .media-content .title {
+    font-size: 1.8rem;
+}
+
+/* 名称与下方描述之间的距离：原本继承 Bulma 的块间距 1.5rem，按要求减半 */
+.card .media.is-icon-top:not(:last-child) {
+    margin-bottom: 0.75rem;
+}
+
+/* ============================ 图片 ============================ */
+
+.image {
+    display: block;
+    position: relative;
+}
+
+.image img {
+    display: block;
+    height: auto;
+    width: 100%;
+}
+
+.image.is-48x48 {
+    height: 48px;
+    width: 48px;
+}
+
+/* 本页扩展：Bulma 自带尺寸只有 16/24/32/48/64/96/128，没有 120，这里补一个 */
+.image.is-120x120 {
+    height: 120px;
+    width: 120px;
+}
+
+.has-radius-normal {
+    border-radius: var(--bulma-radius);
+}
+
+/* ============================ 标题 ============================ */
+
+.title,
+.subtitle {
+    word-break: break-word;
+}
+
+.title {
+    color: var(--bulma-text-strong);
+    font-size: var(--bulma-size-3);
+    font-weight: var(--bulma-weight-extrabold);
+    line-height: 1.125;
+}
+
+.title.is-1 { font-size: 3rem; }
+.title.is-2 { font-size: 2.5rem; }
+.title.is-3 { font-size: 2rem; }
+.title.is-4 { font-size: 1.5rem; }
+.title.is-5 { font-size: 1.25rem; }
+.title.is-6 { font-size: 1rem; }
+
+.subtitle {
+    color: var(--bulma-text);
+    font-size: var(--bulma-size-5);
+    font-weight: 400;
+    line-height: 1.25;
+}
+
+.subtitle.is-1 { font-size: 3rem; }
+.subtitle.is-2 { font-size: 2.5rem; }
+.subtitle.is-3 { font-size: 2rem; }
+.subtitle.is-4 { font-size: 1.5rem; }
+.subtitle.is-5 { font-size: 1.25rem; }
+.subtitle.is-6 { font-size: 1rem; }
+
+/* =========================== 内容块 =========================== */
+/* 只搬运卡片里用得到的部分（正文段落 / 列表间距） */
+
+.content {
+    --bulma-content-block-margin-bottom: 1em;
+}
+
+.content li + li {
+    margin-top: 0.25em;
+}
+
+.content p:not(:last-child),
+.content dl:not(:last-child),
+.content ol:not(:last-child),
+.content ul:not(:last-child),
+.content blockquote:not(:last-child),
+.content pre:not(:last-child),
+.content table:not(:last-child) {
+    margin-bottom: var(--bulma-content-block-margin-bottom);
+}
+
+/* Bulma 的“块间距”规则：卡片里靠它撑开「媒体区 / 描述 / 按钮」之间的距离，
+   原文见 bulma.css 的 .skeleton-block:not(:last-child) 那一组 */
+.media:not(:last-child),
+.grid:not(:last-child),
+.card:not(:last-child),
+.title:not(:last-child),
+.subtitle:not(:last-child),
+.content:not(:last-child) {
+    margin-bottom: var(--bulma-block-spacing);
+}
+
+.title:not(.is-spaced):has(+ .subtitle) {
+    margin-bottom: 0;
+}
+
+.subtitle:not(.is-spaced):has(+ .title) {
+    margin-bottom: 0;
+}
+
+/* ============================ 网格 ============================ */
+
+.grid {
+    --bulma-grid-gap: 0.75rem;
+    --bulma-grid-column-min: 9rem;
+    --bulma-grid-cell-column-span: 1;
+    --bulma-grid-cell-row-span: 1;
+    --bulma-grid-cell-column-start: auto;
+    --bulma-grid-cell-row-start: auto;
+
+    display: grid;
+    gap: var(--bulma-grid-gap);
+    column-gap: var(--bulma-grid-column-gap, var(--bulma-grid-gap));
+    row-gap: var(--bulma-grid-row-gap, var(--bulma-grid-gap));
+    grid-template-columns: repeat(auto-fit, minmax(var(--bulma-grid-column-min), 1fr));
+    grid-template-rows: auto;
+}
+
+.grid.is-col-min-16 {
+    --bulma-grid-column-min: 24rem;
+}
+
+/* 说明：Bulma 1.x 并没有 .is-gap-* 类，index.html 里的 is-gap-2 同样不生效，
+   shaderlist 照抄这个类名只是为了与主页写法一致 */
+
+.cell {
+    grid-column-end: span var(--bulma-grid-cell-column-span);
+    grid-column-start: var(--bulma-grid-cell-column-start);
+    grid-row-end: span var(--bulma-grid-cell-row-span);
+    grid-row-start: var(--bulma-grid-cell-row-start);
+}
