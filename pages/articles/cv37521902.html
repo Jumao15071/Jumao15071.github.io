@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 方块被放置后发生了什么？方块更新如何影响红石系统？ - 橘猫的资源站</title>
+    <meta name="description" content="当玩家或命令方块等放置方块时，游戏会通过 BlockSource::setBlock() 函数完成放置流程。 C++ 复制 bool BlockSource::setBlock( const BlockPos &amp;amp;amp;pos, const Block">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv37521902.webp" alt="MCBE 方块被放置后发生了什么？方块更新如何影响红石系统？">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 方块被放置后发生了什么？方块更新如何影响红石系统？</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/122391924" target="_blank" rel="noopener noreferrer">何以贯之</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">编辑于 2025年02月26日 13:32</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/968866668366266423" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv37521902</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv7121053.html" title="« 上一篇：切断烧火把特性研究报告" aria-label="« 上一篇：切断烧火把特性研究报告">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">切断烧火把特性研究报告</span>
+            </a>
+            <a class="pager-item is-next" href="cv9201868.html" title="下一篇 »：MCJE 活塞BUD?QC?傻傻分不清？一篇文章讲清楚" aria-label="下一篇 »：MCJE 活塞BUD?QC?傻傻分不清？一篇文章讲清楚">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCJE 活塞BUD?QC?傻傻分不清？一篇文章讲清楚</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p>当玩家或命令方块等放置方块时，游戏会通过 BlockSource::setBlock() 函数完成放置流程。</p>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">C++</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>bool BlockSource::setBlock(
+    const BlockPos &amp;amp;pos,
+    const Block &amp;amp;block,
+    int updateFlags,
+    std::shared_ptr&amp;lt;BlockActor&amp;gt; blockEntity,
+    const ActorBlockSyncMessage *syncMsg,
+    Actor *blockChangeSource
+);</code></pre>
+</div>
+        <ol>
+            <li>pos: 方块坐标</li>
+            <li>block: 方块对象本身</li>
+            <li>updateFlags: 一个标记，一般为 3(二进制 11)</li>
+            <li>blockEntity: 方块的方块实体（可空）</li>
+            <li>syncMsg: 未知</li>
+            <li>blockChangeSource: 未知</li>
+        </ol>
+        <p><strong>BlockSource::setBlock()</strong></p>
+        <p>首先检查 y 坐标，也就是高度限制。然后找到方块所在区块，调用区块的函数 LevelChunk::setBlock()，由该区块完成方块的放置。</p>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">C++</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>const Block &amp;amp;LevelChunk::setBlock(
+    const ChunkBlockPos &amp;amp;pos,
+    const Block &amp;amp;block,
+    BlockSource *issuingSource,
+    std::shared_ptr&amp;lt;BlockActor&amp;gt; blockEntity
+);</code></pre>
+</div>
+        <ol>
+            <li>pos: 方块在区块内的坐标</li>
+            <li>block: 方块对象</li>
+            <li>issuingSource: BlockSource</li>
+            <li>blockEntity: 方块的方块实体（可空）</li>
+        </ol>
+        <p>之后调用 BlockSource::_blockChanged()，完成方块更新。</p>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">C++</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>void BlockSource::_blockChanged(
+    const BlockPos &amp;amp;pos,
+    uint32_t layer,
+    const Block &amp;amp;block,
+    const Block &amp;amp;previousBlock,
+    int updateFlags,
+    const ActorBlockSyncMessage *syncMsg,
+    Actor* blockChangeSource
+);</code></pre>
+</div>
+        <ol>
+            <li>pos: 方块坐标</li>
+            <li>layer: 层号（共 2 层，第 2 层用于实现含水方块）</li>
+            <li>block: 放置的方块</li>
+            <li>previousBlock: 原来的方块</li>
+            <li>updateFlags: 更新标记</li>
+            <li>syncMsg: 未知</li>
+            <li>blockChangeSource: 未知</li>
+        </ol>
+        <p><strong>LevelChunk::setBlock()</strong></p>
+        <p>该函数会先真正放置下方块，同时会完成含水方块的处理。</p>
+        <p>然后会更新光照，配置方块实体并插入到本区块的方块实体列表中。</p>
+        <p>接下来调用方块的 onPlace() 函数，由其完成自身的一些更新，比如铁轨的连接；如果自己属于红石元件，也会在这里创建红石元件，添加到红石系统的待添加列表中，并初始化红石设置，比如中继器挡位。</p>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">C++</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>virtual void xxxBlock::onPlace(
+    BlockSource &amp;amp;region,
+    const BlockPos &amp;amp;pos
+) const;</code></pre>
+</div>
+        <p>最后调用红石系统的 CircuitSystem::invalidatePos() 函数，处理该方块对周围电路的影响。</p>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">C++</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>void CircuitSystem::invalidatePos(const BlockPos &amp;amp;pos);</code></pre>
+</div>
+        <p><strong>BlockSource::_blockChanged()</strong></p>
+        <p>该函数内会依次调用六个面的方块的`neighborChanged()`函数，也就是广为人知的 NC 更新。观察者通过此函数检测方块更新。</p>
+        <p>六个面的更新顺序为：西 东 南 北 上 下</p>
+        <p><strong>CircuitSystem::invalidatePos()</strong></p>
+        <p>如果自己是红石元件，将自身所有信号源添加到待更新列表中。</p>
+        <p>如果不是，检查周围六个面是否是红石元件，如果是将其添加到待更新列表中。</p>
+        <p>然后将该元件的所有信号源添加到待更新列表中。</p>
+        <p>六个面的遍历顺序与前面不同，为：下 上 北 南 西 东</p>
+        <p>注意！！：只有生产者和电容器能被添加到待更新列表中，其它类型元件会被直接跳过。</p>
+        <hr class="opus-pagebreak">
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv37521902/ad2b1b112330.webp" width="3068" height="5380" alt="文章配图" loading="lazy">
+    </figure>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/968866668366266423">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv7121053.html" title="« 上一篇：切断烧火把特性研究报告" aria-label="« 上一篇：切断烧火把特性研究报告">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">切断烧火把特性研究报告</span>
+            </a>
+            <a class="pager-item is-next" href="cv9201868.html" title="下一篇 »：MCJE 活塞BUD?QC?傻傻分不清？一篇文章讲清楚" aria-label="下一篇 »：MCJE 活塞BUD?QC?傻傻分不清？一篇文章讲清楚">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCJE 活塞BUD?QC?傻傻分不清？一篇文章讲清楚</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

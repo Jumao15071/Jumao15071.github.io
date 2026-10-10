@@ -1,0 +1,195 @@
+/* ==========================================================================
+   Bulma 按钮模板 —— 旧版（Bootstrap）页面专用
+   --------------------------------------------------------------------------
+   来源：assets/lib/bulma/css/bulma.css（Bulma 1.x）
+   目的：pages/ 下的旧版页面（Bootstrap 5 布局）使用与根目录 index.html
+         完全相同的按钮类名与外观：
+
+           主按钮   <a class="button is-danger has-text-white">… »</a>
+           次按钮   <a class="button is-danger is-outlined">… »</a>
+           导航按钮 <a class="button has-background-danger has-text-white">…</a>
+
+   为什么不直接引入全量 bulma.css：
+   这些页面同时加载 Bootstrap，两者存在大量同名类（.container /
+   .navbar / .p-5 / .p-4 / .mt-4 / .mb-4 …），而 spacing 工具类的取值
+   并不相同（Bootstrap .p-5 = 3rem，Bulma .p-5 = 1.5rem），整体引入会
+   直接改乱现有排版。因此这里只搬运 index.html 用到的按钮规则，并把
+   Bulma 的 CSS 变量静态化、作用域限定在 .button 上，不污染其他元素。
+   ========================================================================== */
+
+.button {
+    /* --- Bulma 变量：静态化，原值取自 bulma.css 的 :root --- */
+    --bulma-control-radius: 0.375rem;
+    --bulma-control-border-width: 1px;
+    --bulma-control-height: 2.5em;
+    --bulma-control-line-height: 1.5;
+    --bulma-control-size: 1rem;
+    --bulma-duration: 294ms;
+    --bulma-scheme-main: hsl(221, 14%, 100%);
+    --bulma-border: hsl(221, 14%, 86%);
+    --bulma-focus-h: 233deg;
+    --bulma-focus-s: 100%;
+    --bulma-focus-l: 63%;
+    --bulma-focus-shadow-size: 0 0 0 0.1875em;
+    --bulma-focus-shadow-alpha: 0.25;
+
+    --bulma-button-weight: 500;
+    --bulma-button-border-width: var(--bulma-control-border-width);
+    --bulma-button-padding-vertical: 0.5em;
+    --bulma-button-padding-horizontal: 1em;
+    --bulma-button-disabled-background-color: var(--bulma-scheme-main);
+    --bulma-button-disabled-border-color: var(--bulma-border);
+    --bulma-button-disabled-shadow: none;
+    --bulma-button-disabled-opacity: 0.5;
+
+    --bulma-button-h: 221;
+    --bulma-button-s: 14%;
+    --bulma-button-l: 100%;
+    --bulma-button-background-l: 100%;
+    --bulma-button-background-l-delta: 0%;
+    --bulma-button-hover-background-l-delta: -5%;
+    --bulma-button-active-background-l-delta: -10%;
+    --bulma-button-color-l: 21%;
+    --bulma-button-border-l: 86%;
+    --bulma-button-border-l-delta: 0%;
+    --bulma-button-hover-border-l-delta: -10%;
+    --bulma-button-active-border-l-delta: -20%;
+    --bulma-button-focus-border-l-delta: 0%;
+    --bulma-button-outer-shadow-h: 0;
+    --bulma-button-outer-shadow-s: 0%;
+    --bulma-button-outer-shadow-l: 20%;
+    --bulma-button-outer-shadow-a: 0.05;
+
+    /* --- 控件基础（bulma.css 中由 control mixin 生成） --- */
+    align-items: center;
+    appearance: none;
+    -webkit-appearance: none;
+    border-color: hsl(var(--bulma-button-h), var(--bulma-button-s), calc(var(--bulma-button-border-l) + var(--bulma-button-border-l-delta)));
+    border-radius: var(--bulma-control-radius);
+    border-style: solid;
+    border-width: var(--bulma-button-border-width);
+    box-shadow: 0 0.0625em 0.125em hsla(var(--bulma-button-outer-shadow-h), var(--bulma-button-outer-shadow-s), var(--bulma-button-outer-shadow-l), var(--bulma-button-outer-shadow-a)), 0 0.125em 0.25em hsla(var(--bulma-button-outer-shadow-h), var(--bulma-button-outer-shadow-s), var(--bulma-button-outer-shadow-l), var(--bulma-button-outer-shadow-a));
+    color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-color-l));
+    display: inline-flex;
+    font-size: var(--bulma-control-size);
+    height: auto;
+    justify-content: center;
+    line-height: var(--bulma-control-line-height);
+    padding: calc(var(--bulma-button-padding-vertical) - var(--bulma-button-border-width)) calc(var(--bulma-button-padding-horizontal) - var(--bulma-button-border-width));
+    position: relative;
+    text-align: center;
+    transition-duration: var(--bulma-duration);
+    transition-property: background-color, border-color, box-shadow, color;
+    vertical-align: top;
+    white-space: nowrap;
+
+    /* --- .button 自身 --- */
+    background-color: hsl(var(--bulma-button-h), var(--bulma-button-s), calc(var(--bulma-button-background-l) + var(--bulma-button-background-l-delta)));
+    cursor: pointer;
+    font-weight: var(--bulma-button-weight);
+    -webkit-touch-callout: none;
+    user-select: none;
+
+    /* 本页适配：Bootstrap 的 reboot 会给 <a> 加下划线，Bulma 环境里没有 */
+    text-decoration: none;
+}
+
+.button strong {
+    color: inherit;
+}
+
+/* 本页适配：Bootstrap 的 reboot 里有 a:hover { color: … }，特异性 (0,1,1)
+   高于 .button 的 (0,1,0)，会把鼠标悬停时的按钮文字改成链接色。
+   下面这条同为 (0,1,1) 且加载更晚，用来把 Bulma 的文字色钉回来
+   （is-outlined / is-danger 的特异性更高，仍按各自规则取色）。 */
+a.button {
+    color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-color-l));
+}
+
+.button:hover, .button.is-hovered {
+    --bulma-button-background-l-delta: var(--bulma-button-hover-background-l-delta);
+    --bulma-button-border-l-delta: var(--bulma-button-hover-border-l-delta);
+}
+
+.button:focus-visible, .button.is-focused {
+    --bulma-button-border-width: 1px;
+    border-color: hsl(var(--bulma-focus-h), var(--bulma-focus-s), var(--bulma-focus-l));
+    box-shadow: var(--bulma-focus-shadow-size) hsla(var(--bulma-focus-h), var(--bulma-focus-s), var(--bulma-focus-l), var(--bulma-focus-shadow-alpha));
+}
+
+.button:active, .button.is-active {
+    --bulma-button-background-l-delta: var(--bulma-button-active-background-l-delta);
+    --bulma-button-border-l-delta: var(--bulma-button-active-border-l-delta);
+    --bulma-button-outer-shadow-a: 0;
+}
+
+.button[disabled], fieldset[disabled] .button {
+    background-color: var(--bulma-button-disabled-background-color);
+    border-color: var(--bulma-button-disabled-border-color);
+    box-shadow: var(--bulma-button-disabled-shadow);
+    opacity: var(--bulma-button-disabled-opacity);
+}
+
+/* 实心按钮：danger 红（= index.html 的主按钮） */
+.button.is-danger {
+    --bulma-button-h: 348deg;
+    --bulma-button-s: 100%;
+    --bulma-button-l: 70%;
+    --bulma-button-background-l: 70%;
+    --bulma-button-border-l: 70%;
+    --bulma-button-border-width: 0px;
+    --bulma-button-color-l: 5%;
+    --bulma-button-outer-shadow-a: 0;
+}
+
+.button.is-danger:focus-visible, .button.is-danger.is-focused {
+    --bulma-button-border-width: 1px;
+}
+
+.button.is-danger[disabled], fieldset[disabled] .button.is-danger {
+    background-color: hsl(348deg, 100%, 70%);
+    border-color: hsl(348deg, 100%, 70%);
+    box-shadow: none;
+}
+
+/* 描边按钮：danger 红描边（= index.html 的次按钮） */
+.button.is-outlined {
+    --bulma-button-border-width: max(1px, 0.0625em);
+    background-color: transparent;
+    border-color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-l));
+    color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-l));
+}
+
+.button.is-outlined:hover {
+    --bulma-button-border-width: max(2px, 0.125em);
+    /* 上游原样保留：bulma.css 此处写的是 --bulma-button-outer-shadow-alpha，
+       与实际被消费的 --bulma-button-outer-shadow-a 不同名，故无视觉效果 */
+    --bulma-button-outer-shadow-alpha: 1;
+}
+
+.button.is-outlined[disabled], fieldset[disabled] .button.is-outlined {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+/* --- 窄屏下并排按钮的折行间距 --- */
+/* 与 theme.css 中的同名规则保持一致：这些 Bootstrap 页面里的多按钮组
+   （光影清单按钮、卡片里的两个按钮、hero 里的按钮）在手机竖屏时会折行，
+   .button 是 inline-flex 且彼此没有间距，折行后两行会贴在一起。
+   给「后面还跟着另一个按钮」的按钮补下间距即可：同一行内每个按钮的
+   margin-bottom 相同，行内对齐不受影响，只有换行后的行与行之间被撑开。
+   宽屏不折行时外观与改动前完全一致。 */
+@media (max-width: 991.98px) {
+    .button:has(+ .button) {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* --- 颜色 helper（Bulma helpers，供导航按钮使用） --- */
+.has-text-white {
+    color: hsl(0deg, 0%, 100%) !important;
+}
+
+.has-background-danger {
+    background-color: hsl(348deg, 100%, 70%) !important;
+}

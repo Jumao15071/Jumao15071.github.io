@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 嘎枝生成机制与相关探索 - 橘猫的资源站</title>
+    <meta name="description" content="本文多为1.21.70测试所得，且非全版本测试所得结论，固慎重观看。 前提：生物可生成 黑夜 嘎枝核心被激活 非和平 玩家不处于伪加载 ①.嘎吱树脂产生cd～近似5s 1.生成范围 其可看作为一 以嘎枝核心为中心的 31x*17y*31z的立方体 在其中选点 ">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv40839260.webp" alt="MCBE 嘎枝生成机制与相关探索">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 嘎枝生成机制与相关探索</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/1583493298" target="_blank" rel="noopener noreferrer">Cookie_531</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2025年02月27日 13:29</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1038504907310628920" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv40839260</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">实体机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv39793138.html" title="« 上一篇：MCBE 幻翼相关机制的再探索与农场架构" aria-label="« 上一篇：MCBE 幻翼相关机制的再探索与农场架构">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 幻翼相关机制的再探索与农场架构</span>
+            </a>
+            <a class="pager-item is-next" href="cv21467056.html" title="下一篇 »：MCBE 实体评估---发光鱿鱼篇" aria-label="下一篇 »：MCBE 实体评估---发光鱿鱼篇">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 实体评估---发光鱿鱼篇</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="delta">
+        <p> 本文多为<span style="color:#f85a54">1.21.70</span>测试所得，且非全版本测试所得结论，固慎重观看。</p>
+        <p>前提：生物可生成 黑夜 嘎枝核心被激活 非和平 玩家不处于伪加载</p>
+        <p>①.嘎吱树脂产生cd～近似5s</p>
+        <h2>1.生成范围</h2>
+        <p>其可看作为一 以嘎枝核心为中心的 31x*17y*31z的立方体 在其中选点 生成于偏方块<span style="color:#f85a54">中心处.</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40839260/c4244352a339.webp" width="1855" height="867" alt="文章配图" loading="lazy">
+    </figure>
+        <p>上为大致示意图 中心为嘎枝核心 x两边向外延伸了15 图中为16  y上8下8 z向外延伸15图中也是16 过了一定范围也会消失 包括自带的约30格的消失和区块/重载随机消失。</p>
+        <p>2.消失</p>
+        <p>不同于生成范围 离核心过远后会自己despawn掉</p>
+        <p>新版本的嘎吱命名后正常情况下不会白天消失</p>
+        <p>区块丢实体对嘎吱仍然适用</p>
+        <hr class="opus-pagebreak">
+        <h2>2.生成选点尝试</h2>
+        <p>在新版本 ，oj将套皮逻辑贯彻到底。 在范围内 ，嘎吱的生成尝试仍然是在范围内寻找一个x z 并从最高处向下寻找第一个可生成类方块进行尝试</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40839260/34b36dcefc9b.webp" width="1666" height="779" alt="文章配图" loading="lazy">
+    </figure>
+        <p>一些案例示意图 <span style="color:#2ac864">绿色</span>为可向下可生成方块/继续尝试 <span style="color:#f85a54">红色</span>为不可生成/不向下继续尝试 <span style="color:#00aeec">蓝色表示其在范围内可去遍历用的检测范围</span></p>
+        <h3>1.<span style="color:#2ac864">方块类型检测通过后 则进行实体检测 如果其存在可阻挡类实体 则</span><span style="color:#f85a54">不生成 并停止向下遍历尝试</span><span style="color:#2ac864"> 若实体检测通过 则生成于其上方方块</span><span style="color:#ffb027">约中心处</span><span style="color:#2ac864">（无论有没有不阻挡不可生成类）.   </span>说人话就是在可尝试的范围内 /前文的范围内 嘎枝尝试点位向上的检测范围内不存在其他可生成方块和阻挡方块 可阻挡实体 则可刷。</h3>
+        <h3><span style="color:#f85a54">特殊注</span><span style="color:#2ac864">  ：</span></h3>
+        <p>1.如果选点选在了范围上方的临界处 则不会向上寻找尝试点 固可以做到如后文一样的“连续脚手架/结构空位”不阻挡生成。 </p>
+        <p>2.边界和其延伸类会直接占用尝试并生成失败<span style="color:#f85a54"> 。</span></p>
+        <h2>3.生成检测</h2>
+        <p>尝试后向上检测的范围 </p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40839260/f9bf6ad62ece.webp" width="888" height="415" alt="文章配图" loading="lazy">
+    </figure>
+        <p>接上文 选点后  开始检测 检测范围示意：绿色为嘎枝脚部 蓝色为检测范围延伸。</p>
+        <p>嘎枝会在夜晚在其生成范围内寻找点位并进行“检测”，与其他大部分实体不同的是，其不仅会检测生成点位上方的<span style="color:#2ac864">方块类型</span> 还会检测其上方1*3*1范围内的<span style="color:#f85a54">实体</span>和其类型。那么，方块与实体如何分类呢？</p>
+        <h3>一.<span style="color:#2ac864">方块类型</span></h3>
+        <p>方块主要可以分为四种</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40839260/27ed8f38580f.webp" width="2063" height="924" alt="文章配图" loading="lazy">
+    </figure>
+        <p><span style="color:#00aeec">蓝色玻璃</span><span style="color:#f85a54">：不可生成 阻挡生成</span></p>
+        <p><span style="color:#ffb027">黄色玻璃：</span><span style="color:#f85a54">不可生成 </span><span style="color:#2ac864">不阻挡生成</span></p>
+        <p><span style="color:#2ac864">绿色玻璃：可生成 </span><span style="color:#f85a54">阻挡生成</span></p>
+        <p><span style="color:#f85a54">红色玻璃：</span><span style="color:#2ac864">一定条件下 可生成 不阻挡生成</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40839260/20943c2ea565.webp" width="933" height="422" alt="文章配图" loading="lazy">
+    </figure>
+        <p>1不阻挡生成 可生成</p>
+        <p>已知目前版本案例为脚手架，结构空位。 <span style="color:#f85a54">值得一提的是 ，他们仅在向上范围的临界处即可刷又不阻挡，</span><span style="color:#2ac864">在范围非最上一层一旦检测范围内存在其他可生成则选取上方进行生成尝试。</span></p>
+        <p>所以其实没啥大用 （仅用于临界）</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40839260/1d9f2da8df6f.webp" width="1191" height="557" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40839260/57ae33875845.webp" width="2310" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>2不阻挡生成 不可生成</p>
+        <p>eg 大部分植物 <span style="color:#ff6699">下界传送门 </span>花 树苗 藤蔓 诡异藤蔓 红藤蔓 水 岩浆 细雪 火焰 幽灵蓝火 展示框 压力板 绊线钩 拉杆 线  光源方块 画（实体） <span style="color:#00aeec">泡菜 </span>黑板 未知（火把状）花瓣 落叶 幽匿脉络 光源方块 珊瑚扇 xx珊瑚 萤火虫灌木丛 甜浆果  告示牌 蘑菇  黑板 </p>
+        <p>3阻挡生成 可生成</p>
+        <p>大部分方块eg <span style="color:#2ac864">上表面完整的楼梯 与方块上方平齐的上表面完整的陷阱门 与方块上表面平齐且上表面完整的半砖（包括2合一）</span>蘑菇方块 刷怪笼 <span style="color:#f85a54">关闭</span><span style="color:#2ac864">的栅栏门</span> 基岩 岩浆块 未知1 催化剂 玻璃 木桶 <span style="color:#f85a54">脚手架/结构空位《不阻挡 但是抢选点》 </span>蜂巢 工作台 重生锚点 投掷器 活塞本身 伸出活塞臂的活塞 tnt珊瑚块 错误方块 <span style="color:#f85a54">命令方块 结构方块 </span>照相机方块 反应堆 信标 地狱疣方块 诡异菌方块 </p>
+        <p>4阻挡生成 不可生成</p>
+        <p><span style="color:#2ac864">eg 树叶 上表面不完整或不与方块上方平齐的陷阱门 上表面不完整的楼梯 </span><span style="color:#f85a54">下半砖</span>  折跃门    <span style="color:#f85a54">末地门  </span> 紫松果 紫松花 可可豆 炼药锅 讲台  灯笼 红石中继器 红石比较器 蜡烛 尖啸体  幽匿传感器 末地传送门框  附魔台 铁砧 悬浮告示牌 按钮 堆肥桶 箱子 末影箱 潜影箱 沉重核心 潮涌核心 头颅 <span style="color:#2ac864"> 关闭的栅栏门 </span>石墙类 栅栏类 玻璃板 铁栏杆  龙蛋 海龟蛋 侦查兽蛋 <span style="color:#ff6699">活塞臂 </span>炼药锅 酿造台 箱子<span style="color:#f85a54"> 边界 边界延伸的挤压类 </span><span style="color:#ffb027">耕地 </span>梯子 mb（存疑） 化学版几个交互方块  水晶 滴水石笋 </p>
+        <h2>2.实体分类</h2>
+        <h3>1.阻挡类实体 </h3>
+        <p>eg末影水晶 底座水晶 无敌水晶 怪物/动物实体 盔甲架 船（all kinds） 矿车（all kinds）</p>
+        <h3>2.不阻挡类实体</h3>
+        <p>eg三叉戟 箭矢（all kinds ） 鸡蛋 凋零头 恶魂火球  画 展示架（这弔东西先扔实体里） </p>
+        <h3>杂谈：嘎吱不会末地 下界等传送门传送</h3>
+        <h2>二：架构推荐</h2>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40839260/4f4a590e4991.webp" width="2310" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>如图所示 你也可以用玩家加平台寻路。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40839260/28bdcd7c5cbd.webp" width="1080" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>相关链接</p>
+        <p>上一个测试版的部分机制研究----变异兔子@离殇之枫</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1038504907310628920">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv39793138.html" title="« 上一篇：MCBE 幻翼相关机制的再探索与农场架构" aria-label="« 上一篇：MCBE 幻翼相关机制的再探索与农场架构">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 幻翼相关机制的再探索与农场架构</span>
+            </a>
+            <a class="pager-item is-next" href="cv21467056.html" title="下一篇 »：MCBE 实体评估---发光鱿鱼篇" aria-label="下一篇 »：MCBE 实体评估---发光鱿鱼篇">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 实体评估---发光鱿鱼篇</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

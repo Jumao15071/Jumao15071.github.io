@@ -1,0 +1,747 @@
+/* ==========================================================================
+   文章（专栏移植）样式
+   - 首页/列表页卡片：A4 纸比例（1 : 1.414），上 1:1 头图，下标题
+   - 文章列表页条目：横向，左 1:1 头图，右标题
+   - 阅读页：B 站专栏正文排版
+   ========================================================================== */
+
+/* ---------- A4 比例卡片（首页一排） ---------- */
+.article-card {
+    display: flex;
+    flex-direction: column;
+    /* A4 纸长宽比 */
+    aspect-ratio: 1 / 1.4142;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    border-radius: 0.6rem;
+    overflow: hidden;
+    background-color: #fff;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-3px);
+    border-color: #eb4a6a;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+.article-card:hover .art-title {
+    color: #eb4a6a;
+}
+
+/* 上边：1:1 头图 */
+.article-card .art-thumb {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    flex: 0 0 auto;
+    overflow: hidden;
+    background-color: #f3f3f3;
+}
+
+.article-card .art-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 下边：标题 */
+.article-card .art-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 0.7rem 0.85rem 0.8rem;
+    border-top: 1px solid rgba(128, 128, 128, 0.3);
+    display: flex;
+    flex-direction: column;
+}
+
+.article-card .art-title {
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.4;
+    color: #363636;
+    /* 最多 3 行，超出省略 */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.article-card .art-meta {
+    margin-top: auto;
+    padding-top: 0.4rem;
+    font-size: 0.78rem;
+    color: #9a9a9a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ---------- 文章列表页：横向条目（左 1:1 头图，右标题） ---------- */
+.article-row {
+    display: flex;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 0.75rem;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    border-radius: 0.6rem;
+    background-color: #fff;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.article-row + .article-row {
+    margin-top: 1rem;
+}
+
+.article-row:hover {
+    transform: translateX(3px);
+    border-color: #eb4a6a;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.article-row:hover .art-title {
+    color: #eb4a6a;
+}
+
+.article-row .row-thumb {
+    flex: 0 0 auto;
+    width: 9rem;
+    height: 9rem;
+    /* 左图严格 1:1 */
+    aspect-ratio: 1 / 1;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background-color: #f3f3f3;
+}
+
+.article-row .row-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.article-row .row-body {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.article-row .art-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: #363636;
+}
+
+.article-row .art-desc {
+    font-size: 0.9rem;
+    color: #7a7a7a;
+    line-height: 1.6;
+}
+
+.article-row .art-meta {
+    font-size: 0.8rem;
+    color: #a0a0a0;
+}
+
+@media (max-width: 640px) {
+    .article-row {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .article-row .row-thumb {
+        width: 6.5rem;
+        height: 6.5rem;
+    }
+
+    .article-row .art-title {
+        font-size: 1.05rem;
+    }
+
+    .article-row .art-desc {
+        font-size: 0.82rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+
+/* ---------- 阅读页正文 ---------- */
+.article-page {
+    max-width: 54rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.article-page .article-head {
+    padding: 1.5rem 0 1rem;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.35);
+    margin-bottom: 1.5rem;
+}
+
+.article-page .article-head h1 {
+    font-size: 1.85rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.article-page .article-head .article-sub {
+    margin-top: 0.6rem;
+    font-size: 0.9rem;
+    color: #8a8a8a;
+}
+
+.opus {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: #333;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+}
+
+.opus p {
+    margin-bottom: 1rem;
+}
+
+.opus h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.5;
+    margin: 2rem 0 1rem;
+    padding-left: 0.7rem;
+    border-left: 4px solid #eb4a6a;
+    color: #2b2b2b;
+}
+
+.opus h2:first-child {
+    margin-top: 0;
+}
+
+.opus strong {
+    font-weight: 700;
+    color: #222;
+}
+
+.opus a {
+    color: #eb4a6a;
+    word-break: break-all;
+}
+
+.opus ul,
+.opus ol {
+    margin: 0 0 1rem 1.4rem;
+    list-style: disc;
+}
+
+.opus ol {
+    list-style: decimal;
+}
+
+.opus li {
+    margin-bottom: 0.35rem;
+}
+
+.opus hr {
+    margin: 1.8rem 0;
+    border: none;
+    border-top: 1px dashed rgba(128, 128, 128, 0.5);
+    background: none;
+}
+
+.opus figure {
+    margin: 1.4rem 0;
+    text-align: center;
+}
+
+.opus figure img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    display: inline-block;
+}
+
+/* 图注（B 站专栏里图片下方的灰色小字） */
+.opus .fig-caption {
+    text-align: center;
+    color: #9d9d9d;
+    font-size: 0.88rem;
+    margin: -0.6rem 0 1.4rem;
+}
+
+.article-foot {
+    margin: 2.5rem 0 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(128, 128, 128, 0.35);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+/* 区块标题（与首页其它区块保持一致） */
+.article-section-title {
+    padding-left: 0.75rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+/* ---------- 阅读页：标题上方的封面图 ---------- */
+.article-cover {
+    margin: 0 0 1.5rem;
+    text-align: center;
+}
+
+.article-cover img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+}
+
+/* ---------- 副标题：作者 / 时间 / 分类 ---------- */
+.article-sub {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    line-height: 1.7;
+}
+
+.article-sub .art-author a {
+    color: #eb4a6a;
+    font-weight: 700;
+}
+
+.article-sub .art-author a:hover {
+    text-decoration: underline;
+}
+
+.art-sep {
+    color: #cfcfcf;
+}
+
+.article-sub .art-cat {
+    color: #eb4a6a;
+    background-color: rgba(235, 74, 106, 0.12);
+    border-radius: 1rem;
+    padding: 0.05rem 0.6rem;
+    font-size: 0.82rem;
+}
+
+/* ---------- 分类分组与折叠 ---------- */
+.article-cat {
+    margin-bottom: 2.75rem;
+}
+
+.article-cat-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2b2b2b;
+    margin: 0 0 1rem;
+    padding-left: 0.7rem;
+    border-left: 4px solid #eb4a6a;
+}
+
+.article-cat-count {
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: #fff;
+    background-color: #eb4a6a;
+    border-radius: 1rem;
+    padding: 0.1rem 0.6rem;
+}
+
+.article-cat-list[hidden] {
+    display: none !important;
+}
+
+.cat-toggle {
+    margin-top: 0.9rem;
+}
+
+/* ---------- 正文表格 ---------- */
+.opus table {
+    margin-bottom: 1rem;
+}
+
+.opus table td,
+.opus table th {
+    vertical-align: middle;
+}
+
+/* ==========================================================================
+   阅读页增强：cv 原地址按钮 / 跳转卡片 / 代码卡片 / 图注 / 行内公式
+   ========================================================================== */
+
+/* ---------- 副标题里的 cv 原地址按钮（作者 · 时间之后） ---------- */
+.cv-btn {
+    display: inline-block;
+    font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    padding: 0.05rem 0.6rem;
+    border-radius: 0.35rem;
+    background-color: #00aeec;
+    border: 1px solid transparent;
+    color: #fff !important;
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+}
+
+.cv-btn:hover {
+    background-color: #0094c9;
+    text-decoration: none;
+}
+
+/* ---------- 跳转卡片（B 站「引用专栏 / 引用视频」） ---------- */
+.opus .jump-card {
+    display: block;
+    position: relative;
+    margin: 1.5rem auto;
+    max-width: 100%;
+    border: 1px solid rgba(0, 174, 236, 0.35);
+    border-radius: 0.6rem;
+    overflow: hidden;
+    background-color: #f7fbfd;
+    text-decoration: none;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.opus .jump-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: none;
+    border-radius: 0;
+}
+
+.opus .jump-card:hover {
+    transform: translateY(-2px);
+    border-color: #00aeec;
+    box-shadow: 0 6px 18px rgba(0, 174, 236, 0.18);
+}
+
+.jump-card-badge {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    padding: 0.08rem 0.55rem;
+    border-radius: 1rem;
+    background-color: rgba(0, 174, 236, 0.92);
+    color: #fff;
+    font-size: 0.72rem;
+    line-height: 1.6;
+}
+
+.jump-card-fallback {
+    display: block;
+    padding: 1rem 1.2rem;
+    color: #0077a3;
+    font-weight: 700;
+}
+
+/* 文字版跳转卡片（结构化 link_card：封面 + 标题 + 数据） */
+.opus .jump-card.is-text {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.7rem 0.9rem;
+}
+
+.opus .jump-card.is-text .jump-card-cover {
+    flex: 0 0 auto;
+    width: 7.5rem;
+    height: 4.6rem;
+    border-radius: 0.45rem;
+    overflow: hidden;
+    background-color: #eef3f7;
+}
+
+.opus .jump-card.is-text .jump-card-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.opus .jump-card-main {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.opus .jump-card-title {
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.45;
+    color: #2b2b2b;
+}
+
+.opus .jump-card.is-text:hover .jump-card-title {
+    color: #0077a3;
+}
+
+.opus .jump-card-meta {
+    font-size: 0.82rem;
+    color: #9a9a9a;
+}
+
+.opus .jump-card.is-text .jump-card-badge {
+    position: static;
+    flex: 0 0 auto;
+    align-self: center;
+}
+
+@media (max-width: 640px) {
+    .opus .jump-card.is-text {
+        gap: 0.6rem;
+        padding: 0.6rem;
+    }
+
+    .opus .jump-card.is-text .jump-card-cover {
+        width: 5rem;
+        height: 3.2rem;
+    }
+
+    .opus .jump-card.is-text .jump-card-badge {
+        display: none;
+    }
+}
+
+/* @提及 */
+.opus .opus-mention {
+    color: #00aeec;
+    font-weight: 700;
+}
+
+/* ---------- 代码卡片（可一键复制） ---------- */
+.opus .code-card {
+    margin: 1.5rem 0;
+    border: 1px solid #3a3f4b;
+    border-radius: 0.6rem;
+    overflow: hidden;
+    background-color: #282c34;
+}
+
+.opus .code-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.3rem 0.5rem 0.3rem 0.8rem;
+    background-color: #21252b;
+}
+
+.opus .code-lang {
+    color: #9da5b4;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+}
+
+.opus .code-btn {
+    cursor: pointer;
+    padding: 0.12rem 0.6rem;
+    border: 1px solid #3f4654;
+    border-radius: 0.35rem;
+    background-color: transparent;
+    color: #abb2bf;
+    font-size: 0.75rem;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.opus .code-btn:hover {
+    background-color: #2f3540;
+    color: #fff;
+}
+
+.opus .code-btn.is-done {
+    color: #98c379;
+    border-color: #98c379;
+}
+
+.opus .code-body {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    overflow-x: auto;
+    background-color: transparent;
+}
+
+.opus .code-body code {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background: none;
+    color: #e6e9ef;
+    font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+    font-size: 0.86rem;
+    line-height: 1.65;
+    white-space: pre;
+    tab-size: 4;
+}
+
+/* ---------- 行内公式（B 站 latex 图片 → 文本） ---------- */
+.opus .inline-math {
+    padding: 0 0.28rem;
+    border-radius: 0.2rem;
+    background-color: rgba(0, 174, 236, 0.09);
+    color: #1a5fb4;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    font-size: 0.92em;
+    white-space: nowrap;
+}
+
+/* ---------- 老专栏里的字号 / 颜色类 ---------- */
+.opus .font-size-12 {
+    font-size: 0.78em;
+}
+
+.opus .font-size-16 {
+    font-size: 1em;
+}
+
+.opus .font-size-20 {
+    font-size: 1.25em;
+}
+
+.opus .font-size-23 {
+    font-size: 1.4375em;
+}
+
+.opus .color-pink-03 {
+    color: #eb4a6a;
+}
+
+.opus .color-pink-02 {
+    color: #ff8fb1;
+}
+
+.opus .color-blue-03 {
+    color: #00aeec;
+}
+
+/* ---------- 正文图与图注 ---------- */
+.opus .opus-fig {
+    margin: 1.7rem 0;
+}
+
+.opus .opus-fig .fig-caption {
+    margin: 0.55rem 0 0;
+}
+
+/* ---------- 列表页图标与占位缩略图 ---------- */
+.page-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.page-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    flex: 0 0 auto;
+    border-radius: 0.5rem;
+}
+
+.row-thumb.is-placeholder,
+.art-thumb.is-placeholder {
+    background-color: #f2f7fb;
+}
+
+.row-thumb.is-placeholder img,
+.art-thumb.is-placeholder img {
+    object-fit: contain;
+    padding: 0.8rem;
+}
+
+/* ---------- 阅读页：上一篇 / 下一篇（悬停或直接显示标题预览） ---------- */
+.article-pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin: 0 0 3rem;
+}
+
+/* 标题/作者下方的那一份：与底部完全同款，只把上下留白收紧一点 */
+.article-pager.is-top {
+    margin: 0 0 1.8rem;
+}
+
+.article-pager .pager-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    min-width: 0;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 0.6rem;
+    background-color: rgba(235, 74, 106, 0.05);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.15s, background-color 0.15s;
+}
+
+.article-pager .pager-item.is-next {
+    align-items: flex-end;
+    text-align: right;
+}
+
+.article-pager .pager-item:hover,
+.article-pager .pager-item:focus-visible {
+    border-color: #eb4a6a;
+    background-color: rgba(235, 74, 106, 0.12);
+}
+
+.article-pager .pager-dir {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #eb4a6a;
+}
+
+/* 标题预览：最多两行，超出省略 */
+.article-pager .pager-title {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.article-pager .pager-item.is-disabled {
+    pointer-events: none;
+    background-color: transparent;
+    border-style: dashed;
+    opacity: 0.6;
+}
+
+.article-pager .pager-item.is-disabled .pager-dir {
+    color: #8a8a8a;
+}
+
+@media screen and (max-width: 640px) {
+    .article-pager {
+        grid-template-columns: 1fr;
+    }
+
+    .article-pager .pager-item.is-next {
+        align-items: flex-start;
+        text-align: left;
+    }
+}
+

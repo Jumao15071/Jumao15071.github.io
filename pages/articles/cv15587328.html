@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>如何建造一条无延迟投掷器链––MCBE 计划刻机制详解 - 橘猫的资源站</title>
+    <meta name="description" content="〇、前言 相信大家对无延迟投掷器链已经期待了很久了，那么本专栏将要讲述的就是无延迟投掷器链的发现历程与底层原理，并且该原理不止有无延迟这一个应用。 一、投掷器与物品实体 投掷器在被充能后会投掷其中的物品，这点我们都知道，但投掷器先后投掷的物品被捡起的顺序与投掷">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv15587328.webp" alt="如何建造一条无延迟投掷器链––MCBE 计划刻机制详解">
+        </figure>
+        <div class="article-head">
+            <h1>如何建造一条无延迟投掷器链––MCBE 计划刻机制详解</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/507463378" target="_blank" rel="noopener noreferrer">SAC_Official</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2022年03月09日 19:10</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/635594313088106517" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv15587328</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv23489507.html" title="« 上一篇：MCBE 漏斗一些行为的补充和介绍" aria-label="« 上一篇：MCBE 漏斗一些行为的补充和介绍">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 漏斗一些行为的补充和介绍</span>
+            </a>
+            <a class="pager-item is-next" href="cv40738765.html" title="下一篇 »：活塞-方块系统源码解析一：mb和方块实体的性质" aria-label="下一篇 »：活塞-方块系统源码解析一：mb和方块实体的性质">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">活塞-方块系统源码解析一：mb和方块实体的性质</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="html">
+        <h2>〇、前言</h2>
+        <p>相信大家对无延迟投掷器链已经期待了很久了，那么本专栏将要讲述的就是无延迟投掷器链的发现历程与底层原理，并且该原理不止有无延迟这一个应用。<br></p>
+        <h2>一、投掷器与物品实体</h2>
+        <p>投掷器在被充能后会投掷其中的物品，这点我们都知道，但投掷器先后投掷的物品被捡起的顺序与投掷的顺序有没有关系呢？</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv15587328/033a4da3b210.webp" width="3900" height="2086" alt="文章配图" loading="lazy">
+    </figure>
+        <p>摆出如图所示电路，并在投掷器内放上几个互不相同的单个物品。这时，站远一些，多次按动按钮，记住物品被投掷出的顺序，因为玻璃的挤压，物品应当会在同个位置。这时捡起他们，由于在同一位置，物品会被同时捡起。仔细观察会发现，物品栏中被捡起的物品的顺序与物品被投掷出的先后顺序是完全一致的。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv15587328/c177ae220cab.webp" width="3900" height="2086" alt="文章配图" loading="lazy">
+    </figure>
+        <p>多次试验后没有反常现象，那么这时我们可以下结论，瞬间被捡起的物品，其捡起顺序即为物品实体创建顺序，与物品种类等无关。我们还知道，投掷器创建物品的顺序，应当就是投掷器本身被激活的顺序，这时我们就可以测量投掷器投掷出的物品被同时捡起的顺序来代替测量投掷器被激活的顺序。<br></p>
+        <p>这对平时的情况没有什么影响，但我们稍微动一下脑子，这样是不是就可以测出在同一红石刻内被激活的投掷器的激活顺序了呢？<br></p>
+        <h2>二、激活顺序表</h2>
+        <p>想到这么一点，不赶紧测试就说不过去了。你可以摆出类似如下的电路，使投掷器均被间接激活。这里我们使用的是混凝土在创造物品栏的排序标记不同投掷器。白色代表第一个被放置的投掷器，淡灰色代表第二个被放置的，以此类推。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv15587328/4f7d87279328.webp" width="3900" height="2086" alt="文章配图" loading="lazy">
+    </figure>
+        <p>接着我们按下按钮，同时激活这些投掷器，并用某种方法把物品归到同一位置，使其方便被同时捡起。可以用水流或飞行器。多次试验后我们发现，在均间接激活且同区块下，物品被捡起的顺序与投掷器的位置，朝向等都没有关系，只与投掷器被放置下的顺序相关，包括活塞推动等放置方式。</p>
+        <p>我们先测试不同数量的投掷器的顺序，期初，效果很好，在1~4个投掷器的时候，我们都是按投掷器放置的顺序被捡起的，但大于等于5时就没那么简单了。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv15587328/72636404b7c5.webp" width="2240" height="2368" alt="文章配图" loading="lazy">
+    </figure>
+        <p>虽然结果有些杂乱，但至少这说明了这个结果在同区块内是只与放置顺序相关的。<br></p>
+        <p>那么我们还可以测试一些有趣的情况，例如，当一条链上的投掷器被强充能会发生什么呢？这里同样也有有趣的现象，为了方便起见，这里只展示16个投掷器的表。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv15587328/ac3e27b4e420.webp" width="2240" height="2112" alt="文章配图" loading="lazy">
+    </figure>
+        <p>当我们在第一个被放置的投掷器上激活整条链时，结果与原先的间接充能相同。然后我们依次在第二，第三个投掷器上激活，最终得到了上表。我们发现此表有很强的规律性，可以递推得到。当激活第二个投掷器时，激活顺序仅是将第一与第二个交换位置，其余的沿用上一个激活位置产生的顺序；激活第三个时，顺序与激活第二个时的也只是相差了第二和第三个的顺序，以此类推，通过不断交换，我们可以得到一张 n×n 的表，记录了区块内 n 个投掷器在同一条链上被任意投掷器上的源同时强充能的投掷顺序表。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv15587328/e8e947881bbd.webp" width="2240" height="2112" alt="文章配图" loading="lazy">
+    </figure>
+        <p>要注意的是，当区块内有其他会影响计划刻的方块时，可能需要重新测表。<br></p>
+        <h2>三、无延迟投掷器链</h2>
+        <p>好了，有了上述测得的表，与测表方式，我们就可以开始着手制作无延迟投掷器链了。<br></p>
+        <p>显然，想做无延迟投掷器链，只需要让投掷器在同 gt 内被依次激活即可，我们知道在投掷器小于等于 4 个时，顺序是十分规律的，那么我们可以按先前在这篇专栏中介绍的活塞放置方块的顺序来使得这些投掷器被按顺序放置：</p>
+        <a class="jump-card" href="cv13617717.html">
+    <img src="../../assets/articles/cv15587328/9ca82bda7e12.webp" width="1320" height="224" alt="站内专栏 cv13617717" loading="lazy">
+    <span class="jump-card-badge">站内专栏 »</span>
+</a>
+        <p>例如这样，激活活塞，投掷器就会被按顺序放置好，这是在投掷器内放置物品，激活投掷器，物品就会被瞬间投掷出，跨越4个方块。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv15587328/476242a3f339.webp" width="3900" height="2086" alt="文章配图" loading="lazy">
+    </figure>
+        <p>但超过 4 个时，顺序就变得有些捉摸不透了，所以相应的改变放置顺序的电路就会有些丑，例如下方的 16 投掷器链:</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv15587328/10036174ade0.webp" width="3900" height="2086" alt="文章配图" loading="lazy">
+    </figure>
+        <p>注意，这只是实验性质的电路，未经优化。无延迟投掷器链当然也可以竖着放置。</p>
+        <h2>四、其他应用</h2>
+        <p>这里只举一个简单的例子：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv15587328/7ccf8d297e01.webp" width="3900" height="2086" alt="文章配图" loading="lazy">
+    </figure>
+        <p>在知晓了发射器的运行顺序后，我们可以很轻易的让液体被发射的瞬间收回去，上图的 0t 催熟仙人掌机就是一个例子，甚至每个仙人掌可以同时受到两个催熟。要注意的是，这个机械得制作在四个区块的交叉点。<br></p>
+        <h2>五、原理</h2>
+        <p>以下便是简化后的游戏内计划刻执行机制，运行科输出 1~99 的计划刻执行顺序。<br></p>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">C++</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>/*copyright @hhhxiao*/
+
+#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+#include &lt;unordered_map&gt;
+#include &lt;unordered_set&gt;
+#include &lt;vector&gt;
+struct BlockPos {
+    int x, y, z;
+    bool operator==(const BlockPos&amp; p) const {
+        return x == p.x &amp;&amp; y == p.y &amp;&amp; z == p.z;
+    }
+};
+struct BlockTick {
+    int tick;
+    BlockPos pos;
+    int priorityOffset;
+    bool operator&lt;(const BlockTick&amp; rhs) const {
+        if (tick &lt; rhs.tick || tick &gt; rhs.tick)
+            return this-&gt;tick &lt; rhs.tick;
+        else
+            return this-&gt;priorityOffset &lt; rhs.priorityOffset;
+    }
+    bool operator&gt;(const BlockTick&amp; rhs) const {
+        if (tick &lt; rhs.tick || tick &gt; rhs.tick)
+            return this-&gt;tick &gt; rhs.tick;
+        else
+            return this-&gt;priorityOffset &gt; rhs.priorityOffset;
+    }
+    inline void tickBlock() { printf("%-2d | ", pos.x); }
+};
+class MovePriorityQueue {
+   public:
+    size_t size() const { return heap_.size(); }
+    bool empty() const { return heap_.empty(); }
+    BlockTick top() { return heap_.front(); }
+    BlockTick pop() {
+        std::pop_heap(heap_.begin(), heap_.end(), std::greater&lt;BlockTick&gt;());
+        auto tick = heap_.back();
+        heap_.pop_back();
+        return tick;
+    }
+    void push(const BlockTick&amp; tick) {
+        heap_.push_back(tick);
+        std::push_heap(heap_.begin(), heap_.end(), std::greater&lt;BlockTick&gt;());
+    }
+   private:
+    std::vector&lt;BlockTick&gt; heap_;
+};
+struct BlockTickingQueue {
+    MovePriorityQueue nextTickQueue;
+    MovePriorityQueue activeTickQueue;
+    void add(const BlockTick&amp; tick) { this-&gt;nextTickQueue.push(tick); }
+    void tick() {
+        while (!nextTickQueue.empty()) {
+            auto tick = nextTickQueue.pop();
+            activeTickQueue.push(tick);
+        }
+        while (!activeTickQueue.empty()) {
+            /* code */
+            auto t = activeTickQueue.top();
+            t.tickBlock();
+            activeTickQueue.pop();
+        }
+    }
+};
+int main() {
+    for (int n = 1; n &lt;= 99; n++) {
+        BlockTickingQueue q;
+        printf("| ");
+        for (int i = 0; i &lt; n; i++) {
+            BlockTick t = {0, {i + 1, 0, 0}, 0};
+            q.add(t);
+        }
+        q.tick();
+        printf("\n");
+    }
+    return 0;
+}</code></pre>
+</div>
+        <p>可以看到，代码中并没有显现出 MOJANG 对计划刻的顺序进行了某种固定的打乱，那么造成这个顺序的唯一可能就是 STL 了。使用 C++ 编写的 Minecraft Bedrock Edition 同样也会使用 C++ 的标准模板库，在上述的代码中我们可以看到，计划刻列表是一个 vector ，以隐式形式储存堆，所以造成这个顺序的是 STL 内部对堆的实现。<br></p>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">C++</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>template &lt;class _RandomAccessIterator, class _Distance, class _Tp, 
+          class _Compare&gt;
+void
+__push_heap(_RandomAccessIterator __first, _Distance __holeIndex,
+            _Distance __topIndex, _Tp __value, _Compare __comp)
+{
+  _Distance __parent = (__holeIndex - 1) / 2;
+  while (__holeIndex &gt; __topIndex &amp;&amp; __comp(*(__first + __parent), __value)) {
+    *(__first + __holeIndex) = *(__first + __parent);
+    __holeIndex = __parent;
+    __parent = (__holeIndex - 1) / 2;
+  }
+  *(__first + __holeIndex) = __value;
+}
+
+template &lt;class _RandomAccessIterator, class _Compare,
+          class _Distance, class _Tp&gt;
+inline void 
+__push_heap_aux(_RandomAccessIterator __first,
+                _RandomAccessIterator __last, _Compare __comp,
+                _Distance*, _Tp*) 
+{
+  __push_heap(__first, _Distance((__last - __first) - 1), _Distance(0), 
+              _Tp(*(__last - 1)), __comp);
+}
+
+template &lt;class _RandomAccessIterator, class _Compare&gt;
+inline void 
+push_heap(_RandomAccessIterator __first, _RandomAccessIterator __last,
+          _Compare __comp)
+{
+  __STL_REQUIRES(_RandomAccessIterator, _Mutable_RandomAccessIterator);
+  __push_heap_aux(__first, __last, __comp,
+                  __DISTANCE_TYPE(__first), __VALUE_TYPE(__first));
+}
+
+template &lt;class _RandomAccessIterator, class _Distance, class _Tp&gt;
+void 
+__adjust_heap(_RandomAccessIterator __first, _Distance __holeIndex,
+              _Distance __len, _Tp __value)
+{
+  _Distance __topIndex = __holeIndex;
+  _Distance __secondChild = 2 * __holeIndex + 2;
+  while (__secondChild &lt; __len) {
+    if (*(__first + __secondChild) &lt; *(__first + (__secondChild - 1)))
+      __secondChild--;
+    *(__first + __holeIndex) = *(__first + __secondChild);
+    __holeIndex = __secondChild;
+    __secondChild = 2 * (__secondChild + 1);
+  }
+  if (__secondChild == __len) {
+    *(__first + __holeIndex) = *(__first + (__secondChild - 1));
+    __holeIndex = __secondChild - 1;
+  }
+  __push_heap(__first, __holeIndex, __topIndex, __value);
+}</code></pre>
+</div>
+        <p>STL 库有许多不同的实现，上方为 SGI-STL 的部分实现，我们可以很轻易的看出就是上述部分造成了投掷器的顺序被打乱。下面是简化版的 python 实现：</p>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">C++</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>def adjustList(l):
+    d = len(l)-1
+    h = 0
+    s = h*2 + 2
+    while s &lt; d:
+        l[h] = l[s]
+        h = s
+        s = h*2 + 2
+    if s == d:
+        l[h] = l[s-1]
+        h = s - 1
+    l[h] = l.pop(-1)
+
+def operation(l):
+    t = []
+    while len(l) &gt; 1:
+        t.append(l[0])
+        adjustList(l)
+    t.append(l[0])
+    return t
+
+def getOrder(num):
+    r = []
+    l = operation(list(range(num)))
+    for i in l:
+        r.append(l[i]+1)
+    return r
+
+print(getOrder(128))</code></pre>
+</div>
+        <p>在了解了这些之后，我们可以手动推出不同情况下的投掷器顺序。下面我们以 7 个投掷器举例：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv15587328/9cef5bf75a24.webp" width="1280" height="2496" alt="文章配图" loading="lazy">
+    </figure>
+        <p>首先，将 1~7 按顺序排列出一棵二叉树，每次从最右侧往外挤，让最后一个填补挤上去的空缺，如果树是完美的，就把倒数第二个代替最右下方的挤上去，最后一个填补挤上去的空缺。</p>
+        <p>我们得到了一个中间表，我们只需再将这个中间表按上述方法再执行一次，就可以得到与上面测试得到的一样的表了。</p>
+        <hr class="opus-pagebreak">
+        <p>无延迟投掷器链发现及其他应用与 Python 代码提供：<a href="https://space.bilibili.com/167429424" target="_blank" rel="noopener noreferrer">panda4994万岁</a></p>
+        <p>代码挖掘与c++代码提供：<a href="https://space.bilibili.com/34227664" target="_blank" rel="noopener noreferrer">hhhxiao</a></p>
+        <p>打杂的：<a href="https://space.bilibili.com/18010881/" target="_blank" rel="noopener noreferrer">OEOTYAN</a></p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/635594313088106517">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv23489507.html" title="« 上一篇：MCBE 漏斗一些行为的补充和介绍" aria-label="« 上一篇：MCBE 漏斗一些行为的补充和介绍">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 漏斗一些行为的补充和介绍</span>
+            </a>
+            <a class="pager-item is-next" href="cv40738765.html" title="下一篇 »：活塞-方块系统源码解析一：mb和方块实体的性质" aria-label="下一篇 »：活塞-方块系统源码解析一：mb和方块实体的性质">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">活塞-方块系统源码解析一：mb和方块实体的性质</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

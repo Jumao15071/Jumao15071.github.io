@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>（终焉）MC大云杉生长机制及效率计算 - 橘猫的资源站</title>
+    <meta name="description" content="1.概论： 在之前大云杉生长机制初步探究之后，一直没有一个原型机来验证这个模型。加上lin佬对于代码的更改建议后，现如今从新拾起这份工作，来最终研究MCBE大云杉生长机制以及树厂理论效率的计算。首先感谢@linlin的代码修改意见，再次感谢@半枫沙的大云杉原型">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv33358140.webp" alt="（终焉）MC大云杉生长机制及效率计算">
+        </figure>
+        <div class="article-head">
+            <h1>（终焉）MC大云杉生长机制及效率计算</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/572565493" target="_blank" rel="noopener noreferrer">RSSMcRedRockRT</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">编辑于 2024年03月25日 05:28</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/911948593501306883" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv33358140</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">树场</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv27781635.html" title="« 上一篇：MC 齐喷催熟树厂极限效率定理和树厂理论效率的计算" aria-label="« 上一篇：MC 齐喷催熟树厂极限效率定理和树厂理论效率的计算">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MC 齐喷催熟树厂极限效率定理和树厂理论效率的计算</span>
+            </a>
+            <a class="pager-item is-next" href="cv16215603.html" title="下一篇 »：MCBE 关于掉落物的简单研究 ep.1 由限位讲掉落物碰撞箱" aria-label="下一篇 »：MCBE 关于掉落物的简单研究 ep.1 由限位讲掉落物碰撞箱">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 关于掉落物的简单研究 ep.1 由限位讲掉落物碰撞箱</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p><strong><span style="color:#02a2ff">1.概论：</span></strong></p>
+        <p><span style="color:#02a2ff">    在之前大云杉生长机制初步探究之后，一直没有一个原型机来验证这个模型。加上lin佬对于代码的更改建议后，现如今从新拾起这份工作，来最终研究MCBE大云杉生长机制以及树厂理论效率的计算。</span><span style="color:#ff654e">首先感谢@linlin的代码修改意见，再次感谢@半枫沙的大云杉原型机。</span></p>
+        <a class="jump-card is-text" href="cv27029335.html">
+    <span class="jump-card-cover"><img src="../../assets/articles/cv33358140/219fcb4e85f6.webp" alt="" loading="lazy"></span><span class="jump-card-main">
+        <span class="jump-card-title">MC 巨型云杉树的生长机制以及最优催熟策略</span>
+        <span class="jump-card-meta">RSSMcRedRockRT · 5011 阅读 · 20 回复</span>
+    </span>
+    <span class="jump-card-badge">站内专栏 »</span>
+</a>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv33358140/6a9102e4be53.webp" width="1920" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">半枫沙的22gt实用向大云杉原型机（视频未发布）</span></p>
+        <p><span style="color:#ff654e">建模方法：pycharm，Excel</span>
+</p>
+        <p><span style="color:#ff654e">计算核心：程序模拟种树三百万次，误差允许                     范围内逼近数值解。</span></p>
+        <p><span style="color:#ff654e">声明：此建模忽略随机刻的影响，不考虑新催             熟理论（寸止催熟）的影响，仍然是传               统催熟方式。</span></p>
+        <hr class="opus-pagebreak">
+        <p><strong><span style="color:#02a2ff">2.正文：</span></strong></p>
+        <hr class="opus-pagebreak">
+        <p><strong><span style="color:#ff654e">（1）源代码解析：</span></strong></p>
+        <p>首先，我们先对源代码进行叙述：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv33358140/6e3a89888fbe.webp" width="886" height="370" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">代码的核心部分</span></p>
+        <p>       通过定义多个函数，包括“预催熟”，“催熟”，“生长检测”，“回退”，“模拟种树”等，结合大云杉生长机制，用Python写出来模拟种树程序，运行三百万次。输入预催熟次数和树厂速度后，返回效率（树/min）。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv33358140/7a204f60185f.webp" width="888" height="234" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">代码的print输出示例</span></p>
+        <p>        那么我猜你看了上篇生长机制研究后，会说：“都是模拟种树，这次代码更改了何处呢？🤔＂</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv33358140/3458e2f13cc4.webp" width="944" height="372" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">lin佬给予的更改意见</span></p>
+        <p>        这次代码更改了预催熟部分，<span style="color:#ff654e">发射器每一次催熟都会进行树苗回退检查</span>。以前的代码认为，树苗在1gt内顶多阶段变化一次（也就是说不考虑微时序。这是错误的🖕）。如今的代码考虑了微时序（允许树苗1gt内阶段变化多次。）这也源自于我在游戏里面的实验：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv33358140/772a53f8ea14.webp" width="1040" height="934" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">游戏里的实验</span></p>
+        <blockquote><p>感兴趣的可以试一试：<span style="color:#02a2ff99">只让这俩发射器齐喷一次催熟，树苗真的可以长成大云杉树！这说明微时序内：这俩发射器发射骨粉是有先后顺序的，允许树苗阶段变化多次。😨</span>
+</p></blockquote>
+        <hr class="opus-pagebreak">
+        <p><strong><span style="color:#ff654e">（2）代码正确性的验证：</span></strong></p>
+        <p><span style="color:#ff654e">      @半枫沙制作的</span><span style="color:#02a2ff">22gt三发射器（对角双发）齐喷催熟，在18gt一次三发射器齐喷催</span><span style="color:#02a2ff">熟</span><span style="color:#ff654e">的树厂，经过tr的效率，效率达到了2930树/h，</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv33358140/4e2fa0a27f23.webp" width="1080" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">tr结果找不到了，不过过程有人见证</span></p>
+        <p><span style="color:#ff654e">代码经过计算，返回的效率是47.86树/min，</span>
+</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv33358140/8c0117b54a43.webp" width="828" height="202" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">程序计算出的结果</span></p>
+        <p><span style="color:#ff654e">折合成小时是2880树/h，</span><span style="color:#ff654e">总体误差控制在2％以内，</span><span style="color:#ff654e">考虑到tr测效率的一些因素，这说明代码计算出的基本符合游戏运行情况。</span>
+</p>
+        <p><strong><span style="color:#ff654e">（3）大云杉催熟理论修正：</span></strong></p>
+        <p><span style="color:#ff654e">     通过搜集数据，结合matplotlib.pyplot绘图，我们得到了一下图：</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv33358140/1a5d8df99939.webp" width="1000" height="500" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">18gt三发射器对角齐喷催熟，预催熟和效率的关系</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv33358140/92e4fb0b931a.webp" width="1000" height="500" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">20gt的</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv33358140/aabc3e85dddc.webp" width="1000" height="500" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">22gt的</span></p>
+        <p><strong><span style="color:#02a2ff">对此我们得到了新的结论！</span></strong></p>
+        <p><strong><span style="color:#ff654e">1.大云杉树厂的效率随预催熟次数不是旧专栏的锯齿状趋近于某一个值，而是单调递减趋近于某一个值。</span></strong></p>
+        <blockquote><p><span style="color:#ff654e99">你没听错，是单调递减趋近于某一个值，这说明了大云杉树苗的独特生长机制：一个不行全体回退放大了预催熟的负面影响，这在单木是完全不同的。</span></p></blockquote>
+        <p><strong><span style="color:#ff654e">2.预催熟次数对于效率的影响比较小。</span></strong></p>
+        <blockquote><p><span style="color:#ff654e99">这次的结果符合旧</span>有印象：预催熟对于效率影响很小，只有0到1时候有巨大的提升。</p></blockquote>
+        <p><strong><span style="color:#ff654e">3.仍然是预催熟一次效率达到最大值。</span></strong></p>
+        <blockquote><p><span style="color:#ff654e99">幸亏，旧专栏得出来的结论没被否定。</span></p></blockquote>
+        <p><strong><span style="color:#ff654e">4.大云杉催熟具有微时序，而且齐喷催熟中，微时序顺序对于效率影响较小。</span></strong></p>
+        <blockquote><p><span style="color:#ff654e99">我曾调换过代码中发射器的催熟顺序，发现只有0.3树/min的差距，而且微时序貌似不可控，所以齐喷催熟下发射器催熟顺序影响不大。</span></p></blockquote>
+        <p><strong><span style="color:#ff654e">（4）高速大云杉树厂效率计算</span></strong></p>
+        <blockquote><p><strong><span style="color:#ff654e99">新写的代码可以计算出来不同催熟下的树厂效率，对此rss制作了一张图表，里面展示了三发射器（对角双发），四发射器，在18gt到28gt的效率，以供大家参考。</span></strong><strong><span style="color:#ff654e99">
+</span></strong>
+</p></blockquote>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv33358140/837be6fe1d3d.webp" width="738" height="400" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">四发射器后面懒得算了😫，程序跑的是真的慢啊</span></p>
+        <p><strong><span style="color:#ff654e">（5）后记</span></strong></p>
+        <p><span style="color:#ff654e">      至此，mcbe大云杉生长机制被验证完毕。巨云杉催熟理论完工。</span><span style="color:#18e7cf">不过代码得到的并不是理论解，期待有其他的佬可以把数值解给出，这还是一个</span><span style="color:#ff654e">很大的难度。</span><span style="color:#ff654e">
+</span></p>
+        <p><span style="color:#ff654e">       代码给出的结果并不十分精确，因为是类似频率估计概率，结果有一定的浮动性，不过总体误差很小（模拟种树千万上亿次程序能算半小时，时间代价很大😇）。</span></p>
+        <p><span style="color:#ff654e">特别鸣谢：</span></p>
+        <p><span style="color:#ff654e">linlin（提供催熟代码更改</span>）</p>
+        <p>半枫沙（他制作了树厂，提供了原型机）</p>
+        <p>ndt服务器（提供了原型机的测试）</p>
+        <p>furfur（提供了封面的高速大云杉）</p>
+        <blockquote><p>数据不全，我会给出源代码，感兴趣的可以更改和跑一下来算效率。另外：Python算数是真的慢啊😫，程序跑一分多钟才能算出来一个结果。跑结果就快用了俩小时了😇</p></blockquote>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/911948593501306883">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv27781635.html" title="« 上一篇：MC 齐喷催熟树厂极限效率定理和树厂理论效率的计算" aria-label="« 上一篇：MC 齐喷催熟树厂极限效率定理和树厂理论效率的计算">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MC 齐喷催熟树厂极限效率定理和树厂理论效率的计算</span>
+            </a>
+            <a class="pager-item is-next" href="cv16215603.html" title="下一篇 »：MCBE 关于掉落物的简单研究 ep.1 由限位讲掉落物碰撞箱" aria-label="下一篇 »：MCBE 关于掉落物的简单研究 ep.1 由限位讲掉落物碰撞箱">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 关于掉落物的简单研究 ep.1 由限位讲掉落物碰撞箱</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

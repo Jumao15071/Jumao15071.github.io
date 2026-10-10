@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一份比较详细的 MCBE 村庄机制解析 - 橘猫的资源站</title>
+    <meta name="description" content="这篇专栏会较为详细地阐述MCBE中村庄的产生与消亡，村庄范围与中心的变迁，POI的生命周期等过程。 POI POI就是(point of interst),也就是村民的兴趣点，POI一共有四类(其实是三类) 床 集会点(钟) 工作方块(讲台等等) 未定义 一个">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv5581369.webp" alt="一份比较详细的 MCBE 村庄机制解析">
+        </figure>
+        <div class="article-head">
+            <h1>一份比较详细的 MCBE 村庄机制解析</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/507463378" target="_blank" rel="noopener noreferrer">SAC_Official</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2020年04月12日 20:02</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/377332397582403217" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv5581369</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">实体机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv40350407.html" title="« 上一篇：MCBE 部分掉落物及抢夺计算相关机制" aria-label="« 上一篇：MCBE 部分掉落物及抢夺计算相关机制">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 部分掉落物及抢夺计算相关机制</span>
+            </a>
+            <a class="pager-item is-next" href="cv7841838.html" title="下一篇 »：村庄机制limx2" aria-label="下一篇 »：村庄机制limx2">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">村庄机制limx2</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p>这篇专栏会较为详细地阐述MCBE中村庄的产生与消亡，村庄范围与中心的变迁，POI的生命周期等过程。</p>
+        <hr class="opus-pagebreak">
+        <p>POI</p>
+        <p>POI就是(point of interst),也就是村民的兴趣点，POI一共有四类(其实是三类)</p>
+        <ol>
+            <li>床</li>
+            <li>集会点(钟)</li>
+            <li>工作方块(讲台等等)</li>
+            <li>未定义</li>
+        </ol>
+        <p>一个POI里面存的信息包括但不限于:</p>
+        <ol>
+            <li>坐标</li>
+            <li>类型</li>
+            <li>它所属的村庄</li>
+            <li>它所属者的数量</li>
+            <li>它的所属者的数量上限</li>
+        </ol>
+        <p>村庄管理器</p>
+        <p>MCBE中单维度的所有村庄都是由一个叫做<strong>村庄管理器</strong>的东西来管理的。这个管理器管理着村庄的运行，管理POI的状态，村庄状态的更新，铁傀儡的刷新，劫掠的产生等等等。一个维度<strong>有且仅有一个</strong>村庄管理器</p>
+        <p>村庄管理器做的最基本的事情是在你打开(关闭)存档的时候把存档内部的村庄信息加载进游戏(把游戏中的村庄信息写入存档)。</p>
+        <p>下面是村庄管理器所包含的数据：</p>
+        <ol>
+            <li>一个方块位置的列表(Blcok Position List) </li>
+            <li>一个村庄列表</li>
+            <li>一个未分配的POI列表(cluster POI list)</li>
+            <li>一个已经分配的POI列表(cluster POI list)</li>
+            <li>其它信息(如流浪商人的调度器)</li>
+        </ol>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv5581369/ed251d64acef.webp" width="1231" height="740" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">村庄管理器的结构</span></p>
+        <p>村庄</p>
+        <p>你在游戏中看到的村庄是一些村民和一些方块的集合，但是游戏内部的的村庄其实也是一坨数据的集合，这些数据包括但不限于:</p>
+        <ol>
+            <li>未被绑定的POI列表(unclaimedPOIList)</li>
+            <li>实体列表(包括村民，铁傀儡，猫等)(actorList)</li>
+            <li>村民和POI的绑定列表（claimedPOIList）</li>
+            <li>村庄UID(uid)</li>
+            <li>几个时钟，包括繁殖相关，劫掠相关，自动存档相关</li>
+            <li>其它和劫掠相关数据(略)</li>
+        </ol>
+        <p>居民系统(Dweller System)</p>
+        <p>居民系统定义了村民的作息和行为，这使得不同状态的村民在不同的时间内做不同的事情</p>
+        <p><a href="https://wiki.biligame.com/mc/%E6%9D%91%E6%B0%91" target="_blank" rel="noopener noreferrer">minecraft 中文wiki--村民</a></p>
+        <p>对于居民系统，我们仅需要知道，村民会在特定时候寻找以它为中心32*8*32的POI。</p>
+        <p>村庄管理器的数据更新
+</p>
+        <p>每个游戏刻(gt)村庄管理器都和区块，和方块实体一样在更新(说白了就是执行tick()函数),比较特殊的一点是,村庄管理器不光要更新自己，还要更新维度内的每一个村庄(执行每一个村庄的tick()函数),下面是村庄相关更新和区块更新之间的一个层级关系:</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv5581369/50a036aa74e5.webp" width="874" height="627" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">更新层次</span></p>
+        <p>这里区块更新不是重点，不赘述，但是可以看到<strong>村庄管理器的更新是不依托于区块加载</strong>的。</p>
+        <p>那么村庄管理器的更新到底做了什么？</p>
+        <p>每个游戏刻村庄管理器都试图进行如下操作:</p>
+        <p>1. 尝试移除村庄</p>
+        <p>下面是操作的步骤
+</p>
+        <ol>
+            <li>遍历村庄列表找到<strong>可以</strong><strong>移除的村庄</strong>,这样的村庄的条件包括但不限于: </li>
+            <li>对可以移除的村庄内部的所有POI进行回收(uncluster),也就是<strong>把该村庄的所有POI从村庄管理器的已分配POI列表中移除</strong></li>
+        </ol>
+        <p>2.受理村民的POI查询请求</p>
+        <p>上文提到村民会在特定时候寻找以它为中心32*8*32的POI，但是<strong>村民的工作仅仅是向村庄管理器提出查询请求</strong>，查询请求里面装的是村民的坐标，这些坐标会被<strong>暂存到村庄管理器的方块位置的列表</strong>(Blcok Position List)中。</p>
+        <p>而受理村民的POI查询请求要做的就是帮助村民查询:</p>
+        <ol>
+            <li>从列表中取出<strong>一个</strong>坐标</li>
+            <li>遍历以该坐标32*8*32的区域</li>
+            <li>找到合适的方块就根据该方块的信息创建POI并<strong>放入村庄管理器的未分配列表</strong></li>
+        </ol>
+        <p>需要注意的是，每个游戏刻村庄管理器只受理一个请求(即<strong>查询一次</strong>)，如果这个区域的合适的方块超过1024个会直接停止查询。</p>
+        <p>这一步就是创建POI的过程，但是这个过程结束的时候新创建的POI还不属于任何村庄，于是下面要做的就是把未分配的POI分配给各个村庄</p>
+        <p>3. 尝试分配POI</p>
+        <p>创建的POI一直放着也不是办法，总要分发给村庄，这一步执行的就是这个过程：</p>
+        <ol>
+            <li>遍历未分配的POI列表</li>
+            <li>对于每个POI </li>
+        </ol>
+        <p>注意这个64格是和村庄的最近距离，不是中心(这里存疑，如果有玩家能给出准确数据感激不尽)</p>
+        <p>在略去流浪商人的更新问题后当前游戏刻村庄管理器的事情终于做完了，下面是村庄的行为。</p>
+        <p>村庄更新</p>
+        <p>村庄更新是由村庄管理器调用的，每个游戏刻村庄管理器会遍历当前维度的每一个村庄并依次执行它们的tick函数</p>
+        <p>这里为了阅读方便再写一遍村庄的数据:</p>
+        <ol>
+            <li>未被绑定的POI列表(unclaimedPOIList)</li>
+            <li>实体列表(包括村民，铁傀儡，猫等)(actorList)</li>
+            <li>村民和POI的绑定列表（claimedPOIList）</li>
+            <li>村庄UID(uid)</li>
+            <li>几个时钟，包括繁殖相关，劫掠相关，自动存档相关</li>
+            <li>其它和劫掠相关数据(略)</li>
+        </ol>
+        <p>下面是tick函数的过程(不包括劫掠相关)</p>
+        <p>1. 更新村民的时间戳
+</p>
+        <p>村庄所属的每个实体都有一个时间戳(应该是方便村民行为的，如繁殖,活动等等)，这个行为就是同步村庄里面所有村民的时间戳，把出问题的村民直接移出村庄(暂不清晰)
+</p>
+        <p> 2. 更新已经绑定的POI状态
+</p>
+        <p>这一步主要是对已经绑定的POI进行检查:具体操作是遍历每个村民绑定的每个POI(也就是遍历绑定的POI列表)，对于出现状况的POI会将该POI和村民解绑，并且把该从村庄管理器的已分配列表中移除，可能的条件:</p>
+        <ol>
+            <li>该POI的实体方块不存在了</li>
+            <li>该POI的数据出现问题</li>
+            <li>其它</li>
+        </ol>
+        <p>如果在上述操作中绑定关系被修改(有POI被移除),就会进行所谓的<strong>重新计算POI距离(calPOIdist)</strong>的操作,这个操作也是你<strong>无法确定村庄中心的罪魁祸首.</strong></p>
+        <p>下面就是calPOIdist操作</p>
+        <ol>
+            <li>遍历每一个村民的每一个POI</li>
+            <li><strong>把第一个遍历到的POI作为村庄中心，重置村庄边界为(x-32,y-12,z-32)--(x+32,y+12,z+32),xyz是该POI的坐标</strong></li>
+            <li>对于以后遍到的POI，只会根据它和当前村庄中心的距离对村庄的边界进行调整，如果太远就会适当拓宽村庄范围(因为村庄中心就是范围的中心,这意味着村庄中心也在跟着变化，并不一定是第一个POI的位置，可以是任何方块)</li>
+            <li>其它操作</li>
+        </ol>
+        <p>这操作看着没啥毛病，但是最要命的是已绑定的POI列表是一个<strong>哈希表</strong>,村民在这个表里面的排列顺序和<strong>村民自身的唯一实体ID完全相关</strong>，和村民的加入顺序的关系并不紧密，由于你无法通过常规手段获取这个ID，因此你<strong>无法找到上述操作遍历到的第一个村民</strong>,同时无法确定最基础的村庄中心，更何况调整以后的。</p>
+        <p>3.铁傀儡刷新  </p>
+        <p>当如下条件同时满的时候会尝试进行铁傀儡刷新</p>
+        <ol>
+            <li>床的数量大于20</li>
+            <li>居民数量/10(向下取整) 大于当前铁傀儡数量</li>
+            <li>7000里面随机选一个数选到0</li>
+        </ol>
+        <p>如果上述条件成立，会在村庄中心前后左右各8格,上下3格的区域内进行10次随机选点，如果每次的选点都能够刷出而且都在村庄范围内，会进行铁傀儡的生成。</p>
+        <p>上面是每个游戏刻村庄更新做的事情(劫掠除外)，当游戏刻是30的倍数的时候(也就是正常情况下的每1.5s)村庄更新还会做如下的事情:</p>
+        <p>4. 处理未绑定的POI
+</p>
+        <p>前排提醒：未绑定的POI是村庄管理器塞给村庄的</p>
+        <ol>
+            <li>遍历未绑定的POI列表,执行和已绑定的同样的操作，找出出问题的POI，将其从<strong>村庄管理器的已分配POI列表</strong>以及<strong>当前村庄的未分配POI列表</strong>中移除，但是不会重新计算村庄中心(因为村庄中心的计算仅和已分配的列表有关)</li>
+            <li>遍历未被绑定的POI列表，通过特定方法找到一个村民(暂不清楚)，尝试将该POI和该村民进行绑定(优先职业，其次权重)，如果绑定成功就把该POI移入已绑定的POI列表，当然这里也会执行<strong>calPOIDist</strong>操作</li>
+        </ol>
+        <p>注意:退出游戏的时候会存入存档的只有已经绑定的POI列表，未绑定的POI列表在下次进入游戏就没了</p>
+        <p>最后附上一张POI的生命周期:</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv5581369/65edcbd06364.webp" width="1144" height="644" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">一个POI的生命周期</span></p>
+        <p>顺带一提，头图是一个当MCBE中所有随机数都返回1时生成的世界</p>
+        <p>文: _hhhxiao</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/377332397582403217">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv40350407.html" title="« 上一篇：MCBE 部分掉落物及抢夺计算相关机制" aria-label="« 上一篇：MCBE 部分掉落物及抢夺计算相关机制">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 部分掉落物及抢夺计算相关机制</span>
+            </a>
+            <a class="pager-item is-next" href="cv7841838.html" title="下一篇 »：村庄机制limx2" aria-label="下一篇 »：村庄机制limx2">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">村庄机制limx2</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

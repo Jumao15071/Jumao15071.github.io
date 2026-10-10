@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 基岩版红石粉压线与引线机制 - 橘猫的资源站</title>
+    <meta name="description" content="开始之前，先介绍两个个元件属性： 1. allowPowerUp: 该属性代表元件对信号的单向传递情况，如果为 false，则下方一格的信号无法斜向上传递，但是上方信号可以斜向下传递； 如果为true，则下方信号可以斜向上传递，但是上方信号无法斜向下传递。 半">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv39623885.webp" alt="MCBE 基岩版红石粉压线与引线机制">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 基岩版红石粉压线与引线机制</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/122391924" target="_blank" rel="noopener noreferrer">何以贯之</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">编辑于 2025年03月13日 20:19</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/993680206256406552" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv39623885</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv39577420.html" title="« 上一篇：基岩版中的方块与方块实体等" aria-label="« 上一篇：基岩版中的方块与方块实体等">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">基岩版中的方块与方块实体等</span>
+            </a>
+            <a class="pager-item is-next" href="cv26326388.html" title="下一篇 »：MCBE 部分特殊性质方块汇总（红石相关）" aria-label="下一篇 »：MCBE 部分特殊性质方块汇总（红石相关）">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 部分特殊性质方块汇总（红石相关）</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p>开始之前，先介绍两个个元件属性：
+</p>
+        <p><strong>1. allowPowerUp:</strong></p>
+        <p>该属性代表元件对信号的单向传递情况，如果为 false，则下方一格的信号无法斜向上传递，但是上方信号可以斜向下传递；</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39623885/85043be8c4f1.webp" width="2112" height="1148" alt="文章配图" loading="lazy">
+    </figure>
+        <p>如果为true，则下方信号可以斜向上传递，但是上方信号无法斜向下传递。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39623885/49b5317cbaa8.webp" width="1886" height="1034" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">半砖是充能方块元件，allowPowerUp为true</span></p>
+        <p>其代表了红石系统中元件的"压线"行为。</p>
+        <p><strong>2. consumePowerAnyDirection:</strong></p>
+        <p>该属性指示元件对信号的一种接收情况，如果为 true，则无条件接收周围信号。
+</p>
+        <p>该属性为 true 的元件有活塞，中继器，比较器，标靶。</p>
+        <p>非红石元件不具有以上属性。</p>
+        <hr class="opus-pagebreak">
+        <p><strong>压线逻辑</strong></p>
+        <p>若红石粉要斜向上传递信号，则需要其上方方块不是红石元件，或<strong>allowPowerUp</strong>属性为true，也即通常意义上的不压线。</p>
+        <p>若红石粉要斜向下传递信号，则需要其下方方块不是红石元件，或<strong>allowPowerUp</strong>属性为false，然后斜向下红石粉的上方方块不压线。</p>
+        <p>本文将这两种情况统称为<strong>压线</strong>。</p>
+        <p><strong>引线逻辑</strong></p>
+        <p>当红石粉四周的某一元件满足下面的情况，则红石粉被引线：</p>
+        <ol>
+            <li>是中继器的输入输出端，或</li>
+            <li>是观察者的输出端，或</li>
+            <li>是红石粉，或</li>
+            <li>是生产者或比较器或火把</li>
+        </ol>
+        <p>当红石粉的某一斜角位置也是红石粉，且未出现压线，则红石粉被引线。</p>
+        <hr class="opus-pagebreak">
+        <p>下面正式介绍连接规则。</p>
+        <p><strong>连接规则</strong></p>
+        <ol>
+            <li>不允许连接上方元件。</li>
+            <li>若被搜索元件位于红石粉下方，则与该元件进行连接。</li>
+            <li>若被搜索元件满足 consumePowerAnyDirection 为 true，则与该元件进行连接。</li>
+            <li>红石粉间若被引线，则进行连接。</li>
+        </ol>
+        <p>剩下的情况包括尝试连接其他电容器，连接充能方块，连接一般的消费者。</p>
+        <p>这里先定义一个电路走向的概念：</p>
+        <p>红石粉不是信号源，那么在红石粉之前应当有一个信号源或其他红石粉等元件，否则不构成电路，那么这个元件加上红石粉和红石粉后面的元件(即被搜索元件)，构成的相对方向，可能是水平一条直线，或一个拐角，这称为电路走向。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39623885/301230290e47.webp" width="2162" height="1000" alt="文章配图" loading="lazy">
+    </figure>
+        <p>则满足以下情况时，被搜索元件可被连接：</p>
+        <ol>
+            <li>当电路走向为水平直线时，要求红石粉两侧没有引线。</li>
+            <li>当电路走向为直角拐角时，要求红石粉至多被引1次线。</li>
+        </ol>
+        <p>其他情况均不允许连接。</p>
+        <p>以上就是完整的连接规则，注意连接不等于添加信号源，可能连接了，但是由于信号源重复等各种原因没有添加信号源。</p>
+        <p><strong>视觉压线引线</strong></p>
+        <p>红石粉在视觉上的压线引线由客户端控制，且与红石系统中红石粉的压线引线机制没有任何关联，因为后者需要构成带信号源的电路，前者只需要红石粉和可压线引线的方块。</p>
+        <p>其机制目前未知。</p>
+        <p>欢迎提交反例，以完善本理论。</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/993680206256406552">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv39577420.html" title="« 上一篇：基岩版中的方块与方块实体等" aria-label="« 上一篇：基岩版中的方块与方块实体等">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">基岩版中的方块与方块实体等</span>
+            </a>
+            <a class="pager-item is-next" href="cv26326388.html" title="下一篇 »：MCBE 部分特殊性质方块汇总（红石相关）" aria-label="下一篇 »：MCBE 部分特殊性质方块汇总（红石相关）">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 部分特殊性质方块汇总（红石相关）</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

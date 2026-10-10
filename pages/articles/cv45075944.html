@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 区块系列机制解析（一）——区块的卸载与保存 - 橘猫的资源站</title>
+    <meta name="description" content="本来区块系列应该以区块加载为开始的，而且区块加载也是最复杂的。不过由于过两天要发那个基于区块保存机制的刷物品视频，就先做卸载保存的专栏了，看这篇专栏前请先阅读序章名词解释 请先阅读序章 一、区块们的保存流程 区块保存主要会由三个渠道触发，总体的框架是在服务器线">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>MCBE 区块系列机制解析（一）——区块的卸载与保存</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/3546590734190596" target="_blank" rel="noopener noreferrer">Naytia_帕芙洛</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2026年01月28日 16:34</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1162866071899734036" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv45075944</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">区块机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv45074160.html" title="« 上一篇：MCBE 区块加载/卸载/保存全流程解析序章——名词解释" aria-label="« 上一篇：MCBE 区块加载/卸载/保存全流程解析序章——名词解释">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 区块加载/卸载/保存全流程解析序章——名词解释</span>
+            </a>
+            <a class="pager-item is-next" href="cv45119486.html" title="下一篇 »：MCBE 区块系列机制解析应用篇——流传多年的区块刷物到底是什么原理" aria-label="下一篇 »：MCBE 区块系列机制解析应用篇——流传多年的区块刷物到底是什么原理">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 区块系列机制解析应用篇——流传多年的区块刷物到底是什么原理</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <blockquote><p>本来区块系列应该以区块加载为开始的，而且区块加载也是最复杂的。不过由于过两天要发那个基于区块保存机制的刷物品视频，就先做卸载保存的专栏了，看这篇专栏前请先阅读序章名词解释</p></blockquote>
+        <hr class="opus-pagebreak">
+        <p>请先阅读序章</p>
+        <h2><strong>一、区块们的保存流程</strong></h2>
+        <p>区块保存主要会由三个渠道触发，总体的框架是在服务器线程tick的某个位置触发保存——&gt;发布区块保存的任务到任务队列——&gt;服务器调度器阶段执行区块保存的任务将区块序列化成compoundtag——&gt;IO线程将compoundtag写入存档</p>
+        <p>第一个触发区块保存的渠道是随机保存，每gt都会有一次，在每gt一个固定的世界级更新阶段中处理（LevelChunkSaveManager::trySaveChunks）。每gt区块保存管理器会遍历所有玩家并且看需不需要保存。<strong>然后选出一个随机的区块</strong>保存（每gt一个）。选择的流程是这样的：从mainchunksource的chunkmap里随机（概率也可能和在结构中的位置有细微联系）选出一个区块（LevelChunkSaveManager::_findRandomChunkToSave），然后检查这个区块（LevelChunkSaveManagerProxy::doesLevelChunkNeedSaving）是否有至少一个dirtytickscounter上次更新到现在的时间大于100gt或者第一次更新到现在的时间大于500gt，<u>如果有，便把这个区块加入区块保存管理器存储的要保存区块的一个堆里面。然后保存管理器会构建一个区块保存任务发布到任务队列里。如果没有，就再找一个区块直到有一个区块需要保存或者遍历完了所有区块。</u></p>
+        <p>第二个触发区块保存的渠道是玩家移动（包括视角），当玩家移动时会更新玩家所属的chunkviewsource的area范围，这个过程中如果在某个区块更新后在area的范围外了（这个范围就是区块的开始加载范围，在模拟四，视距五的区块下是半径10。别的文章会详细解释）它便会进行是否要保存的判断，然后的流程就和随机保存后面的流程一样了（只是不寻找随机区块，而且只要dirtytickscounter记录的上次更新时间存在就行）。这个过程在gt中玩家行为系统更新中发生</p>
+        <p>第三个触发区块保存的渠道是Chunksource的删除，当玩家所属的chunksource删除时，或者维度的mainchunksource删除时，会发布区块保存的任务，流程和上面一样，而且会对自己管理的所有区块进行这个流程</p>
+        <p>另外，所有要卸载或保存的区块都必须loadState等于9以及不是isReadOnly的</p>
+        <h2><strong>二、区块卸载</strong></h2>
+        <p>区块卸载主要会由两个渠道触发分别对应区块保存的二和三，总体的流程是触发区块卸载——&gt;检查是否需要区块保存（并进入区块保存流程）——&gt;将要卸载的区块加入一个队列（LevelChunkPhase1Deleter::operator）——&gt;Gametick中的区块回收阶段（维度级更新阶段）从队列中取出区块并删除。要卸载的区块和区块保存的第二、三类里要保存的区块一样</p>
+        <h2><strong>三、区块内部数据的保存（DbChunkStorage::_serializeChunk)</strong></h2>
+        <p>区块的保存是以key为单位进行的。每一类区块数据对应一个key。</p>
+        <p>以下是常见的chunkkey（现版本）：</p>
+        <p>方块实体（blockEntities）</p>
+        <p>群系（Biome）</p>
+        <p>实体（Entities，要特别提到的是，实体在1.18.3以前是一种chunkkey，但是那之后就不储存的区块的nbt数据里了，但仍然和区块一起序列化）</p>
+        <p>计划刻与随机计划刻队列</p>
+        <p>子区块（SubChunks）</p>
+        <p>HardCodedSpawner</p>
+        <p>...</p>
+        <p>以下是区块内部数据保存的流程：</p>
+        <p>先检查并保存区块元数据（区块高度范围，区块版本等），这个过程会给levelStorage上一个共享锁</p>
+        <p>然后会修剪掉不需要的子区块，空的子区块会直接不保存，全是空气的子区块会保存为默认值。然后保存需要保存的子区块</p>
+        <p>然后会保存区块的3d群系信息</p>
+        <p>然后是重点：方块实体的保存</p>
+        <p>如果区块内的方块实体dirtytickscounter上次更新到现在的时间不为0，而且区块没有isChanged的方块实体（下个专栏会解释），并且区块内存在至少一个方块实体就会进入方块实体的保存流程。这个保存会检查方块实体和它所在位置的方块是否对应，如果不对应就不保存</p>
+        <p>然后会根据dirtytickscounter是否为0判断要不要保存计划刻和随机计划刻列表</p>
+        <p>最后会保存区块的实体。</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1162866071899734036">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv45074160.html" title="« 上一篇：MCBE 区块加载/卸载/保存全流程解析序章——名词解释" aria-label="« 上一篇：MCBE 区块加载/卸载/保存全流程解析序章——名词解释">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 区块加载/卸载/保存全流程解析序章——名词解释</span>
+            </a>
+            <a class="pager-item is-next" href="cv45119486.html" title="下一篇 »：MCBE 区块系列机制解析应用篇——流传多年的区块刷物到底是什么原理" aria-label="下一篇 »：MCBE 区块系列机制解析应用篇——流传多年的区块刷物到底是什么原理">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 区块系列机制解析应用篇——流传多年的区块刷物到底是什么原理</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

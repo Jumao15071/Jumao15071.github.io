@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>树场全解析（活塞篇） - 橘猫的资源站</title>
+    <meta name="description" content="活塞篇 1,就活塞本身状态的讨论 活塞存在四种状态 推出 半推出 收回 半收回，实际而言，我们只需要关注推出与收回两种状态即可。 在一次活塞推出运动中，0t红石系统更新，1t活塞更新为半推出，1.5t活塞更新为推出，2t保持推出状态。 在一次活塞收回运动中，0">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>树场全解析（活塞篇）</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/279093667" target="_blank" rel="noopener noreferrer">angel丶抱</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2024年10月01日 18:27</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/983289963102601220" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv39249382</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">树场</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv27029335.html" title="« 上一篇：MC 巨型云杉树的生长机制以及最优催熟策略" aria-label="« 上一篇：MC 巨型云杉树的生长机制以及最优催熟策略">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MC 巨型云杉树的生长机制以及最优催熟策略</span>
+            </a>
+            <a class="pager-item is-next" href="cv39256219.html" title="下一篇 »：树场全解析（发射器篇）" aria-label="下一篇 »：树场全解析（发射器篇）">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">树场全解析（发射器篇）</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p>活塞篇</p>
+        <p>1,就活塞本身状态的讨论</p>
+        <p>活塞存在四种状态 推出 半推出 收回 半收回，实际而言，我们只需要关注推出与收回两种状态即可。</p>
+        <p>在一次活塞推出运动中，0t红石系统更新，1t活塞更新为半推出，1.5t活塞更新为推出，2t保持推出状态。</p>
+        <p>在一次活塞收回运动中，0t红石系统更新，1t活塞更新为半收回，1.5t活塞更新为收回，2t保持收回状态。</p>
+        <p>（上文0t为红石刻，则1.5t为普通刻）</p>
+        <p>上文中保持这两个字极其刺眼，他是be活塞运动速度不理想的关键，我们管他叫冷却，那么这个冷却是如何产生的呢？</p>
+        <p>我们需知，红石系统的更新是在方块实体之后的。</p>
+        <p>也就是说，活塞运动与否是在活塞运动刻的上1rt完成的活塞内部信号值决定的，这便是活塞冷却的罪魁祸首。</p>
+        <p>2,就活塞所推动方块的状态讨论</p>
+        <p>在一次活塞推出运动中，0t红石系统更新，1t活塞更新为半推出，1.5t活塞更新为推出，2t保持推出状态。</p>
+        <p>被该活塞推动的方块在1t被转化为mb，2t转化为方块本身。需知mb是无法推动的，那么2t被转化为方块本身这个时间点能否被推动呢？</p>
+        <p>这里便与优先级有关了，若转b的优先级高于尝试推动该方块活塞的优先级，那么在tick是可以推动该方块的。因为对于尝试推动该方块活塞而言，mb已经更新为了普通方块。</p>
+        <p>*显然的，活塞所推方块是活塞是树场的重中之重，根据上文，我们便能解释为什么活塞推动2rt后，次推活塞才能推动。</p>
+        <p>首推活塞0t红石系统更新，1t活塞更新为半推出，1.5t活塞更新为推出，2t保持推出状态。</p>
+        <p>同时的</p>
+        <p>次推活塞在2t发生实体方块更新，mb转普通活塞，然后进行活塞内部信号值计算，在下1rt更新为半推出状态。</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/983289963102601220">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv27029335.html" title="« 上一篇：MC 巨型云杉树的生长机制以及最优催熟策略" aria-label="« 上一篇：MC 巨型云杉树的生长机制以及最优催熟策略">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MC 巨型云杉树的生长机制以及最优催熟策略</span>
+            </a>
+            <a class="pager-item is-next" href="cv39256219.html" title="下一篇 »：树场全解析（发射器篇）" aria-label="下一篇 »：树场全解析（发射器篇）">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">树场全解析（发射器篇）</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

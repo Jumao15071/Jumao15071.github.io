@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>无限方块的方块变化解析1.19.50+（尚未修复） - 橘猫的资源站</title>
+    <meta name="description" content="本篇专栏主要详细解析形成无限方块时方块发生了什么变化，以及分离方块实体的原理 一，无限方块的本质 部分缩写名词解释： mb：movingblock，移动中的方块 活塞移动方块时会直接生成mb（虽然表面上看是方块一点一点移动到向前一格的位置，但这只是mba根据活">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>无限方块的方块变化解析1.19.50+（尚未修复）</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/521607430" target="_blank" rel="noopener noreferrer">樱银音_</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2025年06月23日 11:10</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1081514928830939136" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv42093789</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">游戏漏洞</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv45557011.html" title="« 上一篇：MCBE 区块系列机制解析（十一）——区块加载控制架构设计实例" aria-label="« 上一篇：MCBE 区块系列机制解析（十一）——区块加载控制架构设计实例">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 区块系列机制解析（十一）——区块加载控制架构设计实例</span>
+            </a>
+            <a class="pager-item is-next" href="cv41321279.html" title="下一篇 »：夺取创世神的权柄——方块实体类型混淆漏洞在基岩版红石中的应用" aria-label="下一篇 »：夺取创世神的权柄——方块实体类型混淆漏洞在基岩版红石中的应用">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">夺取创世神的权柄——方块实体类型混淆漏洞在基岩版红石中的应用</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="html">
+        <blockquote><p>本篇专栏主要详细解析形成无限方块时方块发生了什么变化，以及分离方块实体的原理</p></blockquote>
+        <p><strong><span class="font-size-20">一，无限方块的本质</span></strong></p>
+        <p>部分缩写名词解释：</p>
+        <p><strong>mb：movingblock</strong>，移动中的方块</p>
+        <p>活塞移动方块时会直接生成mb（虽然表面上看是方块一点一点移动到向前一格的位置，但这只是mba根据活塞状态调整的渲染，实际上方块的坐标不可能有两个方块各占一半的时候）在被推动的方块活塞方向向前一格的位置</p>
+        <p><strong>mba：movingblockactor</strong>mb的方块实体</p>
+        <p>用于记录被移动的方块的信息，确保活塞推出完成之后，这个方块还是被推之前的方块</p>
+        <p><strong>继承：一个方块和方块实体在同一个位置我们就说这个方块继承了这个方块实体</strong></p>
+        <p><strong>分离/保留 方块实体/mba：一个不会创建方块实体的方块继承我们要分离的方块实体</strong></p>
+        <p><strong><span class="font-size-20">无限方块的本质以及现象的原理</span></strong></p>
+        <p>一个位置存在一个不可以创建方块实体的方块，这个方块实体继承一个，内部moving block标签是这个方块的mba，</p>
+        <p>mba每gt更新时检测它记录的活塞的坐标有没有活塞，没有就把标签里的（详情请看</p>
+        <a class="jump-card" href="cv40738765.html">
+    <img src="../../assets/articles/cv42093789/a51a9bd66fb5.webp" width="1320" height="224" alt="站内专栏 cv40738765" loading="lazy">
+    <span class="jump-card-badge">站内专栏 »</span>
+</a>
+        <p>movingblock（记录方块）</p>
+        <p>movingextra（记录的被包含的方块）</p>
+        <p>movingentity（记录的方块实体）</p>
+        <p>放置出来</p>
+        <p>因为原位置方块一直是无法创建方块实体的方块被替换，所以原位置mba无法被删除（因为方块实体的删除，依赖于可以创建方块实体的方块的删除），</p>
+        <p>外观体现就是<strong>每gt放置且可以被推走</strong></p>
+        <p><strong><span class="font-size-20">二，分离mba每一步的原理</span></strong></p>
+        <p>我们需要先了解活塞<strong>函数movecollidedentity(用来推实体函数)的异常行为</strong>，</p>
+        <p>这个函数只在活塞的状态为state1时每gt执行，相关了解请看</p>
+        <a class="jump-card" href="cv41212558.html">
+    <img src="../../assets/articles/cv42093789/a458bcbb13f9.webp" width="1320" height="224" alt="站内专栏 cv41212558" loading="lazy">
+    <span class="jump-card-badge">站内专栏 »</span>
+</a>
+        <p>首先我们先利用活塞先破坏所有要破坏的坐标的方块再推出所有要推出的坐标的方块的特性来推出一个空气，</p>
+        <p>这时活塞state值为1，执行movecollidedentity函数，他检查到它的推出列表其中一个坐标活塞方向向前一格的位置有空气的mba，于是就将那个坐标的方块强制往前推一次（无视方块是不是可推动的，一推就碎的），</p>
+        <p>于是那个被强制推动的方块，会被推到空气mba的位置上去，然而通过这篇专栏里描述的</p>
+        <a class="jump-card" href="cv40157045.html">
+    <img src="../../assets/articles/cv42093789/3de20c55ba5d.webp" width="1320" height="224" alt="站内专栏 cv40157045" loading="lazy">
+    <span class="jump-card-badge">站内专栏 »</span>
+</a>
+        <p>blocklegacy（方块基类）相同的方块被替换，原位方块实体不会被删除，</p>
+        <p>也就是说空气mba还会留在那里，</p>
+        <p>而根据mb创建mba的规则（ mb先创建默认数据mba，接下来输入各种标签的值），因为原位方块实体无法被删除，所以就跳过了创建mba，直接输入值，</p>
+        <p>结果就是那个位置的mba还是那个mba但是值被改成新的</p>
+        <p><strong><span class="font-size-16">接下来我们分析一下mb的mb（mb继承一个记录mb方块和mba的mba）被tick会发生什么</span></strong></p>
+        <p>首先我们要知道mba每gt会检测自己记录的方块是不是不可推动的，如果是就设置成空气，而mb是不可推动的方块， mba被tick之后检测到他的方块标签里记录了个mb，所以就设置成空气，这时mb的mb的位置就变成了mb继承一个记录了空气和mba的mba，</p>
+        <p>接下来活塞state2/0时（推出完成或拉回完成）对这个位置正常转b（mba把内部记录的方块方块实体什么的放出来，然后因为mb方块被替换，删除了原位mba）之后，</p>
+        <p>变成<strong>空气继承mba，也就是分离了mba</strong></p>
+        <p><strong><span class="font-size-20">三，两种分离方块实体的原理</span></strong></p>
+        <p><strong>1.分离可推动方块的方块实体：</strong></p>
+        <p>通过先分离记录这个方块的mba（也就是对着这个方块用无限方块的方法做一遍，但是不要打掉活塞）</p>
+        <p>我们用箱子举例，那么此时这个mba记录了箱子方块和箱子方块实体以及被包含方块（被包含方块目前在我们的讲解中不重要，所以这里忽略掉）</p>
+        <p>接下来将一个不会创建方块实体的方块（比如玻璃，这里用玻璃举例）推到mba的位置，这时活塞会先在这个记录箱子的mba的位置放置mb方块，然后因为原位置已经有了一个方块实体，所以跳过创建mb方块实体，并输入值改写原位置mba的数据，</p>
+        <p>也就是说此时原位置mba被改写成记录玻璃方块和箱子方块实体，此时因为原位置是mb继承mba，可以被活塞正常转b（ mb被替换并删掉mba），</p>
+        <p>于是转b后那个位置变成，玻璃方块继承箱子方块实体，</p>
+        <p>这样就做到了<strong>可以推动方块的方块实体分离</strong></p>
+        <p><strong>2.分离不可推动方块的方块实体</strong></p>
+        <p>不可推动方块（比如末地传送门方块，mb方块）</p>
+        <p>我们首先可以用推实体函数（函数movecollidedentity）的异常来推动任何方块（有1gt的放置时间）</p>
+        <p>根据mba的特性，它每gt都会检测自己记录的方块是不是不可推动的，如果是不可推动的就设置成空气，这里用末地门来举例，首先末地门被推动，mba里记录了末地门方块和末地门方块实体，</p>
+        <p>接下来它被tick，它检测到末地门方块是不可推动的方块所以设置成空气，于是mba里面就变成了记录空气和末地门方块实体，</p>
+        <p>转b放置出来后就是空气继承末地门方块实体</p>
+        <hr class="opus-pagebreak">
+        <p>放下相关专栏和视频，看完之后更助于理解：</p>
+        <a class="jump-card" href="cv40738765.html">
+    <img src="../../assets/articles/cv42093789/0382f21472a7.webp" width="1320" height="224" alt="站内专栏 cv40738765" loading="lazy">
+    <span class="jump-card-badge">站内专栏 »</span>
+</a>
+        <a class="jump-card" href="cv40157045.html">
+    <img src="../../assets/articles/cv42093789/91a9a0ed12b8.webp" width="1320" height="224" alt="站内专栏 cv40157045" loading="lazy">
+    <span class="jump-card-badge">站内专栏 »</span>
+</a>
+        <a class="jump-card" href="cv41212558.html">
+    <img src="../../assets/articles/cv42093789/2fd65e2eead4.webp" width="1320" height="224" alt="站内专栏 cv41212558" loading="lazy">
+    <span class="jump-card-badge">站内专栏 »</span>
+</a>
+        <a class="jump-card" href="https://www.bilibili.com/read/cv41431428" target="_blank" rel="noopener noreferrer">
+    <img src="../../assets/articles/cv42093789/784ab0511fc1.webp" width="1320" height="224" alt="B 站专栏 cv41431428" loading="lazy">
+    <span class="jump-card-badge">B 站专栏 »</span>
+</a>
+        <a class="jump-card" href="https://www.bilibili.com/read/cv40040231" target="_blank" rel="noopener noreferrer">
+    <img src="../../assets/articles/cv42093789/4066dcc389e3.webp" width="1320" height="224" alt="B 站专栏 cv40040231" loading="lazy">
+    <span class="jump-card-badge">B 站专栏 »</span>
+</a>
+        <a class="jump-card" href="https://www.bilibili.com/video/av114425713397819" target="_blank" rel="noopener noreferrer">
+    <img src="../../assets/articles/cv42093789/ef0a60f6807a.webp" width="1320" height="188" alt="B 站视频 cv114425713397819" loading="lazy">
+    <span class="jump-card-badge">B 站视频 »</span>
+</a>
+        <hr class="opus-pagebreak">
+        <p><span class="font-size-20">笔者：樱银音</span></p>
+        <p><span class="font-size-20">无限方块源码级研究：</span><a href="https://space.bilibili.com/1025024028?spm_id_from=333.1387.follow.user_card.click" target="_blank" rel="noopener noreferrer"><span class="font-size-20">8848yyds</span></a><span class="font-size-20"></span><a href="https://space.bilibili.com/3546590734190596?spm_id_from=333.1387.follow.user_card.click" target="_blank" rel="noopener noreferrer"><span class="font-size-20">奈茶泡芙</span></a></p>
+        <p><span class="font-size-20">高版本无限方块发现者：</span><a href="https://space.bilibili.com/167429424?spm_id_from=333.337.0.0" target="_blank" rel="noopener noreferrer"><span class="font-size-20">panda4994</span></a></p>
+        <p>完结撒花</p>
+        <hr class="opus-pagebreak">
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1081514928830939136">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv45557011.html" title="« 上一篇：MCBE 区块系列机制解析（十一）——区块加载控制架构设计实例" aria-label="« 上一篇：MCBE 区块系列机制解析（十一）——区块加载控制架构设计实例">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 区块系列机制解析（十一）——区块加载控制架构设计实例</span>
+            </a>
+            <a class="pager-item is-next" href="cv41321279.html" title="下一篇 »：夺取创世神的权柄——方块实体类型混淆漏洞在基岩版红石中的应用" aria-label="下一篇 »：夺取创世神的权柄——方块实体类型混淆漏洞在基岩版红石中的应用">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">夺取创世神的权柄——方块实体类型混淆漏洞在基岩版红石中的应用</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

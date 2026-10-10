@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 实体评估---发光鱿鱼篇 - 橘猫的资源站</title>
+    <meta name="description" content="MCBE实体评估---发光鱿鱼篇 注：本篇专栏并没有全部基于源码的理论支撑，大部分由测试和经验向的推理得出，版本约涵盖了此实体出现后的每一个版本，大部分为安卓端，其中1.18.2版本测试环境为win端 以及特别去测试的现网易版（大雾 此专栏将分为3个部分 1.">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv21467056.webp" alt="MCBE 实体评估---发光鱿鱼篇">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 实体评估---发光鱿鱼篇</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/1583493298" target="_blank" rel="noopener noreferrer">Cookie_531</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2023年01月29日 10:10</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/756428970360045573" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv21467056</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">实体机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv40839260.html" title="« 上一篇：MCBE 嘎枝生成机制与相关探索" aria-label="« 上一篇：MCBE 嘎枝生成机制与相关探索">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 嘎枝生成机制与相关探索</span>
+            </a>
+            <a class="pager-item is-next" href="cv17966733.html" title="下一篇 »：MCBE 关于伪空气类方块的评估" aria-label="下一篇 »：MCBE 关于伪空气类方块的评估">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 关于伪空气类方块的评估</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="delta">
+        <h2>MCBE实体评估---发光鱿鱼篇</h2>
+        <p><span style="color:#f85a54">注：本篇专栏并没有全部基于源码的理论支撑，大部分由测试和经验向的推理得出，版本约涵盖了此实体出现后的每一个版本，大部分为安卓端，其中1.18.2版本测试环境为win端 以及特别去测试的现网易版（大雾</span></p>
+        <h3>此专栏将分为3个部分</h3>
+        <h3> 1.发光鱿鱼实体的基本数值及行为</h3>
+        <h3> 2.历代版本的生成评估和特殊情况</h3>
+        <h3> 3.生成架和处死</h3>
+        <h2>1.发光鱿鱼实体的基本数值及行为</h2>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/d4407d2bf7ed.gif" width="200" height="207" alt="文章配图" loading="lazy">
+    </figure>
+        <p>ID：glow_squid</p>
+        <p><em><span style="color:#ff6699">生命值</span></em>：10 （即摔落处死要13+）</p>
+        <p><span style="color:#4fd3d1">实体尺寸</span>：成年实体y0.95   xz：0.95 幼年个体y0.475 xz0.475</p>
+        <p><span style="color:#ffb027">掉落物</span>：荧光墨囊 1-6（ 1-3为常规掉落，随抢夺附魔等级递增1）             </p>
+        <p>               经验 1-3   （狼击杀无经验）</p>
+        <p>开始窒息时间：15s</p>
+        <p>因其尺寸，在±2^18处大小实体均可完全丢失碰撞箱下落。</p>
+        <h2>2.生成评估与历代版本变化</h2>
+        <h3>⑴版本变化---变化处会表明，没有写就是没有变</h3>
+        <p>1.16.230.56   群系：海洋，河流及其变种  维度：全  y63-</p>
+        <p>1.17.0.50       群系：无限制（蘑菇岛爬啊） 河流海洋63- 其他y30-</p>
+        <p>1.17.0.52      y63-   </p>
+        <p>1.17.3/1.17.20.22     y0--64  竹子不能完全不阻挡其生成</p>
+        <p>1.18.0           y30-    </p>
+        <p>现版本1.19.6 y30-   </p>
+        <p>网易目前版本河流截图</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/f7082eb69af1.webp" width="1152" height="769" alt="文章配图" loading="lazy">
+    </figure>
+        <p>河流 海洋在洞穴生成情况下y63-即可生成 ，模拟6的情况下，河流上限为2，海洋的上限为4。----上限可能随模拟距离增加而增加</p>
+        <h2>⑵生成评估</h2>
+        <p>类型：洞穴</p>
+        <p>密度检测上限：4/2</p>
+        <p>上限计入：洞穴兽群？</p>
+        <p>光照强度：0-15</p>
+        <h2>生成范围测试</h2>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/7fec465f5633.webp" width="803" height="615" alt="文章配图" loading="lazy">
+    </figure>
+        <p>1.18.2模拟4末地 100 31 100 由近乎一个r12-22.5的空心一些点位推理出其生成范围可能为<span style="color:#f85a54">r24-45的空心球体（与怪物和动物生成范围相近）</span></p>
+        <h2>空间检测</h2>
+        <p>测试过程如下</p>
+        <h3>①水源下方生成方块测试</h3>
+        <p>几个有代表性的方块测试</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/2745efdeccb2.webp" width="576" height="319" alt="文章配图" loading="lazy">
+    </figure>
+        <p>玻璃测试</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/29c046cf86be.webp" width="833" height="304" alt="文章配图" loading="lazy">
+    </figure>
+        <p>岩浆块测试</p>
+        <p>经过了更多的测试后 可以不完全归纳出其近似于方块对正常生物的性质。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/6564815ce982.webp" width="529" height="370" alt="文章配图" loading="lazy">
+    </figure>
+        <p>以下为列举的部分<em>初生</em>方块</p>
+        <p><em>可生成：刷怪笼 岩浆块 灵魂沙 珊瑚礁  数据更新方块 </em></p>
+        <p><em>不可生成：树叶玻璃 基岩 末地门框 末地传送门 MB（利用btr测试）</em></p>
+        <h3>水源处测试</h3>
+        <p><em><span style="color:#ffb027">水源处方块可为含水方块，气泡柱，水源。</span></em></p>
+        <h2><span style="color:#f85a54">X</span><span style="color:#2ac864">Y</span><span style="color:#00aeec">Z</span>检测 </h2>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/1e3c0d362897.webp" width="415" height="142" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/ac133b16287b.webp" width="475" height="338" alt="文章配图" loading="lazy">
+    </figure>
+        <p>………………</p>
+        <p>通过改动生成架布局，我们可以得出一个确切的空间检测范围：</p>
+        <h2><span style="color:#f85a54"> 2</span>*<span style="color:#2ac864">1</span>*<span style="color:#00aeec">2</span></h2>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/47635fae711d.webp" width="162" height="169" alt="文章配图" loading="lazy">
+    </figure>
+        <p>但是事情并没有那么简单，不同于以往的空间检测范围，发光鱿鱼会检测上方y+1的2*2的空间（白区） ，大部分透明方块都不阻挡。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/bd8ad951a9b0.webp" width="138" height="186" alt="文章配图" loading="lazy">
+    </figure>
+        <p>下图列举了一些不阻挡的方块，什么你问问绊线钩和线为什么被挡住了，👈😆</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/d3178475a073.webp" width="606" height="142" alt="文章配图" loading="lazy">
+    </figure>
+        <p>楼梯的测试</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/aa40c8810ea0.webp" width="606" height="477" alt="文章配图" loading="lazy">
+    </figure>
+        <h2>方块性质</h2>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/e248edd18a41.webp" width="757" height="384" alt="文章配图" loading="lazy">
+    </figure>
+        <p>1.18.3一些植物等的性质</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/7c0cdde72ca9.webp" width="1102" height="122" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/41cb9e2c35cb.webp" width="1009" height="112" alt="文章配图" loading="lazy">
+    </figure>
+        <p>总结了一下1.16.2-1.19.6的一些方块对于发光鱿鱼的性质</p>
+        <h3>完全不阻挡：铁轨及其变种，蜘蛛网，发光地衣，杜鹃花（1.16.2-1.18.3），大垂滴叶，红石中继器，红石比较器，光源方块0-15，两种气泡柱，末地烛，两种篝火，边界上方，蜡烛1-4，海泡菜1-4，头颅，花盆，线，脚手架，潮涌核心，上方的莲叶，藤蔓，梯子，展示框，海带，海草，拉杆，按钮，绊线钩，海龟蛋，青蛙卵，实体等。</h3>
+        <h3>几种部分阻挡：TNT， 玻璃及其变种 ，三种传送门，海晶灯，萤石，信标，地毯，树叶，结构空位（1.16.2-1.17.0）玻璃板子，竹子（应该是1.16.2-1.17.10）</h3>
+        <h3>完全阻挡：🐉🥚 告示牌，避雷针，MB等（懒）</h3>
+        <h2>几种简易的生成架</h2>
+        <h3>挤压架</h3>
+        <h3>生成挤压</h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/1c4fb32f796d.webp" width="156" height="236" alt="文章配图" loading="lazy">
+    </figure>
+        <p>篝火 头颅 边界（上） 等摆烂架构</p>
+        <h3>生成侧挤压</h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/58d3649c1f0d.webp" width="1187" height="432" alt="文章配图" loading="lazy">
+    </figure>
+        <p>使用这几种廉价的方块交错排布即可</p>
+        <h3>摆烂架/划掉</h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/79bc65190273.webp" width="1570" height="598" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/aeebfae434ca.webp" width="833" height="304" alt="文章配图" loading="lazy">
+    </figure>
+        <h3>守卫者架构，结构空位三叉戟（1.16.2-1.17.0），抖三叉戟，1高水直接窒息等…</h3>
+        <h3>大粪传送门</h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/b936c06fd59b.webp" width="199" height="335" alt="文章配图" loading="lazy">
+    </figure>
+        <h3>4.26Wdph折跃门架构</h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/bfbb2386c1de.webp" width="1280" height="800" alt="文章配图" loading="lazy">
+    </figure>
+        <p>别的就懒得写了，本专栏仅抛砖引玉，👴继续摆，时不时上其他小号发点东西👀。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21467056/e76fd475059d.gif" width="55" height="46" alt="文章配图" loading="lazy">
+    </figure>
+        <h3><em><span style="color:#ffb027">专栏鸣谢：</span></em></h3>
+        <h3>                  离殇之枫-----1.19.6版本的测试</h3>
+        <h3>                  江雁岁在-----1.18.2版本win的测试</h3>
+        <h3>                   JX67-----空间检测理论</h3>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/756428970360045573">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv40839260.html" title="« 上一篇：MCBE 嘎枝生成机制与相关探索" aria-label="« 上一篇：MCBE 嘎枝生成机制与相关探索">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 嘎枝生成机制与相关探索</span>
+            </a>
+            <a class="pager-item is-next" href="cv17966733.html" title="下一篇 »：MCBE 关于伪空气类方块的评估" aria-label="下一篇 »：MCBE 关于伪空气类方块的评估">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 关于伪空气类方块的评估</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

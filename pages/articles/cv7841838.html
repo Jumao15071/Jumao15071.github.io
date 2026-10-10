@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>村庄机制limx2 - 橘猫的资源站</title>
+    <meta name="description" content="目录 引用（感谢） 写在前面 村庄机制基础 村庄中心和村庄范围 一些范围 关于铁傀儡 引用（感谢） 特别感谢Silver nitrate对村庄源码的剖析。 同时感谢藏青茶壶提供的实验数据支持。 关于铁傀儡的生成检测范围参考了youtuber：RufusAtti">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv7841838.webp" alt="村庄机制limx2">
+        </figure>
+        <div class="article-head">
+            <h1>村庄机制limx2</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/34533202" target="_blank" rel="noopener noreferrer">莵道三室戸</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2020年10月05日 10:00</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/442488370020676060" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv7841838</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">实体机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv5581369.html" title="« 上一篇：一份比较详细的 MCBE 村庄机制解析" aria-label="« 上一篇：一份比较详细的 MCBE 村庄机制解析">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">一份比较详细的 MCBE 村庄机制解析</span>
+            </a>
+            <a class="pager-item is-next" href="cv12005990.html" title="下一篇 »：MCBE 袭击（Raid）事件生成区域解析" aria-label="下一篇 »：MCBE 袭击（Raid）事件生成区域解析">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 袭击（Raid）事件生成区域解析</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p><strong>目录</strong></p>
+        <ol>
+            <li>引用（感谢）</li>
+            <li>写在前面</li>
+            <li>村庄机制基础</li>
+            <li>村庄中心和村庄范围</li>
+            <li>一些范围</li>
+            <li>关于铁傀儡</li>
+        </ol>
+        <hr class="opus-pagebreak">
+        <p><strong>引用（感谢）</strong></p>
+        <p>特别感谢Silver nitrate对村庄源码的剖析。</p>
+        <p>同时感谢藏青茶壶提供的实验数据支持。</p>
+        <p>关于铁傀儡的生成检测范围参考了youtuber：RufusAtticus的视频：https://youtu.be/3XxKRTJj5_U(并在此基础上加以实验）</p>
+        <p>关于铁傀儡迷失范围判定来自与youtuber：</p>
+        <p>ばっち（https://www.youtube.com/c/bacchigames）的交流。</p>
+        <p>本次专栏由Silver nitrate和菟道三室戸共同完成。</p>
+        <hr class="opus-pagebreak">
+        <p><strong>写在前面</strong></p>
+        <p>对应版本：【mcbe】1.16</p>
+        <p>作者的话：这次专栏是对村庄机制的一次近乎全面的解析，内容可能会涉及一些晦涩的语言，虽然关于基础知识会做适当的讲解，但是还是建议各位读者在对村庄机制稍有了解的前提下浏览。</p>
+        <p>同时对于一部分实验会附上游戏视频验证，便于大家理解。</p>
+        <p>其中涉及了没有源码验证的猜想（bug）部分，会做出相应的标注：</p>
+        <p>“（与源码不符）”“（无源码验证）”等，望慎重。</p>
+        <hr class="opus-pagebreak">
+        <p><strong>村庄机制基础</strong></p>
+        <p>（作者Silver nitrate原帖链接：<a href="cv5581369.html">网页链接</a>）</p>
+        <p>一：poi</p>
+        <p>一共有三种：1.床2.钟3.工作方块</p>
+        <p>二：村庄管理器</p>
+        <p>游戏中每个维度的所有村庄的生死存亡和poi分配都由一个叫村庄管理器的东西进行管理，一个维度有且仅有一个村庄管理器。</p>
+        <p>三：村庄行为</p>
+        <p>每gt在一定范围内（具体范围见下文）的村庄都会进行更新（做如下事情）：</p>
+        <p>1.POI处理</p>
+        <p>2.尝试刷新铁傀儡和猫</p>
+        <p>等等</p>
+        <p>四 村庄的建立</p>
+        <p>村庄管理器在处理poi请求的时候如果poi类型是床且附近(精确范围见下文)无村庄的时候会建立一个新村庄,注意一开始这个村庄是没有村民的(村民如何加入村庄见下文)。</p>
+        <p>五：居民系统</p>
+        <p>居民（包括村民和铁傀儡）每隔特定的间隔会执行一些事件，这个执行事件的gt暂且叫做居民刻。在居民刻村民做的其中一件事情是向管理器提交POI请求。还有一件事情就是：如果自己不属于任何村庄就会尝试加入离自己最近的村庄。（游戏中放床过一会儿村民才和床绑定是因为居民刻间隔较长）</p>
+        <p>其它具体细节见上方的专栏链接</p>
+        <p>【<strong>补充：每个村庄内的未绑定poi≤32（1.16未删去），第33个空poi会因无法进入这个满空poi的村庄而被缓存在村庄管理器中。</strong>】</p>
+        <hr class="opus-pagebreak">
+        <p><strong>村庄中心和村庄范围</strong></p>
+        <p>一．村庄范围</p>
+        <p>村庄范围是个长方体。在刚建立的村庄中，村庄的中心就是唯一一张床的床头，这时候村庄是默认大小64 * 24 * 64。村庄的范围永远会包括这个以poi①（不一定是床）为几何中心的64 * 24 * 64的矩形。</p>
+        <p><strong>【同时</strong><strong>在任何时候</strong><strong>，</strong><strong>村庄中心都是村庄范围长方体的几何中心</strong><strong>。】</strong></p>
+        <p>二．多poi村庄的村庄中心确定。</p>
+        <p>在游戏内部村民和poi的绑定关系是一张n*3的表格，每一行对应一个村民和它绑定的三种poi,如果没有绑定就是空缺。见下图。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7841838/3f12583e3a70.webp" width="831" height="179" alt="文章配图" loading="lazy">
+    </figure>
+        <p>村庄中心是这样计算的：</p>
+        <p>从上至下从左往右遍历这个表格，遍历到的第一个poi就是村庄的中心，然后设置村庄大小为64*24*64。对于后面的所有poi,如果它们在当前村庄范围内则无事发生。但是如果它们在村庄范围外，村庄范围就会进行最小代价的扩张（就是在把新poi包括进村庄内的情况下扩大村庄范围）。见下图。这也意味者新村的中心不再是第一张床了。</p>
+        <p>【<strong>注意</strong>：<strong>哪个是村民1哪个是村民n是没法直接判定的，不是说第一个加入村庄的就是村民1，下面会提供一种利用游戏机制</strong><strong>来</strong><strong>确定村民1的方法</strong><strong>】</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7841838/18242f440dab.webp" width="461" height="57" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7841838/4122aa045f6c.webp" width="861" height="284" alt="文章配图" loading="lazy">
+    </figure>
+        <p>三．村庄中心的变化</p>
+        <p>当上述的表格发生更新的时候就会依据上面的算法重新计算村庄中心。这些行为包括:</p>
+        <p>有村民被移除和添加</p>
+        <p>村民和POI的绑定关系发生变化。</p>
+        <p>因此理论上如果上面两条没发生村庄中心就能稳下来，但是事与愿违，解绑发生太频繁了。</p>
+        <p>就算你啥事不干，村民也会在一定条件下和它的POI解绑，这个现象在服务器尤为明显。然后村庄就会重新计算村庄范围和中心，导致村庄中心的偏移。</p>
+        <p>四．村庄中心的确定与锁定</p>
+        <p>（1）确定：</p>
+        <p>我们先构造这样一个村庄：所有的村民和床都绑定好了，但是没有一个村民绑定其它POI（工作方块或钟），同时保证这个村庄未被扩大过。</p>
+        <p>这时候我们放一个工作方块或者钟，和他绑定的那个村民就是村民1（v1）。</p>
+        <p>(2) 锁定：</p>
+        <p>为了锁定村庄中心，所需要做的就是防止村民和poi的绑定关系发生变化，在刷铁机中更是需要阻止现有村民和poi解绑，来锁定村庄中心。</p>
+        <p>方法一：用水流不断更新村民的状态（泡脚），让村民不与床解绑。【<strong>或可理解为连续不断发送状态更新抑制村庄管理器更新】</strong>
+</p>
+        <p> 方法二（无源码验证）：把村民关在一个仅能容下村民本身的空间里，阻止村民寻路。</p>
+        <p>【推测：村民解绑床的原因是村民无法通过寻路来触碰到床，所以如果从一开始就阻止村民进行寻路，就不会解绑床。】</p>
+        <hr class="opus-pagebreak">
+        <p><strong>一些范围</strong></p>
+        <p>一．铁傀儡刷新范围</p>
+        <p>铁傀儡的刷新范围是村庄中心东南西北各8格，上下各3格的区域。如图。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7841838/0b7566b5a231.webp" width="213" height="290" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7841838/273620f2752a.webp" width="432" height="322" alt="文章配图" loading="lazy">
+    </figure>
+        <p>二．村庄加载范围</p>
+        <p>当玩家在加载范围内的时候村庄才可以正常加载（当然包括刷猫，铁等行为）该范围根据模拟距离的不同而变化。大致描述为 村庄范围的长宽高+模拟距离*8所形成的矩形（也就是说，此范围会随着村庄范围的扩大而扩大）。如图（铅锤方向同理）：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7841838/616451137a62.webp" width="267" height="215" alt="文章配图" loading="lazy">
+    </figure>
+        <p>公式为（R为模拟距离，此处表示为格数）：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7841838/28e1c09da8bf.webp" width="573" height="60" alt="文章配图" loading="lazy">
+    </figure>
+        <p>三．村庄检测范围</p>
+        <p>在一个村庄1的一定距离外新放下一个poi和村民，可以在此处建立一个新的村庄2而不是融合进村庄1的最近距离的集合。命名为村庄检测范围。</p>
+        <p>大致描述为 村庄距离的长宽高+64所形成的矩形（和村庄加载距离一样，会随着村庄范围扩大而扩大）。如图：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7841838/28b0150136f5.webp" width="380" height="365" alt="文章配图" loading="lazy">
+    </figure>
+        <p>公式为：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7841838/2f25026e68ae.webp" width="541" height="60" alt="文章配图" loading="lazy">
+    </figure>
+        <p>四．村庄半径R</p>
+        <p>以村庄中心为球心的某个球体的的半径。为该村庄的半径。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7841838/b8e30cdca82b.webp" width="384" height="158" alt="文章配图" loading="lazy">
+    </figure>
+        <p>此时村庄半径根据dx，dy的不同而变化（大小与中心无关）。</p>
+        <p>dx=dz</p>
+        <p>R=1/2×√2dx</p>
+        <p>dx≠dy</p>
+        <p>R=1/2×（dx+dy）×0.6</p>
+        <p>(也就是说，一个标准的最小范围村庄，半径R=1/2×√2×64≈45.5。</p>
+        <p>最小半径（利用dx≠dz）R=1/2×（64+65）×0.6≈39)</p>
+        <p>五．距离检测范围</p>
+        <p>以村庄中心为球心，村庄半径R为半径的球体。poi到此村庄的距离都是检测poi所在的点到这个球面的距离。如图（poi在圆内时距离为负）：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7841838/59263619d3ae.webp" width="633" height="355" alt="文章配图" loading="lazy">
+    </figure>
+        <p>【猜测：堆叠村庄过程中，同时进入两个村庄的距离检测范围圆内（负值）时，poi的分配会不遵循就近原则（无源码验证）（与源码不符），这也是堆叠村庄的一大难点所在】</p>
+        <p>六．总结</p>
+        <p>（1）与村庄中心有关的是，这些范围所形成的图形的几何中心都在村庄中心。</p>
+        <p>（2）村庄加载范围和新建村庄范围都是在村庄范围的基础上扩大一定值形成的。</p>
+        <p>这些范围的一个立体图（没有铁傀儡刷新范围），方便大家理解。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7841838/3bfc0a533fcd.webp" width="516" height="408" alt="文章配图" loading="lazy">
+    </figure>
+        <hr class="opus-pagebreak">
+        <p><strong>关于铁傀儡</strong></p>
+        <p>生成前提</p>
+        <p>（1）一个村庄内包含20张（及以上）的床(包括绑定和未绑定的)。</p>
+        <p>（2）村庄人数为10时，可存在的铁傀儡上限为1。每多10人，上限增加1。</p>
+        <p>（3）村庄内3/4的村民在前一天与工作方块有过交互。</p>
+        <p>（4）村庄人口≤床</p>
+        <p>（5）所有村民都绑定床</p>
+        <p>二．生成判定</p>
+        <p>（1）可生成在固体方块或大部分拥有完整表面的方块（property 21）。（除树叶，冰，玻璃等）</p>
+        <p>（2）检测生成点的长宽高2×2×4范围，不能存在固体方块或property 21等一些特殊方块（如树叶，冰，玻璃）</p>
+        <p>（3）可在生成点上方有透明方块的情况下生成（如上方有半砖，围栏等）。</p>
+        <p>三．移除与迷失（移民）</p>
+        <p>（1）移除。铁傀儡被正常的从此村庄内清除，条件有：</p>
+        <p>1. 铁傀儡死亡</p>
+        <p>2. 铁傀儡进入其他维度</p>
+        <p>3. 内部TS值超过24000（见“迷失”）</p>
+        <p>【移除后村庄中铁傀儡数量-1】</p>
+        <p>（2）迷失（移民）：适用于村民和铁傀儡，如图：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7841838/9c4ba66080e3.webp" width="518" height="441" alt="文章配图" loading="lazy">
+    </figure>
+        <p>村庄更新还有一件事就是更新它所拥有的居民内部的TS值。而居民自己在居民刻的时候而且在<strong>村庄</strong><strong>检测</strong><strong>范围内</strong>的时候会把自己的TS值清零。村庄和村民对TS值的更新导致居民内部的TS值维持在不太高的状态。但是如果居民跑到<strong>村庄</strong><strong>检测范围</strong>外就不会重置他自己的TS值，这样的居民暂且叫做”<strong>迷失状态</strong>”。此居民的TS值在达到24000（20分钟）时就会被原本所属的村庄移除。</p>
+        <p><strong>【</strong><strong>注意：（1）</strong>刷铁机密堆，铁傀儡生成点离两个村庄都比较近（具体范围待验证）的时候，其中一个村庄（V1）的铁傀儡会在生成的瞬间被另一个村庄（V2）夺走。此时铁傀儡会被分裂，同时在V1和V2中占用上限，但是此时铁傀儡实则已经脱离V1，会被判定为迷失，在TS值到达24000后移除。</p>
+        <p><strong>（2）</strong>此时处死已经被V2夺走的铁傀儡，V1的铁傀儡数量值也不会减少（这是玄学），而是依然判定铁傀儡已经迷失。】</p>
+        <hr class="opus-pagebreak">
+        <p style="text-align: right"><strong>完~</strong>
+</p>
+        <p style="text-align: right">by：菟道三室戸</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/442488370020676060">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv5581369.html" title="« 上一篇：一份比较详细的 MCBE 村庄机制解析" aria-label="« 上一篇：一份比较详细的 MCBE 村庄机制解析">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">一份比较详细的 MCBE 村庄机制解析</span>
+            </a>
+            <a class="pager-item is-next" href="cv12005990.html" title="下一篇 »：MCBE 袭击（Raid）事件生成区域解析" aria-label="下一篇 »：MCBE 袭击（Raid）事件生成区域解析">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 袭击（Raid）事件生成区域解析</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

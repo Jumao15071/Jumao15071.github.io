@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基岩版中的方块与方块实体等 - 橘猫的资源站</title>
+    <meta name="description" content="方块 游戏中所有的方块都围绕着 BlockLegacy 这个类设计。 这个类定义了方块的通用基本属性，比如方块 id，碰撞箱，是否为重力方块等。 所有的方块类都继承或间接继承自这个类，比如门(DoorBlock)，泥土(DirtBlock)。 每个方块类都只有">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>基岩版中的方块与方块实体等</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/122391924" target="_blank" rel="noopener noreferrer">何以贯之</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">编辑于 2024年11月28日 11:18</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/992224465716772897" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv39577420</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv15245302.html" title="« 上一篇：MCBE 活塞的一些简单应用-续续篇" aria-label="« 上一篇：MCBE 活塞的一些简单应用-续续篇">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 活塞的一些简单应用-续续篇</span>
+            </a>
+            <a class="pager-item is-next" href="cv39623885.html" title="下一篇 »：MCBE 基岩版红石粉压线与引线机制" aria-label="下一篇 »：MCBE 基岩版红石粉压线与引线机制">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 基岩版红石粉压线与引线机制</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p><strong>方块</strong></p>
+        <p>游戏中所有的方块都围绕着 BlockLegacy 这个类设计。</p>
+        <p>这个类定义了方块的通用基本属性，比如方块 id，碰撞箱，是否为重力方块等。</p>
+        <p>所有的方块类都继承或间接继承自这个类，比如门(DoorBlock)，泥土(DirtBlock)。</p>
+        <p>每个方块类都只有一个实例，同种方块将指向同一个实例。</p>
+        <p><strong>方块状态</strong></p>
+        <p>一种方块可能有多种状态，将方块的实例和一个方块状态包装在一起，构成通常意义上的方块(Block)。</p>
+        <p>同种方块的不同方块状态，它们对应的 BlockLegacy 是相同的。</p>
+        <p><strong>方块的初始化</strong></p>
+        <p>进入游戏时，游戏会为每种方块创建一个 BlockLegacy 实例，然后遍历它们的所有方块状态，为每个方块状态创建一个 Block，分别保存在对应的实例内。</p>
+        <p>每个 BlockLegacy 实例内拥有不同方块状态的 Block 列表，称为 BlockPermutations。</p>
+        <p>无论是 Block 还是 BlockLegacy，它们创建后都是不应改变的。方块的使用就如同查询大字典，比如门从关到开状态改变，只是从关闭状态的 Block 获取对应的 DoorBlock，再从其 BlockPermutations 内找到开启状态的 Block，最后替换放置。</p>
+        <p><strong>方块实体(BlockActor)</strong></p>
+        <p>由前文可知，BlockLegacy 的单实例模式(准确说是享元模式)使得同种方块共用了大部分数据，且这些数据确定后就不应改变。方块的不变性是其与实体的本质区别。如果你试图修改一个草方块的碰撞箱，那么所有草方块的碰撞箱都会被修改。</p>
+        <p>这带来了许多限制，比如容器就难以实现，两个箱子只能共用一个空间。</p>
+        <p>所以方块实体的概念诞生了，它赋予方块类似实体互相独立的特点。</p>
+        <p>所有方块实体类都继承自 BlockActor 这个类，比如箱子方块实体(ChestBlockActor)。</p>
+        <p>一个方块实体内部包含了其对应的 Block，和要保存的特殊数据。相比方块，方块实体不需要提前创建，且可以多次实例化，这意味着你可以创建两个箱子方块实体对象，保存不同的容器内容。</p>
+        <p>方块实体创建后保存在区块(LevelChunk)内，可以通过区块坐标查找到方块实体。</p>
+        <p><strong>方块实体的创建</strong></p>
+        <p>方块实体跟随方块创建，当放置一个方块时，如果这个方块有方块实体，就会新实例化一个对应的方块实体，并保存在区块中。放置方块时也可以选择使用已有的方块实体，这样就不会新创建方块实体。</p>
+        <p>当方块被替换，被破坏(实际上就是替换为空气方块(AirBlock))，对应的方块实体也会从区块中移除。</p>
+        <p>BlockLegacy、Block、BlockActor 都使用智能指针管理。</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/992224465716772897">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv15245302.html" title="« 上一篇：MCBE 活塞的一些简单应用-续续篇" aria-label="« 上一篇：MCBE 活塞的一些简单应用-续续篇">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 活塞的一些简单应用-续续篇</span>
+            </a>
+            <a class="pager-item is-next" href="cv39623885.html" title="下一篇 »：MCBE 基岩版红石粉压线与引线机制" aria-label="下一篇 »：MCBE 基岩版红石粉压线与引线机制">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 基岩版红石粉压线与引线机制</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

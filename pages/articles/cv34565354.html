@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 生物生成机制经验总结 - 橘猫的资源站</title>
+    <meta name="description" content="《我的世界》这款游戏中，生物生成是游戏玩法的重要组成部分。了解生物生成机制可以有助于我们建造生物农场，并排除其故障。本文总结了现有的一些资料，可能有不准确之处，欢迎大家指正。 生物与玩家 生物的生成和玩家密切相关。举个例子，如果你去距离基地很远的地方挖矿，怪物">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv34565354.webp" alt="MCBE 生物生成机制经验总结">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 生物生成机制经验总结</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/37691488" target="_blank" rel="noopener noreferrer">橘猫sama</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2024年05月16日 21:40</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/932129940696989735" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv34565354</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">实体机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv12809481.html" title="« 上一篇：MCBE 生成机制讲解（1.16.40）" aria-label="« 上一篇：MCBE 生成机制讲解（1.16.40）">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 生成机制讲解（1.16.40）</span>
+            </a>
+            <a class="pager-item is-next" href="cv36693249.html" title="下一篇 »：MCBE 生物寻路的一些机制" aria-label="下一篇 »：MCBE 生物寻路的一些机制">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 生物寻路的一些机制</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="html">
+        <p>《我的世界》这款游戏中，生物生成是游戏玩法的重要组成部分。了解生物生成机制可以有助于我们建造生物农场，并排除其故障。本文总结了现有的一些资料，可能有不准确之处，欢迎大家指正。</p>
+        <hr class="opus-pagebreak">
+        <h2><strong><br></strong><strong>生物与玩家</strong></h2>
+        <p><strong>生物的生成和玩家密切相关。</strong>举个例子，如果你去距离基地很远的地方挖矿，怪物会生成在你周围的矿洞里，而不会生成在家里。这时，由于玩家距离基地非常远，游戏会卸载基地的区块以降低卡顿。卸载的区块中，农作物不能生长，生物不会运动，生物自然也不会生成。<br></p>
+        <p>而如果你使用指令强制加载基地的区块，那么农作物等受随机刻影响的方块会因此生长，农场里的羊也会正常吃草，鸡也会正常下蛋，然而，生物不会因此生成，生物的生成只和玩家有关。</p>
+        <p>总而言之，<strong>生物只能在加载的区块中，距离玩家一定距离内生成和清除。</strong></p>
+        <hr class="opus-pagebreak">
+        <h2>模拟距离</h2>
+        <p><strong>区块加载、生物的生成和清除与模拟距离有关。</strong>模拟距离是控制世界计算范围的设置，在基岩版中可以在游戏外存档设置中修改，网易版不能修改，游戏内不能修改。服务器修改模拟距离可通过server.properties里的tick-distance=[4,12]改变。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34565354/29e228212616.webp" width="1853" height="921" alt="模拟距离" loading="lazy">
+        <figcaption class="fig-caption">模拟距离</figcaption>
+    </figure>
+        <p>在Minecraft wiki中，模拟距离条目对此有详细叙述。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34565354/5369c21f4616.webp" width="1022" height="285" alt="模拟距离修改范围" loading="lazy">
+        <figcaption class="fig-caption">模拟距离修改范围</figcaption>
+    </figure>
+        <p>模拟距离限制了生物生成和清除的最大距离，其范围如下表格。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34565354/f798130db0a5.webp" width="1043" height="298" alt="模拟距离与生物生成和清除范围" loading="lazy">
+        <figcaption class="fig-caption">模拟距离与生物生成和清除范围</figcaption>
+    </figure>
+        <p>这里我们需要注意的是，<strong>模拟距离=4和模拟距离＞4的生物生成和清除范围差别非常大</strong>，虽然这对低性能手机和服务器非常友好，但这会造成两种情况下刷怪塔设计有所差异。</p>
+        <p>例如，如果你的刷怪塔建造在主世界高空中，为避免地面刷怪影响效率，模拟距离=4时你只需从地面向上搭44格以上，模拟距离＞4时你需要从地面向上搭128格以上。如果你的刷怪塔建造在下界，为避免刷怪影响效率，模拟距离=4时你需要清理挂机点为中心半径44的空间，模拟距离＞4时你需要清理挂机点为中心半径128的空间。</p>
+        <p><strong>具体变化请参考评论区置顶链接</strong></p>
+        <p>在模拟距离内，每个区块、每一游戏刻有11⁄2000的概率在尝试运行生物生成的算法。</p>
+        <p>距离玩家超过32格超过30秒，并且在最近30秒内没有受到伤害时，每游戏刻(gametick)有1⁄800的概率被随机清除。</p>
+        <p>现有的网易中国版，手机端单人游戏模拟距离可以为6或8，服务器、租赁服模拟距离固定为4，且<strong>不可修改</strong>。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34565354/e5bb7437f0cf.webp" width="1920" height="1200" alt="这张图是我做的" loading="lazy">
+        <figcaption class="fig-caption">这张图是我做的</figcaption>
+    </figure>
+        <p>区块的加载范围也由模拟距离n决定。区块加载控制实体和方块的更新，其最大的加载范围距离玩家曼哈顿距离n+1个区块，且与玩家所在区块的X和Z坐标相同的最外侧4个区块不加载。</p>
+        <p>其他具体内容可直接查阅Minecraft wiki 模拟距离条目，这里不过多解释。</p>
+        <p><a href="https://wiki.biligame.com/mc/%E6%A8%A1%E6%8B%9F%E8%B7%9D%E7%A6%BB" target="_blank" rel="noopener noreferrer">模拟距离 Minecraft wiki</a></p>
+        <hr class="opus-pagebreak">
+        <h2>指导：距离</h2>
+        <p>前文提到了一些距离量度，可能有些玩家会感到困惑，因此专门介绍一下。</p>
+        <p>《我的世界》这款游戏中，常用的距离量度有三种，分别是<strong>欧几里得距离、曼哈顿距离和切比雪夫距离</strong>，不懂没关系，我会举例说明。</p>
+        <p><strong>欧几里得距离</strong>在二维平面上是圆形范围，三维空间内是球形范围，以模拟距离=4时，怪物生成在距离玩家24-44格为例：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34565354/1f454fb99e77.webp" width="1920" height="1080" alt="盔甲架代表玩家，绿色范围是R24，红色范围是R44" loading="lazy">
+        <figcaption class="fig-caption">盔甲架代表玩家，绿色范围是R24，红色范围是R44</figcaption>
+    </figure>
+        <p><strong>曼哈顿距离</strong>在二维平面上类似一个菱形范围，以模拟距离n=6时，怪物生成在距离玩家曼哈顿距离≤n-1个区块为例（曼哈顿距离仅限制区块，三维空间依旧需满足欧氏距离R24-R128）：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34565354/c88657a6cd39.webp" width="571" height="573" alt="绿色范围是怪物生成范围，加上红色部分是区块加载范围" loading="lazy">
+        <figcaption class="fig-caption">绿色范围是怪物生成范围，加上红色部分是区块加载范围</figcaption>
+    </figure>
+        <p><strong>切比雪夫距离</strong>在三维平面上类似一个立方体范围，村庄未经扩张时村庄范围为以村庄中心为中心65×25×65格(坐标xyz顺序)，铁傀儡生成范围以村庄中心为中心17×13×17格：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34565354/b0cc2930a12d.webp" width="1203" height="703" alt="绿色为村庄中心，蓝色为铁傀儡生成范围，橙色为村庄范围" loading="lazy">
+        <figcaption class="fig-caption">绿色为村庄中心，蓝色为铁傀儡生成范围，橙色为村庄范围</figcaption>
+    </figure>
+        <p>我们只需要记住这三种距离的概念即可，并没有什么特别难的东西。</p>
+        <hr class="opus-pagebreak">
+        <h2>生成<br></h2>
+        <p>游戏中生物的生成一般分为<strong>自然生成</strong>和<strong>结构生成</strong>。</p>
+        <p><strong>结构生成</strong>指生物作为结构的一部分生成（如掠夺者前哨站、海底神殿、下界要塞、沼泽小屋等），其他所有为自然生成。</p>
+        <p>在生成条件上，两种生成基本遵守和Java版类似的规则，部分规则有所不同。</p>
+        <p>在基岩版1.21.0以前，基岩版生物生成在方块的西北角，而非像Java版那样位于方块的中心。</p>
+        <p>在基岩版1.21.0以后，自然生成的生物生成变为方块的中心，在代码上意味着原坐标xz各+0.49000001。</p>
+        <p>游戏中每一游戏刻每一区块有11⁄2000的概率运行生成算法，随后更新其种群控制上限，随后Y坐标从上往下遍历可作为生成点的方块，再根据群系和生物权重选择一种生物生成。</p>
+        <p><span class="color-blue-03">注意，接下来的内容可能会更改，本文写于基岩版1.21.0</span></p>
+        <p>部分内容摘自Minecraft wiki<a href="https://wiki.biligame.com/mc/%E7%94%9F%E6%88%90" target="_blank" rel="noopener noreferrer">生成 Minecraft wiki</a></p>
+        <h2><strong>生物上限</strong></h2>
+        <p>无论游戏难度或玩家数量如何，自然生成的<strong>全局上限</strong>总是200。全局上限仅影响自然生成，不影响繁殖、刷怪蛋、命令召唤、刷怪笼或其他种类的生成。只有加载区块内的生物会被纳入全局上限的计算。</p>
+        <p>除全局生物上限之外，还有<strong>种群控制上限</strong>，种群控制上限限定了生物的密度。生物生成时，会检测生物当前区块为中心的9×9区块范围内生物数量，其不能超过种群控制上限。这个范围被称作<strong>区块密度检测范围</strong>。</p>
+        <p>只要在模拟距离所控制的区块加载范围内（与生物生成范围无关）或通过<code>/tickingarea</code>设置的常加载区域内，已生成的生物就会影响种群控制上限。</p>
+        <p>种群上限分为截然不同的两类：<strong>地表生物上限</strong>和<strong>洞穴生物上限</strong>。洞穴生物不会计入地表生物上限中，反之亦然。决定生物计入哪个上限是其生成时的位置，而非其目前所在的位置。</p>
+        <p>对于自然生成，Y坐标从上往下遍历到的第一个生成点上方生成的生物（可能生成失败）计入地表上限，其他则计入洞穴上限。结构生成的生物（女巫计入地表上限）和转化的生物永远计入洞穴上限。</p>
+        <p>截至基岩版1.21.0，生物<strong>种群控制上限</strong>被分为以下六种：环境生物、动物、怪物、掠夺者、水生生物和猫。其内容被数据驱动，位于行为包/vanilla/spawn_rules中的 &#34;population_control&#34;</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34565354/870040621e6d.webp" width="393" height="494" alt="种群控制上限" loading="lazy">
+        <figcaption class="fig-caption">种群控制上限</figcaption>
+    </figure>
+        <p>部分生物亦有其自己的密度上限，使其数量略小于种群控制上限。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34565354/76ceb9703a29.webp" width="590" height="568" alt="密度上限" loading="lazy">
+        <figcaption class="fig-caption">密度上限</figcaption>
+    </figure>
+        <p>然而，这个机制源于携带版，而携带版的机制并不适合现在的基岩版。因此，在1.20.80后，mojang在vanilla/entities中添加了&#34;spawn_category&#34;。其类似于Java版的生成类别，其生物分类也完全一致。mojang表示目前这个组件不起作用，但是未来将会实装。我们目前（写于1.21.0）不清楚mojang会怎么改，作者我个人推测会修改种群控制上限相关的机制，以更趋近于Java版，因为二者目前是有冲突的。</p>
+        <p>在Java版中，生物被划分为8种类别，分别为<strong>怪物</strong>（Monster）、<strong>动物</strong>（Creature）、<strong>环境生物</strong>（Ambient）、<strong>美西螈</strong>（Axolotls）、<strong>地下水生生物</strong>（Underground Water Creature）、<strong>水生生物</strong>（Water Creature）、<strong>水下环境生物</strong>（Water Ambient）和<strong>其他</strong>（Misc）</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34565354/4b0f0e6aef89.webp" width="528" height="378" alt="Java版生成类别" loading="lazy">
+        <figcaption class="fig-caption">Java版生成类别</figcaption>
+    </figure>
+        <hr class="opus-pagebreak">
+        <h2>生成条件</h2>
+        <ul>
+            <li>生物会在玩家24格外一定距离内生成，如果模拟距离n为4，该生物生成在距玩家欧几里得距离24-44格远处；如果模拟距离n大于4，该生物生成在欧几里得距离24-128格远处并且曼哈顿距离小于等于n-1个区块。这部分内容在前文模拟距离部分已介绍，在此不再赘述。</li>
+            <li>该生物必须生成在一个平整的固体表面<strong>之上</strong>，这个<strong>可进行生成尝试的方块</strong>我们通常叫做<strong>生成点</strong>。该生物不能生成生成在无生成尝试的方块，如玻璃、树叶、栅栏、活板门、下半台阶、向上的楼梯和箱子等方块上。</li>
+            <li>生物会检测生物生成的空间是否符合生成条件。以苦力怕为例，在基岩版1.21.0以前，这个范围是2×2×2；在基岩版1.21.0以后，这个范围是1×2×1。以蜘蛛为例，在基岩版1.21.0以前，这个范围是2×1×2；在基岩版1.21.0以后，这个范围是3×1×3。一些怪物如史莱姆、岩浆怪在旧版本误用苦力怕的空间检测，这属于bug。<br></li>
+            <li>生成点<strong>上方一格</strong>必须是空气类型的方块（以苦力怕为例 其脚部方块），真正的空气类型的方块有空气、水和岩浆。对于陆地生物而言，这格方块必须是空气；对于水生生物而言，这格方块必须是水；对于炽足兽而言，这格方块必须是岩浆。然而，<strong>部分方块</strong>可以将这种空气检测挪到<strong>此方块上方一格</strong>（以苦力怕为例 其头部方块），并检查上方方块是否为空气类型的方块，如果是，则依旧可以生成生物，这时此方块是空气、水或岩浆都可以。此类方块可以堆叠多层，只要最上方通过空气检测就可以。此类方块常见的有各种植物（睡莲除外）、雪、饰纹陶罐、生物头颅、火把、脚手架、物品展示框、幽匿脉络等，其<strong>完全不阻碍生物生成</strong>，尽管其中一些方块有碰撞箱，导致生物生成后会被挤压出方块。</li>
+        </ul>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34565354/a05d42b98e0a.webp" width="796" height="1080" alt="空气检测可以叠多层，但必须有一格空气类型的方块以供生成" loading="lazy">
+        <figcaption class="fig-caption">空气检测可以叠多层，但必须有一格空气类型的方块以供生成</figcaption>
+    </figure>
+        <ul>
+            <li>部分方块不能将空气检测挪到此方块上方一格，但依旧不阻碍生物生成，我们也可以把这类方块归类为<strong>部分不阻碍生物生成</strong>，其不能位于生成点上方一格或以其他形式阻碍空气检测。此类方块常见的有地毯、仙人掌、玻璃、树叶、冰（不包括浮冰和蓝冰）、TNT、荧石、海晶灯等，其中一些方块有碰撞箱。此外，冰、TNT、海晶灯等方块属于平整固体表面，可作为生物的生成点。</li>
+            <li>如果有<strong>阻碍生物生成</strong>的方块，如石头、栅栏、墙、活板门等，游戏会检测尝试生成的生物的碰撞箱是否与方块的碰撞箱重合，如果不重合则生成成功，反之则生成失败。雪、饰纹陶罐、垂滴叶等方块虽然完全不阻碍生物生成，但这些方块有碰撞箱，因此一旦启用碰撞箱检测，则这些方块也会阻碍生物生成。</li>
+        </ul>
+        <p>相关内容可查阅<a href="cv24284987.html">离殇之枫 完全不阻碍与部分不阻碍方块汇总及空气类方块简述</a></p>
+        <p>除此之外，</p>
+        <ul>
+            <li>绝大多数主世界怪物不能在方块光照高于0或天空光照高于7的地点生成。</li>
+            <li>绝大多数主世界动物不能在方块光照和天空光照低于7的地点生成。</li>
+            <li>对于水生生物（美西螈不是）来说，营火、中继器、比较器，铁轨、拉杆、绊线钩等方块完全不阻碍生物生成，但对于其他一些生物来说属于部分不阻碍生物生成的方块。</li>
+            <li>僵尸猪灵只启用碰撞箱检测，不能被玻璃等方块挤压。</li>
+            <li>部分生物只能在特定的方块上生成，如多数主世界动物只能在草方块上生成，兔子只能在草方块、沙子、雪块、雪层上生成，犰狳只能在草方块、砂土、红沙以及未染色、红色、橙色、黄色、棕色、白色和淡灰色陶瓦上生成等等。</li>
+            <li>海洋和河流中的鱼只在高度Y=50至Y=64之间的水中自然生成，鱼在距离玩家12-32格的范围内生成，超过40格距离则立即消失。</li>
+            <li>幻翼以玩家上方28格为中心，21×15×21的切比雪夫范围生成。</li>
+            <li>对于能够生成并飘浮在空气中或漂浮在水中的生物，水生生物检查生成条件的方块是该生物生成位置向下第一个<strong>生成点</strong>之上紧邻的水方块和其方块上方生成位置的方块，而幻翼生成也会同时检测<strong>生成点</strong>之上紧邻的空气方块和其玩家上方生成位置的方块。因此，幻翼不能在铺满地毯的平原上空生成，鱼也不能在铺满下半台阶的海洋之中生成（不通过空气检测）。</li>
+            <li>铁傀儡和猫会在玩家进入村庄加载范围内后生成。</li>
+        </ul>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34565354/0b732090559d.webp" width="518" height="291" alt="基岩版1.21.0以前生物生成检测" loading="lazy">
+        <figcaption class="fig-caption">基岩版1.21.0以前生物生成检测</figcaption>
+    </figure>
+        <hr class="opus-pagebreak">
+        <h2><strong>坐标偏移现象<br></strong></h2>
+        <p>1.21.0以前，如果挤压生物脚部，可能会出现某个方向能挤压生物，某个方向不行的情况，这是因为基岩版的生物生成坐标会有一个很小的偏移，其具体情况如下表：<strong><br></strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34565354/ac8038a26f77.webp" width="1920" height="1080" alt="1.21.0以前生物挤压方向（蜘蛛与僵尸的挤压表现不同，但未测试）" loading="lazy">
+        <figcaption class="fig-caption">1.21.0以前生物挤压方向（蜘蛛与僵尸的挤压表现不同，但未测试）</figcaption>
+    </figure>
+        <p>在1.21.0以后，由于自然生成的生物位于方块中心，这导致了生物挤压方向的不规律。但是1.21.0以后利用挤压偏移，通过雪、冰、树叶、玻璃等方块挤压生物落下去成为刚需，因此你还需要这张经验表确定刷怪塔的建造方向。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34565354/23f369fb7899.webp" width="1920" height="1080" alt="1.21.0僵尸挤压方向" loading="lazy">
+        <figcaption class="fig-caption">1.21.0僵尸挤压方向</figcaption>
+    </figure>
+        <p>例如，如果你想在X=-500，Z=114514做刷怪塔，查表可知大怪往北挤压，小怪往西挤压。你做不了雪片刷怪塔（怪物挤压方向不一致） 可以做一个玻璃挤压刷怪塔，玻璃需要朝东西方向铺（挤压大怪），小怪用活板门骗寻路掉下去。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34565354/b629c0cd79ed.webp" width="1032" height="852" alt="活板门限制蜘蛛生成+玻璃挤压怪物+活板门骗小僵尸寻路" loading="lazy">
+        <figcaption class="fig-caption">活板门限制蜘蛛生成+玻璃挤压怪物+活板门骗小僵尸寻路</figcaption>
+    </figure>
+        <hr class="opus-pagebreak">
+        <h2><strong>地表&amp;洞穴</strong></h2>
+        <p><strong>自然生成</strong>的生物分为<strong>地表生物</strong>和<strong>洞穴生物</strong>。</p>
+        <p>自然生成首先会更新种群控制上限，接着在被计算的区块内随机选择X和Z坐标，Y坐标通过从世界高度向下搜索找到第一个<strong>可进行生成尝试的方块</strong>和上方的空气类方块尝试生成生物。</p>
+        <p>生成算法会将该方块当作地表方块，同时尝试生成一群地表生物，但可能生成失败。</p>
+        <p>此后，生成算法继续向下搜索至下一个合适的<strong>可进行生成尝试</strong>，其上方一格完全不阻碍生成的方块。找到满足上述要求的方块后，生成算法会尝试在该方块处生成洞穴生物。洞穴生成会一直持续至Y坐标达到世界底部，并且不会在生成生物后停止。</p>
+        <p>生成的生物分别计入<strong>地表生物上限</strong>和<strong>洞穴生物上限</strong>，参见前文“种群控制上限”部分。</p>
+        <p>生成生物会按照<strong>生成权重</strong>生成，其数据都可以在Minecraft wiki生物群系和生成结构相关条目找到。</p>
+        <p>其位于行为包vanilla/spawn_rules中的&#34;biome_filter&#34;和vanilla/biomes中的&#34;tags&#34;</p>
+        <p>*在基岩版中，由于河流没有“monster”的tag，所以怪物不能在河流群系生成（这是一个bug）</p>
+        <p>*沼骸和流浪者也只有地表可以生成，其所在的红树林沼泽、雪原也并不会生成僵尸、骷髅、蜘蛛、苦力怕等怪物。</p>
+        <hr class="opus-pagebreak">
+        <h2>结构生成</h2>
+        <p>结构生成以自然生成的生成尝试为基础，游戏会尝试于自然生成的结构中的特定相对X、Z坐标（称为“<strong>硬编码生成点</strong>”，<strong>HSA</strong>）进行结构生成。</p>
+        <p>*这些生成点其实有可能是代码bug，本来应该像Java版一样拥有完整结构范围。</p>
+        <p>含有HSA的结构目前包括沼泽小屋、海底神殿、掠夺者前哨站和下界要塞。</p>
+        <p>含有HSA的结构除沼泽小屋生成的女巫（地表生物上限）外均计入<strong>洞穴生物上限</strong>。</p>
+        <p>每当含有HSA的区块中进行了一次自然生成尝试，算法亦会尝试进行一次结构生成。注意，此处自然生成指找到<strong>可进行生成尝试的方块</strong>，即使由于光照或是密度检查等原因而未能生成生物也是如此。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34565354/279ab34e1c62.webp" width="2041" height="2041" alt="自然生成尝试（水池）转移给结构生成" loading="lazy">
+        <figcaption class="fig-caption">自然生成尝试（水池）转移给结构生成</figcaption>
+    </figure>
+        <p>因此如果某个X、Z坐标没有合适的生成点（如仅有空气方块，或所有可生成位置被下半台阶、地毯覆盖等情况），则没有自然生成，亦无法进行结构生成。结构生成遵循和上述自然生成相同的规则和步骤，只有以下不同：</p>
+        <ul>
+            <li>硬编码生成点的Y坐标搜索的起止点由结构的硬编码生成点区域决定，而非从世界高度开始至基岩结束。结构生成仅在该区间内第一个可生成方块（即最高的可生成方块）处尝试一次。例如，如果脚手架搭满了整个HSA区域，则没有空气类型的方块可供生成，生物生成失败；如果从上到下找到的第一个可生成方块上方使用下半台阶等方块遮盖，则生物生成失败，即使下方依旧有可生成的区域。</li>
+            <li>选择的生物取决于结构：沼泽小屋生成女巫，海底神殿生成守卫者，掠夺者前哨站生成掠夺者（包含巡逻队长），下界要塞生成僵尸猪灵、骷髅、凋灵骷髅、烈焰人和岩浆怪。如果这个世界有野生的灾厄巡逻队并含有巡逻队长，掠夺者前哨站不会生成巡逻队长。</li>
+        </ul>
+        <p>HSA均为于其子结构的中心，除下界要塞的其他三种结构HSA可查询Minecraft wiki找到</p>
+        <p>（图都是我做的，上传到wiki上）</p>
+        <p><a href="https://wiki.biligame.com/mc/%E6%B2%BC%E6%B3%BD%E5%B0%8F%E5%B1%8B" target="_blank" rel="noopener noreferrer">沼泽小屋</a></p>
+        <p><a href="https://wiki.biligame.com/mc/%E6%B5%B7%E5%BA%95%E7%A5%9E%E6%AE%BF" target="_blank" rel="noopener noreferrer">海底神殿</a></p>
+        <p><a href="https://wiki.biligame.com/mc/%E6%8E%A0%E5%A4%BA%E8%80%85%E5%89%8D%E5%93%A8%E7%AB%99" target="_blank" rel="noopener noreferrer">掠夺者前哨站</a></p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/932129940696989735">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv12809481.html" title="« 上一篇：MCBE 生成机制讲解（1.16.40）" aria-label="« 上一篇：MCBE 生成机制讲解（1.16.40）">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 生成机制讲解（1.16.40）</span>
+            </a>
+            <a class="pager-item is-next" href="cv36693249.html" title="下一篇 »：MCBE 生物寻路的一些机制" aria-label="下一篇 »：MCBE 生物寻路的一些机制">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 生物寻路的一些机制</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

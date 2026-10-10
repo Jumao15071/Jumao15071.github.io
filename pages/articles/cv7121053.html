@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>切断烧火把特性研究报告 - 橘猫的资源站</title>
+    <meta name="description" content="三个月多了 依然是理论缺乏 也没名字 就发个专栏补偿吧233 其实这个信号很常见只是被大家忽略了应该（ 我只是发现的比较多就算留档吧 这是目前我见到的最精简的版本了 ================================== 图1,2:用于调试的单次">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv7121053.webp" alt="切断烧火把特性研究报告">
+        </figure>
+        <div class="article-head">
+            <h1>切断烧火把特性研究报告</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/86226988" target="_blank" rel="noopener noreferrer">tyerjs</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2020年08月11日 02:15</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/421958653973672392" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv7121053</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv29597163.html" title="« 上一篇：MCBE 红石火把与无线电底层分析" aria-label="« 上一篇：MCBE 红石火把与无线电底层分析">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 红石火把与无线电底层分析</span>
+            </a>
+            <a class="pager-item is-next" href="cv37521902.html" title="下一篇 »：MCBE 方块被放置后发生了什么？方块更新如何影响红石系统？" aria-label="下一篇 »：MCBE 方块被放置后发生了什么？方块更新如何影响红石系统？">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 方块被放置后发生了什么？方块更新如何影响红石系统？</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p>三个月多了
+</p>
+        <p>依然是理论缺乏 也没名字 </p>
+        <p>就发个专栏补偿吧233</p>
+        <p>其实这个信号很常见只是被大家忽略了应该（
+我只是发现的比较多就算留档吧
+这是目前我见到的最精简的版本了</p>
+        <p>==================================
+图1,2:用于调试的单次触发器 可直接发出这种信号</p>
+        <p>（只能<span style="color:#ff654e">红石火把</span>放置可见原理问题就在火把身上）</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7121053/f0ed7e74cb58.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">正在放置红石火把</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7121053/0a7364c28373.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">正在放置红石火把</span></p>
+        <p>PS:你们经常用的红石块+红石火把的调试短脉冲在BE基岩版特征和-0t一样，这个只是换成了活塞
+</p>
+        <p>==================================</p>
+        <p>图3：支持电路输入直接发出这个信号（单个目前最精简的触发电路）</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7121053/3a0118921cd4.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">活塞臂下面的红石火把是必须斜插在红石粉下面的方块的</span></p>
+        <p>==================================</p>
+        <p>图4:多接几个堆叠变成“持续”（微观上不持续）的信号（可用于迷惑玩家）</p>
+        <p>视频: <a href="https://b23.tv/N7N5CK" target="_blank" rel="noopener noreferrer">网页链接</a></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7121053/9a2ba232b830.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">电路正在运行</span></p>
+        <p>列举一下所有元件接收这条信号的行为吧：
+能被激活的：红石火把、中继器、比较器、普通活塞、粘性活塞、红石灯、漏斗、各种材质围墙、音符盒、命令方块、普通铁轨（激活会在附近条件允许下变向）
+不能被激活的：充能铁轨、激活铁轨、各种材质门、龙头、各种材质活板门、投掷器、发射器
+以上列举的能被接收正常信号并有相应反应的元件都是对应接收普通高频火把信号时出现的行为（持续激活和闪烁）:</p>
+        <p>在这条接收线上能被激活的BE阶段元件(Block Event)接收普通的火把高频也会持续激活
+</p>
+        <p>在这条接收线上不能被激活的元件接收普通火把高频是会跟随高频闪烁的</p>
+        <p>==================================</p>
+        <p><strong>接收烧火把元件行为分类</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7121053/22da78bd313f.webp" width="2188" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">接收烧火把持续激活不鬼畜</span></p>
+        <p>上图举例为持续激活元件，直到火把高频停止闪元件也停止激活，可以把它们称之为<strong>烧持元件；</strong>可以发现，烧火把和经典比较器高频都是一样的频率，都是2t一周期，但是只有烧火把能做到对这类元件持续激活，比较器高频（13-0的接位）接它们符合传统理论会闪，可见问题就在红石火把身上；</p>
+        <p>红石灯下沿熄灭慢符合理，活塞过了cd在信号为0时理应收回但事实是不收回，其他2t一周期的元件就更加不符合传统理论了。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7121053/0ee6447f5aa2.webp" width="2188" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">接收烧火把断续激活鬼畜</span></p>
+        <p>上图举例为不持续激活元件，跟随烧火把本来有的频率闪烁；可以把它们称之为<strong>烧断元件</strong>。
+</p>
+        <hr class="opus-pagebreak">
+        <p>接下来我们将在这2个分类元件中选出2个代表为下面作分析。用活塞代表烧持元件，用活板门代表烧断元件。</p>
+        <p><strong>活塞推拉方块到位位置有火把信号源时接活板门</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7121053/97c7104cc99f.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">拉杆拉回，活板门同时开启。</span></p>
+        <p>从左往右依次计算：</p>
+        <p>第一路红石火把1t+中继器2t=3t</p>
+        <p>第二路拉杆接入启动延时1t+活塞1t+到位启动延时1t=3t</p>
+        <p><strong>活塞推拉方块到位位置有烧火把信号源时接活塞</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7121053/36149f7fe323.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">拉杆拉回，活塞同时开启。</span></p>
+        <p>从左往右依次计算：</p>
+        <p>第一路红石火把1t+中继器2t=3t</p>
+        <p>第二路拉杆接入启动延时1t+活塞1t+到位启动延时1t=3t</p>
+        <p><strong>活塞推拉方块到位位置有烧火把信号源时接活板门</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7121053/b3b16dda7a81.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">拉杆拉回，活板门同时开启。</span></p>
+        <p>从左往右依次计算：</p>
+        <p>第一路红石火把1t+中继器3t=4t</p>
+        <p>第二路拉杆接入启动延时1t+活塞1t+红石火把熄灭1t+红石火把亮起1t=4t</p>
+        <p>可以发现，当出现活塞推拉方块到位位置有烧火把信号源时接活板门时，活塞收回带来的启动延时活板门并不响应（原因未知，可能和更新顺序有关）所以活板门直到红石火把熄灭-亮起后才开始接受信号。</p>
+        <hr class="opus-pagebreak">
+        <p>现在可以在已有的结论解释下单个触发器的原理了。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7121053/b3c58a5a3fee.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>活塞运动3t，只考虑红石粉被激活了1t，中继器无启动延时故直接更新，输出活塞在粘性活塞收回后存在启动延时，而活板门在粘性活塞收回带来的启动延时活板门并不响应，活板门直到红石火把熄灭-亮起后才能接受信号，但第3t活塞就开始重新推出复位了，3&amp;lt;4提早断了信号故活板门不响应。</p>
+        <p>你们有兴趣的可以试试玩玩，说不定摸出来的比我还多（
+</p>
+        <p>==================================</p>
+        <p>结束 也没什么好讲的了 欢迎有问题或意见什么的在评论区留言!拜拜～</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/421958653973672392">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv29597163.html" title="« 上一篇：MCBE 红石火把与无线电底层分析" aria-label="« 上一篇：MCBE 红石火把与无线电底层分析">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 红石火把与无线电底层分析</span>
+            </a>
+            <a class="pager-item is-next" href="cv37521902.html" title="下一篇 »：MCBE 方块被放置后发生了什么？方块更新如何影响红石系统？" aria-label="下一篇 »：MCBE 方块被放置后发生了什么？方块更新如何影响红石系统？">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 方块被放置后发生了什么？方块更新如何影响红石系统？</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

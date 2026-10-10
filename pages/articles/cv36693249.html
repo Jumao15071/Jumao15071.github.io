@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 生物寻路的一些机制 - 橘猫的资源站</title>
+    <meta name="description" content="由于基岩版1.21以后生物生成从方块的西北角挪到了方块的中心，所以苦力怕刷怪塔做成寻路式的会更加简单可靠高效。 因为国内没有人总结过相关的机制，因此本文将会阐述一些BE寻路相关的机制和原理，由于缺乏代码验证，本文相关内容可能有所纰漏，请见谅。 1.为什么选择寻">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv36693249.webp" alt="MCBE 生物寻路的一些机制">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 生物寻路的一些机制</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/37691488" target="_blank" rel="noopener noreferrer">橘猫sama</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2024年08月04日 21:50</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/961819301337104404" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv36693249</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">实体机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv34565354.html" title="« 上一篇：MCBE 生物生成机制经验总结" aria-label="« 上一篇：MCBE 生物生成机制经验总结">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 生物生成机制经验总结</span>
+            </a>
+            <a class="pager-item is-next" href="cv15138547.html" title="下一篇 »：MCBE 主世界常规怪物的空间检测机制" aria-label="下一篇 »：MCBE 主世界常规怪物的空间检测机制">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 主世界常规怪物的空间检测机制</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="delta">
+        <p>由于基岩版1.21以后生物生成从方块的西北角挪到了方块的中心，所以苦力怕刷怪塔做成寻路式的会更加简单可靠高效。</p>
+        <p>因为国内没有人总结过相关的机制，因此本文将会阐述一些BE寻路相关的机制和原理，由于缺乏代码验证，本文相关内容可能有所纰漏，请见谅。</p>
+        <h2><strong>1.为什么选择寻路式刷怪塔？</strong></h2>
+        <p>苦力怕刷怪塔一直是生存最常见的刷怪塔之一。</p>
+        <p>但由于基岩版的生物生成位置从角落挪到了方块的中心，因此苦力怕就不能同时满足<strong>活板门限位</strong>、<strong>水流冲刷</strong>和<strong>存在空气源</strong>这三个条件，因此传统的水流式苦力怕在1.21版本以后不复存在。</p>
+        <p>那么，我们就需要参考一下Java版的科技树了。</p>
+        <p>我们都知道，刷怪塔的核心要点就是如何迫使怪物移动，将刷怪平台的怪物以某种方法聚在一起。在Java版中，常见的刷怪塔原理大致分为三类：</p>
+        <ul>
+            <li><strong>水流时钟</strong>，即利用红石时钟控制水流的开关，以定时冲刷生物迫使其移动。</li>
+            <li><strong>生物恐吓</strong>，即利用某种生物害怕另一种生物，如苦力怕害怕猫，会试图躲避猫来迫使其移动。</li>
+            <li><strong>寻路机制</strong>，即利用怪物在不安全方块上，会试图寻找完整方块的机制来迫使其移动。</li>
+        </ul>
+        <p>在Java版中，由于生物没有基岩版的9*9区块的种群密度控制，怪物能以非常高的密度聚集在一起，因此水流时钟成本低廉且处理速度够快。但是在基岩版中，由于怪物刷新速度太慢，而且怪物密度比较低，在mojang不移除种群密度检测这个远古机制以前，我们造水流时钟式刷怪塔得不偿失。</p>
+        <p>在Java版中，苦力怕躲避猫的速度远远快于其寻找完整方块的速度，因此在Java版中简单的苦力怕刷怪塔经常会用到大量的猫。</p>
+        <p>但是在基岩版中，苦力怕躲避猫的速度没有其寻找完整方块的速度快，且苦力怕躲避猫的范围只有6格（欧式距离），这比寻路的范围小多了，因此基岩版刷怪塔用寻路机制更为合理。</p>
+        <h2><strong>2.寻路范围</strong></h2>
+        <p>在基岩版中，怪物在其感受到不安全的方块上，如台阶、冰等方块上时，会寻找安全的方块，如石头、木板等。</p>
+        <p>其搜索范围以其脚部为中心，范围为21*17*21（切比雪夫距离），即寻找横向10格，纵向8格的范围内有无安全完整的方块。</p>
+        <p>超过此距离苦力怕也有非常低的概率寻路，但是速度极其缓慢，可忽略不计。</p>
+        <p>我们先在每个冰方块上放置苦力怕刷怪蛋，然后观察情况：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv36693249/96d26588c705.webp" width="1920" height="1030" alt="文章配图" loading="lazy">
+    </figure>
+        <p>一段时间内，横向10格范围内有完整方块的苦力怕都走到珊瑚扇上掉了下去。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv36693249/33a5cfe77b45.webp" width="1920" height="1030" alt="文章配图" loading="lazy">
+    </figure>
+        <p>纵向8格范围内有完整安全方块的苦力怕也会进行寻路：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv36693249/20f681cc4850.webp" width="1920" height="1030" alt="文章配图" loading="lazy">
+    </figure>
+        <p>可以观察到此范围以苦力怕的脚部一格为中心：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv36693249/92090cdd247b.webp" width="1920" height="1030" alt="文章配图" loading="lazy">
+    </figure>
+        <h2>3.寻路路径机制</h2>
+        <p>在找到安全方块以后，生物会寻找一条路径以尽可能抵达安全方块上方。如果没有合适的路径，生物则会寻找距离其最近的地方。</p>
+        <p>如图，我们放置了一些苦力怕：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv36693249/81cde495ed4e.webp" width="1920" height="1030" alt="文章配图" loading="lazy">
+    </figure>
+        <p>而苦力怕并没有成功抵达安全方块上方，这就是因为寻路路径超出了其寻路范围导致的，这时苦力怕会抵达其寻路范围内距离安全方块最近的地方：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv36693249/dfa170644076.webp" width="1920" height="1030" alt="文章配图" loading="lazy">
+    </figure>
+        <p>上图一部分苦力怕被其他苦力怕挤下去了（</p>
+        <p>那如果我们在寻路路径上使用其他障碍呢？</p>
+        <p>如图，基岩版的苦力怕从冰上出发，为了走到完整方块上居然会跨过水流！这在Java版显然是行不通的，但是在基岩版却可以。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv36693249/48674abf05dd.webp" width="1920" height="1030" alt="文章配图" loading="lazy">
+    </figure>
+        <p>除了水流这种会迫使生物移动的方块外，有一些方块并没有完整的碰撞箱，如珊瑚扇或活板门，但是苦力怕依旧会在寻路过程中直接踩过去这些方块，因此珊瑚扇或活板门非常适合用来制作聚怪陷阱。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv36693249/6cac96e239f5.webp" width="1920" height="1030" alt="文章配图" loading="lazy">
+    </figure>
+        <h2>4.案例指导</h2>
+        <p>那么我们来介绍一些利用寻路机制的刷怪塔案例吧。</p>
+        <h3><strong>寻路+十字水流聚集</strong></h3>
+        <p>如图，黑色方块为上层台阶，可以刷怪，白色石英台阶用于限制蜘蛛生成，活板门用于控制苦力怕生成。</p>
+        <p>苦力怕生成后会寻路到十字形的白色混凝土上，但因为混凝土上方的水流而被冲刷到中心。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv36693249/f3eca0508585.webp" width="1920" height="1030" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv36693249/9cbf0cfc5ee5.webp" width="1920" height="1030" alt="文章配图" loading="lazy">
+    </figure>
+        <h3>寻路+角落聚集</h3>
+        <p>本结构由国外大佬@mikehomer制作并在油管发布</p>
+        <p>如图，中间的活板门由于限制蜘蛛生成，周围抬高一格围绕三圈土径，土径被生物认为是安全方块，但土径上方不会生成生物。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv36693249/98406a70505b.webp" width="1920" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>在四个角落，使用珊瑚扇骗寻路，苦力怕即可通过角落试图走到土径上，然后用活板门限制苦力怕的运动。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv36693249/a8afd5871a25.webp" width="1920" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <h3>寻路+交错完整方块</h3>
+        <p>本设计由B站大佬@积雨云awa 设计完成。</p>
+        <p>如图，由于1.21生成位置改变，苦力怕可以在交错的完整方块上生成。下层交错的完整方块恰好阻碍了蜘蛛的生成，而上层的活板门也阻碍了蜘蛛的生成。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv36693249/26b297030797.webp" width="1920" height="1030" alt="文章配图" loading="lazy">
+    </figure>
+        <p>在完整方块上的生物会随机寻路。</p>
+        <p>在基岩版中，怪物是先找到一个点再去寻找走到其位置的路径。那么，我们隔层放珊瑚扇即可使生物以非常快的速度寻路到其他层，以骗取生物坠落。</p>
+        <p>千万要注意，这里的珊瑚扇是隔层放置的。</p>
+        <p>橙色为起点，紫色为终点，红色为寻路路径，青色为坠落地点：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv36693249/49d8880fa7a3.webp" width="1920" height="1030" alt="文章配图" loading="lazy">
+    </figure>
+        <p>怪物摔落后，利用水流缓冲，再利用矿车+激活铁轨即可迅速将怪物聚集到搅拌机内。这是目前最好的刷怪塔之一。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv36693249/b664f60ab2c2.webp" width="1920" height="1030" alt="文章配图" loading="lazy">
+    </figure>
+        <h2>5.结语</h2>
+        <p>寻路式刷怪塔一直有非常高的拓展性，但是长期缺乏相应的设计和机制总结。希望本期图文专栏可以为后来者提供一些帮助，目前的设计远未抵达尽头，还需要各位加油努力呀。</p>
+        <p>参考资料：</p>
+        <ul>
+            <li><a href="https://www.youtube.com/watch?v=rQGxs7_k0g0&amp;t=321s" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=rQGxs7_k0g0&amp;t=321s</a></li>
+            <li><a href="https://www.bilibili.com/video/BV1fr421M7QL" target="_blank" rel="noopener noreferrer">https://www.bilibili.com/video/BV1fr421M7QL</a></li>
+        </ul>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/961819301337104404">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv34565354.html" title="« 上一篇：MCBE 生物生成机制经验总结" aria-label="« 上一篇：MCBE 生物生成机制经验总结">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 生物生成机制经验总结</span>
+            </a>
+            <a class="pager-item is-next" href="cv15138547.html" title="下一篇 »：MCBE 主世界常规怪物的空间检测机制" aria-label="下一篇 »：MCBE 主世界常规怪物的空间检测机制">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 主世界常规怪物的空间检测机制</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

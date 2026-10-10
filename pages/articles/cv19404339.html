@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 关于掉落物的简单研究 ep.3 掉落物的生成与合并 - 橘猫的资源站</title>
+    <meta name="description" content="写在前面（感谢） 由于大部分数据仅为测试结果，并没有源码支持，所以仅供参考 3.1、掉落物生成 3.1.1、方块破坏生成 当方块被破坏时，掉落物会生成在与方块同心的一个边长0.7b的方块内随机位置 其概率大体按照高斯分布。掉落物生成于0.36b边长的正方体表面">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv19404339.webp" alt="MCBE 关于掉落物的简单研究 ep.3 掉落物的生成与合并">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 关于掉落物的简单研究 ep.3 掉落物的生成与合并</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/19974985" target="_blank" rel="noopener noreferrer">叼叼的名字</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2022年10月29日 23:10</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/722490147357065221" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv19404339</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">储电</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv19295223.html" title="« 上一篇：MCBE 关于掉落物的简单研究 ep.2 由挤压简述掉落物运动" aria-label="« 上一篇：MCBE 关于掉落物的简单研究 ep.2 由挤压简述掉落物运动">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 关于掉落物的简单研究 ep.2 由挤压简述掉落物运动</span>
+            </a>
+            <a class="pager-item is-next" href="cv9604929.html" title="下一篇 »：MCBE 【全物品】浅谈全物品 1、绪论" aria-label="下一篇 »：MCBE 【全物品】浅谈全物品 1、绪论">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 【全物品】浅谈全物品 1、绪论</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p><strong>写在前面（感谢）</strong></p>
+        <p>由于大部分数据仅为测试结果，并没有源码支持，所以仅供参考</p>
+        <hr class="opus-pagebreak">
+        <p><strong>3.1、掉落物生成</strong></p>
+        <p><strong>3.1.1、方块破坏生成</strong></p>
+        <p>当方块被破坏时，掉落物会生成在与方块同心的一个边长0.7b的方块内随机位置</p>
+        <p>其概率大体按照高斯分布。掉落物生成于0.36b边长的正方体表面上的概率最高</p>
+        <p><strong>3.1.2、投掷器生成</strong></p>
+        <p>投掷器吐出掉落物时，掉落物生成位置是固定的</p>
+        <p>对于面向水平位置的投掷器，掉落物生成在距离投掷器0.2格，高0.269的位置。对于向上或向下的投掷器，掉落物生成在距离投掷器0格位置</p>
+        <p><strong>3.1.3、常见的投掷器稳定方案</strong></p>
+        <p><a href="https://t.bilibili.com/547626583852503302" target="_blank" rel="noopener noreferrer">https://t.bilibili.com/547626583852503302</a></p>
+        <p><strong>3.2、掉落物合并</strong></p>
+        <p><a href="https://t.bilibili.com/524956664135009619" target="_blank" rel="noopener noreferrer">https://t.bilibili.com/524956664135009619</a></p>
+        <hr class="opus-pagebreak">
+        <p><strong>写在最后（作者的碎碎念）</strong></p>
+        <p>最后没啥可写的了，也懒得更多测试了 _(:з」∠)_</p>
+        <p>小摆烂一手，拿之前的测试结果充个数吧</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/722490147357065221">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv19295223.html" title="« 上一篇：MCBE 关于掉落物的简单研究 ep.2 由挤压简述掉落物运动" aria-label="« 上一篇：MCBE 关于掉落物的简单研究 ep.2 由挤压简述掉落物运动">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 关于掉落物的简单研究 ep.2 由挤压简述掉落物运动</span>
+            </a>
+            <a class="pager-item is-next" href="cv9604929.html" title="下一篇 »：MCBE 【全物品】浅谈全物品 1、绪论" aria-label="下一篇 »：MCBE 【全物品】浅谈全物品 1、绪论">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 【全物品】浅谈全物品 1、绪论</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

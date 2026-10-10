@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 折学（折跃门科学）研究 - 橘猫的资源站</title>
+    <meta name="description" content="零、阅读前 ⚠️本专栏过于硬核，在查看前请确保： 大脑已正确安装且处于正常运行状态 可以适当超频，但是请注意大脑状态，防止出现温度过高，血压不足等情况 如发现理解突然变慢甚至停止理解的情况，请暂停观看本专栏并进行充分休息，根据情况请考虑跳过部分内容 一、介绍 ">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv16696653.webp" alt="MCBE 折学（折跃门科学）研究">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 折学（折跃门科学）研究</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/240090561" target="_blank" rel="noopener noreferrer">xiaoqch</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2022年05月19日 22:05</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/661986552071585863" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv16696653</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">方块性质</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv12275135.html" title="« 上一篇：MCBE 末地折跃门总结" aria-label="« 上一篇：MCBE 末地折跃门总结">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 末地折跃门总结</span>
+            </a>
+            <a class="pager-item is-next" href="cv46217552.html" title="下一篇 »：MCBE 方块系列机制杂谈（一）——方块放置流程全解析" aria-label="下一篇 »：MCBE 方块系列机制杂谈（一）——方块放置流程全解析">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 方块系列机制杂谈（一）——方块放置流程全解析</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p><strong>零、阅读前</strong>
+</p>
+        <blockquote><p><strong>⚠️本专栏过于硬核，在查看前请确保：</strong></p></blockquote>
+        <ol>
+            <li>大脑已正确安装且处于正常运行状态</li>
+            <li>可以适当超频，但是请注意大脑状态，防止出现温度过高，血压不足等情况</li>
+            <li>如发现理解突然变慢甚至停止理解的情况，请暂停观看本专栏并进行充分休息，根据情况请考虑跳过部分内容</li>
+        </ol>
+        <hr class="opus-pagebreak">
+        <p><strong>一、介绍</strong></p>
+        <ol>
+            <li>前人研究：mcbe末地折跃门总结</li>
+            <li>本文研究方法：分析BDS反汇编伪代码、编写LiteLoaderBDS插件与实际测试</li>
+            <li>适用范围：理论上 1.14.60.04 到最新版均适用，但目前只在1.18.32与1.17.10测试过，1.14.60更早的版本也可能适用</li>
+        </ol>
+        <hr class="opus-pagebreak">
+        <p><strong>二、定义</strong></p>
+        <ol>
+            <li><strong>零点门</strong>：传送点为（0，0，0）的折跃门</li>
+            <li><strong>伪零点门</strong>：传送点为（0，1，0）的折跃门（因为容易被误认为零点门）</li>
+            <li><strong>主岛门</strong>与<strong>外岛门</strong>：分别是位于主岛与外岛的门</li>
+            <li><strong>量产门</strong>：通过人工控制的方法，大量生成的门</li>
+            <li><strong>自传门</strong>：传送点位于外岛的外岛门（或者传送点位于内岛的内岛门）</li>
+            <li><strong>互传门</strong>：传送点位于外岛的内岛门（或者传送点位于内岛的外岛门）</li>
+            <li><strong>基准点</strong>：生成新折跃门中需要用到的点，与触发生成的折跃门和世界生成器（种子）相关</li>
+            <li><strong>127（双层）屏蔽层</strong>：位于126和128的两层平台，后续介绍</li>
+            <li><strong>折跃门特判</strong>：有效生成点查找算法中的特殊判断，后续介绍</li>
+            <li><strong>欧氏距离</strong>：三维空间直线距离</li>
+            <li><strong>SolidBlckingMaterial</strong>：石制，木制等材料，具体看评论区</li>
+            <li><strong>SolidBlckingBlock</strong>：属于SolidBlckingMaterial中的完整方块？具体看评论区</li>
+        </ol>
+        <hr class="opus-pagebreak">
+        <p><strong>三、关键算法介绍</strong>
+</p>
+        <ol>
+            <li><strong>基</strong><strong>准点寻找算法（EndGatewayBlockActor::findExitPortal）</strong></li>
+            <li>⚠️由于该算法存在浮点数转换产生的偏移，以及该返回值的重要性，此处仅用于理解，准确计算另外提供（具体看评论区） </li>
+            <li><strong>向下查找最高固体方块算法</strong>（BlockSource::findNextTopSolidBlockUnder）此处命名中的固体方块不要太在意，仅命名
+ </li>
+        </ol>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16696653/369284807389.webp" width="697" height="573" alt="文章配图" loading="lazy">
+    </figure>
+        <ol>
+            <li><strong>判断某方块上是否允许玩家生成</strong> </li>
+            <li><strong>有效生成点查找算法</strong>（EndGatewayBlockActor::findValidSpawnAround） </li>
+            <li>以给的坐标为中心，向水平四方向延申n个方块（即边长为2n+1的正方形）为查找范围</li>
+            <li>在查早范围内逐个取点，并从y=127（包含）开始开始使用<strong>向下查找最高固体方块算法</strong><strong>， </strong>如果寻找失败，忽略该点，如果成功继续判断</li>
+            <li>判断该方块类型 </li>
+            <li>从所有<strong>有效点</strong>中找出与给定的点欧氏距离最近的点，该点即查找结果，如果没有<strong>有效点</strong>，结果为<strong>（0，0，0）点（请记住这个点）</strong></li>
+        </ol>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16696653/2544419cd49d.webp" width="1249" height="717" alt="文章配图" loading="lazy">
+    </figure>
+        <ol>
+            <li><strong>最高点查找算法</strong> </li>
+            <li>以给的坐标为中心，向水平四方向延申n个方块（即边长为2n+1的正方形）为查找范围</li>
+            <li>范围内逐个取点，从y=ymax（末地默认为255）开始向下逐个方块进行判断，直到找到<strong>SolidBlckingBlock</strong>类型方块</li>
+            <li>如果找到的是基岩且不允许基岩，跳过该点，否则设置该点为<strong>有效点</strong></li>
+            <li>从<strong>有效点</strong>中找出y值最大的点，如果范围内值最大的点不唯一，则从y值最大的点筛选出x值最小的点，如果筛选结果仍然不唯一，则继续筛选出z值最小的点</li>
+        </ol>
+        <hr class="opus-pagebreak">
+        <p><strong>四、折跃门关键逻辑</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16696653/d3c416977a0f.webp" width="799" height="623" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">因为B站专栏中间插入图片会有奇奇怪怪的问题就放这里系列</span></p>
+        <ol>
+            <li><strong>任务队列</strong>当触发折跃门生成或验证时会将生成或验证请求添加到任务队列，末地每tick均会从任务队列中尝试取出一个请求，并执行该请求，请求的坐标在添加请求时确定</li>
+            <li><strong>生成逻辑</strong> </li>
+            <li><strong>验证与校正逻辑</strong>分为主动验证和被动验证，验证逻辑与已有折跃门传送点是否稳定，以及如何更改已有折跃门的传送点，也是<strong>折学研究的重点</strong>，主动验证和被动验证总是同时出现的，同时出现的两个验证互不干扰，以下将触发主动验证的门称为<strong>主动门</strong>，被主动门触发验证的门称为<strong>被动门</strong>， </li>
+        </ol>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16696653/408a21e8a7e5.webp" width="681" height="278" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">是否会触发校正与校正后传送点是否发生变化举例</span></p>
+        <hr class="opus-pagebreak">
+        <p><strong>五、重要特性介绍</strong></p>
+        <ol>
+            <li><strong>零点门产生</strong></li>
+            <li>有效点屏蔽：如果<strong>有效生成点查找算法</strong>范围内找不到有效点，并且生成末地小岛后仍然找不到有效点，则不管<strong>主动验证校正</strong>还是<strong>被动验证校正</strong>，均会使被校正的折跃门变成<strong>零点门</strong></li>
+            <li>被动校正：条件需要<strong>主动门</strong>与<strong>被动门</strong><strong>传送点</strong>距离超出<strong>区域</strong>的范围，由于使用<strong>主动门区域</strong>来寻找<strong>被动门</strong>传送点附近的有效生成点会失败，<strong>被动门</strong>会变成<strong>零点门</strong>，常见四种情况是 </li>
+            <li>人工放置：人工通过折跃门物品放置的门均为<strong>零点门</strong></li>
+            <li><strong>自传门产生</strong></li>
+            <li>当外岛门触发被动生成时，由于<strong>被动生成逻辑的第6步</strong>，新生成的门很可能会是自传门，同时由于第4步，触发被动生成的外岛门也很可能会成为自传门</li>
+            <li>当（0，y，0）处的折跃门触发被动生成时，由于<strong>基</strong><strong>准点寻找算法</strong>的特性，新生成的门必定是自传门（可能是主岛零点门，也是自传门的一种）</li>
+            <li><strong>零点门刷门</strong>零点门加载方块实体数据时，会发出被动生成请求。<strong>由于各种因素，可能需要下线再上线才能触发</strong>，触发条件暂时不清楚，如需模拟，可使用<strong>结构方块加载零点门</strong>的方式触发</li>
+            <li><strong>伪零点门产生</strong><strong>被动生成</strong>第4步中，如果找不到有效点，会返回（0，0，0），第5步由于<strong>区域</strong>的范围性，会继续找不到有效点，维持（0，0，0），然后将该点坐标向上移动一格设置为触发<strong>被动生成的</strong>的折跃门的传送点，该门变成<strong>伪零点门</strong></li>
+            <li><strong>127屏蔽层</strong>折学研究的重大成果之一，让工程中难以稳定零点门成为可能，让外岛折跃门堆门工程早期脱离主岛折跃门定义，根据<strong>生成逻辑</strong>中两次<strong>有效生成点查找算法</strong>的使用顺序，将<strong>仅允许末地石</strong>的<strong>有效生成点查找算法</strong>定义为<strong>正向查找</strong>，将<strong>非仅允许末地石</strong>的<strong>有效生成点查找算法</strong>定义为<strong>反向查找</strong>，y=127是<strong>有效生成点查找算法</strong>开始的高度，由于<strong>反向查找</strong>相比<strong>正向查找</strong>多了一步玩家空间判断，使得126~128层成为非常特殊的层，下面具体对各种屏蔽进行介绍</li>
+            <li>正向屏蔽<strong>反向查找</strong>会成功，<strong>正向查找</strong>会失败的屏蔽，简单的在126或以下放置非末地石的SolidBlckingMaterial类型的方块即可</li>
+            <li>反向屏蔽<strong>正向查找</strong>会成功，<strong>反向查找</strong>会失败的屏蔽，通过127层留空气，126层放置末地石，128层放置SolidBlckingBlock类型方块，<strong>正向查找</strong>时会找到126层的末地石，查找成功，<strong>反向查找</strong>时也会找到126层的末地石，但是由于128层的方块阻挡玩家生成，所以会查找失败</li>
+            <li>双向屏蔽<strong>正向查找</strong>与<strong>反向查找</strong>均会失败的屏蔽，通过127层留空，126层放置SolidBlckingMaterial类型的方块，128层放置SolidBlckingBlock类型方块，两种查找均会失败，另一种双向屏蔽，在126或以下放置基岩，并防止折跃门特判成功即可或者将方块全清空，</li>
+        </ol>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16696653/aaf3e7e855a1.webp" width="589" height="320" alt="文章配图" loading="lazy">
+    </figure>
+        <ol>
+            <li><strong>忽略某位置方块向下查找</strong>此处略过是对于<strong>有效生成点查找算法</strong>来讲的，通过在该点堆任意方块到127层，由于<strong>向下查找最高固体方块算法</strong>特性，该点方块将会被忽略直到遇到空气</li>
+        </ol>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16696653/d79e3a0c4682.webp" width="227" height="338" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">跳过基岩寻找到下方的末地石</span></p>
+        <ol>
+            <li><strong>127屏蔽层下移</strong>由于<strong>有效生成点查找算法</strong>特性，如果127层不是空气，会首先向下查找到空气，再进行查找，因此只需下移<strong>屏蔽层</strong>并在其上方补充任意方块到127即可，（如果补充方块是<strong>最高点查找算法</strong>会忽略的方块会有额外用途，如水方块与流动水（待验证），铁砧）</li>
+        </ol>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16696653/fd152c5caea0.webp" width="243" height="236" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">127屏蔽层下移至124</span></p>
+        <ol>
+            <li><strong>折跃门特判</strong><strong>有效生成点查找算法</strong>中遇到折跃门结构时会继续往下进行判断，且会无视是否<strong>仅允许末地石</strong>参数寻找<strong>SolidBlockingMaterial</strong>类型方块</li>
+            <li><strong>有效零点</strong>通过特殊方法使得（0，0，0）点成为<strong>有效生成点查找算法</strong>能查找到的点，一个比较简单的方法末地祭坛向上堆任意方块至127高度（包含），坐标（0，0，0）处放置末地石，并保证坐标（0，0，0）到（0，127，0）之间只穿过一次连续空气方块注：此方法未进行详细测试，不保证此方法维持的零点门的稳定性
+</li>
+            <li>命名物品人工门变自传门如果通过被命名的折跃门物品放置的折跃门，会在短时间内触发<strong>被动生成</strong>，然后再短时间内触发<strong>验证</strong>，导致放出来显示不是<strong>零点门</strong>的现象，简单验证，往自己身上放置折跃门，会瞬间被传送至零点，再次进入该折跃门，会被传送至附近的点，暂未详细研究</li>
+        </ol>
+        <hr class="opus-pagebreak">
+        <p><strong>六、应用：</strong><strong>通用</strong><strong>双层屏蔽折跃门堆叠框架</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16696653/0be8b85203df.webp" width="1366" height="734" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">框架示意图</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16696653/b0f6db56dec1.webp" width="710" height="679" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">控制点移动示例</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16696653/653bffa32ca2.webp" width="907" height="629" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">原理简单示意</span></p>
+        <ol>
+            <li>寻找一个外岛折跃门（最好位于外岛向内岛的边界附近，一般选用与主岛门一起生成的外岛门
+</li>
+            <li>寻找该门的基准点，以该点为基础搭建此框架</li>
+            <li>预先设置好反向屏蔽控制点与高点方块，</li>
+            <li>在（0，0）处做好维持零点门稳定的准备，如33*33单层屏蔽（不能位于或高于127）或有效零点方案</li>
+            <li>使外岛门转成零点门，如传送点坐标为中心33*33范围单层屏蔽，屏蔽层必须高于原传送点坐标，注意<strong>折跃门特判</strong>与<strong>侧向挤压</strong></li>
+            <li>想办法让外岛零点门反复加载数据（如退出重进）</li>
+            <li>当一个位置堆叠至无法继续堆叠时，移动控制点，重复操作</li>
+        </ol>
+        <p><strong>七、其他补充</strong></p>
+        <ol>
+            <li>基准点寻找 </li>
+            <li>基准点验证 </li>
+            <li>堆门过程中量产门的生成越来越慢由于每个折跃门加载时均会添加验证请求，零点门加载时会添加生成请求，是同一队列的，并且每tick只会执行一个任务，因此当折跃门越来越多是，生成请求排队的时间也会越来越长（后期可能会需要等待一分钟以上）解决方法，上线时玩家的加载范围内尽量避开量产门区域</li>
+            <li>移动基准点来扩大折跃门的堆叠范围通过改变自传门坐标即可做到，但是由于框架外生成自传门相对麻烦，基准点和初始地形相关，以及已有区域可堆叠数量已经足够大等原因，一般不会这么做</li>
+            <li>改变量产门生成初始高度参考<strong>屏蔽层下移</strong></li>
+            <li>传送目标高于127的传送门传送门<strong>被动生成</strong>的第5步，使用的是最高点查找算法确定的触发<strong>被动生成</strong>的传送门传送点，因此此时该门传送点最高可255，但是一般该点不稳定，主动验证会进行校正，维持该点稳定的方法，在传送点改变前，把该点方块往下移动一格，并防止该传送门的被动验证即可维持稳定</li>
+            <li>关于本文内容适用范围通过对比BDS 1.14.60.04与BDS 1.18.32.02反汇编伪代码，相关内容均未发现变化，但不排除又未发现的或者从其他联系不大的地方影响的，以实际版本为主，另外服务器与客户端应该没区别太大</li>
+        </ol>
+        <p><strong>八、鸣谢</strong></p>
+        <p>感谢 LiteLDev团队 提供LiteLoader插件加载器，与大量API极大方便了测试插件的开发，</p>
+        <p>感谢 和风LeftSoftwind、野生的无产诗人、凉辰Liang00Chen 的讨论和纠错</p>
+        <p>感谢 和风LeftSoftwind 对1.17.10版本进行测试</p>
+        <p>感谢 MCBE开发交流群 其他参与讨论的所有小可爱们</p>
+        <p>最后，如果发现本文内容有误，欢迎指出</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/661986552071585863">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv12275135.html" title="« 上一篇：MCBE 末地折跃门总结" aria-label="« 上一篇：MCBE 末地折跃门总结">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 末地折跃门总结</span>
+            </a>
+            <a class="pager-item is-next" href="cv46217552.html" title="下一篇 »：MCBE 方块系列机制杂谈（一）——方块放置流程全解析" aria-label="下一篇 »：MCBE 方块系列机制杂谈（一）——方块放置流程全解析">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 方块系列机制杂谈（一）——方块放置流程全解析</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

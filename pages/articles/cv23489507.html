@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 漏斗一些行为的补充和介绍 - 橘猫的资源站</title>
+    <meta name="description" content="前言： 2021年3月，汤圆发布了基石专栏第一个篇目：漏斗的行为 感谢学姐的trapdoor插件 时隔两年，这份资料是对上面文章漏斗行为的部分修正与设定补充 ● 修正一：漏斗行为与红石刻绑定 漏斗行为与基岩版红石刻挂钩，只在红石刻里运行。 不了解基岩版红石刻的">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv23489507.webp" alt="MCBE 漏斗一些行为的补充和介绍">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 漏斗一些行为的补充和介绍</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/405815662" target="_blank" rel="noopener noreferrer">江雁苍穹</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2023年05月05日 18:09</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/792176494269956177" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv23489507</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv10249803.html" title="« 上一篇：MCBE 常见漏斗行为简述" aria-label="« 上一篇：MCBE 常见漏斗行为简述">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 常见漏斗行为简述</span>
+            </a>
+            <a class="pager-item is-next" href="cv15587328.html" title="下一篇 »：如何建造一条无延迟投掷器链––MCBE 计划刻机制详解" aria-label="下一篇 »：如何建造一条无延迟投掷器链––MCBE 计划刻机制详解">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">如何建造一条无延迟投掷器链––MCBE 计划刻机制详解</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="html">
+        <p><span class="font-size-20">前言：</span></p>
+        <p><span class="font-size-16">2021年3月，汤圆发布了基石专栏第一个篇目：<a href="cv10249803.html">漏斗的行为</a></span></p>
+        <p><span class="font-size-16">感谢学姐的trapdoor插件</span></p>
+        <p><span class="font-size-16">时隔两年，这份资料是对上面文章漏斗行为的部分修正与设定补充</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv23489507/dd8918a36b81.webp" width="504" height="181" alt="文章配图" loading="lazy">
+    </figure>
+        <hr class="opus-pagebreak">
+        <h2>● 修正一：漏斗行为与红石刻绑定</h2>
+        <p><span class="font-size-16">漏斗行为与基岩版红石刻挂钩，只在红石刻里运行。</span></p>
+        <p><span class="font-size-16">不了解基岩版红石刻的请看这篇专栏：</span></p>
+        <p><a href="cv7581645.html"><span class="font-size-16">https://www.bilibili.com/read/cv7581645</span></a></p>
+        <p><span class="font-size-16">比如常见的漏斗锁住与解锁、漏斗的吸收和放出。</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv23489507/2689a97f8030.webp" width="554" height="136" alt="来自汤圆的基石第一篇专栏-漏斗的行为" loading="lazy">
+        <figcaption class="fig-caption">来自汤圆的基石第一篇专栏-漏斗的行为</figcaption>
+    </figure>
+        <p><span class="font-size-16">而汤圆专栏第一段内容实际上是有一定错误的。</span></p>
+        <p><span class="font-size-16">实际上游戏刻度只有进入红石刻的时候，漏斗会检测吸收范围内是否有物品，如果上方有物品漏斗才会执行吸收。如果是非红石刻，漏斗不会执行吸收和传输这个行为。所以实际上只需要1gt就可以了，但是实际做全物品的时候，建议还是每经过1个漏斗至少2gt。</span></p>
+        <h2>● 修正二：漏斗的吸收范围</h2>
+        <p><span class="font-size-16">这其实没啥好说的。</span></p>
+        <p><span class="font-size-16">链接：</span><span class="font-size-16">https://bugs.mojang.com/browse/MCPE-55824</span></p>
+        <p><span class="font-size-16">Mojang</span><span class="font-size-16">在基岩版1.19.70修改了漏斗的吸收范围。</span></p>
+        <p><span class="font-size-16">修正图如下：</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv23489507/45fd87d10ce7.webp" width="260" height="303" alt="maple画的新图，直接不用自己画了，哈哈哈" loading="lazy">
+        <figcaption class="fig-caption">maple画的新图，直接不用自己画了，哈哈哈</figcaption>
+    </figure>
+        <p><span class="font-size-16">漏斗吸收范围其他具体内容可以移到<a href="https://space.bilibili.com/413324281" target="_blank" rel="noopener noreferrer">maple</a>的专栏查看：</span></p>
+        <p><a href="cv16438222.html">https://www.bilibili.com/read/cv16438222</a></p>
+        <h2>● 修正三：分类漏斗摸鱼被修复了（划去）</h2>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv23489507/13367c6411f2.webp" width="554" height="141" alt="来自汤圆的基石第一篇专栏-漏斗的行为" loading="lazy">
+        <figcaption class="fig-caption">来自汤圆的基石第一篇专栏-漏斗的行为</figcaption>
+    </figure>
+        <p><span class="font-size-16">此问题在基岩版1.19.60已经修复。不会一直尝试吸收表第一位物品了。（具体内容不想写了，划去）</span></p>
+        <p><span class="font-size-16">不过请注意。这个和跨区块漏斗不吸收不是一个东西。跨区块漏斗不吸问题依旧存在，这个仅是分类漏斗上方遇到多种类物品时开摆的bug的修复。</span></p>
+        <hr class="opus-pagebreak">
+        <h2>修正差不多写到这里了，接下来是额外的补充内容</h2>
+        <p>额外的补充来自 [Mod] GoldenHelmet，感谢他对于这些bug的介绍与分享</p>
+        <p>https://bugs.mojang.com/browse/MCPE-166990，</p>
+        <p><span class="font-size-16">我们先知道漏斗几个重要的行为：</span></p>
+        <p><span class="font-size-16">1</span><span class="font-size-16">漏斗会优先输出漏斗里格子最前面的物品。</span></p>
+        <p><span class="font-size-16">2</span><span class="font-size-16">漏斗会先优先输出物品，再被输入物品 。</span></p>
+        <p><span class="font-size-16">3</span><span class="font-size-16">漏斗只要输出或者吸收物品，自己都会进入8gt冷却。</span></p>
+        <p><span class="font-size-16">要记住这几个行为，下面讲的内容与这些行为息息相关。</span></p>
+        <hr class="opus-pagebreak">
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv23489507/c1492ff8a3cc.webp" width="554" height="257" alt="感谢@Misac_制作并且分享的图" loading="lazy">
+        <figcaption class="fig-caption">感谢@Misac_制作并且分享的图</figcaption>
+    </figure>
+        <p><span class="font-size-16"></span>你摸不着头脑吧（注释1rt = 2gt）</p>
+        <p><span class="font-size-16">首先，漏斗自身输入和输出物品行为的完成之后，就会进入8gt的冷却。那么我们首先把进入冷却的漏斗叫做<strong>非闲置状态</strong>，没有进入冷却的漏斗称为<strong>闲置状态</strong>。</span></p>
+        <p><span class="font-size-16">那么发生了什么？</span></p>
+        <p><strong><span class="font-size-16">先讲结论吧：</span></strong></p>
+        <h2>● 漏斗为空漏斗：</h2>
+        <p><strong><span class="font-size-16">如果漏斗处于闲置状态,无论漏斗是否被锁上，只要有物品输入就会进入冷却</span></strong></p>
+        <h2>● 漏斗内不为空：</h2>
+        <p><strong><span class="font-size-16">如果被锁，那么被漏斗输入物品，则不会进入冷却，而是一直处于闲置状态（重点）（上图的唯一的能）</span></strong></p>
+        <p><strong><span class="font-size-16">不过有例外，漏斗在闲置状态下被投掷器投入物品，则会进入8gt冷却</span></strong></p>
+        <p><span class="font-size-16">还有其他测试的结果：</span></p>
+        <p><span class="font-size-16">1</span><span class="font-size-16">玩家对漏斗输入输出不会让漏斗进入冷却cd</span></p>
+        <p><span class="font-size-16">2</span><span class="font-size-16">漏斗冷却cd不会被重置，无论在什么情况下。不过活塞推动漏斗会影响甚至延长漏斗冷却。（mb状态下漏斗冷却暂停）</span></p>
+        <p><strong><span class="font-size-16">结论第二点是重点，因为我们可以利用这个做一个快速运输的漏斗链：</span></strong></p>
+        <p><span class="font-size-16">我们从第二个结论得知：漏斗如果被锁，而且漏斗里有物品，其他漏斗对这个漏斗进行输入动作都不会让这个漏斗进入冷却状态。</span></p>
+        <p><span class="font-size-16">这样漏斗如果被解开，那么下个时刻漏斗会立马输入输出物品。</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv23489507/7adbf917ab93.webp" width="554" height="509" alt="来自金色头盔GoldenHelmet分享的存档，很明显左边比右边快" loading="lazy">
+        <figcaption class="fig-caption">来自金色头盔GoldenHelmet分享的存档，很明显左边比右边快</figcaption>
+    </figure>
+        <p><span class="font-size-16">而做一个连续的这样的漏斗链，让漏斗依次被解开，这样的漏斗链运输物品的速度远快于</span><span class="font-size-16">1</span><span class="font-size-16">条普通漏斗链的速度。</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv23489507/64f9d2cf3e91.webp" width="554" height="181" alt="漏斗依次被解锁" loading="lazy">
+        <figcaption class="fig-caption">漏斗依次被解锁</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv23489507/1ed72f95c1c7.webp" width="292" height="86" alt="不要填充第一个！注意上面写的漏斗的行为" loading="lazy">
+        <figcaption class="fig-caption">不要填充第一个！注意上面写的漏斗的行为</figcaption>
+    </figure>
+        <p><span class="font-size-16">在被锁的漏斗里第二格填充物品即可。</span></p>
+        <hr class="opus-pagebreak">
+        <p><strong><span class="font-size-16">接下来是第二个：著名的漏斗链输送随机：</span></strong></p>
+        <p><span class="font-size-16">链接小介绍：</span><span class="font-size-16">https://bugs.mojang.com/browse/MCPE-28890</span><span class="font-size-16">（mojang表示我不修）</span></p>
+        <p><span class="font-size-16">如图所示：</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv23489507/316b9dc86e0b.webp" width="554" height="368" alt="经典漏斗转圈圈" loading="lazy">
+        <figcaption class="fig-caption">经典漏斗转圈圈</figcaption>
+    </figure>
+        <p><span class="font-size-16">在红石火把被锁的下面漏斗物品是这样填装的</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv23489507/afb553d65856.webp" width="352" height="122" alt="填充" loading="lazy">
+        <figcaption class="fig-caption">填充</figcaption>
+    </figure>
+        <p><span class="font-size-16">然而按下按钮之后，等物品转一圈回来发现漏斗里的排序会导向两个结果：</span></p>
+        <p><span class="font-size-16">这是正常的结果</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv23489507/69fe8172d548.webp" width="401" height="125" alt="正常转一圈回来的样子" loading="lazy">
+        <figcaption class="fig-caption">正常转一圈回来的样子</figcaption>
+    </figure>
+        <p><span class="font-size-16">这是另一种</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv23489507/cc8e89b74152.webp" width="312" height="112" alt="出乎意料的结果" loading="lazy">
+        <figcaption class="fig-caption">出乎意料的结果</figcaption>
+    </figure>
+        <p><span class="font-size-16">欸？发生了什么？</span></p>
+        <p><span class="font-size-16">这是漏斗前后<strong>更新顺序不同</strong>导致的结果。</span></p>
+        <p><span class="font-size-16">有一个abcd漏斗</span></p>
+        <p><span class="font-size-16">在1红石刻度里4个漏斗都要同时更新进行输出，而漏斗不可能都“一起进行的“，只能在1红石刻下有一个先后更新顺序，比如这个时刻先更新a再b再c后d，或者先b后c后a最后是d。而4个漏斗更新顺序不一样导致出现了这种现象。</span></p>
+        <p>（图中示范）</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv23489507/5882049447a6.webp" width="554" height="283" alt="一张研究物品流动变化的表" loading="lazy">
+        <figcaption class="fig-caption">一张研究物品流动变化的表</figcaption>
+    </figure>
+        <p><span class="font-size-16">这个其实对漏斗链影响挺大的，假如说用漏斗链分类，在箱子末尾看到有没分类成功的，不要意外，是这个在作妖哦！</span></p>
+        <p><strong><span class="font-size-16">重点：其实根据漏斗更新顺序，可以</span></strong><span class="font-size-20"><strong>理想化</strong></span><strong></strong><strong><span class="font-size-16">做一个无延迟漏斗链。</span></strong></p>
+        <p><strong><span class="font-size-16">将漏斗快速输送与漏斗更新顺序结合起来</span></strong></p>
+        <p><span class="font-size-16">就是在abcdef…漏斗链里后面4格填充物品，锁住。在a漏斗第一格输入物品，迅速解开，漏斗以理想下的由a更新到最后一个，之后漏斗再锁上。最终在1个红石刻内第一格物品在a漏斗瞬移达到最后一个</span></p>
+        <p><span class="font-size-23"><strong>现实是：</strong><strong>由于mojang随机的更新机制，无法很好的控制，至少对于现在来说无法实现。</strong></span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv23489507/47110ba9f1f2.webp" width="554" height="104" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv23489507/8b3c986d1a15.webp" width="186" height="30" alt="(来自学姐的专栏，世界是如何运行的)" loading="lazy">
+        <figcaption class="fig-caption">(来自学姐的专栏，世界是如何运行的)</figcaption>
+    </figure>
+        <p>链接：<a href="cv6013612.html"><span class="font-size-16">https://www.bilibili.com/read/cv6013612</span></a></p>
+        <p><strong>所以这个坑只能交给其他有兴趣的人实现了。<span class="font-size-23">（不建议，这是天坑）</span></strong></p>
+        <p><span class="font-size-16">至于有兴趣研究无延迟投掷的，的可以去看sac写的无延迟投掷链专栏：</span></p>
+        <p><a href="cv15587328.html"><span class="font-size-16">https://www.bilibili.com/read/cv15587328</span></a></p>
+        <hr class="opus-pagebreak">
+        <p>鸣谢<br></p>
+        <p>金色头盔GoldenHelmet分享的存档和对此相关的介绍</p>
+        <p><a href="https://space.bilibili.com/34227664" target="_blank" rel="noopener noreferrer">hhhxiao_</a>提供的trapdoor插件和对游戏代码的挖掘让我们能更加深刻的理解游戏机制</p>
+        <p><a href="https://space.bilibili.com/281937815" target="_blank" rel="noopener noreferrer">Misac_</a>为<strong>漏斗快速输送</strong>提供的资料和相关分享</p>
+        <p><a href="https://space.bilibili.com/413324281" target="_blank" rel="noopener noreferrer">Maple枫溪</a>和<a href="https://space.bilibili.com/19974985" target="_blank" rel="noopener noreferrer">叼叼的汤圆</a>等人提供的帮助与讨论</p>
+        <p><a href="https://space.bilibili.com/402934900" target="_blank" rel="noopener noreferrer">非凡</a>和<a href="https://space.bilibili.com/19974985" target="_blank" rel="noopener noreferrer">汤圆</a>为本文提供修改润色建议</p>
+        <p>如果您对本文有异议或者发现勘误，请私信我，我会尽快改正。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv23489507/978222aae2d9.webp" width="168" height="104" alt="文章配图" loading="lazy">
+    </figure>
+        <hr class="opus-pagebreak">
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/792176494269956177">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv10249803.html" title="« 上一篇：MCBE 常见漏斗行为简述" aria-label="« 上一篇：MCBE 常见漏斗行为简述">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 常见漏斗行为简述</span>
+            </a>
+            <a class="pager-item is-next" href="cv15587328.html" title="下一篇 »：如何建造一条无延迟投掷器链––MCBE 计划刻机制详解" aria-label="下一篇 »：如何建造一条无延迟投掷器链––MCBE 计划刻机制详解">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">如何建造一条无延迟投掷器链––MCBE 计划刻机制详解</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

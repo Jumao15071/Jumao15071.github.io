@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>树场全解析（更新顺序篇） - 橘猫的资源站</title>
+    <meta name="description" content="更新顺序篇 对于活塞 同区块内不同活塞优先级是随机的 对于活塞推动的方块 同一活塞推动：对于附着的方块A,和B,先计算A到B的位置向量AB,然含给定活塞的推动方向P,如果AB和P的点乘(数量积)大于0,也就是这俩相向量的夹角是锐角，那么B会比A先动，否则A先动">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>树场全解析（更新顺序篇）</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/279093667" target="_blank" rel="noopener noreferrer">angel丶抱</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2024年10月02日 12:53</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/983575097385156661" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv39256634</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">树场</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv39256219.html" title="« 上一篇：树场全解析（发射器篇）" aria-label="« 上一篇：树场全解析（发射器篇）">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">树场全解析（发射器篇）</span>
+            </a>
+            <a class="pager-item is-next" href="cv39256744.html" title="下一篇 »：树场全解析（实际运用：连推连拉篇）" aria-label="下一篇 »：树场全解析（实际运用：连推连拉篇）">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">树场全解析（实际运用：连推连拉篇）</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p>更新顺序篇</p>
+        <p>对于活塞</p>
+        <p>同区块内不同活塞优先级是随机的</p>
+        <p>对于活塞推动的方块</p>
+        <p>同一活塞推动：对于附着的方块A,和B,先计算A到B的位置向量AB,然含给定活塞的推动方向P,如果AB和P的点乘(数量积)大于0,也就是这俩相向量的夹角是锐角，那么B会比A先动，否则A先动（出处SAC_Official）</p>
+        <p>不同活塞推动：依据所推活塞的更新顺序</p>
+        <p>对于发射器</p>
+        <p>同区块内优先级遵循计划刻优先顺序。</p>
+        <p>对于一个区块</p>
+        <p>每gt的更新顺序</p>
+        <p>随机刻更新</p>
+        <p>更新队列更新</p>
+        <p>更新队列更新</p>
+        <p>方块实体更新</p>
+        <p>（出处：hhhxiao_）</p>
+        <p>对于不同区块</p>
+        <p>我们需知，mc的随机刻更新，更新队列更新，更新队列更新，方块实体更新（活塞和发射器隶属于此，是以区块为单位的，一个区块的这些内容更新完才会开始更新下一个区块的内容，也就是说不同区块的条件下，发射器和活塞的优先级是固定的。</p>
+        <p>那么我们是否可以根据此利用优先级做出高速树场呢？很遗憾，同一个玩家加载的区块之间的优先级在世界时钟下，每20gt会随机打乱一次，也就是你所想要的优先级并不是恒有的。</p>
+        <p>可恶，难道要止步于此了？</p>
+        <p>非也，固定优先级的办法还是有的。</p>
+        <p>1，常加载区块一定优先于普通区块，而生存服务器中，末地是天然形成常加载区块</p>
+        <p>2，上文我们说的是"同一个玩家加载的区块"，那要是不同玩家呢？是的，不同玩家之前的区块优先级不会被打乱，只会在玩家本身加载的区块中内部打乱。就是说a玩家加载的区块若是优先于b玩家，那么这个优先级是恒有的。</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/983575097385156661">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv39256219.html" title="« 上一篇：树场全解析（发射器篇）" aria-label="« 上一篇：树场全解析（发射器篇）">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">树场全解析（发射器篇）</span>
+            </a>
+            <a class="pager-item is-next" href="cv39256744.html" title="下一篇 »：树场全解析（实际运用：连推连拉篇）" aria-label="下一篇 »：树场全解析（实际运用：连推连拉篇）">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">树场全解析（实际运用：连推连拉篇）</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

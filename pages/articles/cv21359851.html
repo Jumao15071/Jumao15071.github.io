@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 修改之后的篝火性质 - 橘猫的资源站</title>
+    <meta name="description" content="众所周知，基岩版的篝火原本是一个完全不阻碍生成方块外加真空气类方块的挤压性质方块，但是在1.17的哪个版本当中进行了修改，当时，更新日志是这样描述的，就是修复了动物会生成在篝火上的问题，然后从此这个篝火就被一刀砍的半废了，因为从此之后，篝火的性质就变成了一个部">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv21359851.webp" alt="MCBE 修改之后的篝火性质">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 修改之后的篝火性质</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/565837815" target="_blank" rel="noopener noreferrer">离殇之枫</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2023年01月22日 15:56</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/753920494716059651" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv21359851</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">实体机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv17966733.html" title="« 上一篇：MCBE 关于伪空气类方块的评估" aria-label="« 上一篇：MCBE 关于伪空气类方块的评估">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 关于伪空气类方块的评估</span>
+            </a>
+            <a class="pager-item is-next" href="cv21421845.html" title="下一篇 »：MCBE 部分生物的特殊方块性质判定" aria-label="下一篇 »：MCBE 部分生物的特殊方块性质判定">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 部分生物的特殊方块性质判定</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="delta">
+        <p>众所周知，基岩版的篝火原本是一个完全不阻碍生成方块外加真空气类方块的挤压性质方块，但是在1.17的哪个版本当中进行了修改，当时，更新日志是这样描述的，就是修复了动物会生成在篝火上的问题，然后从此这个篝火就被一刀砍的半废了，因为从此之后，篝火的性质就变成了一个部分不阻碍生成方块外加伪空气类方块的挤压性质方块，因此，很多之前的设计也不能用了，而且最新版还要把燃烧给砍了，真就是直接废了</p>
+        <p>看过我们之前守卫者生成机制专栏的，应该都知道，篝火对于守卫者来说仍然是一个完全不阻碍生成方块【MCBE 守卫者生成的空间检测机制-哔哩哔哩】 <a href="https://b23.tv/3h55lZB" target="_blank" rel="noopener noreferrer">https://b23.tv/3h55lZB</a></p>
+        <p>但是我们今天在测试发光鱿鱼农场的時候，突发奇想，想测试一下篝火，结果就出现了这样的情况</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21359851/d535e68edc4b.webp" width="2376" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>没错，篝火对于发光鱿鱼来说居然也是完全不阻碍生成方块，然后这个时候我们就大概猜到了一点，那就是篝火肯定还对于一些别的生物仍然来说是完全不阻碍生成方块，所以我们先去群里问了一下曲奇，不过他也没有过多的测试，得到的新的结果就是增加了一个流浪商人，于是我们打算自己再去测试一下</p>
+        <p>我们主世界测试了，露天动物，洞穴动物，普通怪物，女巫小屋，掠夺者哨塔，海底神殿，史莱姆区块，溺尸，露天鱼类，鱿鱼，海豚，发光鱿鱼，洞穴鱼类，蝾螈，流浪者，基本上大部分都测试了，铁傀儡应该想来是不行，至于劫掠的话，倒是没有去测试，流浪商人实在难等就算了，听曲奇说可以，就当他可以吧，问题不大</p>
+        <p>然后结果的话，我们把可以生成的给放出来图片</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21359851/dd47fc3fc92f.webp" width="2376" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21359851/72f418f7d476.webp" width="2376" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21359851/9bdbc8e3b856.webp" width="2376" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21359851/4ef8e5f35cbf.webp" width="2376" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>最终得到的结果就是，在主世界当中，除了蝾螈之外，其他的所有水生生物都是可以生成在篝火当中的，就包括鱿鱼发光，鱿鱼，以及洞穴和露天生成的所有鱼，外加守卫者，以及曲奇测试的流浪商人</p>
+        <p>之后我们也把地狱和末地的自然生成与结构生成给测试了一下，不过，火云邪神不好测试，因为篝火不可能含岩浆，所以就没有测了，除此之外的都测试了，不过能刷的还是只有这个</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21359851/db47fca4fe24.webp" width="2376" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>所以基本上到这里就可以得出结论了，篝火在1.17被修改了性质之后，除了流浪商人（劫掠和铁傀儡及猫没测试），之外的所有非水生生物，外加一个蝾螈，他们的判定都改过来了，也就是把篝火视为部分不阻碍生成方块，但是除了蝾螈之外的水生生物都没有改过来，依然是把它当做完全不阻碍生成方块来判定，不过他的真空气类方块性质是完全消失了，不管哪一种，都是把它当做伪空气类方块来判定，问题不大</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv21359851/7e5aa4b3daa9.webp" width="2376" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>总结，篝火的真空气类方块性质完全改为伪空气类方块性质，但是完全不阻碍方块性质对于除了蝾螈之外的其他水生生物以及流浪商人仍然有效，挤压类方块性质不变，那就这样，水个专栏，到此结束，问题不大</p>
+        <p>测试使用版本：正式版1.19.51</p>
+        <p>鸣谢：@Cookie_531</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/753920494716059651">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv17966733.html" title="« 上一篇：MCBE 关于伪空气类方块的评估" aria-label="« 上一篇：MCBE 关于伪空气类方块的评估">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 关于伪空气类方块的评估</span>
+            </a>
+            <a class="pager-item is-next" href="cv21421845.html" title="下一篇 »：MCBE 部分生物的特殊方块性质判定" aria-label="下一篇 »：MCBE 部分生物的特殊方块性质判定">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 部分生物的特殊方块性质判定</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

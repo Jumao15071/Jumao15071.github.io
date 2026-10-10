@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MC 齐喷催熟树厂极限效率定理和树厂理论效率的计算 - 橘猫的资源站</title>
+    <meta name="description" content="1.总述： 从树厂诞生到现在，经过很多大佬的探索和研究，常规架构已经发展完善，部分架构来说已经到达了极限，列如四发射器16gt双线程树厂。那么，我们是否可以进一步发掘树厂理论，创造一个类似“可逆热机的“卡诺定理””一样的公式，来说明各类单木树厂的效率极限值？且">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv27781635.webp" alt="MC 齐喷催熟树厂极限效率定理和树厂理论效率的计算">
+        </figure>
+        <div class="article-head">
+            <h1>MC 齐喷催熟树厂极限效率定理和树厂理论效率的计算</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/572565493" target="_blank" rel="noopener noreferrer">RSSMcRedRockRT</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">编辑于 2024年01月07日 09:04</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/865017142261579785" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv27781635</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">树场</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv36522613.html" title="« 上一篇：树厂速度计算文案" aria-label="« 上一篇：树厂速度计算文案">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">树厂速度计算文案</span>
+            </a>
+            <a class="pager-item is-next" href="cv33358140.html" title="下一篇 »：（终焉）MC大云杉生长机制及效率计算" aria-label="下一篇 »：（终焉）MC大云杉生长机制及效率计算">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">（终焉）MC大云杉生长机制及效率计算</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p><strong><span style="color:#ff654e">1.</span></strong><strong><span style="color:#ff654e">总述：</span></strong></p>
+        <p><span style="color:#ff654e">      从树厂诞生到现在，经过很多大佬的探索和研究，常规架构已经发展完善，部分架构来说已经到达了极限，列如四发射器16gt双线程树厂。那么，我们是否可以进一步发掘树厂理论，创造一个类似“</span><strong><span style="color:#ff654e">可逆热机的“卡诺定理””</span></strong><span style="color:#ff654e">一样的公式，来说明各类</span><strong><span style="color:#ff654e">单木树厂</span></strong><span style="color:#ff654e">的效率极限值？且听RSS分析：</span></p>
+        <p><strong><span style="color:#02a2ff">建模工具：Python（IDE：pycharm）</span></strong><span style="color:#ff654e">
+</span></p>
+        <p><strong><span style="color:#02a2ff">                 Excel（用于制表）</span></strong></p>
+        <p><strong><span style="color:#ff654e">2.正文：</span></strong></p>
+        <p><span style="color:#ff654e">      可逆热机的卡诺定理指出：“</span><span style="color:#ff654e">可逆热机的效率最大值只和高低温热库的温度Tmin Tmax有关</span><span style="color:#ff654e">”任何非可逆热机效率都低于同类型卡诺热机的效率。可以说，卡诺定理规定了热机效率的最大值。那么，我们将其类比到树厂，</span><span style="color:#02a2ff">探究n个发射器，m gt周期（最短种树间隔）树厂的极限效率（每分钟处理多少棵树）</span><span style="color:#02a2ff">。同时将各个数量发射器数目，各个gt周期树厂的实际理论效率列举成表格，供大家参考。</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/68e3a367b2cf.webp" width="1076" height="1568" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">可逆热机的卡诺定理</span></p>
+        <p><span style="color:#02a2ff">      根据linlin的单木理论，树苗在接受n发骨粉预催熟，在长树窗口处于第二阶段的概率是：</span><span style="color:#ff654e">P二阶段</span><span style="color:#02a2ff"> </span><span style="color:#ff654e"> </span><strong><span style="color:#ff654e">＝（1-0.1^n）/2</span></strong><span style="color:#ff654e">；</span><span style="color:#ff654e">在m个发射器齐喷催熟一次中，树苗生长一次（阶段变化一次）的概率为：</span><strong><span style="color:#02a2ff">P</span></strong><span style="color:#02a2ff">生长</span><strong><span style="color:#02a2ff">＝（1-0.55^m）。</span></strong><span style="color:#02a2ff">（树苗接受一发骨粉生长的概率为0.45，m次发射器一次齐喷可以看做m次伯努利试验，符合二项分布率。）发射器周期是</span><strong><span style="color:#ff654e">4gt</span></strong><strong><span style="color:#ff654e">（0.2秒）</span></strong><span style="color:#ff654e">，知道这些数据，我们来计算常见单木树厂的实际理论效率：</span></p>
+        <p><span style="color:#ff654e">    </span><strong><span style="color:#ff654e">   </span></strong><strong><span style="color:#ff654e">对于地狱蘑菇，不存在生长检测范围，不存在第一阶段，催熟成功立刻长出。对于杜鹃花，不存在第一阶段，催熟成功后检测空间范围，通过就立刻长出，不通过还保留在第二阶段。这两种是特殊的树苗，预催熟对他们毫无意义。</span></strong></p>
+        <a class="jump-card is-text" href="cv4361187.html">
+    <span class="jump-card-cover"><img src="../../assets/articles/cv27781635/a13ac85f11b2.webp" alt="" loading="lazy"></span><span class="jump-card-main">
+        <span class="jump-card-title">[MCBE][水]部分树苗的生长机制</span>
+        <span class="jump-card-meta">账号已注销 · 9669 阅读 · 31 回复</span>
+    </span>
+    <span class="jump-card-badge">站内专栏 »</span>
+</a>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/abec6f9714df.webp" width="1920" height="990" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">三发射器双线程16gt树厂</span></p>
+        <p><span style="color:#ff654e">       以三发射器16gt树厂（12gt齐喷预催一次）为例子：</span><span style="color:#18e7cf">因为树苗催熟是概率问题，可能失败，所以树苗可能在16gt，20gt，24gt，28gt…生长成树，各自有各自的概率权重，依次递减，总和为概率归一化的1。</span><span style="color:#18e7cf">树厂以16gt（0.8s）运行，每分钟就是60÷0.8＝75树/min，20gt就是60树/min，24gt就是50树/min，以此类推做除法，可以得到树厂以不同gt周期运行每分钟多少棵树。下面开始计算树厂以上周期运行的概率权重：</span></p>
+        <p><strong><span style="color:#18e7cf">      </span></strong><strong><span style="color:#ff654e">（1）树厂理论效率的计算：</span></strong></p>
+        <p><span style="color:#ff654e">以16gt三发射器12gt三发预催为例子：</span></p>
+        <p><span style="color:#ff654e">       16gt长树要求树苗在长树窗口必须处于第二阶段，而且第16gt接受骨粉后应该生长成功。所以：</span><strong><span style="color:#ff654e">P16gt＝P二阶段×（1-0.55^3）＝0.4995×0.833625＝0.4163956875</span></strong></p>
+        <p><span style="color:#ff654e">         20gt分为两种情况：</span></p>
+        <p><span style="color:#02a2ff">情况一：</span><span style="color:#02a2ff">16gt长树窗口前处于第二阶段，但16gt催熟失败，20gt催熟成功。</span><strong><span style="color:#ff654e">P20gt1＝P二阶段×（1-0.55^3）×0.55^3</span></strong>
+</p>
+        <p><span style="color:#02a2ff">情况二：</span><span style="color:#02a2ff">16gt长树窗口树苗处于第一阶段，16和20gt都催熟成功，变成三阶段树木。</span><strong><span style="color:#ff654e">P20gt2＝（1-P二阶段）×0.55^6</span></strong></p>
+        <p><span style="color:#ff654e">           </span><span style="color:#ff654e">24gt也分为两种情况：</span></p>
+        <p><span style="color:#18e7cf">情况一：</span><span style="color:#18e7cf">处于第二阶段，但16gt，20gt都失败，24gt才催熟成功。概率不再赘述类似几何分布。</span></p>
+        <p><span style="color:#18e7cf">情况二：</span><span style="color:#18e7cf">处于第一阶段，在16gt和20gt失败一次成功一次，进入第二阶段，符合二项分布；在24gt催熟成功，变成三阶段树木。概率也不赘述。里面涉及到二项分布的一些知识。</span><span style="color:#18e7cf">
+</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/a34cdaf258c9.webp" width="1524" height="662" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">20gt周期和24gt周期的概率权重计算</span></p>
+        <p><span style="color:#18e7cf">       那么以此类推以后的周期只有两种情况：</span></p>
+        <p><span style="color:#fbe231">情况一：</span><span style="color:#fbe231">处于二阶段，但是在长树窗口前n-1次催熟均失败，第n次催熟成功，变成树木。</span><span style="color:#18e7cf">
+</span></p>
+        <p><span style="color:#fbe231">情况二：</span><span style="color:#fbe231">处于第一阶段，但是在前n-1次内只成功一次，变成第二阶段，第n次催熟成功，生长成树。</span><span style="color:#fbe231">
+</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/19b82d488ce2.webp" width="1520" height="668" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">之后周期的概率权重</span></p>
+        <p>再这样套用数学期望公式，就可以得到树厂理论的概率（单位：棵/min），再乘以60就是每小时处理多少棵树的期望，再乘以平均树高（我会在后续给出）就可以得到树厂的理论效率。</p>
+        <p>知道原理后，下面是Python代码及其实现：</p>
+        <p><strong> </strong><strong><span style="color:#ff654e">（2）Python代码以及实验结果</span></strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/12f66f01b4c7.webp" width="1520" height="630" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">Python源代码，IDE是pycharm</span></p>
+        <p><strong><span style="color:#02a2ff">声明：</span></strong></p>
+        <p><strong><span style="color:#02a2ff">    1.该代码输入树厂的发射器数目，预催熟消耗骨粉数量和树厂最小种树周期，输出树厂的理论效率（每分钟处理多少棵树）。代码可以算出来树厂ngt到n+800gt时间段各周期的概率权重，误差小于百万分之一。</span></strong><strong><span style="color:#02a2ff">
+</span></strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/a1fbd1b574f7.webp" width="928" height="286" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">输入输出案例</span></p>
+        <p><strong><span style="color:#fbe231">（3）代码正确性的验证：</span></strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/45be7e5f158c.webp" width="1920" height="990" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">16gt三发射器双线程，12gt给予三发骨粉预催熟</span></p>
+        <p>这是一个16gt三发射器双线程树厂（在我动态有存档），在第12gt拥有三个骨粉的齐喷预催熟，经过一小时的种树测试，树厂平均效率是64.053树/min，和上面的理论效率64.24660324树/min，两者相差不足三百分之一，说明代码计算出来的和实际情况很符合。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/26ad02ddfab7.webp" width="1080" height="1564" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">林林小宇的14gt樱花树厂</span></p>
+        <p>     这是林林小宇的一个骨粉预催，三发射器的14gt树厂，经过代码计算理论效率是71.20189839树/min，和上面五分钟测试的数据误差大概百分之二。这考虑到测量时间短的原因，不过误差很小，基本符合实际情况。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/56228a6dba16.webp" width="1856" height="1146" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">20gt土轮全树种，三发射器，16gt三发预催熟</span></p>
+        <p>       这是键盘O大佬和众多树厂大佬联合出品的兼容樱花的20gt土轮全树，经过一小时测试，金合欢52.3树/min，云杉52.1/min，白桦52.7/min，理论效率代码计算的是52.72221416树每分钟，三个数据与理论值相差不足百分之一十分准确。</p>
+        <p><strong><span style="color:#02a2ff">    以上三个数据说明代码是正确的，可以应对不同架构不同数量发射器齐喷催熟，不同数目骨粉预催熟的树厂效率理论值。下面放出结论：</span></strong></p>
+        <p><strong><span style="color:#ff654e">（3）结论：</span></strong></p>
+        <p><strong><span style="color:#ff654e">     rss在这里制作了一张图表，详细记述了各类单木树厂的理论效率，用来参考，同时也是生存能实现的树厂的最大效率。以后就可以查表大概知道树厂的效率大概在什么范围左右了。</span></strong><strong><span style="color:#ff654e">
+</span></strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/b0613342fe41.webp" width="828" height="366" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">程序跑出来的各个树厂理论效率的值</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/eb49e3e6c2eb.webp" width="1654" height="624" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">一两个骨粉预催熟下各类单木树厂的理论效率</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/21eabe7f2156.webp" width="1666" height="688" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">三四个骨粉预催熟下各类单木树厂的理论效率</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/e441961766a9.webp" width="1626" height="435" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">手种杜鹃花树厂的理论效率和极限效率</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/ecda91590eab.webp" width="977" height="331" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">计算手种杜鹃花树厂的源代码</span></p>
+        <p>我们发现了一些不同的结论：</p>
+        <p><strong><span style="color:#ff654e">1.双发射器到三发射器的提升十分明显，但是三发到四发射器的提升很微小，只有一两棵树的提升。</span></strong><strong><span style="color:#ff654e">如果追求实用性，尽量还是选择三发射器，这样更节省骨粉和卡顿，底座也更为简单。</span></strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/6f0fb76a9e58.webp" width="1235" height="645" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">16gt三个骨粉预催熟树厂理论效率和发射器数量的关系（不过实际上树厂最多四个发射器位置）</span></p>
+        <p><strong><span style="color:#ff654e">2.随着发射器数量的提升，树厂的效率趋单调递增并近于某一个最大值，</span></strong><strong><span style="color:#ff654e">后续我会给出求解方法</span></strong><strong><span style="color:#ff654e">。</span></strong></p>
+        <p><strong><span style="color:#ff654e">3.发射器数目和预催熟所用骨粉数目在越快速的树厂提升越明显，在高gt慢速树厂的提升逐渐下降。</span></strong><strong><span style="color:#ff654e">所以对于冲击世界纪录的玩家，多增加预催熟和发射器数目比较必要。</span></strong></p>
+        <p><strong><span style="color:#ff654e">4.对于杜鹃树和地狱蘑菇，预催熟对他们毫无意义，因为树苗一被放置就处于第二阶段。</span></strong></p>
+        <p><strong><span style="color:#ff654e">考虑到实际玩家种树有回弹和卡顿影响等等，效率可能上下±1浮动。</span></strong><strong><span style="color:#ff654e">
+</span></strong></p>
+        <p><strong><span style="color:#ff654e">（4）树厂极限效率定理</span></strong></p>
+        <p><span style="color:#ff654e">       结合之前的计算过程，如果发射器数量趋于∞，一次齐喷催熟概率1-0.55^n趋于1，也就是说这时候树苗接受一次预催熟是必定生长成功的。在预催熟次数趋于∞的时候，长树窗口前树苗处于二阶段的概率0.5×（1-0.1^n）趋与0.5，那么对于一个ngt为周期的树厂，长树周期只存在第ngt和第n+4gt两种情况。</span><span style="color:#ff654e">
+</span></p>
+        <p><span style="color:#02a2ff">    1.第ngt长树，说明树苗之前处于第二阶段，在第ngt长树窗口一定长成树，概率为0.5×1为0.5。</span>
+</p>
+        <p><span style="color:#02a2ff">   2.第n+4gt长树，说明树苗之前处于第一阶段，第ngt一次催熟必定生长，第n+4gt一次催熟必定成树，概率是0.5×1×1＝0.5。</span></p>
+        <p><strong><span style="color:#ff654e">所以树厂效率期望为树厂以ngt周期运行和n+4gt运行的平均值。</span></strong></p>
+        <p><strong><span style="color:#ff654e">这就是树厂能达到的极限效率，它只和树厂最小种树周期有关系，</span></strong><strong><span style="color:#ff654e">而且通过何种手段效率只能无限趋近这个值，不能超过这个值。</span></strong><strong><span style="color:#ff654e">这类似热机中的卡诺定理，任何可逆热机效率无限趋近卡诺定理，除非没有损耗和额外的传热浪费。</span></strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/4f30e4038f13.webp" width="1416" height="550" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">ngt树厂的效率最大值（一般n＞＝10），单位是每分钟处理多少棵树。</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/279f21aeb2c4.webp" width="898" height="546" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">代码实现</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv27781635/75e7f9e84b16.webp" width="658" height="412" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">代码的输出结果：各个树厂理论最大效率</span></p>
+        <p>     这也解释了为什么上面那张图最后随着发射器数量递增效率无限趋近67.5，因为67.5是16gt树厂能达到的理论效率极限。</p>
+        <p>      对于杜鹃树和地狱树，因为他们不存在第一阶段。极限就是长树窗口立刻催熟成功并长出，换算成公式就是：<span style="color:#ff654e">60s÷最小种树周期</span>。上表已经给出手种杜鹃树的极限效率。</p>
+        <p><strong><span style="color:#ff654e">后记：</span></strong></p>
+        <p><span style="color:#ff654e">      通过这次建模练习，也算学会了怎么使用Python的matplotlib库制表。同时为树厂最大的上限盖棺定论了，希望更多人受到参考。写的有些复杂，大家只看结论就行，感谢观看。</span><span style="color:#02a2ff">特别感谢linlin的单木理论。</span></p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/865017142261579785">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv36522613.html" title="« 上一篇：树厂速度计算文案" aria-label="« 上一篇：树厂速度计算文案">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">树厂速度计算文案</span>
+            </a>
+            <a class="pager-item is-next" href="cv33358140.html" title="下一篇 »：（终焉）MC大云杉生长机制及效率计算" aria-label="下一篇 »：（终焉）MC大云杉生长机制及效率计算">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">（终焉）MC大云杉生长机制及效率计算</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

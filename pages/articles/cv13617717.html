@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 红石系统运行不完全分析(4)——活塞 - 橘猫的资源站</title>
+    <meta name="description" content="0. 介绍 活塞是Minecraft的红石电路系统中极为重要的一个原件。其基本作用是在被红石信号激活时能将方块（或实体）向着特定方向推出。这篇专栏通过逐gt测试、反编译代码、通过特殊手段查看内存数据以及与经验丰富的红石玩家交流（对线）等方式对基岩版的活塞特性做">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv13617717.webp" alt="MCBE 红石系统运行不完全分析(4)——活塞">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 红石系统运行不完全分析(4)——活塞</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/507463378" target="_blank" rel="noopener noreferrer">SAC_Official</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2021年10月17日 13:32</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/582441940946353413" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv13617717</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv10907045.html" title="« 上一篇：MCBE 红石系统运行不完全分析(3)" aria-label="« 上一篇：MCBE 红石系统运行不完全分析(3)">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 红石系统运行不完全分析(3)</span>
+            </a>
+            <a class="pager-item is-next" href="cv23851750.html" title="下一篇 »：Minecraft基岩版红石系统设计简述" aria-label="下一篇 »：Minecraft基岩版红石系统设计简述">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">Minecraft基岩版红石系统设计简述</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="html">
+        <h2>0. 介绍</h2>
+        <p><span class="md-plain md-expand">活塞是Minecraft的红石电路系统中极为重要的一个原件。其基本作用是在被红石信号激活时能将方块（或实体）向着特定方向推出。这篇专栏通过逐gt测试、反编译代码、通过特殊手段查看内存数据以及与经验丰富的红石玩家交流（对线）等方式对基岩版的活塞特性做了一个简单的总结。</span></p>
+        <p>在这篇专栏中你能看到对以下问题的解答：</p>
+        <ul>
+            <li>BE活塞的推出和收回时间到底是多少</li>
+            <li>为什么BE的活塞更慢</li>
+            <li>所谓的CD到底存在吗</li>
+            <li>...</li>
+        </ul>
+        <h2>1. 基本前提</h2>
+        <p>在阅读本篇之前请先浏览第二篇</p>
+        <p><a href="cv7581645.html">MCBE红石系统运行不完全分析(1)</a></p>
+        <p><a href="cv7876046.html">MCBE红石系统运行不完全分析(2)</a></p>
+        <p><a href="cv10907045.html">MCBE红石系统运行不完全分析(3)</a></p>
+        <p>以及务必知晓如下前提</p>
+        <ol>
+            <li>虽然本篇的所有内容基于1.14.6和1.16.4这两个正式版本,但是自上次(几年前)活塞特性改变之后一直都是成立的，因此也适用于新版。</li>
+            <li>时序分析的<span class="md-pair-s"><strong>基本时间单位是gt而不是rt</strong></span>.</li>
+        </ol>
+        <h2>2. 活塞及其状态</h2>
+        <h2>2.1 玩家的直观感受</h2>
+        <p>在玩家眼中活塞有<span class="md-pair-s"><strong>未伸出，伸出一半以及完全伸出</strong></span>这三个阶段，如下同所示：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv13617717/de9e51da0d9c.webp" width="1397" height="706" alt="文章配图" loading="lazy">
+    </figure>
+        <p>玩家对活塞的直观感受是这样的：未收到红石信号的活塞位于第一个状态，收到红石信号的活塞会从第一个状态开始经过第二个状态过渡后最终停留在第三个状态，并将活塞臂方向的方块往外推出一格。在红石信号小时候，活塞会进行相反的过程，如果是粘性活塞还会把方块拉回到原的位置。</p>
+        <h2>2.2 实际的四状态</h2>
+        <p>在游戏内部，活塞<span class="md-pair-s"><strong>有且仅有四个状态</strong></span>:分别为<span class="md-pair-s"><strong>收回，半伸出，伸出，半收回</strong></span>。下文用0、1、2、3四个数字来代表这四个状态。如下图所示：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv13617717/ee30e9f5fc7a.webp" width="889" height="970" alt="文章配图" loading="lazy">
+    </figure>
+        <p>左下角是收回状态(状态0)，左上是半伸出状态（状态1），右上是伸出状态（状态2），右下是半收回状态（状态3）.这四个状态的互相转换构成了BE版活塞的所有性质。</p>
+        <h2>3. 活塞的更新</h2>
+        <h2>3.1 两部分分别运作</h2>
+        <p>在谈论这个问题之前首先要明确的是，<span class="md-pair-s"><strong>活塞内部参与更新的部分有消费者(Piston consumer)和方块实体(Piston block actor)两个部分。前者负责活塞内部红石信号的更新，后者负责活塞的运动状态（也就是和世界的交互）</strong></span>,只发生在模拟距离之内。</p>
+        <p>并且<span class="md-pair-s"><strong>在同1gt内，方块实体总是先于消费者而更新的</strong></span>。下面的伪代码描述了这个更新顺序：</p>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">JavaScript</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>bool isRedstoneTick = false;
+void BlockActorTick(){} //更新方块实体
+
+void RedstoneTick(){} //消费者更新在这里面
+
+void LevelTick(){ //游戏更新
+    isRedstoneTick = !isRedstoneTick;
+    BlockActorTick();
+    if(isRedstoneTick){
+        RedstoneTick();
+    }
+}
+int main() {
+    while(true){ //游戏主循环
+        LevelTick();
+    }
+}</code></pre>
+</div>
+        <p>活塞消费者属于消费者的一种，它的更新在第二篇中做过详细的解释，这里不再赘述。下面重点来看活塞方块实体的更新。</p>
+        <h2>3.2 活塞方块实体更新</h2>
+        <p>在省去无关部分(如和实体交互)并做了适当简化后，该更新过程分依次为如下两个部分:</p>
+        <ol>
+            <li>根据当前状态以及红石信号的强度来计算新状态</li>
+            <li>根据新状态来更新与世界(及方块)的交互状态</li>
+        </ol>
+        <p>下面分成两小节来分别讲这两个步骤：</p>
+        <h2>3.2.1 新状态的计算</h2>
+        <p>状态更新主要依据下面四条规则(用C代表当前装状态,N代表新状态，S表示红石信号的值,&amp;&amp;表示且)：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv13617717/cbfd49df4b0b.webp" width="1197" height="238" alt="文章配图" loading="lazy">
+    </figure>
+        <blockquote><p>注意：这里为了方便理解做了一定的简化，mojang这部分判定的代码太乱了，没啥规章。</p></blockquote>
+        <p>下面这幅图很好地描述了这一状态循环。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv13617717/9c75db2a7e42.webp" width="201" height="201" alt="文章配图" loading="lazy">
+    </figure>
+        <p>不过请注意，这里仅仅是计算出新状态并设置，不会产生外部行为，因此这些改变暂时不会在游戏中表示出来。</p>
+        <h2>3.2.2 更新与世界的交互状态</h2>
+        <p><span class="md-pair-s"><strong>当且仅当当前游戏刻为红石刻且新旧状态不一样时该行为才发生。</strong></span></p>
+        <p>这一步的目的是根据当前不同的状态来对活塞附着的方块进行处理,行为如下表所示:</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv13617717/d23e5ea5d293.webp" width="1204" height="239" alt="文章配图" loading="lazy">
+    </figure>
+        <p>MB和方块具体如何转换请看第五节。</p>
+        <h2>4. 时序分析</h2>
+        <p>讲了这么多理论分析，下面就活塞的推出和缩回做一些时序分析。</p>
+        <h2>4.1 推出</h2>
+        <p>下图是活塞的推出过程，现在来做一个简单的解释：</p>
+        <ol>
+            <li>假设在在红石刻1上活塞收到了激活信号</li>
+            <li>在红石刻2的时候活塞检测到自己收到了红石信号，并且当前装状态为0，就计算新状态为1，并在更新推出状态为一般，其附着的方块变成MB</li>
+            <li>在下一个非红石刻上，<span class="md-pair-s"><strong>活塞不会做任何检查和动作，状态还是1，MB还是MB，但是这时候客户端已经将活塞渲染成全1推出状态</strong></span></li>
+            <li>在红石刻3上，活塞再次做检测，发现自己收到了红石信号，且状态为1，于是计算新状态为2，并将MB变回方块</li>
+        </ol>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv13617717/e53550d4ed03.webp" width="526" height="191" alt="文章配图" loading="lazy">
+    </figure>
+        <p>这就是一个完整的活塞推出流程，请注意，这个图并不会向左或者向右边偏移1gt，因为<span class="md-pair-s"><strong>实际的状态变化一定发生在红石刻</strong></span>。到这里，你会怎么定义活塞的推出时间呢？</p>
+        <ul>
+            <li>从状态0到状态2所花的时间？</li>
+            <li>状态1持续的时间？</li>
+            <li>MB存活的时间？</li>
+        </ul>
+        <p>怎么说都有理。因此这里不会定义活塞的推出时间。至于cd也是如此，只要你的定义能够描述这个事实，怎么定义都可以。</p>
+        <h2>4.2 收回</h2>
+        <p>收回的过程和推出完全相反，其示意图如下所示，这里不再赘述。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv13617717/b0b19bd8d5c6.webp" width="526" height="191" alt="文章配图" loading="lazy">
+    </figure>
+        <h2>4.3 推出一半就收回的活塞存在吗</h2>
+        <p>答案是不存在。因为<span class="md-pair-s"><strong>处于状态1或者状态3的活塞在下一个红石刻会无视红石信号变成状态2和0</strong></span>，如果不这样的设计的话，BE的活塞会出现瞬推和瞬收的动画(但是状态变化还是连续的)，这样也不好管理MB和方块之间的互相转换。</p>
+        <h2>5. Moving Block的产生与灭亡</h2>
+        <p>方块在被推后还没有复原的状态也是一种方块，在Java版中该方块的id为36，因此被称之为36号方块。而在BE版中这个方块同样存在，但是方块id是250,名称是Moving Block,以下和以上简称为MB。</p>
+        <blockquote><p>Mojang在早期版本添加方块的时候特地预留了id为36的位置，但是这个位置最终没有分配给MB，而是被教育版中的0号元素方块所占据。</p></blockquote>
+        <p>方块和MB之间的转化没什么要点，这里简单提一下。</p>
+        <h2>5.1 方块转为MB</h2>
+        <p>在活塞由状态0转向状态1以及由状态2转向状态3的时候会触发该行为。</p>
+        <ol>
+            <li>检查附着在其上的所有无法被推动的方块(如果小麦等),先生成掉落物，范围为1，不会产生任何时运效果，然后移除该方块；</li>
+            <li>对于可以被推动的方块，先在<span class="md-pair-s"><strong>新位置</strong></span>上生成MB,然含再移除该方块。原来的方块信息会被存储到MB内部</li>
+        </ol>
+        <blockquote><p>这里面还有对流动水，大箱子等特殊方块做了一些特殊处理，这里不赘述</p></blockquote>
+        <h2>5.2 MB转为方块</h2>
+        <p>在活塞由状态1转向状态2以及由状态3转向状态0的时候会触发该行为。</p>
+        <ol>
+            <li>在新位置上生成方块，替换掉原来的MB</li>
+        </ol>
+        <h2>5.3 多方块的移动顺序问题</h2>
+        <p>如果不实现规定好活塞附着的方块的移动顺序问题，就会出现各种拉扯和数据丢失。活塞内部维护了一个需要移动的方块列表，并按照特定的规则对方块进行排序。排序需要依据一个严格的二元比较规则，该规则如下所示:</p>
+        <p>对于附着的方块A,和B,先计算A到B的位置向量AB,然含给定活塞的推动方向P,如果AB和P的点乘(数量积)大于0,也就是这俩相向量的夹角是锐角，那么B会比A先动，否则A先动，下面有一个简单的示意图:</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv13617717/232d28c7d934.webp" width="202" height="189" alt="文章配图" loading="lazy">
+    </figure>
+        <h2>6. 简单总结</h2>
+        <p>BE的活塞在各方面来看都是简单清晰而明了的。一句话就是在每个红石刻根据红石信号更新自身状态并处理与世界的交互，其自身的有限状态机也是出奇地简单和易于理解。所谓的推出时间、收回时间在不同的定义下有不同的结果。在非红石刻中BE的活塞基本不会做任何更新和改变，除了动画，这也就是为什么玩家感受到的BE的活塞伸出和缩回很慢的原因。</p>
+        <p>除此之外，在随机的区块更新顺序以及随机的方块实体更新顺序的加持下，BE的活塞之间也没有明显的优先级，随机之下，众生平等。</p>
+        <h2>7. 实例分析</h2>
+        <p>略</p>
+        <h2>8. Credit</h2>
+        <ul>
+            <li>origin0110</li>
+            <li>_hhhxiao</li>
+            <li>群内其它玩家</li>
+        </ul>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/582441940946353413">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv10907045.html" title="« 上一篇：MCBE 红石系统运行不完全分析(3)" aria-label="« 上一篇：MCBE 红石系统运行不完全分析(3)">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 红石系统运行不完全分析(3)</span>
+            </a>
+            <a class="pager-item is-next" href="cv23851750.html" title="下一篇 »：Minecraft基岩版红石系统设计简述" aria-label="下一篇 »：Minecraft基岩版红石系统设计简述">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">Minecraft基岩版红石系统设计简述</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

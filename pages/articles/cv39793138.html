@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 幻翼相关机制的再探索与农场架构 - 橘猫的资源站</title>
+    <meta name="description" content="鉴于老专栏与相关动态于近日被人极伸盒拿下，被变异兔子离殇告知后，特此补发和扩充. 原作者：cookie_531 2023.6.18 本文涵盖1.16-1.21国际版 网易（1.16-1.20？）幻翼的机制，部分理论由大量测试所得，有争议请评论区交流.要看省流版">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv39793138.webp" alt="MCBE 幻翼相关机制的再探索与农场架构">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 幻翼相关机制的再探索与农场架构</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/1583493298" target="_blank" rel="noopener noreferrer">Cookie_531</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2024年11月14日 04:17</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/999398761919676420" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv39793138</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">实体机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv40432640.html" title="« 上一篇：MCBE 抖矿车的目的地" aria-label="« 上一篇：MCBE 抖矿车的目的地">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 抖矿车的目的地</span>
+            </a>
+            <a class="pager-item is-next" href="cv40839260.html" title="下一篇 »：MCBE 嘎枝生成机制与相关探索" aria-label="下一篇 »：MCBE 嘎枝生成机制与相关探索">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 嘎枝生成机制与相关探索</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p>鉴于老专栏与相关动态于近日被人极伸盒拿下，被变异兔子<span style="color:#FF6699">离殇</span>告知后，特此补发和扩充.</p>
+        <p>原作者：cookie_531 2023.6.18 </p>
+        <p>本文涵盖1.16-1.21国际版 网易（1.16-1.20？）幻翼的机制，部分理论由大量测试所得，有争议请评论区交流.要看省流版本在文中有小结.</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/3d6efe5fd6d7.webp" width="1242" height="978" alt="文章配图" loading="lazy">
+    </figure>
+        <p>⬆️</p>
+        <p>幻翼的生成总体来说分为两个主要检测和其余一些条件，即 下方的尝试“成功生成”，上方的实际生成符合检测，才会成功的生成幻翼.本文主要分为两个大部分，幻翼的生成机制<span style="color:#18191C">与</span>幻翼农场的架构和技巧.</p>
+        <h2><strong>1. 幻翼的生成机制</strong></h2>
+        <h3><strong>1.</strong><strong>实际生成的范围：</strong></h3>
+        <p>幻翼实际会在玩家其对应坐标开始，向上27.5（取整28）为中心 x21 y17 z21的立方体生成.</p>
+        <p>范围示意如下</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/8883dcf1bb7d.webp" width="1415" height="796" alt="文章配图" loading="lazy">
+    </figure>
+        <p>xz示意</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/3d10d40b0452.webp" width="1238" height="1102" alt="文章配图" loading="lazy">
+    </figure>
+        <p>y示意</p>
+        <h2><strong>2.幻翼的基本生成条件</strong></h2>
+        <h3><strong>1.游戏难度非和平</strong></h3>
+        <h3><strong>2.生物生成开启</strong></h3>
+        <h3><strong>3.满足连续没有中间死亡的3天熬夜</strong></h3>
+        <h3><strong>4.玩家模式非旁观者模式</strong></h3>
+        <h3><strong>5.主世界 非蘑菇岛（但1.16.2会因群系临界而刷在里面）</strong></h3>
+        <h2><strong>  7.玩家所处高度（建筑范围内）</strong></h2>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/cc56236a3bb9.webp" width="1484" height="970" alt="文章配图" loading="lazy">
+    </figure>
+        <h3><strong>经过测试，</strong><strong>玩家在</strong><strong>可</strong><strong>建筑高度以内时，符合条件的</strong><strong><span style="color:#18191C">点位便会刷新幻翼.（不看玩家脚下方块），如果在临界，</span></strong><strong>幻翼可生成在高度限制外.</strong></h3>
+        <h2><strong>  6.对玩家上方的检测.（头上方块性质？于何处开始检测？）</strong></h2>
+        <h3><strong>.</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/292800d6cd91.webp" width="1345" height="837" alt="文章配图" loading="lazy">
+    </figure>
+        <p>近距离示意图</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/b434dbef23c1.webp" width="1319" height="883" alt="文章配图" loading="lazy">
+    </figure>
+        <p>远示意图</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/23ae10018802.webp" width="2208" height="1242" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/b20df87b7dc3.webp" width="815" height="459" alt="文章配图" loading="lazy">
+    </figure>
+        <h3><strong><span style="color:#FF6699">总结：</span></strong></h3>
+        <h3><strong>通过更替玩家</strong><strong><span style="color:#4FD3D1">纵轴y</span></strong><strong>上方的方块观察幻翼的生成效果我们会发现，会对玩家同坐标下，</strong><strong>从</strong><strong><span style="color:#4FD3D1">玩家头部</span></strong><strong>开始检测，且</strong><strong>脚下方块性质</strong><strong><span style="color:#18191C">或</span></strong><strong>有无方块</strong><strong><span style="color:#18191C">对生成</span></strong><strong>无影响。</strong><strong><span style="color:#18191C">从头部开始对上方方块性质进行检测，而</span></strong><strong>阻挡光照强度传播</strong><strong><span style="color:#18191C">的方块</span></strong><strong>不会阻挡阻止</strong><strong><span style="color:#18191C">幻翼生成，</span></strong><strong>会影响，阻断光照强度传播</strong><strong><span style="color:#18191C">的方块，</span></strong><strong>会阻止幻翼生成。 水在头上延伸检测即阻挡</strong></h3>
+        <h2><strong>  7.尝试和两大部分检测？（主要分上下两部分）</strong></h2>
+        <h2><strong>   ①.下方的“生成”</strong></h2>
+        <h3><strong>⑴</strong><strong>下方尝试的范围：</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/2e75ea477388.webp" width="1483" height="899" alt="文章配图" loading="lazy">
+    </figure>
+        <p>小平台尝试（刷怪范围外） 结果：不刷幻翼.</p>
+        <p>范围外不刷 范围内刷 都有也正常刷.</p>
+        <p>首先我选择了于主世界，在玩家同y下，曼哈顿距离小于24的范围内铺设了可刷怪平台，其结果是，幻翼并没有生成<span style="color:#18191C">，而后铺设了r24-128的空心圆形平台后，幻翼则开始了</span>生成。<span style="color:#18191C">由此可推断，幻翼下方的“生成”或者是在上方生成前的尝试范围是</span><span style="color:#4FD3D1">与当前模拟距离下玩家的刷怪范围相同的。</span></p>
+        <h3><strong><span style="color:#4FD3D1">⑵下方尝试的方块性质 </span></strong></h3>
+        <h3><strong>如下图</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/d9393a848870.webp" width="738" height="1045" alt="文章配图" loading="lazy">
+    </figure>
+        <p>纯粹基岩底不刷</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/8e275e9d835f.webp" width="1433" height="925" alt="文章配图" loading="lazy">
+    </figure>
+        <p><span style="color:#18191C">岩浆块为底可刷</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/42194a4ff3be.webp" width="1292" height="727" alt="文章配图" loading="lazy">
+    </figure>
+        <p>⬆️其他可生成方块为底可刷 打开栅栏门不可.</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/9a3064569ca1.webp" width="1375" height="840" alt="文章配图" loading="lazy">
+    </figure>
+        <p>上方有水可刷其他时，幻翼不生成.</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/8372f72cb4a1.webp" width="1881" height="1125" alt="文章配图" loading="lazy">
+    </figure>
+        <p>上方有水不可刷其他时，幻翼仍然不生成.</p>
+        <h3><strong>通过更换下方生成平台的方块和平台数量，我们可以得出一个结论，</strong><strong>幻翼下方的尝试点位会找寻最高一层的方块进行尝试，且上方不能具有水</strong><strong>，</strong><strong>幻翼于下方尝试的方块</strong><strong><span style="color:#18191C">为</span></strong><strong>岩浆块、和大部分的可刷怪方块，</strong><strong><span style="color:#18191C">不同于hsa可以利用基岩的尝试，</span></strong><strong>幻翼下方尝试的尝试</strong><strong><span style="color:#4FD3D1">无法</span></strong><strong><span style="color:#18191C">以基岩为底。模拟距离更改、视野可见更改对其无影响。</span></strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/c5cc12e8585d.webp" width="807" height="454" alt="文章配图" loading="lazy">
+    </figure>
+        <h3><strong>⑶</strong><strong>下方尝试的亮度：</strong></h3>
+        <p>0-7</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/b78a1e7d0186.webp" width="1239" height="766" alt="文章配图" loading="lazy">
+    </figure>
+        <h3><strong>小于等于7光照强度.</strong></h3>
+        <h3><strong>⑷ </strong><strong>下方尝试的“碰撞箱检测/空间检测”</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/6ec18692fbd8.webp" width="1947" height="1202" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/00a6eb497666.webp" width="1996" height="1212" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/4146b0aad2f0.webp" width="1010" height="569" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/d73811899159.webp" width="1054" height="594" alt="文章配图" loading="lazy">
+    </figure>
+        <h3><strong>小结：</strong><strong>经过多次测试，不难发现，在</strong><strong>对头上一纵列方块进行检测且没有</strong><strong>“阻挡光照的方块”后，</strong><strong>下方再尝试一次“生成”，在找到范围内最上方幻翼可生成方块后 如果上方没有水/水流/含水方块覆盖，则开始进行</strong><strong>光照强度</strong><strong>检测（目前直到1.21.10还是</strong><strong>0-7</strong><strong>）和 </strong><strong><span style="color:#FF6699">与此版本中，</span></strong><strong>爬行者相同的</strong><strong><span style="color:#4FD3D1">空间检测</span></strong><strong>/</strong><strong>碰撞箱检测，</strong><strong><span style="color:#18191C">如果“生成成功了”，则转移至上方（幻翼范围 玩家坐标28开始）开始</span></strong><strong>尝试生成（</strong><em><strong>幻翼的实际生成）</strong></em></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/6690e5fdb445.webp" width="2045" height="1151" alt="文章配图" loading="lazy">
+    </figure>
+        <h3><strong>结</strong><strong>为了防止某些人不清楚爬行者的空间/碰撞检测</strong></h3>
+        <p>左1 1.21 爬行者碰撞检测范围 左2 1.21开始 爬行者空间检测范围：1*2*1  <span style="color:#4FD3D1">右1 </span><span style="color:#18191C">1.21-1.16 爬行者</span>空间检测范围 <span style="color:#4FD3D1">右2 </span><span style="color:#18191C">1.21-1.16 爬行者</span>碰撞检测范…</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/55195cd9fd8b.webp" width="815" height="459" alt="文章配图" loading="lazy">
+    </figure>
+        <p>上图：从头部坐标（实际整y加1）坐标开始向上检测是否阻挡幻翼“下方尝试生成”.</p>
+        <p>小补充:1.边界（border_block）和其延伸也不阻挡</p>
+        <p>2.分离了碰撞箱方块的残留碰撞箱不会阻挡.</p>
+        <h2><strong>2.</strong><strong>上方的生成：</strong></h2>
+        <h3><strong>①：范围：在生成范围内（见上文）</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/3f315b142dbd.webp" width="1238" height="1102" alt="文章配图" loading="lazy">
+    </figure>
+        <h3><strong>②亮度限制：（</strong><strong>0光照强度</strong><strong>）</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/2fd8c7491c25.webp" width="1848" height="1120" alt="文章配图" loading="lazy">
+    </figure>
+        <p>⬆️上方为1-7时都不生成幻翼.</p>
+        <h3><strong>现（1.18.30）——-1.21.10  上方生成点位处的光照强度需要为</strong><strong>0。</strong></h3>
+        <h2><strong>③空间检测：</strong></h2>
+        <p>如下图所示：.</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/009b8ee25128.webp" width="1292" height="727" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/76a3dd1d443a.webp" width="2208" height="1242" alt="文章配图" loading="lazy">
+    </figure>
+        <p>全屏障：不生成幻翼.</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/42c6f36f1d0c.webp" width="2208" height="1242" alt="文章配图" loading="lazy">
+    </figure>
+        <p>全隐形基岩 不生成幻翼.</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/dce10a61e6ff.webp" width="2208" height="1242" alt="文章配图" loading="lazy">
+    </figure>
+        <p>全结构空位 可生成幻翼.</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/7901627bf7bc.webp" width="2208" height="1242" alt="文章配图" loading="lazy">
+    </figure>
+        <p>除玩家头上方全部水 可生成幻翼.</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/8dd226508a2d.webp" width="2208" height="1242" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/0e230c624b1c.webp" width="2208" height="1242" alt="文章配图" loading="lazy">
+    </figure>
+        <h2><strong><span style="color:#4FD3D1">小结：</span></strong></h2>
+        <p>通过不断的改变内部布局我们可以得到幻翼的“空间检测”范围<span style="color:#18191C">和所占同坐标方块性质对其的影响⬇️</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/205c43ca7d6c.webp" width="1175" height="661" alt="文章配图" loading="lazy">
+    </figure>
+        <p>检测范围x2y2z2 西北刷  x-z-</p>
+        <h3><strong>1.幻翼在上方实际生成在选取到的点位的</strong><strong>西北角（1.21也是这样）</strong><strong><span style="color:#18191C">，这个“点位”光照强度为</span></strong><strong>0、</strong><strong><span style="color:#18191C">可以是空气，也可以是下图中的一些方块；这个检测范围为2*2*2</span></strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/faeec83110e2.webp" width="1306" height="735" alt="文章配图" loading="lazy">
+    </figure>
+        <h3><strong>主要为大部分对与其他</strong><strong>生物实体</strong><strong>完全不阻挡</strong><strong>、</strong><strong>部分阻挡</strong><strong>、没有碰撞的（打开栅栏门、结构空位）的方块/。上方實際生成</strong><strong>不</strong><strong>具有「</strong><strong>空氣檢測」.</strong></h3>
+        <h2><strong>局部上限：</strong></h2>
+        <p><span style="color:#18191C">幻翼计入主世界</span>露天上限（8）与全局上限（200），<span style="color:#18191C">其上限为</span>5. <span style="color:#18191C">每次尝试应生成1或0只（.</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/0a99148c9992.webp" width="2474" height="2152" alt="文章配图" loading="lazy">
+    </figure>
+        <h3><strong>上图为VFTion的上限统计：</strong></h3>
+        <h3><strong>综上所述， 这就是全部关于“</strong><strong>上部分生成”</strong><strong><span style="color:#18191C">的机制了，接下来，让我们把理论应用于实际农场架构吧.</span></strong></h3>
+        <hr class="opus-pagebreak">
+        <hr class="opus-pagebreak">
+        <h2><strong>Part2：</strong><strong>农场架构设计和技巧</strong></h2>
+        <h3><strong>相关视频演示引路</strong></h3>
+        <h2><strong>1.对于下方“生成”处的铺设</strong></h2>
+        <p>7即7以下光源交错排布 使下方尝试平台方块上光照强度为0-7 ，但首选推荐岩浆块（上方遮光玻璃或树叶平台遮光即可 ）</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/342fae326e56.webp" width="643" height="362" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/784480501bdd.webp" width="900" height="506" alt="文章配图" loading="lazy">
+    </figure>
+        <h3><strong>1.完整效率幻翼农场——BV12V411T7To🍁🐰 👽</strong></h3>
+        <p><em>简易1/2大门式：</em></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/d81e046006e0.webp" width="1100" height="619" alt="文章配图" loading="lazy">
+    </figure>
+        <p>上方架构1</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/7f8464928244.webp" width="1104" height="622" alt="文章配图" loading="lazy">
+    </figure>
+        <p>上方生成架构2</p>
+        <h3><strong>1.5纯粹屑架</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/b98e05258504.webp" width="947" height="663" alt="文章配图" loading="lazy">
+    </figure>
+        <h3><strong>2.便宜幻翼农场———-BV18VmzYWEDQ 🍁🐰 👽</strong></h3>
+        <h3><strong>🤓懒得写了，反正视频里讲得差不多，动态也发过架子，脑补不阻挡上方幻翼生成的气泡柱向上或者侧面冲进传送门或者扎死就行了.</strong></h3>
+        <h3><strong>3.游走冲击集中式———四个一间距方块配合天花板三叉戟即可</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39793138/0462b6c2255e.webp" width="1228" height="1717" alt="文章配图" loading="lazy">
+    </figure>
+        <p>站内个人认为比较好的BV1fU4y1S7Ub —浪叠微汐</p>
+        <hr class="opus-pagebreak">
+        <h2><strong>最后希望这篇专栏不要再被拿下了😡</strong></h2>
+        <h2><strong>END—-鸣谢</strong></h2>
+        <h3><strong>离殇之枫：催更（划掉） 部分架构发布</strong></h3>
+        <h3><strong>浪叠微汐———优秀的单维幻翼农场架构.</strong></h3>
+        <h3><strong>顶层雪——-设备支持 👽</strong></h3>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/999398761919676420">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv40432640.html" title="« 上一篇：MCBE 抖矿车的目的地" aria-label="« 上一篇：MCBE 抖矿车的目的地">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 抖矿车的目的地</span>
+            </a>
+            <a class="pager-item is-next" href="cv40839260.html" title="下一篇 »：MCBE 嘎枝生成机制与相关探索" aria-label="下一篇 »：MCBE 嘎枝生成机制与相关探索">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 嘎枝生成机制与相关探索</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

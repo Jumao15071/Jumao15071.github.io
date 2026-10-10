@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 抖矿车的目的地 - 橘猫的资源站</title>
+    <meta name="description" content="一，简介 我的世界里面，激活铁轨上面的矿车会不断抖动，把坐在矿车上的生物抖到旁边。从抖动的矿车正上方坠落的生物在接触矿车一瞬间会坐上矿车然后立即被抖下去，由此可以设计出相当优秀的三叉戟处死。 designed by遥远的嘱托＆离殇之枫（1.21.30长矛更新后">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>MCBE 抖矿车的目的地</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/1632406332" target="_blank" rel="noopener noreferrer">Meteor_Firefly</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">编辑于 2026年01月02日 22:25</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1023003558596837425" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv40432640</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">实体机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv22211378.html" title="« 上一篇：MCBE 堡垒刷怪塔全解" aria-label="« 上一篇：MCBE 堡垒刷怪塔全解">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 堡垒刷怪塔全解</span>
+            </a>
+            <a class="pager-item is-next" href="cv39793138.html" title="下一篇 »：MCBE 幻翼相关机制的再探索与农场架构" aria-label="下一篇 »：MCBE 幻翼相关机制的再探索与农场架构">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 幻翼相关机制的再探索与农场架构</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p><strong>一，简介</strong></p>
+        <p>我的世界里面，激活铁轨上面的矿车会不断抖动，把坐在矿车上的生物抖到旁边。从抖动的矿车正上方坠落的生物在接触矿车一瞬间会坐上矿车然后立即被抖下去，由此可以设计出相当优秀的三叉戟处死。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/88ae75453e65.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p>designed by遥远的嘱托＆离殇之枫（1.21.30长矛更新后更改见 <a href="https://b23.tv/NFALIqA" target="_blank" rel="noopener noreferrer">网页链接</a>）</p>
+        <p>怪物秒死（用过就知道比搅拌机死得快很多），退出重进抗卸载（也就是不会掉叉子）切换维度可能掉叉、单个活塞更少pt量、处死速度受限于抖矿车本身的速度（每车每gt一个生物），但也非常高。</p>
+        <p>因此在BE猪人塔的处死上可以代替三叉戟搅拌机使用。</p>
+        <p><strong>二，它是如何运作的？</strong></p>
+        <p>换句话说，抖矿车到底会把生物送往哪一个目的地？BE抖矿车可以抖到以下24个方块（图中就是红色玻璃）的的上表面</p>
+        <p>一. y-1的平面：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/5527564fe8d6.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p>二. y平面：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/9860fc8adbec.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p>三. y+1平面：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/27d61abd4005.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p>也就是矿车周围一圈。</p>
+        <p>大量实验表明：这24个方块始终遵循相同的优先顺序，即有更优先的目的地就不会抖到优先级更低的方块上。对于上表面完整的方块，这个优先级顺序是：</p>
+        <p>   y北方＞y南方＞y东北＞y东南＞y西北＞y西南＞y东方＞y西方</p>
+        <p>＞y+1北方＞y+1南方＞y+1东北＞y+1东南＞y+1西北＞y+1西南＞y+1东方＞y+1西方</p>
+        <p>＞y-1北方＞y-1南方＞y-1东北＞y-1东南＞y-1西北＞y-1西南＞y-1东方＞y-1西方</p>
+        <p>另外，有两个方块不能作为目的地：一个就是空气方块，另外一个就是脚手架</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/1d430fad99de.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p>虽然灵魂沙和泥巴缺两个像素，但是上面放铁轨的时候就跟普通方块一样，估计是懒得写两个函数了：</p>
+        <p>下图二者能抖到的范围等同。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/c4b1277a6ee3.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p><strong>三，对于不完整方块，如何选择目的地</strong></p>
+        <p>很简单，分两种情况，分别视为不同高度的完整方块，然后遵从24个方块的优先级。</p>
+        <p>（1）判断抖矿车目的地的优先级时，这些方块相当于把它破坏掉，在原本它在的地方放一个完整方块。图里面的玻璃是为了在侧面放方块用的，忽略掉它们。</p>
+        <p>包括：侧面有2方块的侧面钟</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/4f297790ffaa.webp" width="2104" height="332" alt="文章配图" loading="lazy">
+    </figure>
+        <p>（2）这些方块相当于直接破坏掉它们，然后露出它正下方的完整方块</p>
+        <p>包括：1-8层雪，侧面只有1个方块的侧面钟，放地上的钟，和一切没碰撞箱的花草啥的（不含脚手架，脚手架是被无视的那种）</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/fcc856ccdecc.webp" width="1992" height="548" alt="文章配图" loading="lazy">
+    </figure>
+        <p>这么说有点抽象，举个例子，这是一个玻璃板：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/6b35475f58f7.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p>这是一个红色玻璃：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/3169275d6c75.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p>我想判断玻璃板的优先级，我就把它替换成这个红色玻璃，再判断就好了。</p>
+        <p>再比如：这是一个灵魂沙：（说的是左上方的那个灵魂沙！）</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/a71619b94f3e.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p>这是一个红色玻璃：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/d4e845071f16.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p>我想判断灵魂沙的优先级，那么我只要把灵魂沙换成这个红色玻璃再判断就好了！两个例子的区别就在于，玻璃板属于第一组方块，而灵魂沙属于第二组方块。</p>
+        <p>其实，两个例子里面，站在不完整方块上面（也就是玻璃板或者灵魂沙），游戏显示的坐标y值和站在红色玻璃上的y值是一样的。一个特例是放在侧面的钟，属于第一组方块但坐标跟第二种方块相同。</p>
+        <p><strong>四，碰撞箱检测</strong></p>
+        <p><strong>抖车终点是能满足碰撞箱检测的优先级最高的方块。</strong></p>
+        <p>满足碰撞箱检测大致是说，如果生物站在方块中央，它的碰撞箱不与任何方块碰撞箱重叠。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/07a9c38e1194.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p>凋灵骷髅0.7宽，小紫水晶0.1875高，如果大黑站方块中心，0.7/2+0.1875=0.5375＞0.5，所以啊，图中大黑没有站在玻璃上而是站在小紫水晶上的。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/3acc85b72a13.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p>苦力怕0.6宽，小紫水晶的头部到对面玻璃的空隙能容下苦力怕，所以苦力怕直接站玻璃上。</p>
+        <p>通过限制高度/宽度可以分离大小疣猪兽、蘑菇牛、守卫者和鱿鱼等等，挺好用。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/b4ba3360b746.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/1b9d750d52f7.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p>炼药锅，堆肥桶的空隙能容下苦力怕却不能容下僵尸猪灵，估计因为苦力怕比僵尸猪灵瘦。</p>
+        <p>小紫水晶虽然只有0.1875长度，但是麻酱却视它为合法落脚点（bug）</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/48540cee66b9.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p>苦力怕0.6宽，0.6/2+0.1875=0.4875＜0.5，就是说，苦力怕抖上去时，是直接被抖到空气上，脚没有一点点是站在小紫水晶上的，所以可以自由下落。</p>
+        <p>不过，实际用起来如果多只苦力怕一起抖出来可能相互挤压，有的就站小紫水晶上了。还是建议加梯子。</p>
+        <p>1.21.0的按钮也有小紫水晶一样的效果，目前1.21.93已经被修复。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/a2ca5ede4362.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p>大黑是有一点站小紫水晶上的，所以掉不下去。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40432640/d495701c2cec.webp" width="1548" height="1032" alt="文章配图" loading="lazy">
+    </figure>
+        <p>梯子和小紫水晶一样都是0.1875长，梯子不像小紫水晶有bug被当成合法落脚点。大黑被抖到小紫水晶上，大黑碰撞箱与梯子有重叠（0.7/2+0.1875=0.5375）触发挤压就能被挤下去了。</p>
+        <p>1.19.50.20以前的版本，灵魂沙是完整方块，属于第一种方块而不是高版本所属于的第二种方块了。在低版本，生物没法被抖进水里。</p>
+        <p>恶魂大概被视作1*4*1的生物，4是高度（好吧这是粗略数据，没有细测），大史莱姆岩浆怪虽然宽2.08却能被抖进1*1的空间里，似乎这种大的在谈论宽度的碰撞箱检测时有另一套规则。</p>
+        <p>大黑（0.7宽），苦力怕僵尸猪灵（0.6宽）全方向传送带见群文件，qq群：948204464</p>
+        <p>好了，问题不大，就这样。测试版本：1.21.50，1.21.93，东西年年改，麻酱不是人</p>
+        <p>鸣谢@离殇之枫@cookie_曲奇@无语了_wy</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1023003558596837425">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv22211378.html" title="« 上一篇：MCBE 堡垒刷怪塔全解" aria-label="« 上一篇：MCBE 堡垒刷怪塔全解">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 堡垒刷怪塔全解</span>
+            </a>
+            <a class="pager-item is-next" href="cv39793138.html" title="下一篇 »：MCBE 幻翼相关机制的再探索与农场架构" aria-label="下一篇 »：MCBE 幻翼相关机制的再探索与农场架构">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 幻翼相关机制的再探索与农场架构</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

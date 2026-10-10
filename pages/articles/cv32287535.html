@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 观察者跨区块为什么会坏掉? - 橘猫的资源站</title>
+    <meta name="description" content="1 部分旧知识快速回顾 最好还是看看MCBE- 源码级分析 1.1 单游戏刻内更新顺序 计划刻 方块实体更新 红石方块更新 实体系统更新 红石系统信号更新 这是精简后的更新顺序表，其中标蓝的属于区块更新。 1.2 区块更新 游戏每gt会以玩家为单位，按一定顺序">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv32287535.webp" alt="MCBE 观察者跨区块为什么会坏掉?">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 观察者跨区块为什么会坏掉?</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/122391924" target="_blank" rel="noopener noreferrer">何以贯之</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">编辑于 2024年03月01日 02:55</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/903513943448748056" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv32287535</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv7802504.html" title="« 上一篇：观察者/活塞续篇：多重组合元件的情况分析" aria-label="« 上一篇：观察者/活塞续篇：多重组合元件的情况分析">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">观察者/活塞续篇：多重组合元件的情况分析</span>
+            </a>
+            <a class="pager-item is-next" href="cv15245302.html" title="下一篇 »：MCBE 活塞的一些简单应用-续续篇" aria-label="下一篇 »：MCBE 活塞的一些简单应用-续续篇">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 活塞的一些简单应用-续续篇</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p><strong>1 部分旧知识快速回顾</strong></p>
+        <p>最好还是看看<a href="https://www.bilibili.com/read/readlist/rl322068" target="_blank" rel="noopener noreferrer">MCBE- 源码级分析</a></p>
+        <p><strong>1.1 单游戏刻内更新顺序</strong></p>
+        <ol>
+            <li><span style="color:#02a2ff">计划刻</span></li>
+            <li><span style="color:#02a2ff">方块实体更新</span></li>
+            <li><span style="color:#02a2ff">红石方块更新</span></li>
+            <li>实体系统更新</li>
+            <li>红石系统信号更新</li>
+        </ol>
+        <p>这是精简后的更新顺序表，其中<span style="color:#02a2ff">标蓝</span>的属于区块更新。</p>
+        <p><strong>1.2 区块更新</strong></p>
+        <p>游戏每gt会以玩家为单位，按一定顺序更新该玩家模拟距离内加载的所有区块。在模拟距离为4时，单人玩家一般会有57个区块会更新。每次区块更新包含随机刻、计划刻、方块实体更新等。</p>
+        <p>区块间更新顺序每20gt打乱一次。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv32287535/ed59f3595c0a.webp" width="514" height="489" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">更新范围，数字表示顺序 - 图源@hhhxiao_</span></p>
+        <p><strong>1.3 计划刻</strong></p>
+        <p>计划刻列表是一个基于最小堆的优先队列，按照计划刻的执行时间进行排列。每个区块都有一个计划刻列表，各区块在更新计划刻时，会依次从列表中取出需要执行的计划刻(最多100个，多的推迟)，放入另一个优先队列中，然后从这第二个队列中再次逐个取出计划刻，并执行。计划刻的添加可以在其它阶段。</p>
+        <p>计划刻眼中的当前时间不是全局时间，而是每个列表单独维护一个计时器，在更新计划刻时，计划刻列表会将计时器+1。这导致了不同区块计划刻列表时间的不同步。</p>
+        <p>比如57个区块中，有27个区块完成了计划刻更新，它们的计时器假设均为10；而剩下的30个区块还没有更新计划刻，那么它们的计时器就会慢1gt，也就是9.</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv32287535/5bbb76dab493.webp" width="773" height="580" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">最小堆示意图</span></p>
+        <p><strong>1.4 红石方块更新</strong></p>
+        <p>大部分红石元件产生可见反应的阶段，比如中继器的亮起熄灭。</p>
+        <p><strong>1.5 红石系统信号更新</strong></p>
+        <p>所有红石元件计算信号的阶段，但此时不会有可见的行为，只会有元件内部信号的变化。</p>
+        <p><strong>2 观察者行为分析</strong></p>
+        <p><strong>2.1 观察者与更新源处于同区块</strong></p>
+        <p>以观察中继器为例，假设某个红石刻的红石系统信号更新阶段，中继器决定输出信号，那么在下一gt的红石方块更新阶段，中继器会亮起，并向周围的方块发出更新(nc更新)。</p>
+        <p>此时，观察者收到更新后，就会向当前区块的计划刻列表添加一个2gt后的计划刻。</p>
+        <p>2gt后，计划刻阶段，在观察者执行计划刻时，由于观察者是红石元件，信号应当从红石刻开始产生，所以观察者会检查现在是不是红石刻，如果不是，则重新添加1gt后的计划刻；</p>
+        <p>如果是，观察者亮起，然后将新的输出设为“有”，并添加2gt后的计划刻用于熄灭。</p>
+        <p>同一gt，红石系统信号更新阶段，观察者将新的输出同步至当前输出，新的输出设为“无”。</p>
+        <p>然后当前和下一gt，观察者会持续亮起。再到下一gt，计划刻阶段，观察者熄灭；红石系统信号更新阶段，观察者再次将新的输出同步至当前输出，也即当前输出为“无”。</p>
+        <p>对于本例，观察者延迟3gt，输出2gt脉冲。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv32287535/8ce09cd0ba4e.gif" width="1280" height="720" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">动图演示-同区块</span></p>
+        <p><strong>2.2 观察者与更新源处于异区块</strong></p>
+        <p>同样以观察中继器为例，观察者在A区块，中继器在B区块，直到观察者收到更新，均与上一节一致。</p>
+        <p>此时当前区块的计划刻列表要添加计划刻，要写明该计划刻的执行时间。</p>
+        <p>前文可知，B区块已经执行到红石方块更新，所以计划刻肯定更新过了，而A区块却不一定，</p>
+        <p>如果A区块更新过了，时间是同步的(都为10)，则观察者行为与上一节一致；</p>
+        <p>如果A区块没更新过，那么A区块的时间会慢1gt(为9)，相应地，添加2gt后的计划刻，9+2=11，所以相比上一种情况，A区块添加的计划刻也会提前1gt。</p>
+        <p>如果提前1gt，计划刻执行时刚好就是红石刻，所以相对上一种情况，观察者提前2gt开始输出。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv32287535/36692518872e.gif" width="1280" height="720" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">动图演示-异区块</span></p>
+        <p>现在把中继器换成活塞，假设某个红石刻的红石系统信号更新阶段，活塞被激活，那么下一gt的方块实体阶段，活塞开始伸出，并发出更新，观察者收到更新。</p>
+        <p>A区块添加计划刻同样会有上述问题：</p>
+        <p>假设计划刻没有提前1gt，即正常情况，则计划刻被添加在2gt后的红石刻，则从该红石刻开始，观察者亮起2gt；</p>
+        <p>假设计划刻提前了1gt，则计划刻添加在了1gt后的非红石刻，由于不是红石刻，所以到这时候，观察者会重新添加1gt后的计划刻，此时与上一种情况结果一致。</p>
+        <p>可见观察者检测活塞和被推动方块时有抗跨区块损坏能力，但是能力有限，当活塞不断更新观察者时，观察者依然会受到影响。</p>
+        <p>已知观察者不能重复添加计划刻，不论计划刻是用于亮起还是熄灭。相关时序分析交由读者完成。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv32287535/17c4e96e403b.gif" width="1280" height="720" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">图中情况下，观察者仍会输出不正常</span></p>
+        <p><strong>2.3 其它特性</strong></p>
+        <p>观察者检测某些方块时(比如常亮的红石粉、有东西的箱子等)，会在重进存档后输出一次脉冲。</p>
+        <p>这其实不是观察者的问题，那些方块确实会在重进存档时发出更新。</p>
+        <p><strong>3 后记</strong></p>
+        <p>没有后记。</p>
+        <p>END.
+</p>
+        <hr class="opus-pagebreak">
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/903513943448748056">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv7802504.html" title="« 上一篇：观察者/活塞续篇：多重组合元件的情况分析" aria-label="« 上一篇：观察者/活塞续篇：多重组合元件的情况分析">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">观察者/活塞续篇：多重组合元件的情况分析</span>
+            </a>
+            <a class="pager-item is-next" href="cv15245302.html" title="下一篇 »：MCBE 活塞的一些简单应用-续续篇" aria-label="下一篇 »：MCBE 活塞的一些简单应用-续续篇">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 活塞的一些简单应用-续续篇</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

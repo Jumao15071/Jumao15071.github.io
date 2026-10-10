@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 1.21.10.24哨塔子结构及hsa介绍 - 橘猫的资源站</title>
+    <meta name="description" content="首先来讲一下发现的过程吧，首先是我们之前在1.21.10.22测试方块性质的時候，发现有悖之前结论的现象，在确定不是方块性质出了问题之后，发现好像是这结构hsa出了问题，在群里和橘猫等人交流之后，甚至发现还不止于此，疑似是麻将想改hsa，结果不知道动了什么屎山">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv35662767.webp" alt="MCBE 1.21.10.24哨塔子结构及hsa介绍">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 1.21.10.24哨塔子结构及hsa介绍</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/565837815" target="_blank" rel="noopener noreferrer">离殇之枫</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2024年06月20日 22:10</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/945125605259608066" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv35662767</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">实体机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv12005990.html" title="« 上一篇：MCBE 袭击（Raid）事件生成区域解析" aria-label="« 上一篇：MCBE 袭击（Raid）事件生成区域解析">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 袭击（Raid）事件生成区域解析</span>
+            </a>
+            <a class="pager-item is-next" href="cv40011525.html" title="下一篇 »：MCBE 劫掠生成类方块检测机制" aria-label="下一篇 »：MCBE 劫掠生成类方块检测机制">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 劫掠生成类方块检测机制</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="html">
+        <p>首先来讲一下发现的过程吧，首先是我们之前在1.21.10.22测试方块性质的時候，发现有悖之前结论的现象，在确定不是方块性质出了问题之后，发现好像是这结构hsa出了问题，在群里和橘猫等人交流之后，甚至发现还不止于此，疑似是麻将想改hsa，结果不知道动了什么屎山，导致hsa的保存出了问题，也就是说这个hsa点位直接消失了，并且在测试的过程中，橘猫等人还发现哨塔的部分子结构也可以生成掠夺者了，但是之前两个测试版因为hsa存在消失的问题，所以也没有去很多的关注，问题不大</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv35662767/34b2d3d84593.webp" width="1080" height="377" alt="1.21.10.24公告" loading="lazy">
+        <figcaption class="fig-caption">1.21.10.24公告</figcaption>
+    </figure>
+        <p>但是在今天，新的测试版当中，把这个hsa消失的问题修复了，但是根据橘猫所说，麻将好像并不是直接回溯的代码，似乎是打补丁的样子，所以这就导致那个哨塔的部分子结构也具有hsa这个特性被保留下来了，然后我们来讲一下我们的测试结果，因为并不是所有的子结构都有hsa，而且这个hsa也和哨塔主体的不太一样，问题不大</p>
+        <h2>1.子结构hsa分布</h2>
+        <p>哨塔的子结构一共有6种，分别是铁傀儡的笼子（开顶带地板），小安利的笼子（封顶无地板），两种羊毛棚子（内部有无南瓜），稻草人，原木堆，然后我们先来看一下这六种当中具有hsa的子结构，问题不大</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv35662767/c3d1600f0df5.webp" width="1280" height="800" alt="铁傀儡（开顶带地板）笼子" loading="lazy">
+        <figcaption class="fig-caption">铁傀儡（开顶带地板）笼子</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv35662767/3d370225cd23.webp" width="1280" height="800" alt="小安利（封顶无地板）笼子" loading="lazy">
+        <figcaption class="fig-caption">小安利（封顶无地板）笼子</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv35662767/7eff4cae7554.webp" width="1280" height="800" alt="羊毛棚子（空）" loading="lazy">
+        <figcaption class="fig-caption">羊毛棚子（空）</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv35662767/5d0397d0115c.webp" width="1280" height="800" alt="羊毛棚子（南瓜）" loading="lazy">
+        <figcaption class="fig-caption">羊毛棚子（南瓜）</figcaption>
+    </figure>
+        <p>以上展示的4种结构是具有hsa的子结构，其实就是两种羊毛棚子以及两种笼子，注意铁傀儡的那种笼子是顶上开口并且底下有地板的那种，小安利的笼子是那种顶上封口并且底下没有地板的，里面是否有生物不影响hsa，具体关于hsa的东西下一节会讲，问题不大</p>
+        <p>然后再来看一下剩下的几种不具有hsa的子结构</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv35662767/6cddea87a5f7.webp" width="1280" height="800" alt="原木堆" loading="lazy">
+        <figcaption class="fig-caption">原木堆</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv35662767/0d10a33e35e1.webp" width="1280" height="800" alt="稻草人" loading="lazy">
+        <figcaption class="fig-caption">稻草人</figcaption>
+    </figure>
+        <p>这几种结构里面那个原木堆和稻草人没有hsa我们倒是不意外，我们和橘猫在想，是不是因为hsa过小，所以直接被压掉了，毕竟前面那几个hsa也挺小，不过问题不大，这都是下一节的事了，进入下一节，问题不大</p>
+        <h2>2.子结构hsa情况</h2>
+        <p>首先就是这个子结构和哨塔主体不一样，哨塔主体是固定的位置，基本上就那三种情况，跨区块也只可能是旗帜跨区块，但是这些子结构的分布就相对随机了，而且经过我们和橘猫等人的测试，这些子结构也确实是可以被区块分割的，而且分割之后也确实会形成更多的hsa点位，而且我们测试还发现了一个有趣的东西，就是这个子结构的判定范围比我们想象的要大一点，来举一个例子吧，问题不大</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv35662767/ab0315e0120c.webp" width="1280" height="800" alt="目光范围" loading="lazy">
+        <figcaption class="fig-caption">目光范围</figcaption>
+    </figure>
+        <p>可以看到这个羊毛棚子，它主体结构离这个区块边界还有一点距离，也就是按照我们正常的思维去看的话，这个棚子还是在一个区块内的，但是实际上，经过测试发现，不管是羊毛棚子还是两种笼子，他们的实际判定范围都比自身大小（地板大小）大两圈，也就是说，实际上，这个羊毛棚子的判定范围是这样的</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv35662767/9c96bad58492.webp" width="1280" height="800" alt="实际范围" loading="lazy">
+        <figcaption class="fig-caption">实际范围</figcaption>
+    </figure>
+        <p>也就是比自身的地板大两圈，然后这样子就可以看到实际上这个棚子的范围判定已经跨了两个区块了，这也就是为什么旁边那里还被我们标了个点的原因，那你实际也是有个点，这个我们早测试过了，不用怀疑，而且实际上也可以被四个区块分割的，刚好我们这个哨塔比较运气好，两个棚子，一个被两区块分割，一个被四区块分割，问题不大</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv35662767/d1d03eab9327.webp" width="1280" height="800" alt="四区块棚子" loading="lazy">
+        <figcaption class="fig-caption">四区块棚子</figcaption>
+    </figure>
+        <p>后面我们又去测试了，那个两种笼子，判定范围也没有问题同样是比自身地板大两圈，不过羊毛棚子的地板是5×4，两种笼子的是4×4而已，直接放一个刚好跨4区快的铁傀儡笼子的图吧，问题不大</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv35662767/f9ada88f9e58.webp" width="1280" height="800" alt="四区块笼子" loading="lazy">
+        <figcaption class="fig-caption">四区块笼子</figcaption>
+    </figure>
+        <p>而且不知道是不是巧合，我们找到的这两个有四区块分割的子结构的哨塔，刚好他们的主体也是被四区块分割，问题不大</p>
+        <h2>3.子结构hsa范围</h2>
+        <p>另外就是之前提到的这个体结构的hsa的范围和主体不太一样，我们都知道主体那个hsa范围是一个很长的柱子，而且同样作为子结构的堡垒子结构一般范围也很长，但是这个哨塔的这几个结构hsa范围确实非常的短，具体有多短呢？看一下这个图就知道了，问题不大</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv35662767/f656dff22735.webp" width="1280" height="800" alt="羊毛棚子与铁傀儡笼子hsa范围" loading="lazy">
+        <figcaption class="fig-caption">羊毛棚子与铁傀儡笼子hsa范围</figcaption>
+    </figure>
+        <p>是的，没错，你没看错，两种羊毛棚子和铁傀儡笼子的hsa就两格高，真的就只有两个高，这是我们经过严谨的测试得到的结论，我们和橘猫讨论之后，觉得另外几个子结构没有hsa可能是因为高度太低直接被压掉了，问题不大</p>
+        <p>而且另外就是不同的子结构hsa的起始点还不一样，两种羊毛棚子和铁傀儡笼子这三种带地板的就是直接从地板起始也就是上图展示的，但是小安利笼子这种没有带地板的，就不是从地板开始了，这也就导致我们一开始测试的時候误以为小安利笼子不能刷，让我们来看一下</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv35662767/82352893acee.webp" width="1280" height="800" alt="小安利笼子hsa范围" loading="lazy">
+        <figcaption class="fig-caption">小安利笼子hsa范围</figcaption>
+    </figure>
+        <p>没错，这种没有地板的小安利笼子，它的hsa不是贴着底部，而是靠在中间，就是固定是从上往下第三格，而且只有一格的高度，就很难崩，这也是我们为什么会觉得那个稻草人和原木堆真的是因为hsa高度太低被直接压掉了的原因，问题不大</p>
+        <p>然后这个范围的话，你看一下我们之前发的那个结构生成的空气检测范围的专栏，大概就能知道，问题不大</p>
+        <a class="jump-card" href="cv24876101.html">
+    <img src="../../assets/articles/cv35662767/8bfc9354da83.webp" alt="站内专栏 cv24876101" loading="lazy">
+    <span class="jump-card-badge">站内专栏 »</span>
+</a>
+        <p>也就是说，两格高的生成点就只有两种可能，要不就是直接地板，要不就是地板往上一格，再往下就不在hsa范围，再往上就空气检测直接不通过，就这两种，至于后面那个一格高的，那就只有一种可能了，可能稍微有点难崩，但是问题不大，毕竟主塔的hsa范围还是挺长的，可以很容易的拉低下来，而且这几个子结构也基本都在一个平面，就算是模拟四想要一起加载到也并不是很难，所以的话也不是不能用，问题不大</p>
+        <a class="jump-card" href="https://www.bilibili.com/video/av962049774" target="_blank" rel="noopener noreferrer">
+    <img src="../../assets/articles/cv35662767/79fd485e9e30.webp" alt="B 站视频 cv962049774" loading="lazy">
+    <span class="jump-card-badge">B 站视频 »</span>
+</a>
+        <p>那这么一来的话，我们之前弄的这个东西也并不是完全没有性价比了，毕竟选个好点的哨塔的话，能有个十多个点，最理想的情况是，四个子结构和主体都是4点也就是一共20，不过我们目前来说，最高也就只找到过十多个点，但是怎么说呢，至少比之前有用点了，问题不大</p>
+        <p>不过需要注意一点，就是那个在末地和地狱的劫掠加入，和之前那个直接60开外的秒杀机制一样，都是需要过一个游戏日才可以正常运行，这个根据喝茶壶等人的合理推测，就是麻将直接copy了铁傀儡的部分代码，因为铁傀儡需要过一个游戏日之后才能刷新，所以就导致了这种莫名其妙的现象，问题不大</p>
+        <p>那就这样吧，其他也没什么好说的了，就是单纯的最新测试版那个有一部分的哨塔子结构也具有hsa的情况以及这个hsa和哨塔主体的区别说明一下，到此结束，问题不大</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv35662767/001b9da039ea.webp" width="1600" height="1000" alt="Muffet" loading="lazy">
+        <figcaption class="fig-caption">Muffet</figcaption>
+    </figure>
+        <p>鸣谢：橘猫，joker，茶壶等</p>
+        <p>测试版本：1.21.10.22-24</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/945125605259608066">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv12005990.html" title="« 上一篇：MCBE 袭击（Raid）事件生成区域解析" aria-label="« 上一篇：MCBE 袭击（Raid）事件生成区域解析">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 袭击（Raid）事件生成区域解析</span>
+            </a>
+            <a class="pager-item is-next" href="cv40011525.html" title="下一篇 »：MCBE 劫掠生成类方块检测机制" aria-label="下一篇 »：MCBE 劫掠生成类方块检测机制">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 劫掠生成类方块检测机制</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 关于掉落物的简单研究 ep.1 由限位讲掉落物碰撞箱 - 橘猫的资源站</title>
+    <meta name="description" content="写在前面（感谢） 本文借助了 @hhhxiao_ 的 trapdoor 插件完成掉落物轨迹的统计。由于测量精度为小数点后第三位，所以存在偏差的可能性（如方块单个像素为0.0625block，为小数点后第四位） [MCBE] 1.16~1.18服务插件Trapd">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv16215603.webp" alt="MCBE 关于掉落物的简单研究 ep.1 由限位讲掉落物碰撞箱">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 关于掉落物的简单研究 ep.1 由限位讲掉落物碰撞箱</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/19974985" target="_blank" rel="noopener noreferrer">叼叼的名字</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2022年04月19日 20:41</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/650832182686777367" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv16215603</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">储电</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv33358140.html" title="« 上一篇：（终焉）MC大云杉生长机制及效率计算" aria-label="« 上一篇：（终焉）MC大云杉生长机制及效率计算">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">（终焉）MC大云杉生长机制及效率计算</span>
+            </a>
+            <a class="pager-item is-next" href="cv19295223.html" title="下一篇 »：MCBE 关于掉落物的简单研究 ep.2 由挤压简述掉落物运动" aria-label="下一篇 »：MCBE 关于掉落物的简单研究 ep.2 由挤压简述掉落物运动">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 关于掉落物的简单研究 ep.2 由挤压简述掉落物运动</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p><strong>写在前面（感谢）</strong></p>
+        <p>本文借助了 <a href="https://space.bilibili.com/34227664" target="_blank" rel="noopener noreferrer">@hhhxiao_</a> 的 trapdoor 插件完成掉落物轨迹的统计。由于测量精度为小数点后第三位，所以存在偏差的可能性（如方块单个像素为0.0625block，为小数点后第四位） </p>
+        <a class="jump-card is-text" href="https://www.bilibili.com/video/BV1Ar4y1M7qa" target="_blank" rel="noopener noreferrer">
+    <span class="jump-card-cover"><img src="../../assets/articles/cv16215603/163e4383e42b.webp" alt="" loading="lazy"></span><span class="jump-card-main">
+        <span class="jump-card-title">[MCBE] 1.16~1.18服务插件Trapdoor介绍与教程</span>
+        <span class="jump-card-meta">2万观看 27弹幕 · 20:14</span>
+    </span>
+    <span class="jump-card-badge">B 站视频 »</span>
+</a>
+        <p>本文是与 <a href="https://space.bilibili.com/413324281" target="_blank" rel="noopener noreferrer">@Maple_枫溪</a> 共同讨论出来的。Maple为本文的模型提供了很多猜想与思路</p>
+        <p>本文改自 <a href="https://space.bilibili.com/413324281" target="_blank" rel="noopener noreferrer">@Maple_枫溪</a> 的 《碰撞箱研究》</p>
+        <p><strong>本篇专栏主要结论均在1.16.40服务端测试，其他版本可能会存在出入</strong></p>
+        <p>由于大部分数据仅为测试结果，没有源码支持，所以仅供参考</p>
+        <p><strong>本文是以原版材质（即一个完整方块的长宽高均为16像素，单一像素大小为0.0625block）为前提。部分高清材质以及pvp材质可能与原版材质的像素出现差异</strong></p>
+        <hr class="opus-pagebreak">
+        <p><strong>1.1、什么是限位</strong></p>
+        <p>顾名思义，限位是将掉落物限制在一个特定的位置。在储存红石电路（下简称为储电）中，限位一般指将掉落物限制在两个方块中间的位置</p>
+        <p>限位是一种常见的储电技术，可以让掉落物在水道中享受到冰的低摩擦的情况下，仍然可以被目标漏斗吸取。在这种情况下，掉落物可以快速移动到目标地方，大大降低了因掉落物产生的卡顿时间。同时因为高移速，让掉落物之间彼此间距更大，一定程度上降低了因为漏斗bug受到的影响。所以，理解限位对于储电来说大有裨益</p>
+        <p>--------------------</p>
+        <p><strong>1.2、限位的基础原理</strong></p>
+        <p><strong>1.2.1、掉落物的坐标</strong></p>
+        <p>掉落物的坐标是这个掉落物实体的正中心，这个坐标可以用于tp和统计掉落物的位置</p>
+        <p><strong>1.2.2、掉落物的碰撞箱</strong></p>
+        <p>知晓掉落物的大小是一件很重要的事情</p>
+        <p>掉落物的碰撞箱是边长0.25格（四个像素大小）的正方体。这个碰撞箱是掉落物和大多数方块进行交互的范围，包括流动水的加速、漏斗的吸入、岩浆的焚烧、在方块内的挤压等</p>
+        <p>值得注意的是，这些<strong>对掉落物产生的效果不会因为接触“部分”的多少而受到改变</strong>。如掉落物接触到水流一个像素和掉落物完全浸入水流收到的加速效果相同</p>
+        <p>对于je的方块凹陷导致的减速，如蜜块、灵魂沙等，在be<strong>需要接触到硬碰撞箱外侧才会产生影响</strong></p>
+        <p>这里解释一下硬碰撞箱的效果，引用茶匙佬生动形象的一句话</p>
+        <blockquote><p>“你落地、撞墙，咣叽一下，那个方向上的速度就变成0了”
+                                                                                —— OEOTYAN</p></blockquote>
+        <p>对于掉落物来说，灵魂沙的碰撞箱完整，不会造成减速
+</p>
+        <p><strong>1.2.3、掉落物受到的阻力</strong></p>
+        <p>当掉落物实体的中心浸入水流时，掉落物受到的阻力为一个低阻力的固定值。这个阻力值略小于蓝冰</p>
+        <p>当掉落物实体中心没有浸在水流中，掉落物实体会受到下方完整方块的阻力。若下方方块为不完整方块，则会受到不完整方块下方的完整方块的阻力</p>
+        <p>这里判断为下方方块是指掉落物实体下表面中心点下方的方块。（下文中“掉落物下方的方块均为这个意思”）所以不存在处于两个方块中心掉落物实体将计算两个方块的阻力的情况</p>
+        <p>当掉落物实体下方的方块的数据值大于等于8，掉落物实体会受到减速。这一条的优先级高于大多数其他条件。特别的，当利用不完整方块将掉落物和方块隔开时则不会受到这个条件。实测1.18已修复，<strong>目前不清楚具体版本</strong></p>
+        <p>--------------------</p>
+        <p><strong>1.3、限位</strong></p>
+        <p><strong>1.3.1、限位的简单分类</strong></p>
+        <p>我们将常见的限位简单地分为三类——箱子、海龟蛋和铁砧（并没有一个常见的确切的名字，这里只是用比较经典的方块作为示例）</p>
+        <p><strong>（1）箱子限位</strong></p>
+        <p>即<strong>物品中心在限位方块之外</strong>，漏斗放在限位方块侧。常见的方块有箱子、蜜块。箱子内陷0.025格，蜜块内陷0.063格</p>
+        <p>显而易见的，由于此类限位方块内陷的长度远小于掉落物的半径（即0.125格），掉落物下方的方块并不是限位方块下方的方块，即影响掉落物受到的阻力的方块并不是限位方块下方的方块。同时由于掉落物的部分碰撞箱在限位方块所在的格子内，所以掉落物能收到那一侧的水流、漏斗的影响</p>
+        <p><strong>（2）海龟蛋限位</strong></p>
+        <p><strong>物品中心在限位方块内</strong>，漏斗放在限位方块以外。稳定的限位只有海龟蛋。海龟蛋内陷0.2格</p>
+        <p><strong>（3）铁砧限位</strong></p>
+        <p>由于磨石和铁砧内陷0.125格，正好是物品碰撞箱的一半。简单计算一下，当铁砧在x=0时，物品向x+侧靠拢，0.125（铁砧内陷）-0.125（物品半径）=0，物品在铁砧的位置；当物品向x-侧靠拢，（1-0.125（铁砧内陷））+0.125（物品半径）=1，物品在铁砧之外。z轴同理。磨石两侧都是0.125格内陷，无关摆放方法</p>
+        <p><strong>*1.3.2、如何进行限位</strong></p>
+        <p><a href="https://space.bilibili.com/413324281" target="_blank" rel="noopener noreferrer">@Maple_枫溪</a>《水道的艺术》：</p>
+        <a class="jump-card is-text" href="https://www.bilibili.com/video/BV1Up4y1x7XW" target="_blank" rel="noopener noreferrer">
+    <span class="jump-card-cover"><img src="../../assets/articles/cv16215603/dfca6f2a33b2.webp" alt="" loading="lazy"></span><span class="jump-card-main">
+        <span class="jump-card-title">[mcbe]水道的艺术-和你赌两个币，一定有你没见过的水道</span>
+        <span class="jump-card-meta">8.9万观看 459弹幕 · 04:34</span>
+    </span>
+    <span class="jump-card-badge">B 站视频 »</span>
+</a>
+        <hr class="opus-pagebreak">
+        <p><strong>写在最后（作者的碎碎念）</strong></p>
+        <p>在mj的粪坑中艰难地挖出了点东西 _(:з」∠)_</p>
+        <p>和maple一起自闭了一整天，然后摸索出了一些比较明朗的结论</p>
+        <p>算是可以对一些常见的水道现象做出总结了</p>
+        <p>由于急着发这一篇专栏，大纲都尚未完善，所以暂时还没有目录</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16215603/e6bba66beeb8.webp" width="2688" height="1242" alt="文章配图" loading="lazy">
+    </figure>
+        <p>当时最难解释的一个现象，这个视频的第一句话直接给我俩干沉默了 (´；ω；`)</p>
+        <p>更正后的碎碎念：</p>
+        <p>好久以前写的，之前群友在sac闲聊的时候发现有些地方不严谨容易产生误解，所以火速更正了</p>
+        <p>现在看这张图还是很沉默 _(:з」∠)_</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/650832182686777367">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv33358140.html" title="« 上一篇：（终焉）MC大云杉生长机制及效率计算" aria-label="« 上一篇：（终焉）MC大云杉生长机制及效率计算">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">（终焉）MC大云杉生长机制及效率计算</span>
+            </a>
+            <a class="pager-item is-next" href="cv19295223.html" title="下一篇 »：MCBE 关于掉落物的简单研究 ep.2 由挤压简述掉落物运动" aria-label="下一篇 »：MCBE 关于掉落物的简单研究 ep.2 由挤压简述掉落物运动">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 关于掉落物的简单研究 ep.2 由挤压简述掉落物运动</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

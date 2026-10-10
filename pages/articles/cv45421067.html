@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 区块系列机制解析（七）——区块数据替换（上） - 橘猫的资源站</title>
+    <meta name="description" content="区块数据替换的内容比较多，将会分成上下两篇介绍。 一、区块存储数据库（DbChunkStorage） 区块数据库是一个存储区块compoundtag（nbt数据）的一个容器，是一个数据的缓冲区。区块数据库是一种特殊的区块管理器（chunksource）。它负责">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>MCBE 区块系列机制解析（七）——区块数据替换（上）</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/3546590734190596" target="_blank" rel="noopener noreferrer">Naytia_帕芙洛</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2026年02月07日 13:55</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1166536018416893961" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv45421067</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">区块机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv45379514.html" title="« 上一篇：MCBE 区块系列机制解析（六）——区块生成，装饰与光照初始化（前半）" aria-label="« 上一篇：MCBE 区块系列机制解析（六）——区块生成，装饰与光照初始化（前半）">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 区块系列机制解析（六）——区块生成，装饰与光照初始化（前半）</span>
+            </a>
+            <a class="pager-item is-next" href="cv45423281.html" title="下一篇 »：MCBE 区块系列机制解析（八）——区块数据替换区块升级部分" aria-label="下一篇 »：MCBE 区块系列机制解析（八）——区块数据替换区块升级部分">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 区块系列机制解析（八）——区块数据替换区块升级部分</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <blockquote><p>区块数据替换的内容比较多，将会分成上下两篇介绍。</p></blockquote>
+        <hr class="opus-pagebreak">
+        <h2><strong>一、区块存储数据库（DbChunkStorage）</strong></h2>
+        <p>区块数据库是一个存储区块compoundtag（nbt数据）的一个容器，是一个数据的缓冲区。区块数据库是一种特殊的区块管理器（chunksource）。它负责加载线程、服务器线程和IO线程之间的数据交互。这部分内容可能在未来的专栏里分析。</p>
+        <h2><strong>二、加载数据前的处理</strong></h2>
+        <p>首先它还是会给任务结构里的chunkviewsource内的区块尝试上互斥锁，如果失败就直接返回</p>
+        <p>加载线程在从任务队列里获取了数据替换任务后，首先会取出任务结构里的区块对象，重置区块里的所有dirtytickscounter。这么做是为了避免区块装饰阶段产生的更新影响数据替换。随后该函数会根据区块的坐标和维度创建区块键，并在区块数据库里根据这个键查询是否存在已经缓存了的区块。</p>
+        <p>如果没有，就把区块状态从5改成6直接返回。</p>
+        <p>如果有，它便会新建一个levelchunk对象，并把它的loadstate改成5。然后它会通过dbstorage（数据库）里的一个迭代器迭代那个key查到的所有东西，并和key组合成新的key。然后它会通过这个key去加载区块里的数据。</p>
+        <h2><strong>三、加载区块数据</strong></h2>
+        <p>key "+": 加载区块群系数据。</p>
+        <p>key ","：加载区块的LoadFormat，这代表了区块存储时的游戏版本。</p>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">plaintext</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>LevelChunkFormat : schar {
+    V9_00                          = 0,
+    V9_02                          = 1,
+    V9_05                          = 2,
+    V17_0                          = 3,
+    V18_0                          = 4,
+    VConsole1ToV18_0               = 5,
+    V1_2_0                         = 6,
+    V1_2_0Bis                      = 7,
+    V1_3_0                         = 8,
+    V1_8_0                         = 9,
+    V1_9_0                         = 10,
+    V1_10_0                        = 11,
+    V1_11_0                        = 12,
+    V1_11_1                        = 13,
+    V1_11_2                        = 14,
+    V1_12_0                        = 15,
+    V1_14_0                        = 16,
+    V1_15_0                        = 17,
+    V1_16_0                        = 18,
+    V1_16_0Bis                     = 19,
+    V1_16_100                      = 20,
+    V1_16_100Bis                   = 21,
+    V1_16_210                      = 22,
+    V1_16_300CavesCliffsPart1      = 23,
+    V1_16_300CavesCliffsInternalV1 = 24,
+    V1_16_300CavesCliffsPart2      = 25,
+    V1_16_300CavesCliffsInternalV2 = 26,
+    V1_16_300CavesCliffsPart3      = 27,
+    V1_16_300CavesCliffsInternalV3 = 28,
+    V1_16_300CavesCliffsPart4      = 29,
+    V1_16_300CavesCliffsInternalV4 = 30,
+    V1_16_300CavesCliffsPart5      = 31,
+    V1_16_300CavesCliffsInternalV5 = 32,
+    V1_18_0                        = 33,
+    V1_18_0Internal                = 34,
+    V1_18_1                        = 35,
+    V1_18_1Internal                = 36,
+    V1_18_2                        = 37,
+    V1_18_2Internal                = 38,
+    V1_18_3                        = 39,
+    V1_18_3IndividualActorStorage  = 40,
+    V1_21_4                        = 41,
+    Count                          = 42,
+};</code></pre>
+</div>
+        <p>key "-"：对群系的一些处理</p>
+        <p>key "/": 去序列化子区块，包含了区块记录的方块和extrablock两个二维数组</p>
+        <p>key“0”：对旧版本的方块做处理</p>
+        <p>key“1”：去序列化方块实体。首先会在一个循环里不断读nbt数据，取出方块实体的数据进行方块实体的加载。首先阅读方块实体nbt里的“id”数据，根据id决定创建哪一类方块实体。然后创建完了新的方块实体进行方块实体的load逻辑（blockactor::load）然后取出x，y，z的nbt数据写入方块实体对象的xyz标签里。然后它会检测这个位置的方块对应的方块实体和这个方块实体是不是同类型的，如果是就加入区块的方块实体哈希表。</p>
+        <p>key”3“：去序列化计划刻与随机计划刻列表</p>
+        <p>key”4“：去序列化早期版本保存的遗留extrablock，就是早期版本区块的extrablock保存在了一个单独的key里，要在这里加载</p>
+        <p>key”5“：去序列化hardcodedspawningarea（HSA）</p>
+        <p>key”？“：去序列化区块元数据</p>
+        <h2><strong>四、加载数据后的处理</strong></h2>
+        <p>首先它会在dbstorage里看能不能找到这个区块的实体数据，如果找到了就把它放进区块的一个变量里存储起来，等待区块的第一tick时去序列化这些实体nbt数据并加载生成实体。</p>
+        <p>然后它会修复错误的方块实体，如果有本应有方块实体的方块没有方块实体，一部分这种方块会新建一个方块实体，一部分不会（根据坐标决定，别的专栏有讲）</p>
+        <p>然后它会进行区块升级的逻辑（下篇专栏讲）</p>
+        <p>然后它会进行区块混合的逻辑（无实验验证）：</p>
+        <p>首先获取这个区块的混合模式。如果区块是在PE版本创建的，主世界混合模式为1，地狱为3，末地为5。如果区块是在1.16以前的版本创建的且在地狱，混合模式为4</p>
+        <p>对于混合模式4，游戏会根据一系列基于柏林噪声的插值算法将部分周围生成好的区块的边界的一整竖列方块复制过来，根据一个地狱方块替换表去替换方块，让新版本区块和旧版本区块有些过渡。还会把群系复制过来。这个过程走的直接是levelchunk::setblock并且没有blocksource，也就是这个放置方块的行为不会产生任何与其它方块的交互。</p>
+        <p>如果是混合模式5，就会生成末地的黑曜石柱子啥的</p>
+        <p>混合模式3的逻辑和4大差不差</p>
+        <p>混合模式1做的要复杂很多，不过和34是在做一件事</p>
+        <p>在结束了这些处理之后，游戏会用新的区块替代旧的区块对象，并且把它的loadstate改成6</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1166536018416893961">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv45379514.html" title="« 上一篇：MCBE 区块系列机制解析（六）——区块生成，装饰与光照初始化（前半）" aria-label="« 上一篇：MCBE 区块系列机制解析（六）——区块生成，装饰与光照初始化（前半）">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 区块系列机制解析（六）——区块生成，装饰与光照初始化（前半）</span>
+            </a>
+            <a class="pager-item is-next" href="cv45423281.html" title="下一篇 »：MCBE 区块系列机制解析（八）——区块数据替换区块升级部分" aria-label="下一篇 »：MCBE 区块系列机制解析（八）——区块数据替换区块升级部分">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 区块系列机制解析（八）——区块数据替换区块升级部分</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 方块系列机制杂谈（一）——方块放置流程全解析 - 橘猫的资源站</title>
+    <meta name="description" content="杂谈系列是对分析出来的零散机制其中一些重要的内容的一个阐述，但是也是很重要的内容。实际上了解全面的机制是研究出漏洞的基础，但是漏洞的原理本身往往只基于零散的机制。 步骤一：方块管理器交互 大部分的方块放置都需要通过方块管理器（BlockSource）进行。由于">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>MCBE 方块系列机制杂谈（一）——方块放置流程全解析</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/3546590734190596" target="_blank" rel="noopener noreferrer">Naytia_帕芙洛</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2026年02月25日 21:10</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1173327714632859702" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv46217552</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">方块性质</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv16696653.html" title="« 上一篇：MCBE 折学（折跃门科学）研究" aria-label="« 上一篇：MCBE 折学（折跃门科学）研究">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 折学（折跃门科学）研究</span>
+            </a>
+            <a class="pager-item is-next" href="cv26438994.html" title="下一篇 »：MCBE 关于区块回溯崩服的部分测试结果" aria-label="下一篇 »：MCBE 关于区块回溯崩服的部分测试结果">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 关于区块回溯崩服的部分测试结果</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <blockquote><p>杂谈系列是对分析出来的零散机制其中一些重要的内容的一个阐述，但是也是很重要的内容。实际上了解全面的机制是研究出漏洞的基础，但是漏洞的原理本身往往只基于零散的机制。</p></blockquote>
+        <hr class="opus-pagebreak">
+        <h3><strong>步骤一：方块管理器交互</strong></h3>
+        <p>大部分的方块放置都需要通过方块管理器（BlockSource）进行。由于游戏中的方块存储在区块里，放置方块的首要步骤便是根据坐标找到相应的区块。</p>
+        <p>方块管理器会首先将要放置方块的坐标转化成区块坐标，然后在自己对应的ChunkSource里搜索对应的区块。当找到对应区块后，如果该方块管理器AllowUnPopulatedChunks（允许未完成加载区块），便会检测区块是否generated（区块加载状态大于等于2），如果是便返回该区块，如果不是则返回0，然后方块放置失败。</p>
+        <p>如果方块管理器不允许未完成加载区块，便会检测该区块加载状态是否等于9，如果等于便返回该区块，如果不则方块放置失败。</p>
+        <p>对于加载线程中使用的方块管理器，他们都是允许未完成加载区块。而tick线程中的区块一般都不允许。</p>
+        <p>接下来会进行<strong>步骤二：区块放置方块步骤</strong>。</p>
+        <p>只有该方块管理器是不允许未完成加载区块而且获取到的是完成加载区块，方块管理器才会将自身作为参数传递给区块放置方块流程。</p>
+        <p>当区块放置方块完成后，方块管理器会判断放置的方块是不是边界方块（BorderBlock），如果是会更新区块的边界方块map。</p>
+        <p>然后如果放置的方块和原来那个位置的方块不一样或者原来的方块是空气，且该方块管理器是不允许未完成加载区块而且获取到的是完成加载区块，方块管理器便会进行NC更新流程，向四周的六个方块发出NC更新。然后方块管理器会新建一个UpdateSubChunkBlocksChangedInfo，插入维度的BlocksChangedBySubChunkMap，然后发布BlockChanged的事件</p>
+        <h3><strong>步骤二：区块放置方块步骤（levelchunk::setblock)</strong></h3>
+        <p>在方块管理器找到区块后，并且做出处理后就轮到区块自己处理方块放置了。</p>
+        <p>首先它会检查要放置的位置已有的方块是否要放置的方块一模一样。</p>
+        <p>如果不一样：它会检查要放置的位置和是否在自己的子区块范围内（高度检查）然后检查要放置的方块是否和自己拥有同样的BlockLegacy（比如不同颜色的玻璃属于不同的方块，但是它们有相同的blocklegacy）如果有，便进行<strong>子区块方块放置流程</strong>、<strong>光照更新流程</strong>与<strong>方块放置后处理流程</strong></p>
+        <p>如果没，便先便进行<strong>方块移除处理</strong>（removecallback），然后检查原有位置的方块是否能变成extrablock，以及要放置的方块能不能以它为extrablock，如果可以便将原有的方块变成extrablock，然后进入<strong>extrablock放置流程</strong>。如果原有的方块不能，但是原有的extrablock可以变成要放置的方块的extrablock，便会对原有的extrablock进行extrablock放置流程。</p>
+        <p>然后它会进行<strong>子区块方块放置流程</strong>、<strong>光照更新流程</strong>与<strong>方块放置后处理流程</strong></p>
+        <p>最后它先刷新区块的方块dirtytickscounter，然后再根据方块是否需要在放置时设置计划刻而往区块里添加计划刻（如观察者在放置时设置计划刻）</p>
+        <h3><strong>步骤三、子区块放置流程（Subchunk::_setblock)</strong></h3>
+        <p>子区块放置方块的第一步会先锁住子区块的writelock自旋锁，然后它会获取子区块存储方块的结构，根据一个布尔值决定获取存储extrablock的还是block的。然后子区块会给存储结构上自旋锁并遍历存储结构中的方块调色盘，找出里面是否包含了要放置的方块类型，如果包含就直接将三维数组中坐标对应的位置改成该方块在调色盘中的索引。如果调色盘里找不到该方块（该方块类型从未存在于该子区块）便往调色盘中添加该方块。成功了便会直接解除锁并返回。</p>
+        <p>然而调色盘的大小是有限的，当触及到上限时便会放置失败，并触发扩容机制：</p>
+        <p>子区块存储调色盘有0、1、2、4、8、16六种大小，每种大小意味着它能容纳2^(大小）种方块，也意味着它的方块数组中每个存储方块的单元的大小（bit），比如大小为4的调色盘能记录16种方块，而且方块数组的大小为4*16*16*16=2kb。</p>
+        <p>当调色板扩容时，子区块会新建下一个大小的调色盘（比如2-&gt;4, 4-&gt;8），然后把旧调色板的数据复制到新调色板里。然后再进行刚刚的子区块存储调色盘方块替换流程。</p>
+        <p><strong>方块移除处理：</strong></p>
+        <p>当方块管理器放置流程时给区块传入了blocksource的参数，原本的方块不为空气且区块的加载状态为9时它便会进行主移除处理流程：</p>
+        <p>首先会执行block::onremove，这个因方块而异，比如木头方块在onremove时会遍历改变周围4*4*4的树叶方块的状态。然后如果原本的方块属于有方块实体的方块，执行该方块实体的onremoved流程（比如活塞方块实体onremove时让自己推出的方块转b）。然后将该方块实体加入区块的preservedblockentities等区块tick时析构，再从区块方块实体map中移除该方块实体。最后刷新区块的方块实体dirtytickscounter。</p>
+        <p>当主流程处理完后，它会将原有的方块的方块实体（如果原有的方块属于有方块实体的方块）从区块map中移除（如果没移除，就是没有blocksource参数）</p>
+        <h3><strong>光照更新流程（</strong>LevelChunk::_lightingCallbacks）</h3>
+        <p>详情请见未来会写的光照系统专栏</p>
+        <p><strong>方块放置后处理流程（</strong>LevelChunk::placeCallbacks）</p>
+        <p>如果新方块和旧方块不同，且setblock传入了方块实体参数，便先将方块实体移动到要放置的位置（改变方块实体内部存储的自身位置），然后放置方块实体，将方块实体对象加入区块方块实体map，然后刷新区块方块实体dirtytickscounter。</p>
+        <p>如果没传入方块实体，但要放置的方块属于有方块实体的方块，便会通过blockactorfactory创建一个新的方块实体，并加入区块方块实体map然后刷新区块方块实体dirtytickscounter。</p>
+        <p>随后如果blocksource作为参数传入了，便会进行block::onplace, blockactor::onplace（比如南瓜头放置时检查是否生成傀儡，箱子方块实体放置时合并成大箱子）以及红石邻接表更新。</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1173327714632859702">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv16696653.html" title="« 上一篇：MCBE 折学（折跃门科学）研究" aria-label="« 上一篇：MCBE 折学（折跃门科学）研究">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 折学（折跃门科学）研究</span>
+            </a>
+            <a class="pager-item is-next" href="cv26438994.html" title="下一篇 »：MCBE 关于区块回溯崩服的部分测试结果" aria-label="下一篇 »：MCBE 关于区块回溯崩服的部分测试结果">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 关于区块回溯崩服的部分测试结果</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

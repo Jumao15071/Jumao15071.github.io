@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 区块系列机制解析（九）——区块加载任务后处理 - 橘猫的资源站</title>
+    <meta name="description" content="此篇专栏的内容为前三篇专栏介绍的区块加载的四种任务每种结束后都有的相同流程，没看之前专栏的记得看前面的专栏。 一、区块加载后处理 当每一种区块加载任务完成后，在加载线程都会进行相同的处理，主要作用就是发布新的区块加载任务。 依然在加载线程里，当区块加载任务完成">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>MCBE 区块系列机制解析（九）——区块加载任务后处理</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/3546590734190596" target="_blank" rel="noopener noreferrer">Naytia_帕芙洛</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2026年02月07日 18:03</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1166599888861921283" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv45426363</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">区块机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv45423281.html" title="« 上一篇：MCBE 区块系列机制解析（八）——区块数据替换区块升级部分" aria-label="« 上一篇：MCBE 区块系列机制解析（八）——区块数据替换区块升级部分">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 区块系列机制解析（八）——区块数据替换区块升级部分</span>
+            </a>
+            <a class="pager-item is-next" href="cv45554743.html" title="下一篇 »：MCBE 区块系列机制解析（十）——通俗易懂的区块加载机制总结" aria-label="下一篇 »：MCBE 区块系列机制解析（十）——通俗易懂的区块加载机制总结">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 区块系列机制解析（十）——通俗易懂的区块加载机制总结</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <blockquote><p>此篇专栏的内容为前三篇专栏介绍的区块加载的四种任务每种结束后都有的相同流程，没看之前专栏的记得看前面的专栏。</p></blockquote>
+        <hr class="opus-pagebreak">
+        <h2><strong>一、区块加载后处理</strong></h2>
+        <p>当每一种区块加载任务完成后，在加载线程都会进行相同的处理，主要作用就是发布新的区块加载任务。</p>
+        <p>依然在加载线程里，当区块加载任务完成后，如果这一个阶段加载成功了，函数会把区块的loadstate从奇数加一改成偶数（就是该阶段从正在进行到完成）。但是如果没有成功，它便会将loadstate从奇数减一改成偶数（从该阶段的正在进行改到上个阶段的完成）</p>
+        <p>在这种情况下，它会将该区块的区块坐标和区块加载状态加入主区块管理器的等待加载队列。并且执行区块加载任务发布流程（详情见第四篇专栏）。</p>
+        <p>如果区块加载任务成功了（状态+1），函数便会进行邻域推进检测。在进行完后便会执行区块加载任务发布流程。</p>
+        <p>要特别说的是区块生成阶段。如果在Dbchunkstorage里查询这个区块周围相邻的8个区块都存在，便直接跳过区块装饰到状态4。</p>
+        <h2><strong>二、邻域推进检测（</strong><strong>ChunkSource::_checkForUnBlockingChunks）</strong></h2>
+        <p>首先该函数会以要处理的区块为中心，从mainchunksource获取以这个区块为中心的3*3的区块加入一个新建的临时gridarea。这个过程中mainchunksource的相关成员变量会被上自旋锁。这个gridarea记录由区块、区块删除器组成的结构体。</p>
+        <p>随后它会遍历3*3的区块，对于每个区块做如下处理：</p>
+        <p>将区块删除器中的计数器+1.</p>
+        <p>获取区块，如果没有就将区块删除器的计数器-1。如果有，判断它是在什么生成状态。</p>
+        <p>如果是2，它会先判断自己的区块坐标的奇偶性。如果都是偶数，便会检查自己周围相邻的8个区块的区块加载状态是不是大于等于2，如果都是便将自己的区块坐标和状态加入区块加载的等待列表，如果不都是就返回。</p>
+        <p>如果z是偶数x不是便检测周围8个区块加载状态是否大于等于2，且z+方向的区块和x-方向的区块加载状态大于等于4，如果都满足就和上面的执行一样的</p>
+        <p>如果xz都是奇数便检查x+z+, z+, x-z+, x+z-,z-, x-z-方向的区块是不是状态大于等于4，x+和x-是不是大于等于2</p>
+        <p>如果z是奇数x是偶数，就检查周围8个区块是不是状态都大于等于4。</p>
+        <p>如果该区块状态为4或6，就遍历检查周围8个区块状态是否都大于等于4或者6，如果是就加入待加载列表。</p>
+        <h2><strong>三、区块加载完成</strong></h2>
+        <p>区块状态在加载线程中最终被从7变成8，但是游戏为了防止出现漏洞将8到9的过程最终放到了服务器线程里。</p>
+        <p>当区块完成光照初始化后，它不会再将自己加入区块加载等待队列，而是新建一个任务加入服务器线程的任务队列，在调度器阶段执行。</p>
+        <p>它会首先将区块状态从8变成9，随后将该区块的区块坐标和状态从ChunkGenerationGridMap中删除。到这里服务器线程的mainchunksource对应的blocksource就可以访问它了，也就算加载完成了。</p>
+        <h2><strong>四、其它</strong></h2>
+        <p>在维度更新（dimension::tick）中的一个更新阶段中，会执行一个额外的区块加载任务发布流程。</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1166599888861921283">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv45423281.html" title="« 上一篇：MCBE 区块系列机制解析（八）——区块数据替换区块升级部分" aria-label="« 上一篇：MCBE 区块系列机制解析（八）——区块数据替换区块升级部分">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 区块系列机制解析（八）——区块数据替换区块升级部分</span>
+            </a>
+            <a class="pager-item is-next" href="cv45554743.html" title="下一篇 »：MCBE 区块系列机制解析（十）——通俗易懂的区块加载机制总结" aria-label="下一篇 »：MCBE 区块系列机制解析（十）——通俗易懂的区块加载机制总结">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 区块系列机制解析（十）——通俗易懂的区块加载机制总结</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

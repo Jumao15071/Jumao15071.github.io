@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>观察者/活塞续篇：多重组合元件的情况分析 - 橘猫的资源站</title>
+    <meta name="description" content="前文：介于前面的2篇专栏已经有了基础，那就可以拿来分析实际实践出现的问题。 仅作为证明理论可靠性和深入分析宏观红石原理，应用大佬只需要知道他的特性，所以枯燥很正常。 正文： 观察者检测cd的完善 活塞篇中写到了观察者在检测一部分元件的情况，但这并不完善，为了后">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv7802504.webp" alt="观察者/活塞续篇：多重组合元件的情况分析">
+        </figure>
+        <div class="article-head">
+            <h1>观察者/活塞续篇：多重组合元件的情况分析</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/86226988" target="_blank" rel="noopener noreferrer">tyerjs</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">编辑于 2022年02月13日 13:18</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/443445524959894850" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv7802504</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv7557449.html" title="« 上一篇：MCBE 活塞特性机制和宏观延时计算" aria-label="« 上一篇：MCBE 活塞特性机制和宏观延时计算">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 活塞特性机制和宏观延时计算</span>
+            </a>
+            <a class="pager-item is-next" href="cv32287535.html" title="下一篇 »：MCBE 观察者跨区块为什么会坏掉?" aria-label="下一篇 »：MCBE 观察者跨区块为什么会坏掉?">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 观察者跨区块为什么会坏掉?</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p>前文：介于前面的2篇专栏已经有了基础，那就可以拿来分析实际实践出现的问题。
+</p>
+        <p>仅作为证明理论可靠性和深入分析宏观红石原理，应用大佬只需要知道他的特性，所以枯燥很正常。</p>
+        <p>正文：</p>
+        <p><strong>观察者检测cd的完善</strong></p>
+        <p>活塞篇中写到了观察者在检测一部分元件的情况，但这并不完善，为了后文各种察链提供检测的可靠基石，故先总结观察者检测cd的理论。</p>
+        <p><strong>根据检测cd不同元件分类</strong>
+</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/430f193ca731.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">图中举例元件存在1rt的察检测cd</span></p>
+        <p>活塞篇中因为示题解析用到了中继器和活塞，故举例了这些，但现在扩展了更多的同类元件供参考。他们在被观察者检测时观察者会有1rt时长的检测冷却时间。</p>
+        <p><strong>问我为什么是这些组合?中继器和活塞正常情况一直不和好?这我也不懂，也许就是Mojang故意的固定搭配，我只是一个热心的帮你们理清楚了。</strong>
+</p>
+        <p>所以可以把这类元件分类名叫<strong>察1cd元件</strong></p>
+        <p>乱取的233</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/b7c943a048a0.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">图中举例元件存在2rt的察检测cd</span></p>
+        <p>各种材质活板门，各种材质门，充能/激活铁轨，各种材质栅栏门以及图中举例的都是在被观察者检测时观察者存在2rt的检测冷却时间。</p>
+        <p>所以可以把这类元件分类名叫<strong>察2cd元件</strong></p>
+        <hr class="opus-pagebreak">
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/e690b291deb2.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">检测cd未知???</span></p>
+        <p>红石灯是个很特殊的红石元件，它在各方面都显的不同，它的主要特性就是它的下沿熄灭时间会比正常元件多1rt才开始熄灭，也就是下沿2rt。这正好超出了瞬时检测后2rt检测cd的时间，所以目前没可靠的性质能有效证明红石灯对于察的检测属性。但我猜测应该是2rt属性。
+</p>
+        <hr class="opus-pagebreak">
+        <p>不难考虑到，游戏中总会出现生僻或遗漏的检测情况，再加上以后的版本可能在此理论机制没改的情况下出新元件，所以对于如何判别/证明现有元件对于察检测cd属性需要一个检测方案。下文推导</p>
+        <p><strong>察+活塞+察</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/7c2594c02d65.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">输出101信号</span></p>
+        <p>我们将第一行代表经过的延时，第二行代表输入脉冲长度（1有0无），○代表察检测延时，●代表察输出延时；察检测的是活塞，不需要计算活塞推出的延时，所以○和活塞推出同格。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/d6786d36678b.webp" width="614" height="326" alt="文章配图" loading="lazy">
+    </figure>
+        <p>可以发现，○/●都是同类圆相隔1格，且符合察1cd元件，故输出101。</p>
+        <p><strong>察+红石灯+察</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/67eb9a078cef.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">输出1001信号</span></p>
+        <p>我们将第一行代表经过的延时，第二行代表输入脉冲长度（1有0无），○代表察检测延时，●代表察输出延时；察检测的是红石灯，不需要计算红石灯亮起的延时，所以○和红石灯亮起同格。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/136ce58a5544.webp" width="969" height="554" alt="文章配图" loading="lazy">
+    </figure>
+        <p>可以发现，○/●都是同类圆相隔2格，且超出检测cd外，故输出1001。</p>
+        <p>于是总结出：</p>
+        <p><strong>察+活塞+察</strong>输出<strong>101</strong>
+</p>
+        <p><strong>察+红石灯+察</strong>输出<strong>1001</strong></p>
+        <hr class="opus-pagebreak">
+        <p><strong>察+活塞+察+活塞+察</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/ac43ae35ce9f.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">输出1001信号</span></p>
+        <p>在分析2联元件察链时，已经从上面得知了单联时的输出，所以只需要把已知的放在第二级元件上分析即可。所以n联察链的解析只能是递推的形式。表格数字符号表示参考上面。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/af0a83307e83.webp" width="931" height="548" alt="文章配图" loading="lazy">
+    </figure>
+        <p><strong>察+红石灯+察+红石灯+察</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/3013aed9e0ef.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">输出1000001信号</span></p>
+        <p>表格数字符号表示参考上面。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/816270428fb2.webp" width="1485" height="696" alt="文章配图" loading="lazy">
+    </figure>
+        <p><strong>察+活塞+察+红石灯+察</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/a5f689292099.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">输出100001信号</span></p>
+        <p>表格数字符号表示参考上面。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/e1b44a65f6aa.webp" width="1337" height="548" alt="文章配图" loading="lazy">
+    </figure>
+        <p><strong>察+红石灯+察+活塞+察</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/d7da529ed709.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">输出101信号</span></p>
+        <p>表格数字符号表示参考上面。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/cdbe6a26bf59.webp" width="757" height="531" alt="文章配图" loading="lazy">
+    </figure>
+        <hr class="opus-pagebreak">
+        <p><strong>察+活塞+察+活塞........</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/265842eea325.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>当出现多个活塞察链：</p>
+        <p>第一阶，101</p>
+        <p>第二阶，1001（上面有提到）</p>
+        <p>第三阶，101（第二阶第二次信号处在活塞收回cd和察检测cd上，故活塞不响应）类似于察+红石灯+察+活塞+察。</p>
+        <p>如此往复.........</p>
+        <p><strong>对脸察(此部分比较模糊，可以无视)</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/5ee2b69b317f.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">100循环波</span></p>
+        <p>我们将第一行代表经过的延时，○代表察检测延时，●代表察输出延时，第二行代表察1，第三行代表察2。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/a7567a2656c7.webp" width="1118" height="562" alt="文章配图" loading="lazy">
+    </figure>
+        <p>正常情况察会优先检测上一个察的检测延时，但出现检测cd的存在，察会检测输出延时，贴图也是在输出延时开始时变化的，类似于红石灯下沿的特例，故○在每一个●的右上方出现。</p>
+        <p><strong>2rt输入察2cd元件+察</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/a2dc08631c45.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">输出1rt</span></p>
+        <p>表格数字符号表示参考上面。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/0a9b767fa77c.webp" width="895" height="379" alt="文章配图" loading="lazy">
+    </figure>
+        <p>因为检测的是察2cd元件，故符合只输出一次的1rt脉冲。</p>
+        <p><strong>察+活塞+察+察2cd元件+察</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/007a95298da4.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">输出1001信号</span></p>
+        <p>表格数字符号表示参考上面。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/92249ede30a3.webp" width="830" height="411" alt="文章配图" loading="lazy">
+    </figure>
+        <p>可以发现，第2rt和3rt的时候还处于察2cd元件检测的cd中，故不响应；在第4rt时，已经过了cd且输入信号从1-0，因为检测的是同步类元件所以○在同格位置出现，符合输出1001。</p>
+        <p><strong>察+活塞+察+察1cd元件+察</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/9162d01179f5.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">输出1001信号</span></p>
+        <p>表格数字符号表示参考上面。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/d035c3e550d3.webp" width="1036" height="405" alt="文章配图" loading="lazy">
+    </figure>
+        <p>可以发现，第3rt的时候还处于察1cd元件检测的cd中，故不响应；在第4rt时，已经过了cd且输入信号从1-0，因为检测的是计划刻类元件所以○在延后一格位置出现，符合输出1001。</p>
+        <p><strong>察+活塞+察+钟/龙头+察</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/15ea3bfce276.webp" width="2280" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">输出101信号</span></p>
+        <p>表格数字符号表示参考上面。
+</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7802504/dc9776c1abe7.webp" width="686" height="378" alt="文章配图" loading="lazy">
+    </figure>
+        <p>钟/龙头是察1cd元件，可以发现，第2rt的时候还处于察1cd元件检测的cd中，故不响应（钟在下沿本来就不更新，双重保障）；在第3rt时，已经过了cd且输入信号从0-1，因为检测的是同步类元件所以○在同格位置出现，符合输出101。</p>
+        <hr class="opus-pagebreak">
+        <p>续篇到此结束，感谢查看。最后想说的是这个表格理解法让我想起了画时序逻辑图的题目2333
+</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/443445524959894850">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv7557449.html" title="« 上一篇：MCBE 活塞特性机制和宏观延时计算" aria-label="« 上一篇：MCBE 活塞特性机制和宏观延时计算">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 活塞特性机制和宏观延时计算</span>
+            </a>
+            <a class="pager-item is-next" href="cv32287535.html" title="下一篇 »：MCBE 观察者跨区块为什么会坏掉?" aria-label="下一篇 »：MCBE 观察者跨区块为什么会坏掉?">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 观察者跨区块为什么会坏掉?</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 区块系列机制解析（八）——区块数据替换区块升级部分 - 橘猫的资源站</title>
+    <meta name="description" content="这一部分要单独拿出来重点说的原因是区块从旧版本升到新版本的过程中可能触发漏洞 当区块数据加载完成后，游戏会进行区块升级。区块升级是将旧版本的区块升级到新版本的过程。如果区块的loadformat（版本）和当前游戏版本不一致，便会进行区块升级的流程。 在正式进入">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>MCBE 区块系列机制解析（八）——区块数据替换区块升级部分</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/3546590734190596" target="_blank" rel="noopener noreferrer">Naytia_帕芙洛</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2026年02月07日 15:53</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1166566439673397273" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv45423281</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">区块机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv45421067.html" title="« 上一篇：MCBE 区块系列机制解析（七）——区块数据替换（上）" aria-label="« 上一篇：MCBE 区块系列机制解析（七）——区块数据替换（上）">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 区块系列机制解析（七）——区块数据替换（上）</span>
+            </a>
+            <a class="pager-item is-next" href="cv45426363.html" title="下一篇 »：MCBE 区块系列机制解析（九）——区块加载任务后处理" aria-label="下一篇 »：MCBE 区块系列机制解析（九）——区块加载任务后处理">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 区块系列机制解析（九）——区块加载任务后处理</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <blockquote><p>这一部分要单独拿出来重点说的原因是区块从旧版本升到新版本的过程中可能触发漏洞</p></blockquote>
+        <hr class="opus-pagebreak">
+        <p>当区块数据加载完成后，游戏会进行区块升级。区块升级是将旧版本的区块升级到新版本的过程。如果区块的loadformat（版本）和当前游戏版本不一致，便会进行区块升级的流程。</p>
+        <p>在正式进入流程前，很重要的一点是游戏会创建一个blocksource专门管理区块升级过程中产生的方块交互。这个blocksource基于任务结构传入的chunkviewsource，也就是它的管理范围是3*3区块（而且需要是在生成map里的）</p>
+        <h2><strong>一、主世界（OverworldDimension::upgradeLevelChunk）</strong></h2>
+        <p>如果区块的loadformat小于24，便会进入对洞穴与山崖更新的处理。</p>
+        <p>当世界是超平坦时，游戏会直接创建空气子区块放到区块的子区块列表的负数部分。</p>
+        <p>然后游戏会遍历该区块最低y值的16*16方块，如果都是基岩就把负数的子区块都变成空气（？）如果不到256个基岩，就进入负数区块生成的流程</p>
+        <p>首先遍历负数子区块，序列化那里的方块实体。然后删除区块计划刻和随机计划刻列表里y坐标大于0的tick，再对剩下的所有tick进行重新建堆。然后游戏会把刚刚序列化的方块实体再加载出来，同时对他们做消除错误方块实体的处理。然后遍历区块最低的子区块，把所有基岩都换成深板岩。这个过程直接走的levelchunk::setblock且没有blocksource也就是不和其它方块交互</p>
+        <p>之后如果刚刚替换之前的最下层有基岩，就遍历最下面的16*16把所有方块替换成空气。这个过程走levelchunk::setblock且没有blocksource，但是在放置完了后还执行了一个blocksource::updateNeighborsAt,所以会给四周造成nc更新，不过局限于该方块管理器管理的范围内。</p>
+        <p>接下来游戏会进行方块的修复。游戏会遍历区块内的所有区块方块坐标（ChunkBlockPos)对每个位置进行如下的检测：</p>
+        <p>如果是床方块且没有方块实体（1.2版本之前）就新建方块实体并且placecallback（别的系列专栏有说）</p>
+        <p>然后如果版本在1.16.100，而且方块是木栅栏门，便会检测栅栏门有没有和其它墙方块相接，如果有就更新状态并放置方块，通过Blocksource::setblock</p>
+        <p>如果版本大于1.16.100（更新更多种类的墙）且方块是石墙或者边界方块便像上下遍历所有相接的墙方块更新连接状态。它会遍历四周，对每个方向的方块计算出一个理想中的连接状态与现在的状态对比，如果不同就更改，通过blocksource::setblock。</p>
+        <p>如果方块是藤曼，会做和墙类似的处理。</p>
+        <p>对于区块边界的方块，只有相邻的区块版本也大于1.16.100才进行刚刚那些1.16.100的修复。</p>
+        <p>对于洞穴与山崖更新后的传送门方块，游戏会修改它们的传送记录。</p>
+        <p>然后游戏会移除所有1.11以前的村庄Hsa（VillageDeprecated，newVillageDeprecated ）</p>
+        <p>之后游戏会遍历所有实体，对猫、村民等实体进行升级</p>
+        <h2><strong>二、地狱</strong></h2>
+        <p>和主世界没区别</p>
+        <h2><strong>三、末地</strong></h2>
+        <p>会给这个区块创建群系，除此之外和主世界没区别</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1166566439673397273">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv45421067.html" title="« 上一篇：MCBE 区块系列机制解析（七）——区块数据替换（上）" aria-label="« 上一篇：MCBE 区块系列机制解析（七）——区块数据替换（上）">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 区块系列机制解析（七）——区块数据替换（上）</span>
+            </a>
+            <a class="pager-item is-next" href="cv45426363.html" title="下一篇 »：MCBE 区块系列机制解析（九）——区块加载任务后处理" aria-label="下一篇 »：MCBE 区块系列机制解析（九）——区块加载任务后处理">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 区块系列机制解析（九）——区块加载任务后处理</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

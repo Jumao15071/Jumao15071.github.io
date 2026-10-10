@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 关于区块回溯崩服的部分测试结果 - 橘猫的资源站</title>
+    <meta name="description" content="首先，关于区块回溯崩服的原理，这个视频里面有部分展示，但是并不全面 B 站视频 » 完整一点讲，大概就是，部分方块本身是可以带有nbt标签的，比如活塞刷怪笼箱子漏斗发射器等等，这些在电脑上你也可以通过Ctrl+中键连带着nbt标签一起复制 然后当区块回溯了这些">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv26438994.webp" alt="MCBE 关于区块回溯崩服的部分测试结果">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 关于区块回溯崩服的部分测试结果</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/565837815" target="_blank" rel="noopener noreferrer">离殇之枫</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2023年09月10日 19:47</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/839700801141080081" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv26438994</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">区块机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv46217552.html" title="« 上一篇：MCBE 方块系列机制杂谈（一）——方块放置流程全解析" aria-label="« 上一篇：MCBE 方块系列机制杂谈（一）——方块放置流程全解析">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 方块系列机制杂谈（一）——方块放置流程全解析</span>
+            </a>
+            <a class="pager-item is-next" href="cv45074160.html" title="下一篇 »：MCBE 区块加载/卸载/保存全流程解析序章——名词解释" aria-label="下一篇 »：MCBE 区块加载/卸载/保存全流程解析序章——名词解释">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 区块加载/卸载/保存全流程解析序章——名词解释</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="html">
+        <p>首先，关于区块回溯崩服的原理，这个视频里面有部分展示，但是并不全面</p>
+        <a class="jump-card" href="https://www.bilibili.com/video/av233175010" target="_blank" rel="noopener noreferrer">
+    <img src="../../assets/articles/cv26438994/48c0383bd2d8.webp" alt="B 站视频 cv233175010" loading="lazy">
+    <span class="jump-card-badge">B 站视频 »</span>
+</a>
+        <p>完整一点讲，大概就是，部分方块本身是可以带有nbt标签的，比如活塞刷怪笼箱子漏斗发射器等等，这些在电脑上你也可以通过Ctrl+中键连带着nbt标签一起复制</p>
+        <p>然后当区块回溯了这些可以带有nbt标签的物品時（不一定要已经带了标签，直接放下来的常态也行）</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv26438994/d7c829a4a5ec.webp" width="313" height="227" alt="带有nbt标签的活塞" loading="lazy">
+        <figcaption class="fig-caption">带有nbt标签的活塞</figcaption>
+    </figure>
+        <p>如果这个回朔的区块是处于合适的范围内，那么，将其拉回的时候就会导致服务器崩溃</p>
+        <p>然后如何判断你回溯出来的是否是在合适的位置呢，就需要用那种在是否合适的位置，外观有明显不同的方块，最典型的就是活塞和炼药锅</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv26438994/f1b11b6fefa7.webp" width="2376" height="1080" alt="岩浆锅回溯之后" loading="lazy">
+        <figcaption class="fig-caption">岩浆锅回溯之后</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv26438994/b61b5239b240.webp" width="2376" height="1080" alt="活塞回溯之后" loading="lazy">
+        <figcaption class="fig-caption">活塞回溯之后</figcaption>
+    </figure>
+        <p>当炼药锅里面装有东西的情况下回溯，不管装的是什么，回溯之后都会变成水的贴图，活塞的话就是不管有没有激活，回溯之后都是无头的状态，但这两个还是有区别</p>
+        <p>炼药锅那个是否在合适的位置进行回溯除了是否会崩服之外，仅仅是贴图不同，但是活塞这个在不同的位置是真的不同，在会崩服的地方，回溯出来的这种无头活塞，是你把它推动的一定会带着前面那个方块一起动，当然前提是能带的动</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv26438994/62c830dc3e39.webp" width="2376" height="1080" alt="连带1" loading="lazy">
+        <figcaption class="fig-caption">连带1</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv26438994/78225acb6df5.webp" width="2376" height="1080" alt="连带2" loading="lazy">
+        <figcaption class="fig-caption">连带2</figcaption>
+    </figure>
+        <p>但是在不会崩服的地方，回溯出来的，那就单纯的只是一个收回的活塞而已，最多还包括前面那个一更新就消失的活塞臂，问题不大<br></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv26438994/d1e21186b113.webp" width="2376" height="1080" alt="不连1" loading="lazy">
+        <figcaption class="fig-caption">不连1</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv26438994/88aba4028952.webp" width="2376" height="1080" alt="不连2" loading="lazy">
+        <figcaption class="fig-caption">不连2</figcaption>
+    </figure>
+        <p>行吧，总之讲了这么多，就是说明一点，可以利用回溯之后的活塞是否是有头的贴图状态来判断拉回这个区块内进行回溯的nbt方块是否会导致崩服（准确性不用质疑，经过测试确实是一致的），问题不大<br></p>
+        <p>顺便先说一下区块回溯的发生条件，能稳定触发的主世界之前不知道有没有，反正现在难有，不过地狱和末地是可以稳定触发的，目前我们测试的条件就是，该区块16层以下，也就是第一区段全部清空，然后重新加载这个区块，可以是切换维度或者退出重进之类的，然后这个区块就会回溯到上一次保存的情况，问题不大</p>
+        <p>然后就是分享一下，这里的测试结果，下来看一下测试的一点遗留下来的，能看到活塞头的就是不能崩服的，看不到的就是可以的，问题不大</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv26438994/b1188acedcb0.webp" width="2376" height="1080" alt="部分测试场景" loading="lazy">
+        <figcaption class="fig-caption">部分测试场景</figcaption>
+    </figure>
+        <p>然后我们这里是测试以末地的祭坛为中心，9×9区块范围内的情况（当然先确定了同一个区块内效果都是一样的），绘制成表格大概就是这样，问题不大</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv26438994/56eaf96d08dc.webp" width="363" height="392" alt="测试结果图" loading="lazy">
+        <figcaption class="fig-caption">测试结果图</figcaption>
+    </figure>
+        <p>0代表的就是拉回回溯出来的nbt方块不能崩服，1代表的则是可以崩服，大概就是以东北和西南的对角斜线为轴，靠近东北的部分就是可以崩服的，靠近西南的部分以及斜线本身所在的区块就是不能崩服的</p>
+        <p>这个我们之后又在一些比较坐标大的地方随机抽查了一些位置，也确实同样符合这个规律，之后我们又在地狱也进行了测试，也同样符合这个规律，所以大概能说明这个规律是正确的，问题不大</p>
+        <p>不过就是有点好奇，为什么会分为这两种不同的情况？以及两者的区别，真的就只是拉回是否能崩服这一点吗？但是这个我们也不太懂，所以只能测到这种程度了，问题不大</p>
+        <p>行吧，那就这样，我们也只是把我们自己的测试结果以及能总结的部分总结一下分享出来而已，主要我们也不太擅长这方面，所以也只能做到这样，那就这样吧，到此结束，问题不大</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv26438994/f02c0db73473.webp" width="1350" height="667" alt="文章配图" loading="lazy">
+    </figure>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/839700801141080081">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv46217552.html" title="« 上一篇：MCBE 方块系列机制杂谈（一）——方块放置流程全解析" aria-label="« 上一篇：MCBE 方块系列机制杂谈（一）——方块放置流程全解析">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 方块系列机制杂谈（一）——方块放置流程全解析</span>
+            </a>
+            <a class="pager-item is-next" href="cv45074160.html" title="下一篇 »：MCBE 区块加载/卸载/保存全流程解析序章——名词解释" aria-label="下一篇 »：MCBE 区块加载/卸载/保存全流程解析序章——名词解释">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 区块加载/卸载/保存全流程解析序章——名词解释</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

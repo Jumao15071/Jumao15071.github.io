@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 劫掠生成类方块检测机制 - 橘猫的资源站</title>
+    <meta name="description" content="本专栏意在进一步完善与补充劫掠中“尝试”的第一次生成与散布生成的机制，基本理论框架由@藏青茶壶 茶壶大爷，以及某只變異兔子帮忙去最新版本测得了四个新方块的性质. 1.选点检测大致过程 劫掠第一次选点分为六种方式，详细内容自行查阅（一定不是我懒得去写和配图）。 ">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv40011525.webp" alt="MCBE 劫掠生成类方块检测机制">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 劫掠生成类方块检测机制</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/1583493298" target="_blank" rel="noopener noreferrer">Cookie_531</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2024年12月06日 06:47</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1007601359184199685" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv40011525</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">实体机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv35662767.html" title="« 上一篇：MCBE 1.21.10.24哨塔子结构及hsa介绍" aria-label="« 上一篇：MCBE 1.21.10.24哨塔子结构及hsa介绍">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 1.21.10.24哨塔子结构及hsa介绍</span>
+            </a>
+            <a class="pager-item is-next" href="cv39759209.html" title="下一篇 »：MCBE 恼鬼与尖牙的生成机制" aria-label="下一篇 »：MCBE 恼鬼与尖牙的生成机制">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 恼鬼与尖牙的生成机制</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="delta">
+        <p>本专栏意在进一步完善与补充劫掠中“尝试”的第一次生成与散布生成的机制，基本理论框架由@藏青茶壶 茶壶大爷，以及某只變異兔子帮忙去最新版本测得了四个新方块的性质.</p>
+        <h2>1.选点检测大致过程</h2>
+        <p>劫掠第一次选点分为六种方式，详细内容自行查阅（一定不是我懒得去写和配图）。</p>
+        <h3>每一波➡️前五种方式都为在其尝试范围内，从上到下，第一次选点都可以选择在可刷劫掠的方块上再对上方进行检测，<span style="color:#f85a54">其散步生成点位</span><span style="color:#4fd3d1">同理</span>，而<span style="color:#4fd3d1">第六种尝试生成方式</span>在可刷劫掠的方块的基础上，不可以<span style="color:#f85a54">玻璃</span>作为这个“点位”.但<span style="color:#2ac864">玻璃可以作为</span><span style="color:#00aeec">第六种生成</span><span style="color:#f85a54">散布生成的点位.</span></h3>
+        <h2>⑴可刷劫掠方块与不可刷劫掠方块</h2>
+        <h3>为什么要叫这个名字？因为这些方块性质并没有明确的共同点，按照茶壶大爷本人和变异兔子离殇的评价就是ojang的俺心思能刷分类的。以下为一些方块的统计分类.</h3>
+        <h2><span style="color:#2ac864">可刷劫掠方块；</span></h2>
+        <p>可可豆（1-3） 原木 告示牌 活板门（all朝向）床（2格都是） 重生锚 篝火（4种）半砖/台阶（all） 楼梯（all）  <span style="color:#f85a54">兩種火（1.21-）細雪（1.21-）</span> <span style="color:#ffb027">有碰撞体积的顶层雪 </span>标靶 干草垛 拼图方块 结构方块 命令方块（3种） 门 折越门 末地传送门 竹子（生长后状态） 栅栏 墙 边界（非其延伸类） 杜鹃花（2种） 屏障 隐形基岩 更新方块（除了火把状都可） 化学元素方块 紫松果/花 蜜块 蜂箱 蜂巢 粘液方块 红树根 荷叶 龙蛋 海龟蛋 灯笼（2种）蠟燭 潮湧核心  没“阳痿”的垂滴叶 垂根 混凝土 混凝土粉末 梯子 玻璃板  玻璃 遮光玻璃 關閉的柵欄門 染色玻璃 石砖等 虫蛀砖 工作可交互方块 合成器 发射器 活塞（2  （2  石头 苔藓 苔藓层 地毯（16 木板  <span style="color:#f85a54">按钮（1.11-1.14）.</span>仙人掌 箱子 盒子 嘎枝核心 泥巴 靈魂沙/土 下界猶塊/詭異猶塊 铁栏杆 铁链 蘑菇块 紫水晶 紫水晶尖  懸掛告示牌 （all） 鐘 紅石中繼器 紅石比較器 ？方塊 <span style="color:#00aeec">潛影盒及其伸長 </span>豬籠草 <span style="color:#f85a54">活塞臂（1.21後）</span></p>
+        <h2><span style="color:#ff6699">不刷劫掠方块；</span></h2>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40011525/645af46eae71.webp" width="1133" height="530" alt="文章配图" loading="lazy">
+    </figure>
+        <p>幽匿脈絡 新版本樹脂 地衣  紅石 樹葉（不含菌类“叶子”）  <span style="color:#ffb027">水</span> <span style="color:#ffb027">水流 岩漿 岩漿流</span> 厥 花 線 按鈕（1.14以上） 結構空位 空氣 光源方塊（1-15） 腳手架 蜘蛛網  纏怨藤 垂淚藤 小的珊瑚/珊瑚扇 垂下的垂滴叶 未生長狀態下竹子 小麥 胡蘿蔔 漿果 馬林薯 甜菜 南瓜藤 西瓜藤 甘蔗 <span style="color:#ffb027">展示框（2種）</span>下界猶 打開的柵欄門  拉杆 气泡柱 mb分离出的碰撞箱（mb本身不在范围内 ） 数据更新方块（火把状） 含水线  蘑菇 画（实体） 照相机（实体） 旗幟（上下） 扳線鉤 壓力板（all） 火把（all） 紅石 鐵軌（all）<span style="color:#f85a54">活塞臂（1.21-）</span>潛影貝 普通告示牌 <span style="color:#00aeec">細雪（1.21後） 兩種火（1.21後）</span></p>
+        <h3><span style="color:#f85a54">注：</span>1.玻璃及其变种-不包含版（前5种可作为第一次生成点和散布点位用，第六种可作为散步点位）2.含水的此类方块保存了其可生成劫掠性质.</h3>
+        <p style="text-align: justify">而知曉了方塊類型後，我們便可以將其帶入到「檢測」中了.</p>
+        <h3>「檢測」 ——-茶壺稱其為 「牆 檢」</h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40011525/8478b2e88b76.webp" width="556" height="313" alt="文章配图" loading="lazy">
+    </figure>
+        <p>檢測範圍示意圖（以底為始，整1x*2y*1z）</p>
+        <h3>當底部為<span style="color:#2ac864">可刷劫掠方塊時，</span><span style="color:#f85a54">1處不為</span><span style="color:#2ac864">刷劫掠方塊</span>和<span style="color:#4fd3d1">樹葉</span><span style="color:#00aeec">，2處不为</span><span style="color:#2ac864">当前版本下可刷劫掠方塊</span>和<span style="color:#4fd3d1">樹葉.</span><span style="color:#f85a54">岩漿/水</span>時，劫掠在此處可進行「生成」。如果所有尝试都不成立则结束进度条.他需要至少两格完整空间来生成</h3>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1007601359184199685">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv35662767.html" title="« 上一篇：MCBE 1.21.10.24哨塔子结构及hsa介绍" aria-label="« 上一篇：MCBE 1.21.10.24哨塔子结构及hsa介绍">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 1.21.10.24哨塔子结构及hsa介绍</span>
+            </a>
+            <a class="pager-item is-next" href="cv39759209.html" title="下一篇 »：MCBE 恼鬼与尖牙的生成机制" aria-label="下一篇 »：MCBE 恼鬼与尖牙的生成机制">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 恼鬼与尖牙的生成机制</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

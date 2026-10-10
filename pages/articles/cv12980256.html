@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 红石电路延迟不完全分析 - 橘猫的资源站</title>
+    <meta name="description" content="研究了一下基岩版的红石电路相关的内容，逐渐能理解一些电路运作的原理，所以写了这个专栏。 注意： 本专栏的部分内容为根据实践推出的理论，暂无游戏代码的支持。 本专栏的延迟所有分析都默认电路在一个区块内。部分内容有可能不适用于跨区块电路。 本专栏只研究常规延迟，不">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv12980256.webp" alt="MCBE 红石电路延迟不完全分析">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 红石电路延迟不完全分析</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/112998430" target="_blank" rel="noopener noreferrer">迟昫123</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">编辑于 2021年10月04日 08:34</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/565478280411661634" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv12980256</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv23851750.html" title="« 上一篇：Minecraft基岩版红石系统设计简述" aria-label="« 上一篇：Minecraft基岩版红石系统设计简述">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">Minecraft基岩版红石系统设计简述</span>
+            </a>
+            <a class="pager-item is-next" href="cv34223989.html" title="下一篇 »：曾出现在基岩版的&quot;玄学现象&quot; ~ 红石粉信号强度的计算" aria-label="下一篇 »：曾出现在基岩版的&quot;玄学现象&quot; ~ 红石粉信号强度的计算">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">曾出现在基岩版的"玄学现象" ~ 红石粉信号强度的计算</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p>研究了一下基岩版的红石电路相关的内容，逐渐能理解一些电路运作的原理，所以写了这个专栏。</p>
+        <p><strong>注意</strong>：</p>
+        <p><span style="color:#ff9201">本专栏的部分内容为根据实践推出的理论，暂无游戏代码的支持。</span></p>
+        <p><span style="color:#ff9201">本专栏的延迟所有分析都默认电路</span><span style="color:#ff9201">在</span><span style="color:#ff9201">一个区块</span><span style="color:#ff9201">内</span><span style="color:#ff9201">。部分内容有可能不适用于跨区块电路。</span></p>
+        <p><span style="color:#ff9201">本专栏只研究常规延迟，不研究玄学现象（如无线红石），并且也</span><span style="color:#ff9201">不排除电路运行过程中出现不符合本专栏内容的玄学情况的可能性。</span></p>
+        <p><span style="color:#ff9201">本专栏不研究红石火把的短路、烧毁、半脉冲及相关电路，也不研究漏斗运输物品的延迟。</span></p>
+        <p><span style="color:#ff9201">本专栏中专有名词使用</span><span style="color:#0176ba">蓝色字体</span><span style="color:#ff9201">标出。</span></p>
+        <p><strong><span style="color:#b41700">本专栏可能因为疏忽，出现漏洞或错误内容，如有发现欢迎评论区指出。</span></strong></p>
+        <p><strong>1. 红石系统</strong></p>
+        <p>阅读本专栏，你首先需要了解一下基岩版的<span style="color:#0176ba">红石系统</span>。</p>
+        <p>基岩版的红石是依赖于<span style="color:#0176ba">红石系统</span>运作的，在这个系统中游戏储存了当前世界中的所有的红石元件及充能方块，以及它们之间的连接。
+</p>
+        <p>注意信号源和其他元件是直接相连的。即使在世界中它们有红石线相隔，但在红石系统中只考虑它们是否连接，而不考虑连接方式（包括：直接相连、通过红石线和/或充能方块连接）。</p>
+        <p>除了是否连接，元件之间的应有的信号衰减量也会被储存在<span style="color:#0176ba">红石系统</span>中。</p>
+        <p>因此，红石电路运作过程中，不再依赖红石线，而是只考虑<span style="color:#0176ba">红石系统</span>中所储存的内容。</p>
+        <p><strong>1.1. 红石元件</strong></p>
+        <p>红石元件分为以下几类：</p>
+        <p><span style="color:#0176ba">生产者</span>：就是自身发出信号的，比如红石块，拉杆等</p>
+        <p><span style="color:#0176ba">电容器</span>：比较器、中继器、红石火把、侦测器</p>
+        <p><span style="color:#0176ba">传输者</span>：红石线</p>
+        <p><span style="color:#0176ba">消费者</span>：就是只接受信号的，比如活塞，发射器等</p>
+        <p><strong>2. 游戏刻</strong></p>
+        <p>基岩版中有两种游戏刻，一般把它们称为<strong><span style="color:#0176ba">红石刻</span></strong>和<strong><span style="color:#0176ba">非红石刻</span></strong><span style="color:#0176ba">（在国外它们也常被称为producer tick 和 consumer tick，但这种称呼并不准确）</span>。我们先来了解一游戏刻内各阶段的顺序。</p>
+        <p>一游戏刻内主要的游戏阶段之间的顺序是：逐个已加载区块遍历【<span style="color:#0176ba">刷怪</span>→<span style="color:#0176ba">随机刻</span>→<span style="color:#0176ba">计划刻</span>→<span style="color:#0176ba">随机计划刻</span>→<span style="color:#0176ba">非全局实体</span>→<span style="color:#0176ba">方块实体</span>→<span style="color:#0176ba">红石元件变化</span><span style="color:#0176ba">】→村庄管理器更新</span>→<span style="color:#0176ba">实体系统更新</span>（如：玩家破坏方块、玩家运动、弹射物射中标靶或触发压力板按钮等等等等）→<span style="color:#0176ba">抽象计算</span>（<strong>仅在</strong><strong><span style="color:#0176ba">红石刻</span></strong><strong><span style="color:#0176ba">执行</span></strong>）→切换<span style="color:#0176ba">红石刻</span>与<span style="color:#0176ba">非红石刻</span>状态→<span style="color:#0176ba">玩家操作</span><span style="color:#0176ba">（放置方块和其他操作）→</span><span style="color:#0176ba">全局实体</span>。</p>
+        <p>中括号括起来的部分只有已加载的区块才执行。但未括起来的某些阶段也会受区块加载影响。</p>
+        <p>计划刻单区块上限100，超过的会被延迟到下一游戏刻尝试执行。使用了<span style="color:#0176ba">计划刻</span>的元件详见下文。</p>
+        <p><span style="color:#0176ba">随机计划刻</span>不同于<span style="color:#0176ba">随机刻</span>和<span style="color:#0176ba">计划刻</span>，它也有单区块100的上限，同时也会受到<span style="color:#0176ba">randomTickSpeed</span>的影响。火焰、珊瑚等方块使用的就是<span style="color:#0176ba">随机计划刻</span>。</p>
+        <p>全局实体的NBT的isGlobal是1，非全局实体则为0。玩家射出的箭、扔出的三叉戟等弹射物、闪电、末影龙等等都是全局实体。<span style="color:#0176ba">全局实体</span>阶段虽然在加载区块遍历阶段之外，但全局实体在哪些区块中会被加载在哪些区块会被卸载还<strong>有待研究</strong>（可能就是末影珍珠加载范围的问题）。</p>
+        <p>可以发现，在<span style="color:#0176ba">非全局实体</span>阶段或<span style="color:#0176ba">全局实体</span>阶段（取决于这个弹射物是不是全局实体），以及<span style="color:#0176ba">实体系统更新</span>时，弹射物都会尝试触发压力板和按钮。但非弹射物只会在<span style="color:#0176ba">全局实体</span>或<span style="color:#0176ba">非全局实体</span>阶段（取决于这个实体是不是全局实体）尝试触发。</p>
+        <p><span style="color:#0176ba">红石元件变化</span>阶段的具体内容是：各种红石元件对信号做出响应。比如：中继器亮起/熄灭、活板门打开、红石粉亮灭等等。但要注意几个例外：活塞、龙首不在此阶段做出反应。</p>
+        <p>我们所说的<span style="color:#0176ba">红石刻</span>和<span style="color:#0176ba">非红石刻</span>，指代的其实是在这1gt中<span style="color:#0176ba">玩家操作</span>阶段之前是不是<span style="color:#0176ba">红石刻</span>。在<strong><span style="color:#0176ba">红石刻</span></strong>有一个额外的阶段：<strong><span style="color:#0176ba">红石系统</span></strong><strong>的</strong><strong><span style="color:#0176ba">抽</span></strong><strong><span style="color:#0176ba">象计算</span></strong>。</p>
+        <p><strong><span style="color:#0176ba">抽</span></strong><strong><span style="color:#0176ba">象计算</span></strong>之所以被称为<span style="color:#0176ba">抽象计算</span>，因为它不会对世界产生任何实际的影响，只是计算每个红石元件接受到了多少信号。</p>
+        <p><span style="color:#0176ba">生产者</span>一旦被触发（如拉杆被拉下、陷阱箱被打开、阳光传感器被反转），就会立即更新自己的信号。但是只有在<span style="color:#0176ba">抽象计算</span>阶段，其他红石元件才会计算接收或者发出的信号。</p>
+        <p><span style="color:#0176ba">抽象计算</span>阶段内部也是有顺序的，简单来说就是：先计算红石粉和<span style="color:#0176ba">电容器</span>，再计算<span style="color:#0176ba">消费者</span>。后文中的中继器章节会进行更详细的解释。</p>
+        <p>或参考下图：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/1dbecc660ec6.webp" width="470" height="718" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">时序图</span></p>
+        <p><strong>（各元件变化所在的游戏阶段见文末附录）</strong></p>
+        <p><strong>2.1. 实例分析一</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/b0c4545a7ed3.webp" width="1255" height="641" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">例1</span></p>
+        <p>如图所示，拉杆红石粉1档中继器活板门，分析拉下拉杆后的时序。
+</p>
+        <p>首先拉下拉杆，可能是在<span style="color:#0176ba">红石刻</span>，也可能是在<span style="color:#0176ba">非红石刻</span>。一旦拉下，拉杆就会发出15级信号。但要注意，只有等到<span style="color:#0176ba">抽象计算</span>阶段，其他元件才会接收到信号。</p>
+        <p>所以之后的第一个<span style="color:#0176ba">红石刻</span>的<span style="color:#0176ba">抽象计算</span>阶段，首先红石粉和中继器收到了15级信号，然后活板门也收到了来自中继器的15级的信号。</p>
+        <p>下一个游戏刻的<span style="color:#0176ba">红石元件变化</span>阶段，红石粉、中继器、活板门都发生了相应的变化（亮起或打开）。</p>
+        <p>由此可见，在这个电路中，中继器、活板门、红石粉可以说是<strong>同时</strong>对信号做出响应的。这也就是上文说p-tick和c-tick这两个称呼不准确的原因。</p>
+        <p>或参考下图：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/91996956281b.webp" width="522" height="726" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">例1时序图</span></p>
+        <p><strong>2.2. 实例分析二</strong>
+</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/6abf0b58ed71.webp" width="1436" height="614" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">例2</span></p>
+        <p>如图所示，这次把实例分析一中的活板门换成1档中继器，再分析拉下拉杆后的时序。</p>
+        <p>首先和上面一样拉下拉杆。</p>
+        <p>等到之后的第一个<span style="color:#0176ba">红石刻</span>的<span style="color:#0176ba">抽象计算</span>阶段，红石粉和第一个中继器收到了15级信号。第二个中继器并没有接收到信号（原因可以理解为各个<span style="color:#0176ba">电容器</span>和各个红石粉都是同时计算的，所以第二个中继器并不会等到第一个中继器接受信号之后再计算，具体原因详见后文中继器章节）。</p>
+        <p>下一个游戏刻的<span style="color:#0176ba">红石元件变化</span>阶段，红石粉、第一个中继器都亮起。</p>
+        <p>再下一个游戏刻的<span style="color:#0176ba">抽象计算</span>阶段，发现第二个中继器收到了15级信号。</p>
+        <p>下一个游戏刻的<span style="color:#0176ba">红石元件变化</span>阶段，第二个中继器亮起。</p>
+        <p>由此可见，在这个电路中，第二个1档中继器与之前的活板门相比，多出了2gt的延迟。</p>
+        <p>或参考下图：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/422e35bd56e5.webp" width="482" height="729" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">例2时序图</span></p>
+        <p><strong>2.3. 实例分析三</strong>
+</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/4bc0b3bb94f4.webp" width="1020" height="437" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">例3</span></p>
+        <p>如图所示，在实例分析一中的电路加上一个红石线，再分析拉下拉杆后的时序。
+</p>
+        <p>首先拉下拉杆，和上面一样，就不多说了。</p>
+        <p>等到之后的第一个<span style="color:#0176ba">红石刻</span>的<span style="color:#0176ba">抽象计算</span>阶段，中继器收到了15级信号，红石粉并没有接收到信号（原因同实例分析二中的第二个中继器）。活板门收到来自中继器的信号。</p>
+        <p>下一个游戏刻的<span style="color:#0176ba">红石元件变化</span>阶段，中继器亮起，活板门打开。</p>
+        <p>再下一个游戏刻的<span style="color:#0176ba">抽象计算</span>阶段，发现红石粉收到了15级信号。</p>
+        <p>下一个游戏刻的<span style="color:#0176ba">红石元件变化</span>阶段，红石粉亮起。</p>
+        <p>红石粉在活板门的前面，但比活板门还要晚2gt。不必感到奇怪，事实就是这样。</p>
+        <p><strong>3. 一些元件</strong></p>
+        <p><strong>3.1. 活塞</strong>
+</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/65140cc8c65f.webp" width="1534" height="607" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">活塞</span></p>
+        <p>如图所示，这次把实例分析一中的活板门再换成活塞，再分析拉下拉杆后的时序。</p>
+        <p>首先拉下拉杆，和上面的实例分析一样，就不多说了。</p>
+        <p>等到之后的第一个<span style="color:#0176ba">红石刻</span>的<span style="color:#0176ba">抽象计算</span>阶段，红石粉和中继器收到了15级信号。然后活塞收到了来自中继器的15级信号。</p>
+        <p>下一个游戏刻的<span style="color:#0176ba">红石元件变化</span>阶段，红石粉、中继器都亮起。</p>
+        <p>下一个游戏刻，<span style="color:#0176ba">方块实体</span>阶段，活塞生成MB方块和MB方块实体，推出进度。</p>
+        <p>下一个游戏刻，<span style="color:#0176ba">方块实体</span>阶段，活塞推出一半。</p>
+        <p>下一个游戏刻，<span style="color:#0176ba">方块实体</span>阶段，活塞推出完毕，MB变回原来的方块。</p>
+        <p>时序图如下：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/049aa6f961ac.webp" width="417" height="707" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">活塞时序图</span></p>
+        <p>由此可见，活塞生成MB相较于活板门的打开有1gt的延迟，活塞推出过程持续2gt。</p>
+        <p>活塞<strong>总是</strong><strong>在</strong><strong><span style="color:#0176ba">红石刻</span></strong>的<span style="color:#0176ba">方块实体</span>阶段根据接收到的信号（实际上这个信号是上一个<span style="color:#0176ba">红石刻</span>的<span style="color:#0176ba">抽象计算</span>阶段计算出来的），来决定是否生成MB方块。</p>
+        <p>活塞的推出或缩回的过程持续2gt。</p>
+        <p>在移动过程中，活塞不会因信号变化撤销移动（不像java版那样有瞬推）。推拉完毕后，等到<strong>下一个</strong><span style="color:#0176ba">红石刻</span>的<span style="color:#0176ba">方块实体</span>阶段，活塞才会再一次判断接收到的信号。</p>
+        <p><strong>3.2. 龙首</strong></p>
+        <p>龙首在每个<span style="color:#0176ba">方块实体</span>阶段（无论是不是在<span style="color:#0176ba">红石刻</span>）根据接收到的信号（实际上这个信号是上一个<span style="color:#0176ba">红石刻</span>的<span style="color:#0176ba">抽象计算</span>阶段计算出来的），来改变是否播放张口动画的状态。</p>
+        <p><strong>3.3. 侦测器</strong></p>
+        <p>接下来看一下侦测器。</p>
+        <p>侦测器和大多数元件不同，它的亮起和熄灭是依赖于<span style="color:#0176ba">计划刻</span>的。</p>
+        <p>当检测到<strong><span style="color:#0176ba">方块更新</span></strong>时，侦测器会添加一个2gt后的计划刻事件。</p>
+        <p>但侦测器不会在<span style="color:#0176ba">非红石刻</span>亮起，<strong>只会在</strong><strong><span style="color:#0176ba">红石刻</span></strong><strong>亮起</strong>。2gt后如果是<span style="color:#0176ba">非红石刻</span>，侦测器再额外计划一个1gt的<span style="color:#0176ba">计划刻</span>。</p>
+        <p>也就是说，<strong>侦测器的延迟是2gt或3gt，一定在</strong><strong><span style="color:#0176ba">红石刻</span></strong><strong>里亮起。</strong></p>
+        <p>亮起后，侦测器会计划2gt用于熄灭。</p>
+        <p>不过如果是活塞推拉，在<span style="color:#0176ba">方块实体</span>阶段推拉完毕，侦测器由MB变回方块时，侦测器就会<strong>直接</strong>亮起。亮起时依旧会添加2gt的<span style="color:#0176ba">计划刻</span>用于熄灭。</p>
+        <p>然而，侦测器是<strong><span style="color:#0176ba">电容器</span></strong>，它在亮起和熄灭时<strong>不会</strong>立即更新自身的信号，只有在<span style="color:#0176ba">抽象计算</span>阶段才会更新自身的信号。</p>
+        <p>时序图如下：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/a4baab390801.webp" width="1016" height="728" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">侦测器时序图</span></p>
+        <p>如果把活板门、红石粉和1档中继器与之相连，时序会是什么样呢？
+</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/9a0cb5da1caf.webp" width="1300" height="503" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">侦测器</span></p>
+        <p>类比之前的实例分析一和二，侦测器在<span style="color:#0176ba">红石刻</span>亮起之后，在同一gt内的<span style="color:#0176ba">抽象计算</span>阶段发出15级信号，然后活板门收到15级信号。</p>
+        <p>下一游戏刻，活板门打开。</p>
+        <p>下一游戏刻的<span style="color:#0176ba">抽象计算</span>阶段，红石粉和中继器接收到信号。</p>
+        <p>下一游戏刻，红石粉和中继器亮起。</p>
+        <p><strong>3.4. 讲台</strong></p>
+        <p>讲台比较特殊的原因是，它会计划很多次的1gt<span style="color:#0176ba">计划刻</span><span style="color:#0176ba">。虽然这些过多的</span><span style="color:#0176ba">计划刻</span><span style="color:#0176ba">显得有点多此一举。</span>
+</p>
+        <p>首先，讲台<strong>一定在</strong><strong><span style="color:#0176ba">红石刻</span></strong><strong>里</strong>改变状态。</p>
+        <p>玩家在<span style="color:#0176ba">玩家操作</span>阶段翻书，讲台会添加一个1gt后的<span style="color:#0176ba">计划刻</span>用于亮起。1gt后如果不是<span style="color:#0176ba">红石刻</span>就再额外添加一个1gt的<span style="color:#0176ba">计划刻</span>。</p>
+        <p>讲台和侦测器不一样，讲台不是<span style="color:#0176ba">电容器</span><span style="color:#0176ba">。</span>在<span style="color:#0176ba">计划刻</span>亮起时，讲台信号立即改变。</p>
+        <p>在亮起时，讲台会添加一个1gt延迟的<span style="color:#0176ba">计划刻</span>用于恢复。1gt后如果不是<span style="color:#0176ba">红石刻</span>就再延迟1gt。</p>
+        <p>所以在一般情况下，讲台亮起后总会在2gt后恢复。</p>
+        <p>时序图如下：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/08ac3143604d.webp" width="1039" height="710" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">讲台时序图</span></p>
+        <p><strong>3.5. 投掷器与发射器</strong></p>
+        <p>投掷器与发射器都有激活与未激活两种状态。在<span style="color:#0176ba">红石元件变化</span>阶段，它们会根据收到的信号更新状态。<strong>
+</strong></p>
+        <p>如果此时从未激活状态转到激活状态，那么它们就会添加一个4gt的<span style="color:#0176ba">计划刻</span>用于发射物品。4gt后的<span style="color:#0176ba">计划刻</span>阶段，物品便被发射。</p>
+        <p>在这4gt中，它们依旧会正常根据信号切换激活与未激活状态。但即使中途信号消失而变回了未激活状态，也不会影响4gt后的物品发射。</p>
+        <p><strong>3.6. 命令方块</strong></p>
+        <p>循环模式命令方块会<span style="color:#0176ba">在</span><span style="color:#0176ba">计划刻</span><span style="color:#0176ba">执行命令，同时添加一个新的</span><span style="color:#0176ba">计划刻</span><span style="color:#0176ba">。延迟可以在命令方块里设置。不过你会发现设置成0和1效果是一样的。因为在</span><span style="color:#0176ba">计划刻</span><span style="color:#0176ba">执行过程中添加的0gt的</span><span style="color:#0176ba">计划刻</span><span style="color:#0176ba">效果等同于1gt的</span><span style="color:#0176ba">计划刻</span><span style="color:#0176ba">。</span></p>
+        <p>脉冲模式的命令方块会在<span style="color:#0176ba">红石元件变化</span>阶段添加<span style="color:#0176ba">计划刻</span>。延迟0和1的效果也是一样的。你可以自己想一想为什么。</p>
+        <p>连锁模式的命令方块则有所不同。如果延迟是0，那么会在指向此命令方块的那个命令方块尝试执行命令后，直接尝试执行命令而不使用<span style="color:#0176ba">计划刻</span>。如果延迟大于0，则会添加相应的<span style="color:#0176ba">计划刻</span>。</p>
+        <p><strong>3.7. 其他计划刻元件</strong></p>
+        <p>除了侦测器、讲台、发射器、投掷器、命令方块，还有其他的元件依赖于<span style="color:#0176ba">计划刻</span>。</p>
+        <p>红石灯的亮起不是<span style="color:#0176ba">计划刻</span>，而熄灭则是在4gt后的<span style="color:#0176ba">计划刻</span>。</p>
+        <p>木质和石质压力板每20gt更新一次信号。当它们被压下时，信号被设为15，并添加20gt的<span style="color:#0176ba">计划刻</span>用于更新信号。等到更新信号时，如果上面已没有实体，压力板弹起并把信号设为0；如果有实体，再次添加一个新的20gt的<span style="color:#0176ba">计划刻</span><span style="color:#0176ba">用于下一次更新</span>。
+</p>
+        <p>测重压力板被压下后，每10游戏刻更新一次信号。</p>
+        <p>按钮由玩家按下后，在20gt（石质）或30gt（木质）后的<span style="color:#0176ba">计划刻</span>弹起。</p>
+        <p>按钮因被箭或三叉戟射中而被触发后，每20gt（石质）或30gt（木质）更新一次信号。</p>
+        <p>绊线和绊线钩被触发后，每10游戏刻更新一次信号。</p>
+        <p>探测铁轨被矿车触发后，每20游戏刻更新一次信号。</p>
+        <p>标靶被三叉戟或箭击中，添加20gt的计划刻用于熄灭；如果被其他弹射物击中，则是8gt。如果还未熄灭，就又被新的弹射物射中，则取消掉原本的计划刻，添加一个新的计划刻。</p>
+        <p>避雷针被闪电击中，添加8gt的计划刻用于熄灭。如果还未熄灭，就又被新的闪电击中，则取消掉原本的计划刻，添加一个新的8gt的计划刻。</p>
+        <p><strong>3.8. 实例分析</strong></p>
+        <p>分析从拉下拉杆到活板门打开的延迟：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/aa3be498e352.webp" width="1302" height="454" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">例3.8</span></p>
+        <p>废话不多说，直接上图：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/82d87fd0ae73.webp" width="523" height="908" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">例3.8时序图</span></p>
+        <p><strong>3.9. 盔甲架</strong></p>
+        <p>盔甲架不是红石元件。但它在每个<span style="color:#0176ba">全局实体</span>或<span style="color:#0176ba">非全局实体</span>阶段（取决于这个实体是不是全局实体）检测红石信号，并改变姿势。<strong>
+</strong></p>
+        <p><strong>4. 中继器</strong></p>
+        <p><strong>4.1. 抽象计算阶段</strong></p>
+        <p>上文说“先计算红石粉和<span style="color:#0176ba">电容器</span>再计算<span style="color:#0176ba">消费者</span>”，还说“可以理解为各个<span style="color:#0176ba">电容器</span>和红石粉都是同时计算的”，但遇到电路中有多个不同档位中继器串联时，这两句无法解决所有问题。因此这里进行更详细的解释。<span style="color:#0176ba">抽象计算</span>阶段到底做了什么：</p>
+        <ol>
+            <li>步骤1：计算各个红石粉、中继器、比较器、红石火把的信号。此时算出来的新值其实是暂时缓存起来了，<span style="color:#0176ba">红石系统</span>中实际信号并没有进行更新。对于中继器，如果算出来的值与现有的信号不同，<span style="color:#0176ba">剩余延迟</span><span style="color:#0176ba">设置为应有的延迟（1t、2t、3t或4t）</span></li>
+            <li>步骤2：设置侦测器、红石火把、比较器的信号。对于中继器，<span style="color:#0176ba">剩余延迟</span>减去1rt。如果减去后还剩0rt，更新这个中继器的信号。此时才把<span style="color:#0176ba">红石系统</span>中的电容器信号的实际值进行更新。</li>
+            <li>步骤3：设置红石线和<span style="color:#0176ba">消费者</span>的信号。</li>
+            <li>步骤4：设置中继器锁存或取消锁存。</li>
+        </ol>
+        <p>也就是说，对于1档中继器、红石火把、比较器，在<span style="color:#0176ba">步骤1</span>计算信号后，同1gt的<span style="color:#0176ba">步骤2</span>就更新了信号。对于2档中继器，在<span style="color:#0176ba">步骤1</span>计算信号后，需要等到<strong>下</strong>一个<span style="color:#0176ba">红石刻</span>的<span style="color:#0176ba">抽象计算</span>阶段的<span style="color:#0176ba">步骤2</span>才会更新信号。对于3档中继器，在<span style="color:#0176ba">步骤1</span>计算信号后，需要等到<strong>下</strong><strong>下</strong>一个<span style="color:#0176ba">红石刻</span>的<span style="color:#0176ba">抽象计算</span>阶段的<span style="color:#0176ba">步骤2</span>才会更新信号。对于4档中继器，在<span style="color:#0176ba">步骤1</span>计算信号后，需要等到<strong>下</strong><strong>下</strong><strong>下</strong>一个<span style="color:#0176ba">红石刻</span>的<span style="color:#0176ba">抽象计算</span>阶段的<span style="color:#0176ba">步骤2</span>才会更新信号。</p>
+        <p>如果中继器已经被锁，它就不会计算以及设置信号。</p>
+        <p>对于2、3、4档的中继器，从计算信号到设置信号之间的这一段时间里，在<span style="color:#0176ba">抽象计算</span>阶段的<span style="color:#0176ba">步骤1</span>不再重新计算信号。在这一段时间里，如果中继器由未被锁转变为被锁，就会重置中继器状态，取消<span style="color:#0176ba">剩余延迟</span>，不再设置信号。</p>
+        <p><strong>4.2. 实例分析</strong></p>
+        <p>暂未想起合适的例子，可参考一下5.3的p-tick脉冲发生器。</p>
+        <p><strong>5. 短脉冲分析</strong></p>
+        <p>在国外，有人提出来过2种特殊的短脉冲：<span style="color:#0176ba">p-tick脉冲</span>和<span style="color:#0176ba">c-tick脉冲</span>。但当你看了这篇专栏以后，你就应该能搞清楚这两个种脉冲的原理了。</p>
+        <p><strong>5.1. 一种c-tick脉冲发生器</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/ec57db7b5493.webp" width="1451" height="727" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">例5.1</span></p>
+        <p>先观察初始状态：</p>
+        <p>侦测器连接着活塞、活板门和中继器。如上文所述：在<span style="color:#0176ba">红石系统</span>中只考虑是否连接及应有的信号衰减量，不考虑如何连接。</p>
+        <p>你应该很快就明白了，为什么活板门对输出的脉冲有反应：问这个问题就相当于问为什么活塞会推出。活板门和活塞都是与侦测器相连接的。</p>
+        <p>你也应该知道为什么中继器不会亮，可以理解为只是因为脉冲太短了。</p>
+        <p>也可以尝试分析一下具体的运作过程：</p>
+        <ol>
+            <li>某个红石刻，侦测器亮起。</li>
+            <li>同一gt，<span style="color:#0176ba">抽象计算</span>阶段，侦测器计算更新信号（此时在<span style="color:#0176ba">抽象计算</span>阶段的<span style="color:#0176ba">步骤1</span>同时计算红石线和中继器的信号，而红石线和中继器还收不到信号），然后活塞和活板门收到信号。</li>
+            <li>下一gt，活板门打开。</li>
+            <li>再下一gt，<span style="color:#0176ba">计划刻</span>，侦测器灭掉（信号未更新）。</li>
+            <li>同一gt，<span style="color:#0176ba">方块实体</span>，活塞生成MB方块。</li>
+            <li>同一gt，<span style="color:#0176ba">抽象计算</span>阶段，因为活塞已经开始推出，中继器已经不再与侦测器相连接，所以依旧收不到信号。侦测器把信号更新为0。</li>
+        </ol>
+        <p>分析到这里，你就会发现，这个所谓的<span style="color:#0176ba">c-tick</span>脉冲发生器，实际上原理如此简单。</p>
+        <p>如图所示：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/f82ac8d902fd.webp" width="554" height="725" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">例5.1时序图</span></p>
+        <p><strong>5.2. 另一种c-tick发生器</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/aa0921f25e26.webp" width="1285" height="413" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">例5.2</span></p>
+        <p>这种发生器结构简单，直接文字分析：</p>
+        <ol>
+            <li>某一个<span style="color:#0176ba">红石刻</span>，<span style="color:#0176ba">抽象计算</span>阶段，侦测器①更新信号，然后活塞收到信号。</li>
+            <li>下一游戏刻，没有什么变化。</li>
+            <li>下一gt，<span style="color:#0176ba">计划刻</span>阶段，侦测器①熄灭（还未更新信号）。</li>
+            <li>同一gt，<span style="color:#0176ba">方块实体</span>阶段，活塞生成MB。</li>
+            <li>同一gt，<span style="color:#0176ba">抽象计算</span>阶段，侦测器①更新信号（变为0）。</li>
+            <li>下一gt，<span style="color:#0176ba">方块实体</span>阶段，活塞推出一半。</li>
+            <li>下一gt，<span style="color:#0176ba">方块实体</span>阶段，活塞推出完毕，侦测器②亮起（还未更新信号）。</li>
+            <li>同一gt，<span style="color:#0176ba">抽象计算</span>阶段，侦测器②更新信号，活板门收到信号。</li>
+            <li>下一gt，<span style="color:#0176ba">红石元件变化</span>阶段，活板门打开。</li>
+            <li>下一gt，<span style="color:#0176ba">方块实体</span>阶段，活塞生成MB。</li>
+            <li>同一gt，<span style="color:#0176ba">抽象计算</span>阶段，因为侦测器已经没了（被MB取代），所以中继器收不到信号。</li>
+        </ol>
+        <p>这个c-tick发生器和上一个的原理是类似的，都是在中继器计算信号之前就把信号切断。因为在侦测器更新信号的同一gt，活板门就能收到信号，所以活板门能够打开。</p>
+        <p><strong>5.3. 一种p-tick脉冲发生器</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/1e70f7669ae8.webp" width="1567" height="708" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">例5.3</span></p>
+        <p>这个发生器在输入的<span style="color:#0176ba">下降沿</span>产生<span style="color:#0176ba">p-tick</span>脉冲。还是先观察初始状态（有输入信号的状态）：</p>
+        <p>拉杆连接着1挡中继器①和3挡中继器②，中继器①连接着活塞。</p>
+        <p>分析一下具体的运作过程：
+</p>
+        <ol>
+            <li>拉回拉杆，输入信号消失。</li>
+            <li>第一个<span style="color:#0176ba">红石刻</span>，<span style="color:#0176ba">抽象计算</span>阶段，中继器②计算信号，中继器①计算并更新信号，然后活塞发现信号消失。</li>
+            <li>下一游戏刻，<span style="color:#0176ba">红石元件变化</span>阶段，中继器①熄灭。</li>
+            <li>下一gt，<span style="color:#0176ba">方块实体</span>阶段，活塞生成MB方块。</li>
+            <li>下一gt，<span style="color:#0176ba">方块实体</span>阶段，活塞收回一半。</li>
+            <li>下一gt，<span style="color:#0176ba">方块实体</span>阶段，活塞收回完毕。</li>
+            <li>同一gt，<span style="color:#0176ba">抽象计算</span>阶段，右侧红石线和中继器③收到信号（<span style="color:#0176ba">抽象计算</span>阶段的<span style="color:#0176ba">步骤1</span>），然后中继器②和③更新信号（<span style="color:#0176ba">抽象计算</span>阶段的<span style="color:#0176ba">步骤2</span>）。</li>
+            <li>下一gt，<span style="color:#0176ba">红石元件变化</span>阶段，中继器②熄灭，③亮起，红石线也亮起。</li>
+        </ol>
+        <p><strong>5.5. 两种脉冲的实质</strong></p>
+        <p>由此可见，<span style="color:#0176ba">p-tick脉冲</span>的实质是：在上一次<span style="color:#0176ba">抽象计算</span><strong>之后</strong>开始，在这一次<span style="color:#0176ba">抽象计算步骤2</span><strong><span style="color:#0176ba">时</span></strong>结束的脉冲信号。<strong>
+</strong></p>
+        <p><span style="color:#0176ba">c-tick脉冲</span>的实质是：在上一次<span style="color:#0176ba">抽象计算步骤2</span><strong><span style="color:#0176ba">时</span></strong>开始，在这一次<span style="color:#0176ba">抽象计算步骤1</span><strong>之前</strong>就已经结束的脉冲信号。</p>
+        <p><strong>6. 红石火把</strong></p>
+        <p>红石火把不愧是游戏中最复杂的红石元件。mojang为它定义了很多行为：除了最基本的反转信号，还有短路（自我激活）、半脉冲（短路时发出的特殊脉冲）、烧毁、（烧毁后）检测<span style="color:#0176ba">方块更新</span>、在将被激活的活塞上熄灭（在国外或称“软反转”）。<strong>
+</strong></p>
+        <p>本专栏的主题是延迟分析，只研究红石火把的反转信号和软反转。</p>
+        <p>红石火把大体上就相当于一个1档中继器。但有以下不同之处：</p>
+        <ol>
+            <li>就如同红石块，红石火把被放置时，信号就被设置为15。</li>
+            <li>插在活塞上的红石火把会把活塞视为导体。在计算火把接收的信号时，计算结果相当于活塞此时可以接收到的信号。（但此时活塞还未计算接收到的信号，因为红石火把是在<span style="color:#0176ba">步骤1</span>计算信号，而活塞在<span style="color:#0176ba">步骤3</span>计算信号）</li>
+        </ol>
+        <p>第二条不必多说，但第一条就不得不提一下。看图：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/ca06e30ac5bf.webp" width="1454" height="875" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">火把</span></p>
+        <p>在红石块上放置红石火把，为什么活板门不会打开，而中继器会亮起？</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/0d99807ee5bb.webp" width="713" height="724" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">火把时序图</span></p>
+        <p>可以发现，火把此时发出的短脉冲正是一个<span style="color:#0176ba">p-tick脉冲</span>。</p>
+        <p><strong>6.1. 实例分析</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/1f4d65f25f3e.webp" width="1505" height="804" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">例6.1</span></p>
+        <p>在如图所示的地方插上一个红石火把（记为B）会怎样？</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/091ecc86d0b6.webp" width="652" height="722" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">例6.1时序图</span></p>
+        <p>你会发现两个火把的同时亮同时灭。这很容易理解：因为放下火把时，两个火把的状态一致（都是亮起），因此之后的动作完全同步。</p>
+        <p>如下图，如果此时把信号接到另一个火把C，你会发现这火把的亮灭还是同步的。如果换成中继器，信号反而是反转的。想一想为什么。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/8d832d922178.webp" width="1219" height="613" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">加上火把C</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/2fa645a62b34.webp" width="1399" height="625" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">加上中继器</span></p>
+        <p>参考以下时序分析图：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/b18ae3fcba0c.webp" width="649" height="733" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">加上火把C时序图</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv12980256/2b5d9da51d02.webp" width="651" height="740" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">加上中继器时序图</span></p>
+        <p><strong>7. 随机性</strong><strong>
+</strong></p>
+        <p>不得不注意的是，红石电路中存在着不确定性：</p>
+        <ol>
+            <li>多个方块实体在同一游戏刻尝试运作，顺序是<strong>不确定</strong>的。</li>
+            <li>多个方块尝试在一个游戏刻执行<span style="color:#0176ba">计划刻</span>，顺序是<strong>不确定</strong>的。</li>
+        </ol>
+        <p>当涉及到活塞、漏斗或者投掷器链时，在设计机械的时候，应想办法避免这些随机性。</p>
+        <p>其实这也意味着，稳定的活塞无延迟电路或者无延迟投掷器链是完全无法实现的。</p>
+        <p><strong>8. 结语</strong></p>
+        <p>本专栏是对当前版本红石实际延迟行为的分析，大多数都属于游戏的未定义行为，且部分行为mojang曾多次表示属于bug且将在未来版本会修复。</p>
+        <p>基岩版红石在代码实现过程中，产生了过多的<strong>未定义行为</strong>，甚至与mojang原本的预期行为相悖。通常情况下，除非mojang承诺不会修复，这些未定义行为都应该被视为<strong>bug</strong>。</p>
+        <p>但目前看来，修复还遥遥无期，因此目前来看，理解并学会利用当前的红石机制，对红石玩家还是有很大帮助的。</p>
+        <hr class="opus-pagebreak">
+        <p><strong>附录：红石元件各种变化或计算的游戏阶段列表</strong></p>
+        <p>红石块及其他一切元件：</p>
+        <ol>
+            <li>破坏：实体系统更新</li>
+            <li>放置：玩家操作</li>
+        </ol>
+        <p>按钮：</p>
+        <ol>
+            <li>按下并改变信号：玩家操作</li>
+            <li>射中并改变信号：全局实体，非全局实体，或实体系统更新</li>
+            <li>检测箭是否依旧存在并更新信号：计划刻</li>
+            <li>弹起并改变信号：计划刻</li>
+        </ol>
+        <p>阳光传感器：</p>
+        <ol>
+            <li>每20gt更新信号：方块实体</li>
+            <li>反转并改变信号：玩家操作</li>
+        </ol>
+        <p>拉杆：</p>
+        <ol>
+            <li>打开关闭并改变信号：玩家操作</li>
+        </ol>
+        <p>压力板：</p>
+        <ol>
+            <li>压下并改变信号：全局实体，非全局实体，或实体系统更新</li>
+            <li>测重压力板更新信号：计划刻</li>
+            <li>弹起并改变信号：计划刻</li>
+        </ol>
+        <p>探测铁轨：</p>
+        <ol>
+            <li>被矿车触发并改变信号：全局实体，非全局实体，或实体系统更新</li>
+            <li>更新信号：计划刻</li>
+        </ol>
+        <p>陷阱箱：
+</p>
+        <ol>
+            <li>打开关闭并改变信号：玩家操作</li>
+        </ol>
+        <p>绊线钩和绊线：</p>
+        <ol>
+            <li>压下并改变信号：全局实体，非全局实体，或实体系统更新</li>
+            <li>更新信号：计划刻</li>
+        </ol>
+        <p>标靶：</p>
+        <ol>
+            <li>射中并改变信号：实体系统更新</li>
+            <li>取消信号：计划刻</li>
+        </ol>
+        <p>避雷针：</p>
+        <ol>
+            <li>被闪电击中并改变信号：全局实体</li>
+            <li>取消信号：计划刻</li>
+        </ol>
+        <p>讲台：</p>
+        <ol>
+            <li>亮起熄灭并改变信号：计划刻</li>
+        </ol>
+        <p>唱片机：</p>
+        <ol>
+            <li>玩家放入唱片并改变信号：玩家操作</li>
+            <li>开始播放并改变信号：方块实体</li>
+            <li>结束播放并改变信号：方块实体</li>
+            <li>玩家取出唱片并改变信号：玩家操作</li>
+        </ol>
+        <p>标靶：</p>
+        <ol>
+            <li>射中并改变信号：实体系统更新</li>
+            <li>恢复并改变信号：计划刻</li>
+        </ol>
+        <p>比较器：</p>
+        <ol>
+            <li>更新信号：抽象计算</li>
+            <li>方块变化：红石元件变化</li>
+        </ol>
+        <p>中继器：</p>
+        <ol>
+            <li>更新信号：抽象计算</li>
+            <li>方块变化：红石元件变化</li>
+        </ol>
+        <p>红石火把：</p>
+        <ol>
+            <li>更新信号：抽象计算</li>
+            <li>方块变化：红石元件变化</li>
+        </ol>
+        <p>红石粉：</p>
+        <ol>
+            <li>接收信号：抽象计算</li>
+            <li>方块变化：红石元件变化</li>
+        </ol>
+        <p>侦测器：</p>
+        <ol>
+            <li>亮起熄灭：计划刻</li>
+            <li>改变信号：抽象计算</li>
+        </ol>
+        <p>命令方块：</p>
+        <ol>
+            <li>执行命令：计划刻</li>
+        </ol>
+        <p>漏斗：</p>
+        <ol>
+            <li>漏物品吸物品：方块实体</li>
+            <li>锁定与取消锁定：红石元件变化</li>
+        </ol>
+        <p>发射器：</p>
+        <ol>
+            <li>发射物品：计划刻</li>
+            <li>激活与取消激活：红石元件变化</li>
+        </ol>
+        <p>投掷器：</p>
+        <ol>
+            <li>发射物品：计划刻</li>
+            <li>激活与取消激活：红石元件变化</li>
+        </ol>
+        <p>激活铁轨、充能铁轨：</p>
+        <ol>
+            <li>激活与取消激活：红石元件变化</li>
+        </ol>
+        <p>门、栅栏门、活板门：</p>
+        <ol>
+            <li>因红石信号开关：红石元件变化</li>
+            <li>玩家开关：玩家操作</li>
+        </ol>
+        <p>音符盒：</p>
+        <ol>
+            <li>玩家敲击并播放声音：玩家操作</li>
+            <li>因红石播放音符：红石元件变化</li>
+        </ol>
+        <p>活塞：</p>
+        <ol>
+            <li>生成MB方块及其方块实体：方块实体</li>
+            <li>推拉完毕MB方块恢复为方块：方块实体</li>
+        </ol>
+        <p>红石灯：</p>
+        <ol>
+            <li>亮：红石元件变化</li>
+            <li>灭：计划刻</li>
+        </ol>
+        <p>TNT：</p>
+        <ol>
+            <li>因红石激活而引燃：红石元件变化</li>
+            <li>玩家点燃：玩家操作</li>
+            <li>因爆炸引燃：该爆炸发生的阶段</li>
+        </ol>
+        <hr class="opus-pagebreak">
+        <hr class="opus-pagebreak">
+        <hr class="opus-pagebreak">
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/565478280411661634">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv23851750.html" title="« 上一篇：Minecraft基岩版红石系统设计简述" aria-label="« 上一篇：Minecraft基岩版红石系统设计简述">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">Minecraft基岩版红石系统设计简述</span>
+            </a>
+            <a class="pager-item is-next" href="cv34223989.html" title="下一篇 »：曾出现在基岩版的&quot;玄学现象&quot; ~ 红石粉信号强度的计算" aria-label="下一篇 »：曾出现在基岩版的&quot;玄学现象&quot; ~ 红石粉信号强度的计算">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">曾出现在基岩版的"玄学现象" ~ 红石粉信号强度的计算</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 红石系统运行不完全分析(2) - 橘猫的资源站</title>
+    <meta name="description" content="红石电路和有向图 从原理上讲，一个不增减原件的稳定红石系统的信号计算和更新等各方面的问题和红石线一点关系都没。为了弄清楚红石电路到底长什么样以及方便后面的分析，要先引入有向图的概念。 有向图就是把一些节点用箭头连接起来，这些箭头可以是双向的，也可以是单向的。下">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv7876046.webp" alt="MCBE 红石系统运行不完全分析(2)">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 红石系统运行不完全分析(2)</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/34227664" target="_blank" rel="noopener noreferrer">hhhxiao_</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2020年10月08日 09:49</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/443598662013843916" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv7876046</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv7581645.html" title="« 上一篇：MCBE 红石系统运行不完全分析(1)" aria-label="« 上一篇：MCBE 红石系统运行不完全分析(1)">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 红石系统运行不完全分析(1)</span>
+            </a>
+            <a class="pager-item is-next" href="cv10907045.html" title="下一篇 »：MCBE 红石系统运行不完全分析(3)" aria-label="下一篇 »：MCBE 红石系统运行不完全分析(3)">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 红石系统运行不完全分析(3)</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p><strong>红石电路和有向图</strong></p>
+        <p>从原理上讲，<strong>一个不增减原件的稳定红石系统的信号计算和更新等各方面的问题和红石线一点关系都没</strong>。为了弄清楚红石电路到底长什么样以及方便后面的分析，要先引入有向图的概念。</p>
+        <p>有向图就是把一些节点用箭头连接起来，这些箭头可以是双向的，也可以是单向的。下图就是一个简单的有向图，图中圆圈叫做<strong>节点</strong>，箭头表示<strong>有向边</strong>:</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7876046/8259f4bfc09c.webp" width="400" height="428" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">有向图</span></p>
+        <p>具体到红石电路上，我们用节点表红石原件，比如红石块，比较器，活塞等等，用节点A指向B表示A是B的一个信号源(什么是信号源见专栏1)，当然我们也能定义有向边A-&amp;gt;B上的数字(上图中是8)表示信号源A和红石原件B之间的距离distance.</p>
+        <blockquote><p>注意有向边只是逻辑连接，<strong>和红石线没有任何关系</strong></p></blockquote>
+        <p>来看例子如图的电路:</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7876046/d982477c8b7d.webp" width="1398" height="615" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">示例电路</span></p>
+        <p>可用转换成这样一个有向图:</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7876046/becc02f2a01b.webp" width="821" height="525" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">有向图</span></p>
+        <p>然后这个电路就很清晰了，活塞有两个信号源:红石块和拉杆，而且距离都是2。红石灯没有任何信号源，因此它的信号是0.这一堆红石线有相同的信号源，也就是拉杆和红石块。在<strong>有向图中红石线没啥用，因此下面就不画了</strong></p>
+        <blockquote><p>题外话，MCBE中的红石系统就是有向带权图，用邻接表存的</p></blockquote>
+        <p><strong>红石电路的关系构建</strong></p>
+        <p>红石线<strong>唯一</strong>的作用就是体现在这里，在你放置红石原件的时候游戏会搜索电路，给该原件加上信号源，反映在有向图中就是在图中画一个圈，然后补上和这个圈有关的箭头。经常听到的充能特性，连接特性或者激活特性就是体现在这个过程中。比如下面这个例子，左边是弱充能，右边是强充能，这在游戏内部的区别是羊毛前方的红石粉能否搜索到羊毛后面的信号源(左边没有，右边能搜索到中继器)的问题</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7876046/c346dab2ff5f.webp" width="726" height="661" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">强弱充能</span></p>
+        <p>至于如何搜索不是这里的重点，不会真有人做电路要看信号源吧，不会吧不会吧（。(不过如果你真想可视化倒不是没办法，用我<strong>主页的插件</strong>就能办到了,启用插件后用木棍右击红石原件你能看到一些你平时观察不到的东西,包括信号源，信号强度等等)。</p>
+        <p><strong>再谈生产者电容器和消费者</strong></p>
+        <p>经过上面的阐述，不难发现:</p>
+        <ol>
+            <li>有些节点<strong>只有指向自己的箭头</strong>,表现游戏中就是只能接受信号，比如活塞，发射器等等，这在有些内部有另一个名字叫<strong>消费者</strong>(红石线在一定成程度上也能叫消费者);</li>
+            <li>有些节点<strong>只有指向别的节点的箭头</strong>,表现在游戏中只能输出信号，比如红石块，拉杆等等，这样的原件叫<strong>生产者</strong></li>
+            <li>有些原件<strong>既有指向自己的箭头也有指向别的节点的箭头</strong>，表现在游戏中既能输入又能输出信号，比如红石火把，比较器，这样的叫<strong>电容器</strong></li>
+        </ol>
+        <p>概括一下就是：整个红石电路就是这样一个带权有向图:红石信号就是顺着有向边在各个节点之间流动，边上的数值表示了这次流动的能量损耗；有一些节点负责生产红石信号，有一些节点负责增强，传输，延迟，周转，存储红石信号，还有一些原件只负责对红石信号进行响应。有点计算机系统的味道了(雾).</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7876046/3221a480e3a6.webp" width="697" height="618" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">红石电路的抽象表示</span></p>
+        <p><strong>单gt内的游戏运行流程</strong></p>
+        <p>如下图是MCBE单gt内的更新顺序表</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7876046/0bf4c8abf1b7.webp" width="933" height="790" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">单gt内的游戏运行流程</span></p>
+        <p>这里主要强调下面几个点:</p>
+        <ol>
+            <li>到8游戏刻才+1，在分析红石的时候可把9作为1gt的起点，24看作终点，因为1-8不影响红石运行</li>
+        </ol>
+        <p>然后说几个和红石有关的事件:</p>
+        <ol>
+            <li>12 这里是计划刻的执行，具体干啥可用看我以前的专栏，这里是<strong>观察者</strong>更新信号的地方和<strong>按钮，压力板更新内部计时器的地方</strong>，这也就是说如果你让该区块出现更新延迟会导致按钮的信号持续时间增长</li>
+            <li>14 是<strong>方块实体</strong>更新(或者叫响应红石信号)的时候，也就是<strong>活塞，发射器，投掷器，漏斗以及移动方块实体(MovingBlock)</strong>等更新的时候</li>
+            <li>15 这里是<strong>非方块实体响应红石信号</strong>的地方，包括<strong>红石线和红石灯的渲染，门，陷阱门的开关动画</strong>等</li>
+            <li>17是检测玩家行为的地方(这里还有待确定)，也就是玩家和世界交互的检测在这里，比如你拉动了拉杆，到这个时候拉杆的信号才会被置为15.</li>
+            <li>22 - 24 是红石系统信号更新的三个阶段，这个阶段是每个红石刻才执行的，上篇专栏讲的就是这里，下面会更详细地说一遍。</li>
+        </ol>
+        <p><strong>红石信号的计算</strong></p>
+        <p>在前面了解红石电路的构成后你自己都能猜到为什么mojang要设计这样的计算方式:</p>
+        <blockquote><p>生产者和消费者是只有输入或者只有输出，所以直接计算并设置即可，但是电容器不一样（说句题外话，红石电路从某种意义来讲<strong>更像是一个状态机</strong>),因为各个电容器之间的信号计算是没有固定顺序的，如果你直接计算并设置值，会导致有些电容的状态是根据前1gt的值计算的，而有些电容器可能是根据被更新后的电容器来计算的，这样就乱套了。</p></blockquote>
+        <p>于是mojang把整个电路的信号更新分为两个步骤，每个原件有1-2个(其实mojang还有一个锁检查的步骤，这是专门为中继器设计的，这里不是重点就不说了):</p>
+        <ol>
+            <li>第一个叫计算并设置信号(evaluate)</li>
+            <li>第二个叫计算新信号并暂存(cacheValues)</li>
+        </ol>
+        <p>根据上面的分析，很容易知道每gt消费者和生产者只有evaluate过程，而电容器两者都有,而实际上mojang也是这么做的.</p>
+        <p>严格的顺序是这样的：</p>
+        <ol>
+            <li>电容器和红石线cacheValues</li>
+            <li>电容器和生产者evaluate（电容器的evaluate()只有设置无计算，前面计算过了）</li>
+            <li>消费者和红石线cachevalue</li>
+        </ol>
+        <p>这个顺序也导致了零延迟电容器的产生。</p>
+        <p><strong>一次不含电容器的信号分析</strong></p>
+        <p>这里主要为了说清楚玩家交互以及各个消费者的启动延迟问题</p>
+        <p>先上电路:</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7876046/61c9d36a81e2.webp" width="632" height="661" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">示例电路</span></p>
+        <p>单步运行的截图就不放了，太占地方，下面放一个单gt的示意图:</p>
+        <blockquote><p>注: 蓝色的是红石刻，白色是普通刻</p></blockquote>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7876046/91a1b3527d98.webp" width="892" height="509" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">微时序分析</span></p>
+        <blockquote><p>注：</p></blockquote>
+        <p>上面的图已经很清晰了说明了各个原件的延时情况</p>
+        <p><strong>电容器的零延迟</strong></p>
+        <p>这个现象在上一个专栏已经讲过了就不细说了，具体的各种电路延迟分析不是这里的重点，以后有机会再细说</p>
+        <p><strong>烧火把，半脉冲和消费者特判</strong></p>
+        <blockquote><p>火把是万恶之源</p></blockquote>
+        <p>火把不是单纯的火把，而是一个有众多参数和特判的电容器。</p>
+        <p><strong>火把常规更新</strong></p>
+        <p>火把新值的计算方法有点与众不同，因此<strong>它的信号源永远是它所附着的方块</strong>，如果它附着的不是红石块的时候，用来参与max(signal- distance)计算的不是它的直接信号源，而是它的信号源的信号源，也就是它附着的方块的源，这很合理，比如下面的电路：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7876046/044eacd471c1.webp" width="1098" height="426" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">示例火把电路</span></p>
+        <p>这里火把唯一信号源是羊毛，而羊毛唯一的信号源是中继器，因此火把计算信号是把中继器作为信号来进行计算的，当它检测到源的源为它提供的信号的最大值大于0的时候它就把自己反向，然后重置自己的燃烧值(燃烧值就是火把内部的一个参数，默认是0)。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7876046/dfb82054b9c5.webp" width="807" height="191" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">火把电路对应的有向图</span></p>
+        <p>说真的这很合理，那么关键来了。</p>
+        <p><strong>烧火把特判</strong></p>
+        <p><strong>既然火把是电容器，那么它的源的源有没有可能是自己</strong>呢?答案是完全有可能，这就要请出来著名的烧火把电路和对比电路了:</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7876046/4f0254e3d0b1.webp" width="733" height="578" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">会&amp;</span>#34;烧火把&amp;#<span style="color:#999999">34;的电路</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7876046/54e997f78e67.webp" width="885" height="610" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">不会&amp;</span>#34;烧&amp;#<span style="color:#999999">34;火把的电路</span></p>
+        <p>再来看看这俩的有向图:</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7876046/b45ff8919b49.webp" width="871" height="415" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">有向图</span></p>
+        <p>左图中火把的信号源的信号源是它自己，右图中火把1的信号源的信号源是它自己和火把2，而2同1.那么问题来了，为什么左边会烧而右边不会烧呢？</p>
+        <p>mojang给下面描述的电路做了一个特判:</p>
+        <ol>
+            <li><strong>火把有一到多个信号源的信号源</strong></li>
+            <li><strong>给火把提供最大信号的原件是它自己</strong></li>
+        </ol>
+        <p>mojang把这样的火把信号叫做<strong>halfPulse</strong>，这里暂时用<strong>半脉冲</strong>表示</p>
+        <p>在图1中，当火把1只有一个源的源，因此为它提供信号的肯定是它自己，因此这个火把就被判定为半脉冲,等下1rt再次计算的时候还是同理，它会一直被判定为<strong>半脉冲电路</strong>。而图二就不一样了，给<strong>火把1提供最大信号的源的源交替地是1和2</strong>(实测这俩个火把是交替亮灭的，其它玄学情况未遇到)2同理，因此这个电路的火把会被判定为每间隔1rt产生一次半脉冲</p>
+        <p>半脉冲带来了不少特性:</p>
+        <p>如果该火把是半脉冲的就会<strong>把自己的燃烧值+1,加到16就时钟变成熄灭状态，再也不响应外界信号</strong>了，这就是熟知的烧火把现象。</p>
+        <p>如果不是半脉冲就把燃烧值清零。因此图2的火把的燃烧值就一直在0和1之间跳动，不会烧火火把。</p>
+        <blockquote><p>如果mojang在代码里面求最大源的源的时候把&amp;lt;= 改成&amp;lt; ，那么烧火把电路就不复存在了，由此可见这是mj的<strong>有意为之</strong></p></blockquote>
+        <p><strong>消费者对半脉冲的响应</strong></p>
+        <p>你以为烧火把这就完了吗？其实并没有，这个半脉冲也不是啥都没用，在游戏中mojang给下面五个红石原件做了半脉冲的特殊处理：</p>
+        <ol>
+            <li>门</li>
+            <li>陷阱门</li>
+            <li>发射器</li>
+            <li>投掷器</li>
+            <li>头颅</li>
+        </ol>
+        <p>如果不做特判,按照原有的逻辑，<strong>半脉冲根本没啥用，他和普通2rt脉冲一样能让所有原件鬼畜</strong>,但是Mojang又又又又做特判了:</p>
+        <p><strong>如果收到半脉冲的消费者不是上面五种，就强行让它们的信号源的信号恒为15</strong>,从而达到常激活的目的，但是红石线没这个特判，因此你能正常看到红石线的闪烁但是看不到灯的闪烁和活塞的推拉，就如下面的电路所示，上方的几个原件没做特判，信号强行设置15-距离，根部不考虑信号源的的强度，因此常激活了，但是下面四个特判的原件是正常的。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7876046/99d493aae575.webp" width="1263" height="630" alt="文章配图" loading="lazy">
+    </figure>
+        <blockquote><p><strong>观察者脸对脸不是半脉冲</strong>，灯常亮是灯的特性，灯内部还是有0-x的信号交替的</p></blockquote>
+        <p>目前能找到的半脉冲电路<strong>只有</strong>上述的那一个，如果你不用这个电路，那这些特性也就不复存在了。
+</p>
+        <p>纵观火把的行为，我不得不怀疑Mojang是吃多了多此一举还是另有隐情。但能确定的是<strong>上面的分析并不是火把的全貌</strong>，因为经过各种测试没找到另一部分的代码的执行时机，也就没法分析，因此绝大多数情况下上面的特性是足够的</p>
+        <p>未完待续。</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/443598662013843916">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv7581645.html" title="« 上一篇：MCBE 红石系统运行不完全分析(1)" aria-label="« 上一篇：MCBE 红石系统运行不完全分析(1)">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 红石系统运行不完全分析(1)</span>
+            </a>
+            <a class="pager-item is-next" href="cv10907045.html" title="下一篇 »：MCBE 红石系统运行不完全分析(3)" aria-label="下一篇 »：MCBE 红石系统运行不完全分析(3)">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 红石系统运行不完全分析(3)</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

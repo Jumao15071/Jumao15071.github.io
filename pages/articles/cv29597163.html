@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 红石火把与无线电底层分析 - 橘猫的资源站</title>
+    <meta name="description" content="0. 前言 必要知识： MCBE- 源码级分析- 文集 1. 烧火把的电路 如图为一个经典的烧火把电路，火把的内部有一个燃烧值，初始为0；还有一个值CanReigniteFromBurnout(后文简称CR)，用来确定火把在烧毁时能否复燃，默认为false；当">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv29597163.webp" alt="MCBE 红石火把与无线电底层分析">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 红石火把与无线电底层分析</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/122391924" target="_blank" rel="noopener noreferrer">何以贯之</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">编辑于 2024年01月15日 20:36</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/886821952507871248" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv29597163</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv39482655.html" title="« 上一篇：MCBE 铁轨的搜索及无延迟铁轨的部分解释（1.20+）" aria-label="« 上一篇：MCBE 铁轨的搜索及无延迟铁轨的部分解释（1.20+）">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 铁轨的搜索及无延迟铁轨的部分解释（1.20+）</span>
+            </a>
+            <a class="pager-item is-next" href="cv7121053.html" title="下一篇 »：切断烧火把特性研究报告" aria-label="下一篇 »：切断烧火把特性研究报告">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">切断烧火把特性研究报告</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p><strong>0. 前言</strong></p>
+        <p>必要知识：</p>
+        <p><a href="https://www.bilibili.com/read/readlist/rl322068" target="_blank" rel="noopener noreferrer">MCBE- 源码级分析- 文集</a></p>
+        <p><strong>
+1. 烧火把的电路</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv29597163/79d676d1846f.webp" width="2560" height="1489" alt="文章配图" loading="lazy">
+    </figure>
+        <p>如图为一个经典的烧火把电路，火把的内部有一个<strong>燃烧值</strong>，初始为0；还有一个值CanReigniteFromBurnout(后文简称<strong>CR</strong>)，用来确定火把在烧毁时能否复燃，默认为false；当<strong>CR</strong>为true，或<strong>燃烧值</strong>大于32时，<strong>燃烧值</strong>不允许增加。</p>
+        <p><strong>1.1 信号计算</strong></p>
+        <p>在cacheValue阶段，当火把的信号源只有自己时，<strong>燃烧值+1</strong>(如果可以)，反转亮灭(新值，后文同)，输出半脉冲；如果<strong>燃烧值</strong>大于等于16，则火把熄灭，也即火把烧毁，等于16时会输出最后一次半脉冲；如果<strong>燃烧值</strong>大于32, <strong>CR</strong>取true；当火把的信号源有其它元件时，<strong>燃烧值</strong>清零<strong>，CR</strong>取false，不输出半脉冲。</p>
+        <p>在evaluate阶段，火把同步前面的亮灭状态及是否输出半脉冲，并且<strong>燃烧值再次+1</strong>(如果可以)；亮灭即代表普通的信号，半脉冲见上方链接的不完全分析(2) 。</p>
+        <p>上图为例，火把的<strong>燃烧值从</strong>0开始，一直增加到16，其间一直输出半脉冲，假如激活活塞，因为活塞不响应半脉冲，所以对活塞来说，无论火把亮灭，都视作亮，活塞持续伸出；<strong>燃烧值</strong>到17及以后，半脉冲消失，活塞失去信号；<strong>燃烧值</strong>到33时，<strong>CR</strong>变为true，<strong>燃烧值</strong>也不再增加。</p>
+        <p><strong>1.2 烧火把的复燃</strong></p>
+        <p>当火把受到方块更新(比如火把旁放一个方块)，且<strong>CR</strong>为true时，火把会<strong>重置燃烧值为0，CR</strong>重置为false。</p>
+        <p><strong>2. 不会烧火把的电路</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv29597163/689ce41368a0.webp" width="2560" height="1480" alt="文章配图" loading="lazy">
+    </figure>
+        <p>图中的3种电路都是不会烧火把的电路，并且细心的玩家应该注意到过，它们的亮起顺序是有规律的，也就是从上面看，逆时针顺序。那么mojang肯定是对这种电路做了特殊处理。</p>
+        <p>这种电路似乎没啥专门的名字，代码中称作RepeaterScenario，(不知是我的英语水平不足，还是开发者的英语水平不足，我不理解这名字跟图中电路有什么关系，)本文就暂时叫做<strong>火把阵</strong>。</p>
+        <p><strong>2.1 火把阵的构建</strong></p>
+        <p>火把阵的构建在更新红石依赖阶段完成，对于需要更新的火把，它会检查其附着方块是不是充能方块或消费者，方块上面是不是红石粉，给方块提供信号的火把是不是插在方块上，火把上面是不是充能方块或(可充能的)消费者，如果都满足，记下火把待用。</p>
+        <p>然后，按照 <strong>北-&gt;西-&gt;南-&gt;东(-&gt;北) </strong>的顺序(也即前文的逆时针)，将火把串成环。(怎么串呢？火把内有一个值NextOrder，可以记录下一个火把的指针。)然后北火把的燃烧值改为0(没有就改西，以此类推)，东火把的燃烧值改为16(没有就改南，以此类推)</p>
+        <p>上图第二个为例，假设右方为东，背后为北，最后的燃烧值和指向图如下：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv29597163/2f34d817cd6f.webp" width="1963" height="1120" alt="文章配图" loading="lazy">
+    </figure>
+        <p><strong>2.2 火把阵的信号计算</strong></p>
+        <p>火把阵的信号已经不是半脉冲了。</p>
+        <p>cacheValue阶段，如果火把有非火把信号源(比如红石粉上放一个红石块)，则火把亮起，<strong>燃烧值改为-1</strong>；如果<strong>燃烧值</strong>不为0，火把熄灭，<strong>燃烧值</strong>不变；如果燃烧值为0，则火把亮起，NextOrder的火把<strong>燃烧值改为-1</strong>，如果火把阵有3甚至4个火把，则剩的火把<strong>燃烧值改为1</strong>。</p>
+        <p>evaluate阶段与前文一致。</p>
+        <p>或许你看得一头雾水，咋个燃烧值还能变负数的？别急，evaluate阶段是不是还有个<strong>燃烧值+1</strong>的操作？所以NextOrder的火把<strong>燃烧值改为-1</strong>，就是为了下一红石刻的cacheValue阶段，该火把的<strong>燃烧值是0，</strong>能够亮起；而本火把的<strong>燃烧值从0变为1</strong>，下一红石刻就会熄灭，最终，这些火把就会按照NextOrder指示的逆时针顺序，逐个亮起2gt。</p>
+        <p>以上图为例，假如西边比南边的先cacheValue，那么它亮起，南边的<strong>燃烧值改为-1</strong>，东边的<strong>燃烧值改为1</strong>；下一红石刻，西边<strong>燃烧值是1</strong>，熄灭，而南边的<strong>燃烧值</strong>在上一个evaluate阶段变为0，亮起，它会把东边的<strong>燃烧值变为-1</strong>，又把西边的<strong>燃烧值改为1</strong>......如此，如果你同时将三个火把上的方块复原，就会看到火把按西-&gt;南-&gt;东循环亮起。</p>
+        <p>如果南边比西边的先cacheValue，则只是第一个亮起的变南边罢了。至于到底谁先，这与元件创建顺序有关，先创建的先执行cacheValue，你可以互换它们的放置顺序，然后观察结果。</p>
+        <p><strong>3. 红石火把无线电</strong></p>
+        <p>有了以上知识，我们基本可以手撕红石火把无线电了。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv29597163/0bec850f8bbe.webp" width="2560" height="1480" alt="文章配图" loading="lazy">
+    </figure>
+        <p>如图是一个经典的红石火把无线电，有人有将其称为红牙一代。先放一个火把朝东的烧火把(图中为右)，烧毁后稍等片刻，补上西边的火把，图中电路就完成了。那么到底为什么呢？</p>
+        <p><strong>step 1. 稳定的熄灭火把</strong></p>
+        <p>当右边烧火把时，其<strong>燃烧值</strong>会升至16，熄灭，然后继续升至33，<strong>CR</strong>变为true。</p>
+        <p>此时的火把受到方块更新时，会复燃，然后重复上面的过程；然而如果我们试图将其补成火把阵时，一切都变得不一样了。</p>
+        <p>在红石依赖更新阶段，红石火把会构建火把阵，按照前文的顺序，左边的会指向右边的火把，右边的指回左边，左边的<strong>燃烧值</strong>变为0，右边的<strong>燃烧值变为16</strong>。</p>
+        <p>右边的火把比左边先放置，先计算。</p>
+        <p>cacheValue阶段，右边火把<strong>燃烧值</strong>为16，新状态为熄灭；左边火把<strong>燃烧值</strong>为0，新状态为亮起，更改右边<strong>燃烧值</strong>为-1。</p>
+        <p>evaluate阶段，右边火把<strong>CR</strong>为true，<strong>燃烧值不能变</strong>；左边<strong>燃烧值+1</strong>变为1。</p>
+        <p>如此下去，右边火把<strong>燃烧值不能变</strong>，停在了-1；左边的火把依靠evaluate阶段，<strong>燃烧值</strong>会一直加到33，<strong>但是其CR仍然为false</strong>。最终结果就是，左边火把亮了2gt，右边保持熄灭。</p>
+        <p><strong>step 2. 传输无线信号</strong></p>
+        <p>当玩家放下一个生产者或电容器时，游戏会为其创建红石元件，然后添加到pendingAdds列表，在更新红石依赖阶段，元件又会加入pendingUpdates列表，一但pendingUpdates列表有元件，游戏就会更新全局的<strong>所有生产者和电容器</strong>，调用它们的更新依赖函数，其中当然包括上面的火把。</p>
+        <p><strong>step 3. 响应无线信号</strong></p>
+        <p>火把需要更新依赖，开始重新构建火把阵，于是，<strong>左边的燃烧值又变为0，右边的燃烧值变为16</strong>，想必你已经可以预见后面的事了，左边火把又亮了2gt，这便是红石无线电。</p>
+        <p>除了放置生产者或电容器，还有一些方法可以产生信号，站内有很多视频都介绍过，它们的本质就是更新到了某个生产者或电容器，让其加入了pendingUpdates列表，最终导致重构火把阵，复原燃烧值。</p>
+        <p><strong>4. 后记</strong></p>
+        <p>半脉冲是mojang故意设计的，所谓火把阵也是mojang为了让其输出有规律故意写的判定，但红石无线电的的确确是bug(特性)，至于为什么mojang这么久都不修，那就不得而知了<s>(可能是他们自己都没看懂自己的代码，所以不敢动)</s>。</p>
+        <p>如果有问题欢迎在评论区指出。</p>
+        <hr class="opus-pagebreak">
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/886821952507871248">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv39482655.html" title="« 上一篇：MCBE 铁轨的搜索及无延迟铁轨的部分解释（1.20+）" aria-label="« 上一篇：MCBE 铁轨的搜索及无延迟铁轨的部分解释（1.20+）">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 铁轨的搜索及无延迟铁轨的部分解释（1.20+）</span>
+            </a>
+            <a class="pager-item is-next" href="cv7121053.html" title="下一篇 »：切断烧火把特性研究报告" aria-label="下一篇 »：切断烧火把特性研究报告">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">切断烧火把特性研究报告</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

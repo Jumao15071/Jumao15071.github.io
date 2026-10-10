@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>曾出现在基岩版的"玄学现象" ~ 红石粉信号强度的计算 - 橘猫的资源站</title>
+    <meta name="description" content="不知你是否见过下面这张截图： MCPE-81981 乍一看没什么，仔细观察却发现满满的槽点： 注意左边，信号强度从 2 直接衰减到了 0； 视线上移一点点，有两个比较器输出了 1，且一整排比较器输出与输入信号强度不一致； 还有，拉杆处，凭空变出来一个 15 强">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv34223989.webp" alt="曾出现在基岩版的&quot;玄学现象&quot; ~ 红石粉信号强度的计算">
+        </figure>
+        <div class="article-head">
+            <h1>曾出现在基岩版的"玄学现象" ~ 红石粉信号强度的计算</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/122391924" target="_blank" rel="noopener noreferrer">何以贯之</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">编辑于 2024年05月05日 12:29</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/926083210600775753" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv34223989</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv12980256.html" title="« 上一篇：MCBE 红石电路延迟不完全分析" aria-label="« 上一篇：MCBE 红石电路延迟不完全分析">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 红石电路延迟不完全分析</span>
+            </a>
+            <a class="pager-item is-next" href="cv39576808.html" title="下一篇 »：MCBE 中继器输出信号计算" aria-label="下一篇 »：MCBE 中继器输出信号计算">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 中继器输出信号计算</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p>不知你是否见过下面这张截图：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34223989/bb3c759e9c59.webp" width="1334" height="750" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">MCPE-81981</span></p>
+        <p>乍一看没什么，仔细观察却发现满满的槽点：</p>
+        <ol>
+            <li>注意左边，信号强度从 2 直接衰减到了 0；</li>
+            <li>视线上移一点点，有两个比较器输出了 1，且一整排比较器输出与输入信号强度不一致；</li>
+            <li>还有，拉杆处，凭空变出来一个 15 强度的红石粉。</li>
+        </ol>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34223989/cd760b68efbe.webp" width="1334" height="750" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">MCPE-81981</span></p>
+        <p>这张图没有造假，它截自<strong> Beta 1.16.0.66</strong>，并出现在 Mojang 漏洞追踪器上，编号 <strong>MCPE-81981</strong>。这个奇特的现象一直持续到 <strong>1.19.40.20 Preview </strong>才被修复。</p>
+        <p><strong>一. 分析</strong></p>
+        <p><strong>元件搜索过程</strong></p>
+        <p>核心是广度优先搜索算法，搜索的起点为信号源（生产者或电容器）。最大搜索距离为 15，搜索距离即为<strong>阻尼</strong>(dampening)。</p>
+        <p>为实现该过程，mojang 使用一个叫 <span style="color:#017001">CircuitTrackingInfo </span>的结构来保存搜索到的元件信息，为方便下文称之为<strong>追踪表</strong>：</p>
+        <ol>
+            <li>搜索元件是为了添加信号源，所以信号源的信息必须一直在表内，也即 <span style="color:#02a2ff">mPower</span>(信号源项)。</li>
+            <li>以一个元件为中心，搜索周围 6 个面的方块，这些信息也要保存，中心元件即为 <span style="color:#02a2ff">mNearest</span>(最近项)，搜索到的方块即为 <span style="color:#02a2ff">mCurrent</span>(当前项)。</li>
+            <li>同时，因为默认搜索 6 个面的方块，为防止 A 搜索到 B，B 又反过来搜索 A，所以追踪表内还得再添加一项 <span style="color:#02a2ff">m2ndNearest</span>。</li>
+            <li>最后，再加上 <span style="color:#02a2ff">mDampening</span>(阻尼)，就得到了追踪表的结构：</li>
+        </ol>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">C++</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>class CircuitTrackingInfo {
+    Entry mCurrent;
+    Entry mNearest;
+    Entry m2ndNearest;
+    Entry mPower;
+    int mDampening;
+    // Entry内包含元件的指针、坐标等信息
+};</code></pre>
+</div>
+        <p>除此之外，还有 <span style="color:#02a2ff">mDirectlyPowered</span>、<span style="color:#02a2ff">mData </span>这两个数据，前者用于描述激活方式，默认为 true，后者用于具体元件需要的信息，默认为 0，比如铁轨用于保存铁轨间信号传递距离。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34223989/068b33cd55bd.webp" width="2560" height="1482" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">上北下南</span></p>
+        <p>现在以拉杆搜索三个红石粉为例，实际感受一下搜索过程：</p>
+        <ol>
+            <li>按照下上北南西东的顺序依次遍历拉杆 6 个方向的方块： </li>
+            <li>从队列中逐个取出暂存的追踪表直至为空，队列先进先出： </li>
+        </ol>
+        <p>以上是简化的搜索流程，实际上远比这个复杂，比如特定情况下除了搜索 <span style="color:#02a2ff">mNearest </span>的六个面，还会搜索 <span style="color:#02a2ff">mNearest </span>顶部四周、底部四周的方块。</p>
+        <p><strong>allowConnection、addSource</strong></p>
+        <p>这两个函数除了字面功能外还要负责更新 <span style="color:#02a2ff">mDirectlyPowered</span>，<span style="color:#f8ba00">addSource </span>还要更新 <span style="color:#02a2ff">mDampening</span>。</p>
+        <p>红石粉的 <span style="color:#f8ba00">allowConnection </span>函数主要是各种判断引线压线的判断，这里省略。而红石粉的 <span style="color:#f8ba00">addSource </span>则是本文重点，因为红石粉是唯一一个能使 <span style="color:#02a2ff">mDampening </span>增加的元件。</p>
+        <p>在这个函数中，红石粉先检查 <span style="color:#02a2ff">mNearest </span>是否为弱充能方块，如果是，则显然弱充能方块不能激活红石粉，直接返回 false。</p>
+        <p>然后，红石粉会更新 <span style="color:#02a2ff">mDirectlyPowered</span>，根据代码逻辑和个人经验 <span style="color:#02a2ff">mDirectlyPowered </span>恒为真，所以暂时不细讲（实际上这里更新 <span style="color:#02a2ff">mDirectlyPowered</span>，并不会修改追踪表内的 <span style="color:#02a2ff">mDirectlyPowered</span>，除非 <span style="color:#f8ba00">addSource </span>返回 true，也即元件成功添加信号源）。</p>
+        <p>最后，本文重点中的重点，红石粉调用 <span style="color:#f8ba00">trackPowerSource </span>函数，这个函数是基类提供的，其给出了较为通用的向信号源表添加或更新信号源的方法，红石粉、中继器、比较器都借助了这个函数。添加成功返回 true。</p>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">C++</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>bool BaseCircuitComponent::trackPowerSource(const CircuitTrackingInfo &amp;amp;info, int dampening, bool directlyPowered, int data);</code></pre>
+</div>
+        <p>该函数需要传入一个 <span style="color:#02a2ff">dampening</span>，红石粉也就是这个时候，对阻尼进行+1 操作，但是此时的+1 并没有修改追踪表内的阻尼，除非 <span style="color:#f8ba00">addSource </span>返回 true。</p>
+        <p>这里微软的员工为自己挖了一个小坑，也即：<span style="color:#f8ba00">trackPowerSource </span>函数得到的 <span style="color:#02a2ff">dampening </span>值与追踪表(<span style="color:#02a2ff">info </span>参数就是追踪表)内的阻尼不一致。</p>
+        <p><strong>trackPowerSource</strong></p>
+        <ol>
+            <li>遍历本元件的信号源表，依靠坐标来判断是否为同一个元件 </li>
+            <li>如果有重复，则需要更新一下信号源信息，包括该信号源的阻尼、<span style="color:#02a2ff">mDirectlyPowered</span>： </li>
+        </ol>
+        <p>是不是很绕？没逝的，反正这段代码的作者自己也被绕了。所以也不用再看上面的话，试图理解什么要更新什么不要更新。</p>
+        <p><strong>真假阻尼</strong></p>
+        <p>现在我们有两点问题：</p>
+        <ol>
+            <li>正确的阻尼是多少？</li>
+            <li>实际的阻尼是多少？</li>
+        </ol>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34223989/b06f6c037c3c.webp" width="1850" height="975" alt="文章配图" loading="lazy">
+    </figure>
+        <p>以开头的现象为例，来看看它们的阻尼：</p>
+        <ol>
+            <li>以拉杆为中心，搜索 6 个面，显然下面的三个红石粉均会被搜索两次，一次从拉杆直接往下搜索，一次先搜索石英块，再向下搜索。为方便，前者称为 A 路，后者称为 B 路。可以发现，三个红石粉均先被 A 路搜索到，再被 B 路搜索到。</li>
+            <li>左边红石粉最先被搜索到，由于其无已有信号源，直接添加拉杆为信号源。此过程中，<span style="color:#f8ba00">trackPowerSource </span>函数的形参 <span style="color:#02a2ff">dampening </span>为 1，加入信号源列表的阻尼为 <span style="color:#02a2ff">dampening </span>- 1 = 0，此时 A 路搜索表的阻尼变为 1.</li>
+            <li>石英块后被搜索到，阻尼不变，为默认的 0。</li>
+            <li>左红石粉搜索 6 面方块，搜索到中间红石粉，添加信号源。此过程中，<span style="color:#f8ba00">trackPowerSource </span>函数的形参 <span style="color:#02a2ff">dampening </span>为 2，加入信号源列表的阻尼为 <span style="color:#02a2ff">dampening </span>- 1 = 1，此时 A 路搜索表的阻尼变为 2.</li>
+            <li>同理右红石粉在 A 路添加信号源时，加入信号源列表的阻尼为 2.</li>
+            <li>再看看 B 路，中间红石粉被第二次搜索到时，其信号源列表中必定已有拉杆： </li>
+        </ol>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">C++</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>if (iter.mDampening - 1 &amp;lt;= info.mDampening - 1) {
+    // 旧的小
+} else {
+    // 换新的
+}</code></pre>
+</div>
+        <p>其中 iter 就是表中的信号源。可见这个判断语句跟开头的图一样，槽点满满...</p>
+        <p>旧的信号源的阻尼为什么要减 1？存进信号源表内的已经是减过了的啊。</p>
+        <p>再看右边，这里又用的是 <span style="color:#02a2ff">info</span>.<span style="color:#02a2ff">mDampening</span>，也就是追踪表内的阻尼，前文提到过，追踪表内的阻尼与函数形参 <span style="color:#02a2ff">dampening </span>的值不一样，前者小一个单位。</p>
+        <p>那好，跟着这个逻辑走会怎么样？</p>
+        <p>对于中间红石粉，前为 1 - 1 = 0，后为 0 - 1 = -1，要换新的；</p>
+        <p>对于右边红石粉，前为 2 - 1 = 1，后为 1 - 1 = 0， 要换新的。</p>
+        <p>好像也是要换新的，然后你就会发现，他把 <span style="color:#02a2ff">info</span>.<span style="color:#02a2ff">mDampening </span>- 1 的结果存入信号源表中的阻尼了（小于 0 的取 0）。</p>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">C++</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>iter.mDampening = info.mDampening - 1 &amp;lt; 0 ? 0 : info.mDampening - 1;</code></pre>
+</div>
+        <p>于是你就会发现，中间红石粉阻尼为 0，结果是对的；右边红石粉阻尼也为 0，我不知道结果对不对，反正代码作者以为是对的。</p>
+        <p>因为</p>
+        <p style="text-align: center"><span class="inline-math" title="LaTeX: 信号强度 = 信号源强度 - 阻尼">信号强度 = 信号源强度 - 阻尼</span></p>
+        <p>所以，右边的红石粉就是 15 - 0 = 15。</p>
+        <p><strong>结束问题</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34223989/707080e02859.webp" width="1334" height="750" alt="文章配图" loading="lazy">
+    </figure>
+        <p>再看看左边为什么从 2 直接变为 0，虽然这一排红石粉自己存的阻尼是错的，但是追踪表内的阻尼是没有问题的，而搜索过程中追踪表内的阻尼大于 15 就直接结束，拉杆和其附着的石头下面的红石粉对应追踪表阻尼为 1，数一数，最右边大小为 3 处红石粉的 A 路追踪表阻尼刚好为 15，会进行最后一次搜索，大小为 2 处红石粉虽然不会从 A 路被激活，但是仍会添加信号源；而再左边一格的红石粉(大小为 0)，其无法被 A 路搜索到，即使被 B 路搜索到，也不会受前面乱七八糟的影响。</p>
+        <p>再来看看比较器，比较器也受这个影响，但是比较器不会增大阻尼，回到上面追踪表内的阻尼跟函数形参 <span style="color:#02a2ff">dampening </span>本就是同一个值，然后在那个错误的 if 句的作用下，很巧地每个比较器都没有更新阻尼，都用的 A 路的阻尼，除了最左边的一个比较器，它已经不能被 A 路搜索到了，但是还能被 B 路搜索到，于是只有它一个阻尼是对的。</p>
+        <p><strong>Mojang 修 Bug 之新增了 114514 个 Bug</strong></p>
+        <p>这个修起来很简单，前面的 <span style="color:#02a2ff">info</span>.<span style="color:#02a2ff">mDampening </span><span style="color:#02a2ff">全部</span>换成函数形参 <span style="color:#02a2ff">dampening</span>，再把 if 句换成这样就行了：</p>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">C++</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>if (iter.mDampening &amp;lt;= dampening- 1)</code></pre>
+</div>
+        <p>所以 mojang 在确认这个 bug 之后，迅速展开行动，仅仅花了一周零 817 天，便完成修复。同时，为了展现自己高超的技术并提高代码鲁棒性，mojang 预防性地修改了比较器的代码，最后为广大红石玩家带来了一个振奋人心的好东西：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv34223989/b30bf657f73e.webp" width="928" height="752" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">好 东 西</span></p>
+        <p>这玩意我不讲，单纯乱修整出来的bug。</p>
+        <p><strong>有关链接</strong></p>
+        <ol>
+            <li>https://bugs.mojang.com/browse/MCPE-81981 信号强度计算问题</li>
+            <li>https://bugs.mojang.com/browse/MCPE-163651 船新比较</li>
+            <li><a href="https://www.bilibili.com/read/readlist/rl820632" target="_blank" rel="noopener noreferrer">网页链接</a> Mojang 妙妙红石系统深度赏析，好评如潮，绝赞连载中！！！（大雾</li>
+        </ol>
+        <p style="text-align: center">E N D</p>
+        <hr class="opus-pagebreak">
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/926083210600775753">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv12980256.html" title="« 上一篇：MCBE 红石电路延迟不完全分析" aria-label="« 上一篇：MCBE 红石电路延迟不完全分析">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 红石电路延迟不完全分析</span>
+            </a>
+            <a class="pager-item is-next" href="cv39576808.html" title="下一篇 »：MCBE 中继器输出信号计算" aria-label="下一篇 »：MCBE 中继器输出信号计算">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 中继器输出信号计算</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

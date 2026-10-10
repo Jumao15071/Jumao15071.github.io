@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE [水]部分树苗的生长机制 - 橘猫的资源站</title>
+    <meta name="description" content="在对树场的长期探索和对树苗的大量实验中，我们发现BE和JE的树苗生长机制大部分相同，但是仍在几条重要机制上存在差异。因此我们通过对JE树苗生长理论进行修正，得到了BE树苗生长理论，希望这份理论能给追求BE树场极限效率的redstoner提供帮助。 某垃圾up摸">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv4361187.webp" alt="MCBE [水]部分树苗的生长机制">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE [水]部分树苗的生长机制</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/59693064" target="_blank" rel="noopener noreferrer">账号已注销</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2020年01月16日 01:29</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/344761143730935020" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv4361187</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">树场</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv32523832.html" title="« 上一篇：MCBE 两种含雪方块部分性质" aria-label="« 上一篇：MCBE 两种含雪方块部分性质">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 两种含雪方块部分性质</span>
+            </a>
+            <a class="pager-item is-next" href="cv27029335.html" title="下一篇 »：MC 巨型云杉树的生长机制以及最优催熟策略" aria-label="下一篇 »：MC 巨型云杉树的生长机制以及最优催熟策略">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MC 巨型云杉树的生长机制以及最优催熟策略</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p>        在对树场的长期探索和对树苗的大量实验中，我们发现BE和JE的树苗生长机制大部分相同，但是仍在几条重要机制上存在差异。因此我们通过对JE树苗生长理论进行修正，得到了BE树苗生长理论，希望这份理论能给追求BE树场极限效率的redstoner提供帮助。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv4361187/22ede2312a83.webp" width="1920" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">某垃圾up摸了两年才摸出来的垃圾树场</span></p>
+        <p>        为了理解树苗如何生长，我们先要知道树苗是什么。我们种下一颗树苗后，树苗以一个名为sapling的方块的形式存在世界中。这个名为sapling的方块有一个数据值，代表了树苗的品种和阶段。每一个品种的树苗都有两个可能的数据值，这两个数据值之差为8 。以白桦树苗为例，数据值为2或10的树苗都是白桦树苗。而区分两种数据值的意义就在于不同的数据值代表了树苗的处于不同的阶段。还是以白桦树苗为例，当我们种下它后，它的数据值为2 。此时的树苗我们称它处于第一阶段。通过生长，白桦树苗的数据值可以从2变成10，此时的树苗我们称它处于第二阶段。如果我们需要知道现在的树苗处于哪一阶段，可以使用cb执行/testforblock检查树苗的数据值。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv4361187/9031e8679fd2.webp" width="1920" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">使用cb执行/testforblock检查树苗的数据值</span></p>
+        <p>        由此我们对树苗是什么，以及树苗的阶段已经有了一定的了解。接下来，我们需要理解什么是生长。第一阶段的树苗生长表现为数据值的变化，第二阶段的树苗生长表现为由树苗sapling方块变成由原木log/log2方块和树叶leaves/leaves2方块等组成的树。不难把生长定义为树苗sapling方块特有的一种方块变化。同时这里需要注意一个事实，就是游戏里的树苗生长的概念和现实生活中的树苗生长的概念的区别。现实生活中，树苗的生长是无时不刻在进行的事情，树苗一点点的长大，当然也不存在阶段。而在游戏中，树苗的生长是瞬间完成的事情。在生长事件中，第一阶段的白桦树苗数据值是直接从2瞬间跳到10。第二阶段的树苗生长成树也是一样的。树苗的一生中几乎所有时间啥都不干，只是在几个时间点经历瞬间完成的生长事件。这才是游戏里树苗生长的本质，也是游戏里树苗生长和现实中树苗生长的区别。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv4361187/82e59a9a0ca0.webp" width="1920" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">树苗生长：第一阶段 → 第二阶段 → 树</span></p>
+        <p>        理清了几个关键的概念，终于可以开始说明树苗的生长机制了。。。</p>
+        <p>        树苗被生存模式下的玩家使用骨粉，或被发射器发射骨粉，会有0.45的概率进行一次生长尝试。对第一阶段的树苗来说，生长尝试是一定成功的，结果就是数据值的变化。这个方块更新的过程无法被毒察检测到，但是可以被烧火把检测到。</p>
+        <p>        对第二阶段的树苗来说，生长尝试的流程就比较复杂了。如果是橡树树苗，首先会在普通橡树OakFeature和大橡树FancyTreeFeature间随机选择树型，其中大橡树的权重为0.1 。大橡树的各种特性，影响，和对应的解决方式这里不再赘述，只说明普通树型接下来的流程。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv4361187/6aa8a85d076e.webp" width="1920" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">万恶的大橡树和日常智障的up主</span></p>
+        <p>        普通树型的橡树和其他的单核树场用树种都有一个主干高度范围，游戏首先根据树苗的不同，在相应的高度范围内随机选择一个数字，称为主干高度。提前说一句，对于云杉来说主干高度不一定是最终树的高度，对于合欢来说较高的侧枝高度就是之前所抽中的主干高度。主干高度可能的取值如下：</p>
+        <p>数据值    树种     高度</p>
+        <p>0             橡树     4,5,6</p>
+        <p>1             云杉     6,7,8,9</p>
+        <p>2             白桦     5,6,7</p>
+        <p>3             丛林     5,6,7</p>
+        <p>4             合欢     5,6,7,8,9</p>
+        <p>        随机取得主干高度后，游戏会根据主干高度，检查一个像蘑菇一样形状的范围内的所有方块。下图依次是5,6,7的主干高度会检查的范围，我们可以看图找找规律：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv4361187/c8a7259a318f.webp" width="1920" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">5,6,7的主干高度会检查的范围</span></p>
+        <p>        不难发现，每个检查范围顶部都有一个5*5*3的区域，我们称之为5*5区域，而向下还有3*3*(n-2)的柱状区域，我们称之为3*3区域。游戏会检查这些范围内的全部方块，判断其中是否存在除空气air，泥土dirt，树叶leaves/leaves2之外的方块 。如果不存在，生长尝试通过，将除了泥土之外的方块替换成树相应位置的方块，生长出一棵树。如果存在，生长尝试不通过，树苗回退到第一阶段。</p>
+        <p>        看起来平平无奇是吗？确实没啥很特别的。但是你是否注意到以下几点了呢？</p>
+        <ol>
+            <li>普通树种中，长成什么样和检查范围的形状没有关系。即使是死亡之木，合欢，检查范围依然是蘑菇状的范围，唯一起决定性作用的只是随机抽取的主干高度。</li>
+            <li>游戏是抽取主干高度后检查是否可以生长，而不是根据环境抽取主干高度。
+</li>
+            <li>BE的大部分树比JE的娇贵的多，连原木都会阻碍生长。这使得原木必须被移出检测范围之外，而不能像JE一样仅仅是推离生长位。万幸的是，泥土还不会阻碍生长。</li>
+            <li>BE的云杉不像JE那么娇贵，即使有有泥土有树叶也可以生长。</li>
+            <li>可以利用蘑菇型区域的形状特点，在特殊位置放置方块，使特定主干高度的生长尝试一定失败，进而控制只能长出特定范围高度的树。（被称为限高）同样，可以仅仅把主干横向移出3*3范围，可能可以减少移动次数，提高树场速度（被称为3*3处理）。</li>
+            <li>生长尝试失败时，树苗不是保持在第二阶段而是回退到第一阶段，也就是从头再来。</li>
+            <li>泥土可以用于阉割掉树的主干，以及防止被树叶替换产生更新。</li>
+        </ol>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv4361187/fa0311824f34.webp" width="1920" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">长成什么样和检查范围的形状没有关系</span></p>
+        <p>        至此单核树场常用树种的树苗的生长原理已经基本明了。而树木的形态已经超出了这篇专栏的范围，也敬请参考其他人的源码解读，实验，等等。</p>
+        <p>        然而这篇专栏至此就结束了吗？我可不打算。难得理清了完整的生长机制，为什么不再进一步，为树场的理论效率计算建立一个精确的数学模型呢？这可是和生长机制相关的。</p>
+        <p>        首先考虑预催熟策略在BE的表现。在预催熟环境下，第二阶段的树苗是不可能生长成树的，因此生长回退现象造成的的影响极为显著。
+</p>
+        <p>        每个骨粉有0.45的概率使树苗进行生长尝试，无疑第一阶段的树苗得到一份骨粉后有0.45的概率会生长到第二阶段，而第二阶段的树苗得到一份骨粉后也会有0.45的概率回退到第一阶段。每次生长尝试都是互相独立的，服从二项分布。综上直接套二项分布的公式，就得到了在接受n次催熟后有效催熟的次数为k的概率：
+        P(x=k) = n!/(k!(n-k)!) * 0.45^k * (1-0.45)^(n-k)
+不难理解，有效催熟次数为奇数时，树苗处于第二阶段。有效催熟次数为偶数时，树苗处于第一阶段。因为由之前的生长机制易知，树苗被阻碍无法生长时会在第一和第二阶段之间反复变化。所以处于第二阶段的概率，也就是我们想求出的预催熟成功率为：
+        P(n) = ∑P(x=i)，(i=1,3,5,···,n，n为奇数 或 i=1.3.5,···,n-1，n为偶数）
+为了简化计算，构建函数：
+        f(x)=(0.45x+0.55)^n，n∈N
+展开后偶数项系数之和就是上面的概率。计算偶数项系数之和只要赋值就行了：
+        P(n) = (f(1)-f(-1))/2 = (1-0.1^n)/2</p>
+        <p>        这个式子有什么意义呢？既然存在生长回退现象，很多人就会质疑BE预催熟超过一次是否反而会回退到第一阶段，过犹不及？这个猜想不无道理，在没有数学模型的前提下也确实难以凭直觉断言。那么，让我们来看看这个式子的函数图像：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv4361187/d33b5612ac22.webp" width="1920" height="1058" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">P(n) = (f(1)-f(-1))/2 = (1-0.1^n)/2</span></p>
+        <p>        在R+上这个函数是严格单调递增的，所以预催熟的次数越多。预催熟的成功率还是越高，不必担心过犹不及的问题。但是同时也暴露了一个问题，就是提高BE的预催熟次数能带来的提升微乎其微。大量的预催熟有用吗？有的。但是其实是只要有个几次就行了，贪多几乎就是浪费，毫无意义。</p>
+        <p>        继续计算催熟的过程。假如第二阶段的树苗在第k次催熟的时候生长了，我们来看看它在之前的过程中经历了什么。首先肯定是k-1次的无效尝试，因为只要有一次是有效的，它早就长成树了，不会拖到第k次。同时，它肯定在第k次是有效催熟催熟，不然它也不会刚好在第k次催熟的时候生长。所以就可以计算预催熟成功的树苗在第k次催熟时生长成树的概率：
+        P1(k)=0.55^(k-1)*0.45
+同样的，假如有第一阶段的树苗在第k次催熟时生长成功，我们也可以用相同的方法计算，只是稍微复杂一点。它肯定在第一次到第k-1次催熟中有刚好一次有效催熟，k-2次无效催熟，并且在第k次也是有效催熟。又因为情况有(k-1)!/(1!*(k-2)!)
+ = k-1种，所以预催熟失败的树苗在第k次催熟时生长成树的概率：
+        P2(k)=(k-1)*0.55^(k-2)*0.2025
+然后还需要一个函数是关于第k次催熟时距离上一棵树生长瞬间的时间间隔，记为t(k)。这个函数和每个树场的催熟策略有关，需要自己定义。
+于是关于树场周期的期望（P0为预催熟成功率）：
+        Et=P0(n)*∑(P1(i)*t(i))+(1-P0)*∑(P2(k)*t(i))，(i=1,2,3,···,∞)
+至此速度计算方法已经基本清晰了，再引入一个变量h，为对每棵树的平均木头块数的期望。于是联立上面的公式，就得到了关于树场速度的期望：
+        Ex = h*t/(1-0.1^n)/2*∑(0.55^(i-1)*0.45*t(i))+(1-P0)*∑((i-1)*0.55^(i-2)*0.2025*t(i))，(i=1,2,3,···,∞)</p>
+        <p>        这个模型的意义也不仅仅是让你可以准确的计算出树场的理论效率，更重要的是它使你可以直接从数学上分析不同架构，不同催熟策略对树场效率的影响，从而直接对比各种策略的优劣。那么从中我们能发现一些什么有趣的推论呢？我就不放计算过程了，直接说结果吧。</p>
+        <ol>
+            <li>无论对哪种树来说，通过限高使每棵树变高都反而会导致效率下降。虽然每棵树的产量高了，对整体效率却是损失，是一种很憨的处理策略。</li>
+            <li>通过泥土阉割纯3*3处理，虽然提高了处理频率，但是对效率没有什么改善，和直接全树处理的效率几乎没有区别，还降低了树苗回收率，是种中看不中用的策略。</li>
+            <li>错峰催熟和一起喷哪个快？其实要看一起喷能否卡准放下树苗的哪个点。要是能够卡准的话一起喷比错峰要快，否则通常不相上下，甚至可能造成效率损失。催熟策略的最优解答其实出乎意料的简单，就是尽早给树苗最多的骨粉就是最快的策略，没那么多花里胡哨的。</li>
+            <li>发射器的数量对效率的影响远比想的要大。我们往往只关心架构速度，但是有时牺牲1t处理速度换取多一个发射器催熟反而快。这类问题需要具体分析，同样也不能只关心发射器的数量。
+</li>
+        </ol>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/344761143730935020">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv32523832.html" title="« 上一篇：MCBE 两种含雪方块部分性质" aria-label="« 上一篇：MCBE 两种含雪方块部分性质">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 两种含雪方块部分性质</span>
+            </a>
+            <a class="pager-item is-next" href="cv27029335.html" title="下一篇 »：MC 巨型云杉树的生长机制以及最优催熟策略" aria-label="下一篇 »：MC 巨型云杉树的生长机制以及最优催熟策略">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MC 巨型云杉树的生长机制以及最优催熟策略</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

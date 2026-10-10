@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 守卫者生成的空间检测机制 - 橘猫的资源站</title>
+    <meta name="description" content="1.普通生物生成的空间检测机制 首先，普通生物的空间检测机制是生成点可生怪，生成点上表面无方块或只有完全不阻碍生成方块，上方两格内有真空气类方块或被判定为空气类方块的仿空气类方块，检测范围内其余各处无方块或只有完全不阻碍或部分不阻碍生成方块，即可成功生成 两格">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv19007056.webp" alt="MCBE 守卫者生成的空间检测机制">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 守卫者生成的空间检测机制</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/565837815" target="_blank" rel="noopener noreferrer">离殇之枫</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2022年10月10日 07:37</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/715199122525650946" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv19007056</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">实体机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv39759209.html" title="« 上一篇：MCBE 恼鬼与尖牙的生成机制" aria-label="« 上一篇：MCBE 恼鬼与尖牙的生成机制">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 恼鬼与尖牙的生成机制</span>
+            </a>
+            <a class="pager-item is-next" href="cv36068660.html" title="下一篇 »：MCBE 守卫者的两种生成机制" aria-label="下一篇 »：MCBE 守卫者的两种生成机制">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 守卫者的两种生成机制</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="html">
+        <p>1.普通生物生成的空间检测机制</p>
+        <p>首先，普通生物的空间检测机制是生成点可生怪，生成点上表面无方块或只有完全不阻碍生成方块，上方两格内有真空气类方块或被判定为空气类方块的仿空气类方块，检测范围内其余各处无方块或只有完全不阻碍或部分不阻碍生成方块，即可成功生成</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv19007056/f97e96bf0c00.webp" width="2400" height="1080" alt="两格生物的空间检测范围" loading="lazy">
+        <figcaption class="fig-caption">两格生物的空间检测范围</figcaption>
+    </figure>
+        <p>即如图所示，普通两格生物，即红色匹域为完全不阻碍，黄与绿色区域为部分不阻碍，且红与黄色区域内要有真空气类方块或被判定为空气类方块的伪空气类方块</p>
+        <p>2.结构生成的空间检测机制</p>
+        <p>堡垒、哨塔、女巫的空间检测机制实际上经过测试这三个和普通的完全一致，因此便不再论述，主要讲一下这个非常特殊的守卫者的空间检测机制</p>
+        <p>首先因为它只有一格高，所以它的高度检测范围只有一格，类似于蜘蛛</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv19007056/f6f02eca026d.webp" width="2400" height="1080" alt="蜘蛛的空间检测范围" loading="lazy">
+        <figcaption class="fig-caption">蜘蛛的空间检测范围</figcaption>
+    </figure>
+        <p>但是跟蜘蛛可以说完全不相同，这里先讲一下相同的地方，那就是生成点必须为可生成方块，并且覆盖在生成点上面的方块，只能是完全不阻碍生成方块（因为是水中生成，还要含水），并且同样需要有空气类方块，但这一点跟其他的自然生成并不相同</p>
+        <p>首先来讲一下它的特殊的对空气类方块的要求，不同于普通的只需要上方有被判定为空气类方块的伪空气类方块即可</p>
+        <p>结构生成的空气检测范围只能到结构生成范围的顶端为止，不能继续往上，如果像这样子放置伪空气类方块并且刚好叠加到了结构生成范围的顶端，甚至更上面，则会导致空气检测无法通过，是不能够生成的</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv19007056/048db659067c.webp" width="2400" height="1080" alt="刚好叠到生成范围顶端而失败" loading="lazy">
+        <figcaption class="fig-caption">刚好叠到生成范围顶端而失败</figcaption>
+    </figure>
+        <p>总之这个结构生成和自然生成的空气检测范围还是有一些差别的</p>
+        <p>然后就是关于阻碍生成方块的空间检测机制，首先看两张图</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv19007056/4111d5b9ad75.webp" width="2400" height="1080" alt="存在完全阻碍生成方块" loading="lazy">
+        <figcaption class="fig-caption">存在完全阻碍生成方块</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv19007056/fe7333cbeacd.webp" width="2400" height="1080" alt="同時存在挤压类与限制类方块" loading="lazy">
+        <figcaption class="fig-caption">同時存在挤压类与限制类方块</figcaption>
+    </figure>
+        <p>可以看到这个两张图，分别是检测范围内存在完全阻碍生成方块，以及同時存在挤压类与限制类方块，如果是普通的结构生成，那么就已经失败了，但偏偏它不是普通的，没错，这个两种它都可以正常生成</p>
+        <p>这个時候你可能会觉得，有没有可能它就是生成在生成点的正中心，所以检测范围只有1×1×1，但是实际上可以很肯定的告诉你，它是生成在西北角的，然后那些方块也绝对是已经跟它的碰撞箱重合了的，但是即使如此，还是可以正常的生成，以及正常的被挤压，这一点虽然听起来非常奇怪，但确实就是这样，那就是它无视所有次要生成位置的空间检测，只要主要位置与空气检测通过了，就可以直接生成，如果你没听懂的话，就看一下这张图</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv19007056/932a75667f5a.webp" width="2400" height="1080" alt="守卫者的空间检测范围" loading="lazy">
+        <figcaption class="fig-caption">守卫者的空间检测范围</figcaption>
+    </figure>
+        <p>钻石块为可生成方块，红色玻璃为水或含水的完全不阻碍生成方块，黄色玻璃为任何方块，并且空气检测得顺利通过，如果满足，无论西北边有什么方块均直接生成，如果与碰撞箱重合，则按挤压的规则正常偏移</p>
+        <p>所以目前看来守卫者生成条件为</p>
+        <p>1.生成点为可生成方块且上表面覆盖有水或者是含水的完全不阻碍生成方块</p>
+        <p>2.空气检测能够顺利通过</p>
+        <p>如果满足这两个条件，无视其他空间检测，直接生成</p>
+        <p>在所有的空间检测当中，只有它一个是这种非常特殊的，之所以会去测试这个，是因为昨天看到一个视频，但是它那个生成单元的布局，很明显违反了普通的空间检测机制，但是视频里面依然可以正常生成守卫者，因此，我们就感到很疑惑，在与群友讨论之后，猜测可能是它本身有特判，于是便进入游戏测试之后，得到了准确的数据，然后写了这篇专栏，行吧，那就这样，到此结束，问题不大</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/715199122525650946">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv39759209.html" title="« 上一篇：MCBE 恼鬼与尖牙的生成机制" aria-label="« 上一篇：MCBE 恼鬼与尖牙的生成机制">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 恼鬼与尖牙的生成机制</span>
+            </a>
+            <a class="pager-item is-next" href="cv36068660.html" title="下一篇 »：MCBE 守卫者的两种生成机制" aria-label="下一篇 »：MCBE 守卫者的两种生成机制">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 守卫者的两种生成机制</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

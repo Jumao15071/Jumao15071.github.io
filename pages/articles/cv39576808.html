@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 中继器输出信号计算 - 橘猫的资源站</title>
+    <meta name="description" content="01 表示输入信号，输出信号用 01 加上方括号表示: [0] [1]。 先在时间轴上画出输入信号，我们计算输出信号都要在这个轴上进行。 如果是 1 挡中继器，输出信号与输入信号相同，没有延迟。 如果是 2 挡及以上中继器，在时间轴上画出一个长度为挡数的滑块，">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv39576808.webp" alt="MCBE 中继器输出信号计算">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 中继器输出信号计算</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/122391924" target="_blank" rel="noopener noreferrer">何以贯之</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">编辑于 2024年10月25日 20:24</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/992211297353334791" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv39576808</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv34223989.html" title="« 上一篇：曾出现在基岩版的&quot;玄学现象&quot; ~ 红石粉信号强度的计算" aria-label="« 上一篇：曾出现在基岩版的&quot;玄学现象&quot; ~ 红石粉信号强度的计算">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">曾出现在基岩版的"玄学现象" ~ 红石粉信号强度的计算</span>
+            </a>
+            <a class="pager-item is-next" href="cv7413347.html" title="下一篇 »：MCBE 观察者的宏观延时计算方法" aria-label="下一篇 »：MCBE 观察者的宏观延时计算方法">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 观察者的宏观延时计算方法</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p>01 表示输入信号，输出信号用 01 加上方括号表示: <span class="inline-math" title="LaTeX:  [0] [1]"> [0] [1]</span>。</p>
+        <p>先在时间轴上画出输入信号，我们计算输出信号都要在这个轴上进行。</p>
+        <p>如果是 1 挡中继器，输出信号与输入信号相同，没有延迟。</p>
+        <p>如果是 2 挡及以上中继器，在时间轴上画出一个长度为挡数的滑块，滑块从输入信号开始时画，以 4 挡为例。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39576808/04fbae983346.webp" width="1920" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">左上角就是我们的滑块</span></p>
+        <p><strong>一般信号计算规则</strong></p>
+        <p><strong>1. </strong><strong>初始化输出信号</strong></p>
+        <p>向后滑动滑块至滑块内没有输出信号。如果滑块内有一个或多个输入 1，则滑块内全部变为输出<span class="inline-math" title="LaTeX: [1]">[1]</span>，反之全部变为输出<span class="inline-math" title="LaTeX: [0]">[0]</span>。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39576808/bfbcf9d33bcb.gif" width="1920" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>如果一个输出信号后面紧邻对应的输入信号，比如<span class="inline-math" title="LaTeX: [1]">[1]</span>接 1，<span class="inline-math" title="LaTeX: [0]">[0]</span>接 0，则输入信号转为对应输出信号。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39576808/a3f29e138275.gif" width="1920" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>重复上面两步，直到处理完所有信号。</p>
+        <p>最后将我们的计算结果沿时间轴往后移 3rt，如果是 3 挡就移 2rt，以此类推。移完后就是最终的输出结果。</p>
+        <p><strong>高频输入特判规则</strong></p>
+        <p>这里高频指 4gt 周期高频，也就是rt尺度上 10101010...的输入。</p>
+        <p><strong>1. 高频特判区间</strong></p>
+        <p>先找出高频信号开始的位置和高频中断的位置。</p>
+        <p>则不包括两端，二者之间为高频特判区间；除了二挡中继器并且高频信号以下降沿信号开头，这种情况还要在前面的基础上去除开头位置。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39576808/a2092c206edd.webp" width="1920" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39576808/158eb63eaf01.webp" width="1920" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p><strong>2. 高频特判</strong></p>
+        <p>当滑块处于高频特判区间内时，滑块内先全部转为输出<span class="inline-math" title="LaTeX: [1]">[1]</span>信号，滑动滑块至滑块内没有输出信号，如果滑块仍然处于同一个滑块区间，则滑块内先全部转为输出<span class="inline-math" title="LaTeX: [0]
+">[0]
+</span>信号，如此循环。</p>
+        <p>如果输入高频以下降沿信号开头，则先转成输出<span class="inline-math" title="LaTeX: [0]
+">[0]
+</span>信号，滑动滑块，转成输出<span class="inline-math" title="LaTeX: [1]">[1]</span>信号，如此循环。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39576808/a35bc7df80cd.gif" width="1920" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>如果滑块不处于高频特判区间内，则仍然使用一般信号计算规则。</p>
+        <p>最后将我们的计算结果沿时间轴往后移 3rt，如果是 3 挡移 2rt，以此类推。移完后就是最终的输出结果。</p>
+        <p><strong>锁存</strong></p>
+        <p>可以在时间轴上标记出被锁存的时间点。</p>
+        <p>如果在滑动滑块的过程中，有被锁存的时间点进入滑块，则把滑块头部前一刻的状态填充入滑块，然后继续滑动。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39576808/6b4612cd7426.gif" width="1920" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p><strong>实例分析</strong></p>
+        <p>暂略</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/992211297353334791">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv34223989.html" title="« 上一篇：曾出现在基岩版的&quot;玄学现象&quot; ~ 红石粉信号强度的计算" aria-label="« 上一篇：曾出现在基岩版的&quot;玄学现象&quot; ~ 红石粉信号强度的计算">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">曾出现在基岩版的"玄学现象" ~ 红石粉信号强度的计算</span>
+            </a>
+            <a class="pager-item is-next" href="cv7413347.html" title="下一篇 »：MCBE 观察者的宏观延时计算方法" aria-label="下一篇 »：MCBE 观察者的宏观延时计算方法">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 观察者的宏观延时计算方法</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

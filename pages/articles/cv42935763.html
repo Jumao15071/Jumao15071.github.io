@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>箱子纠缠——MCBE 最新魔法原理解析 - 橘猫的资源站</title>
+    <meta name="description" content="大箱子机制（经简化的）： 箱子方块实体储存以下数据（和大箱子相关的）： 1自身的配对（如果没有则是空指针，有就是指向配对箱子方块实体对象的指针） 2自身配对的坐标 3自己是不是pairlead（大箱子配对中，先放的箱子是pairlead） 4和朝向有关的一些数">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>箱子纠缠——MCBE 最新魔法原理解析</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/3546590734190596" target="_blank" rel="noopener noreferrer">Naytia_帕芙洛</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2025年09月05日 06:31</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1108903325441458182" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv42935763</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">游戏漏洞</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv42156752.html" title="« 上一篇：粘液块是如何破基岩的？基岩版魔法解析（一）" aria-label="« 上一篇：粘液块是如何破基岩的？基岩版魔法解析（一）">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">粘液块是如何破基岩的？基岩版魔法解析（一）</span>
+            </a>
+            <a class="pager-item is-next" href="cv18560132.html" title="下一篇 »：MCBE 通过折跃门跨版本定向获取任意非法方块" aria-label="下一篇 »：MCBE 通过折跃门跨版本定向获取任意非法方块">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 通过折跃门跨版本定向获取任意非法方块</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="delta">
+        <p>大箱子机制（经简化的）：</p>
+        <p>箱子方块实体储存以下数据（和大箱子相关的）：</p>
+        <p>1自身的配对（如果没有则是空指针，有就是指向配对箱子方块实体对象的指针）</p>
+        <p>2自身配对的坐标</p>
+        <p>3自己是不是pairlead（大箱子配对中，先放的箱子是pairlead）</p>
+        <p>4和朝向有关的一些数据</p>
+        <p>大箱子退出重进保存时只会保存自己是否是pairlead，以及pair的坐标</p>
+        <p>大箱子重进后在load的时候如果发现自己记录了pairlead和pair相关信息，会设置自己为有配对（但此时还没配对）</p>
+        <p>大箱子每gt会检测自己是否有配对，如果有，就绑定（根据记录的坐标）</p>
+        <p>大箱子被推动，破坏时会进行解绑，如果自己记录了配对（已绑定）就解绑</p>
+        <p>（以上为经过层层简化，只留下重点的箱子机制，实际上要复杂很多）</p>
+        <p>综上所述，我们不难发现大箱子在退出重进后，第一gt被更新前是有一段时间记录了自己有pair，但是还没绑定的时期，这期间被活塞推动是不会进行解绑的，可以用未加载区块延长这个窗口，然后分离大箱子</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1108903325441458182">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv42156752.html" title="« 上一篇：粘液块是如何破基岩的？基岩版魔法解析（一）" aria-label="« 上一篇：粘液块是如何破基岩的？基岩版魔法解析（一）">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">粘液块是如何破基岩的？基岩版魔法解析（一）</span>
+            </a>
+            <a class="pager-item is-next" href="cv18560132.html" title="下一篇 »：MCBE 通过折跃门跨版本定向获取任意非法方块" aria-label="下一篇 »：MCBE 通过折跃门跨版本定向获取任意非法方块">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 通过折跃门跨版本定向获取任意非法方块</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 【全物品】浅谈全物品 1、绪论 - 橘猫的资源站</title>
+    <meta name="description" content="写在前头（感谢） 这篇文章是面向对全物品有一定理解，打算动手做却还没有开始设计的人的，并非是面向零基础的 对于全物品大量应用的双漏斗分类的原理，这里推荐 @smart_cuber 的视频。视频中展示的大部分分类单元在be都可以使用 【minecraft红石扫盲">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv9604929.webp" alt="MCBE 【全物品】浅谈全物品 1、绪论">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 【全物品】浅谈全物品 1、绪论</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/19974985" target="_blank" rel="noopener noreferrer">叼叼的名字</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">编辑于 2021年03月03日 18:06</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/487200126325509923" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv9604929</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">储电</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv19404339.html" title="« 上一篇：MCBE 关于掉落物的简单研究 ep.3 掉落物的生成与合并" aria-label="« 上一篇：MCBE 关于掉落物的简单研究 ep.3 掉落物的生成与合并">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 关于掉落物的简单研究 ep.3 掉落物的生成与合并</span>
+            </a>
+            <a class="pager-item is-next" href="cv9624632.html" title="下一篇 »：MCBE 【全物品】浅谈全物品 ep.2 卡顿" aria-label="下一篇 »：MCBE 【全物品】浅谈全物品 ep.2 卡顿">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 【全物品】浅谈全物品 ep.2 卡顿</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p><strong>写在前头（感谢）</strong></p>
+        <p>这篇文章是面向对全物品有一定理解，打算动手做却还没有开始设计的人的，并非是面向零基础的<strong>
+</strong></p>
+        <p>对于全物品大量应用的双漏斗分类的原理，这里推荐 <a href="https://space.bilibili.com/15270241" target="_blank" rel="noopener noreferrer">@smart_cuber</a> 的视频。视频中展示的大部分分类单元在be都可以使用</p>
+        <a class="jump-card is-text" href="https://www.bilibili.com/video/BV1yb411h7gW" target="_blank" rel="noopener noreferrer">
+    <span class="jump-card-cover"><img src="../../assets/articles/cv9604929/79facfed8e82.webp" alt="" loading="lazy"></span><span class="jump-card-main">
+        <span class="jump-card-title">【minecraft红石扫盲】物品分类竟然有这么多知识点</span>
+        <span class="jump-card-meta">1.6万观看 119弹幕 · 16:05</span>
+    </span>
+    <span class="jump-card-badge">B 站视频 »</span>
+</a>
+        <p>本文参考了 <a href="https://space.bilibili.com/3803722" target="_blank" rel="noopener noreferrer">@flag易</a> 于2016年在百度帖吧发表的帖子《全物品自动分类机的设计》（链接：https://tieba.baidu.com/p/4920562733）感谢 <a href="https://space.bilibili.com/3803722" target="_blank" rel="noopener noreferrer">@flag易</a> 的这篇帖子，给刚入生电的我极大的启蒙</p>
+        <p>因为现在有较多的全物品的设计资料（包括je的和be的），以及前人留下来的全物品单片设计。<strong>所以本文的侧重点是从卡顿这一点来说的</strong></p>
+        <p>在这里感谢 <a href="https://space.bilibili.com/34227664" target="_blank" rel="noopener noreferrer">@_hhhxiao</a> 开发的 trapdoor 插件，可以精确地测量出服务器内的卡顿</p>
+        <a class="jump-card is-text" href="https://www.bilibili.com/video/BV1Ar4y1M7qa" target="_blank" rel="noopener noreferrer">
+    <span class="jump-card-cover"><img src="../../assets/articles/cv9604929/163e4383e42b.webp" alt="" loading="lazy"></span><span class="jump-card-main">
+        <span class="jump-card-title">[MCBE] 1.16~1.18服务插件Trapdoor介绍与教程</span>
+        <span class="jump-card-meta">2万观看 27弹幕 · 20:14</span>
+    </span>
+    <span class="jump-card-badge">B 站视频 »</span>
+</a>
+        <p>本文是由我和同为天火服务器成员 <a href="https://space.bilibili.com/413324281" target="_blank" rel="noopener noreferrer">@Maple_枫槭</a> 共同撰写的。由我负责主要内容，<a href="https://space.bilibili.com/413324281" target="_blank" rel="noopener noreferrer">@Maple_枫槭</a> 负责技术指导
+</p>
+        <p>（这里打一波广告，天火服务器交流群：1029028772）</p>
+        <p>本文大体分为四部分，从“绪论”、“卡顿”、“全物品的组成”、“水道的设计”系统地阐述全物品的设计方向。由于专栏的表现能力有限，这里只讨论设计方向，具体的设计之后会以视频的方式放出</p>
+        <hr class="opus-pagebreak">
+        <p><strong>1、绪论</strong></p>
+        <p>------------------------------</p>
+        <p><strong>1.1、什么是全物品</strong></p>
+        <p>全物品自动分类机（下简称全物品）是利用漏斗分类作为基本原理，大量堆叠漏斗分类单元来进行mc的所有<strong>可堆叠物品</strong>进行分类的大型、综合的机器</p>
+        <p>由于其大型化，具体设计时对于细节部分有着极高的自由度</p>
+        <p><strong>这意味着基于不同的设计目标以及需求，全物品可以千变万化</strong></p>
+        <p><strong>接下来的文章，我将以目前服务器的需求以及和 @</strong><strong>M</strong><strong>aple_枫槭 讨论出的“最优的全物品”为切入点，给大家系统地讲解、展示全物品</strong></p>
+        <p>------------------------------</p>
+        <p><strong>1.2、全物品的定位</strong></p>
+        <p>“你指望挖空置域的往里面丢吗？那两千箱也没用啊”——origin_0110</p>
+        <p>也许有人说全物品是仓库，储存了所有种类的物资，可以随用随取</p>
+        <p>但正常来说，<strong>仓库不会保留600~800的未闭锁的漏斗，并设置常加载</strong></p>
+        <p>而且需求量大的物资，比方说石头、木头、红石等，正常的工地回收很难跟得上工程使用，需要全物品的运维频繁地去刷石机（凋灵刷石机，常位于末地）、树场（凋灵树场，常位于末地）、女巫塔（位于主世界）进行物资的搬运以供给需求，而且很难把握具体的量。大量的冗余物资常加载会造成卡顿（之后卡顿的章节会细说），而物资不足则会造成施工暂停</p>
+        <p>所以很显然，全物品的定位是<strong>回收杂乱的物品进行分类，并借此进行重新利用</strong>。称呼其为垃圾桶或物品回收站可能更恰当一点。其仓库特性只是伴随其分类后物品的临时存储的附加特性，而并非其主要作用</p>
+        <p>------------------------------</p>
+        <p><strong>1.3、全物品的优点与必要性</strong></p>
+        <p>“如果你觉得全物品没有用，那一定是你没好好利用过全物品”——flag易《全物品自动分类机的设计》</p>
+        <p>全物品也常被视为全服中心，将是服务器人员经常前往的地点，可以进行一些日常物资的少量补给，如食物、烟花等，一次拿一组就够用很久了</p>
+        <p>在有工程时，全物品可以很方便地处理工地垃圾，将工地剩余的物品再次回收利用。在施工过程中，常因为多人共用几个垃圾箱而导致物品混乱，懒得分类。又或者没有掌握好物品的需求，物品多合成了几组，留之无用，弃之可惜，但是它们可以被扔进全物品留待下次利用</p>
+        <p>全物品物资种类全面，对于稀缺不必要的物资有了固定的的储藏位置。如珊瑚扇、草等方块，平时可能想不出来，也懒得整理随手乱扔，但有需求时却难以找出来</p>
+        <p>全物品也是很方便的少量物资获取的仓库。如不可再生物品：原矿、枯萎的灌木、附魔金苹果等，有几组甚至一大箱子的储量就已经很了不起了。如中继器、比较器，合成麻烦，需求量也不算大，但是经常要，动态保有两三组的储量就够用了</p>
+        <p>全物品利用了mc所有方块进行装饰，可以说是最接近创造的地方。同时满足了收藏爱好者</p>
+        <p>------------------------------</p>
+        <p><strong>1.4、全物品的劣势</strong></p>
+        <p>全物品的劣势相当多</p>
+        <p>修建全物品使用的大量的方块实体，工作时产生的大量的掉落物实体等方面会造成严重的卡顿</p>
+        <p>因为单次分类的时长过长（这个原因在后面全物品的组成会说），需要设置常加载来实现后台分类</p>
+        <p>单种物品只有一个大箱子的储量</p>
+        <p>机器整体脆弱，容易被破坏</p>
+        <p>编码全物品可以一定程度上很好地缓解这些问题。但本文并不是讲解编码全物品的，我将在接下来的几章为大家讲解如何尽最大的可能来避免这些问题</p>
+        <p>------------------------------</p>
+        <p><strong>1.5、你为什么要选择全物品</strong></p>
+        <p>现在的物品分类日新月异，在墙面分类、多物品分类出现后，全物品依然是最好用的垃圾桶，因为：</p>
+        <p>相较于多物品和墙面——</p>
+        <p>全物品出现时间早，意味着有更加成熟的设计与理论</p>
+        <p>双漏斗分类原理简单，意味着维护容易，鲁棒性好</p>
+        <p>单种物品能分配到的储量更多，仓库弹性更好</p>
+        <p>水道的物品传输速度要远快于漏斗和投掷器的物品传输速度</p>
+        <p>同时相较于墙面，后台物品分类意味着不需要进行箱子填充，界面简洁，操作方便，人机交互更加舒适，更易修建与维护</p>
+        <p>----------------------
+</p>
+        <p><strong>1.6、全物品的组成</strong></p>
+        <p>跟随物品流动，物品先后进入了</p>
+        <p><strong>输入——水道——全物品单片</strong><strong>——（</strong><strong>大宗物品存储</strong><strong>）</strong></p>
+        <p>如果采用了更高倍速的输入的话，将会采用<strong>循环水道</strong>多次分类，并通过<strong>缓存</strong>将物品吸入并掷出来重置掉落物计时</p>
+        <p>在多次循环分类后仍不能分类的物品，将进入全物品的<strong>仓库</strong>进行收容</p>
+        <p>而让这一切严格按照计划执行的就是全物品的<strong>主控</strong></p>
+        <p>------------------------------</p>
+        <p><strong>1.7全物品的选址</strong></p>
+        <p>全物品是服务器的垃圾桶，同时一个好的全物品会是一个服务器的中心。所以全物品需要设立在服务器的<strong>交通便利之处</strong>，如出生点附近或是地狱交通的中心。在1.16可以通过抽奖机抽取水方块和末地传送门方块的情况下，可以考虑将全物品设立在地狱或是末地</p>
+        <p>但地狱的话恶魂（1.14+、1.16.200及以上）、岩浆怪<strong>无视亮度</strong>生成，而且非常烦人，需要做周密的防刷怪措施，对于装修提出了很大的挑战</p>
+        <p>而末地存在返程比较麻烦的问题。没有开死亡不掉落的服务器需要从(0,0)的末地祭坛或者自己搭建的末地传送门回主世界，并且回到的是主世界的复活点，相对比较麻烦</p>
+        <p>但末地全物品也存在自带半个空置域、可以衔接主世界刷沙机的优势，视情况考虑在末地做全物品也是个不错的选择</p>
+        <p>主世界全物品因为利用了水道传输物品，而河流群系和海洋群系会在露天水中刷鱼，所以要让全物品远离这两个群系或对水道进行洞穴处理</p>
+        <p>由于区块加载问题，掉落物实体会在加载区块的边界上失去动量，所以<strong>未设置常加载</strong>的全物品切记需要让水流跨过区块线，不能让无水的地方靠在区块线上</p>
+        <hr class="opus-pagebreak">
+        <p><strong>写在最后（作者的碎碎念）</strong></p>
+        <p>最开始是服务器开工全物品空置域，就在创造服开始设计全物品。设计之初以为全物品就是单片的堆叠，只要有足够好的单片就可以做出足够好的全物品。但实际上手要考虑的事情非常多非常杂，就打算把心得总结出一篇专栏。恰逢我的朋友，同为服务器储电dalao的 <a href="https://space.bilibili.com/413324281" target="_blank" rel="noopener noreferrer">@Maple_枫槭</a> 打算写一篇全物品的“百科全书”，<s>但第一篇文章出来属实感人_(:з」∠)_，</s>我就接手了主笔。全文大约九千余字，内容详实硬核，但囿于文章这个体裁，可以举出的例子并不多，<strong>所以我委托了 </strong><a href="https://space.bilibili.com/413324281" target="_blank" rel="noopener noreferrer">网页链接</a><strong> 去搞一个科普向的视频，尽请期待</strong></p>
+        <p><s>我不求大家能看完，别给我掉粉就行了QAQ</s>
+</p>
+        <p>当初落笔的时候想法太多太杂，所以索性套用了类似于论文的格式，把想法都很好地梳理完成了。<strong>论文的格式，果然很强大</strong></p>
+        <p>（封面来源：天火创造服全物品框架）</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/487200126325509923">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv19404339.html" title="« 上一篇：MCBE 关于掉落物的简单研究 ep.3 掉落物的生成与合并" aria-label="« 上一篇：MCBE 关于掉落物的简单研究 ep.3 掉落物的生成与合并">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 关于掉落物的简单研究 ep.3 掉落物的生成与合并</span>
+            </a>
+            <a class="pager-item is-next" href="cv9624632.html" title="下一篇 »：MCBE 【全物品】浅谈全物品 ep.2 卡顿" aria-label="下一篇 »：MCBE 【全物品】浅谈全物品 ep.2 卡顿">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 【全物品】浅谈全物品 ep.2 卡顿</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

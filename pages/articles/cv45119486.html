@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 区块系列机制解析应用篇——流传多年的区块刷物到底是什么原理 - 橘猫的资源站</title>
+    <meta name="description" content="区块刷物流传了无数个版本，可以说这方面的机制一直没有改变过。令我意外的是这么多年这么多人用区块刷物品居然没有一人在意过它的原理，不然区块刷物品方法的优化也不应该由我来完成。阅读本文前请先阅读区块保存理论篇 一、区块刷物 首先要科普一些关于方块实体的基本知识： ">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>MCBE 区块系列机制解析应用篇——流传多年的区块刷物到底是什么原理</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/3546590734190596" target="_blank" rel="noopener noreferrer">Naytia_帕芙洛</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2026年01月30日 10:02</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1163507409343217704" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv45119486</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">区块机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv45075944.html" title="« 上一篇：MCBE 区块系列机制解析（一）——区块的卸载与保存" aria-label="« 上一篇：MCBE 区块系列机制解析（一）——区块的卸载与保存">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 区块系列机制解析（一）——区块的卸载与保存</span>
+            </a>
+            <a class="pager-item is-next" href="cv45221746.html" title="下一篇 »：MCBE 区块系列机制解析（三）——区块的创建与加载之前的准备" aria-label="下一篇 »：MCBE 区块系列机制解析（三）——区块的创建与加载之前的准备">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 区块系列机制解析（三）——区块的创建与加载之前的准备</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <blockquote><p>区块刷物流传了无数个版本，可以说这方面的机制一直没有改变过。令我意外的是这么多年这么多人用区块刷物品居然没有一人在意过它的原理，不然区块刷物品方法的优化也不应该由我来完成。</p><p>阅读本文前请先阅读区块保存理论篇</p></blockquote>
+        <hr class="opus-pagebreak">
+        <h3><strong>一、区块刷物</strong></h3>
+        <p>首先要科普一些关于方块实体的基本知识：</p>
+        <p>关于方块实体的基础知识可以参考我以前发的内容，以及@樱银音_的专栏。</p>
+        <p>方块实体每gt会进行tick，也就是周期性执行一些更新，这是方块实体的核心作用之一。方块实体们之间虽然会执行不同的逻辑，但也会共同执行一部分内容。</p>
+        <p>当方块实体内部的数据被改变时，游戏需要一个得知它被改变的渠道，为区块保存的检测做准备。由于方块实体的种类太多了，能改变数据的地方太多了，mojang选择不让方块实体改变数据时直接改变方块实体的dirtytickscounter，而是给它加一个标记：isChanged。</p>
+        <p>当方块实体tick时，游戏会检测它是否被标记了isChanged，如果是就执行一个onChanged的逻辑，这个逻辑对于每种方块实体都是不一样的。但同时它们都还会去执行LevelChunk::onBlockEntityChanged。这个逻辑的用处在于通知区块有方块实体更新了，它会更新区块方块实体的dirtytickscounter，这样它就会被保存了。</p>
+        <p>结合上个文章的内容，很容易可以发现这之间的一个漏洞：区块有任意一个dirtytickscounter更新后便满足了保存条件，然而方块实体的数据改变并不直接更新dirtytickscounter。从改变方块实体数据到它下一次tick之间如果有一次保存流程它便不会被保存，然而其它区块被保存了，这便导致其它区块保存了箱子里被取出的物品，但箱子区块并没有保存箱子物品被取出的结果。</p>
+        <p>利用这个原理我们可以发现区块刷物品其实只需要在取出物品后不要更新箱子区块便可以完成。同时这个特性也不止于刷物品。比如当活塞推出后，让活塞推出的方块和活塞臂都在另一个区块不更新本区块dirtytickscounter，然后立马卸载活塞。重进后发现活塞回到了推出之前的状态，然而mb可以保留下来</p>
+        <hr class="opus-pagebreak">
+        <h3><strong>二、崩溃回溯复制</strong></h3>
+        <p>很容易发现区块的保存并不是统一的，包括世界中的其它数据和区块的保存也不是统一的。由于随机保存区块的机制存在，很有可能出现有些区块保存了有些区块没保存的情况。即使是统一保存的区块，由于在不同的任务里，很有可能一个保存完了另一个还得要很久才保存。所以在一个区块保存了另一个区块没保存的时间窗口将游戏崩溃便得到了一个区块被保存另一个区块没保存的效果。所以这个特性可以复制任何区块储存的数据，以及制作浮空方块等</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1163507409343217704">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv45075944.html" title="« 上一篇：MCBE 区块系列机制解析（一）——区块的卸载与保存" aria-label="« 上一篇：MCBE 区块系列机制解析（一）——区块的卸载与保存">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 区块系列机制解析（一）——区块的卸载与保存</span>
+            </a>
+            <a class="pager-item is-next" href="cv45221746.html" title="下一篇 »：MCBE 区块系列机制解析（三）——区块的创建与加载之前的准备" aria-label="下一篇 »：MCBE 区块系列机制解析（三）——区块的创建与加载之前的准备">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 区块系列机制解析（三）——区块的创建与加载之前的准备</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

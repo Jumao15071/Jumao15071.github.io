@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>夺取创世神的权柄——方块实体类型混淆漏洞在基岩版红石中的应用 - 橘猫的资源站</title>
+    <meta name="description" content="众所周知，在基岩版我的世界中，红石玩家制作的机器无论再怎么精妙，仍然限制在mojang设置的框架内。一次更新，修改一些代码就能改变无数的机制。 那么有没有一种可能，让玩家只通过原版游戏内的操作，影响游戏运行的规律呢？ 一 、原理 “类型混淆是一种程序中违反类型">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>夺取创世神的权柄——方块实体类型混淆漏洞在基岩版红石中的应用</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/3546590734190596" target="_blank" rel="noopener noreferrer">Naytia_帕芙洛</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2025年04月13日 05:12</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1055075582650351617" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv41321279</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">游戏漏洞</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv42093789.html" title="« 上一篇：无限方块的方块变化解析1.19.50+（尚未修复）" aria-label="« 上一篇：无限方块的方块变化解析1.19.50+（尚未修复）">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">无限方块的方块变化解析1.19.50+（尚未修复）</span>
+            </a>
+            <a class="pager-item is-next" href="cv42156752.html" title="下一篇 »：粘液块是如何破基岩的？基岩版魔法解析（一）" aria-label="下一篇 »：粘液块是如何破基岩的？基岩版魔法解析（一）">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">粘液块是如何破基岩的？基岩版魔法解析（一）</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="delta">
+        <blockquote><p><em>众所周知，在基岩版我的世界中，红石玩家制作的机器无论再怎么精妙，仍然限制在mojang设置的框架内。一次更新，修改一些代码就能改变无数的机制。</em></p></blockquote>
+        <blockquote><p><em>那么有没有一种可能，让玩家只通过原版游戏内的操作，影响游戏运行的规律呢？</em></p></blockquote>
+        <hr class="opus-pagebreak">
+        <h2>一 、原理</h2>
+        <blockquote><p><strong>“类型混淆</strong>是一种程序中违反类型系统的错误行为，它发生在<strong>对象被当作错误类型来使用</strong>时，导致对其成员的访问或操作出现<strong>未定义行为（UB）</strong>。”——Chatgpt</p></blockquote>
+        <p>在基岩版原版红石（生电中），尽管很少人知道原理，但方块实体分离这个前置技术已经被发掘出来了将近一个月并得到了一定规模的应用。</p>
+        <blockquote><p><strong>“方块实体（Block Entity或Tile Entity）</strong>是与各类方块关联的附加数据，作为方块的各种状态有穷集合的补充“——minecraft wiki</p></blockquote>
+        <p>方块实体在方块创建时被创建，在方块被破坏时被删除。但实际上两者的生命周期并没有依赖关系。<strong><span style="color:#017001">方块大多数时候是通过用自身的坐标查表获取同位置的方块实体的</span></strong></p>
+        <p>这就导致了，如果你成功让一个方块实体独立于方块存在，它可以被别的有方块实体的方块继承并修改。这种情况下方块实体会被当成另一个blockactor子类的方块实体去使用，也就造成了所谓的类型混淆。</p>
+        <p><strong>通过这种方法，我们可以真正意义上改写方块的性质</strong></p>
+        <p>尽管大多数时候方块查找自身位置的方块实体时，会检测方块实体的type变量。但mojang的程序员仍然粗心的漏掉了一些方块，这就给了我们可乘之机。</p>
+        <p>第一类这种魔法是在今年2月份发现的活塞粘方块特性。</p>
+        <p>每个方块实体在游戏运行时，想获取某个成员变量的值都是通过起始地址+偏移量的指针取值的。这就导致了，如果某个方块获取自身方块实体的某个值时，我们可以用另一类方块实体伪装成这个方块实体，让它从同样的偏移量中得到错误的值。</p>
+        <p>第二类魔法是通过方块修改方块实体的某个值。</p>
+        <p>然而，这些方法能修改出的结果，或获取到的错误的值都很有限（包括由于每个方块实体都是blockactor的子类，这导致了方块实体前200字节，也就是blockactor父类成员变量占的空间，是不可修改的）</p>
+        <p>在讲第三类魔法时，需要先说明一些方块实体的特性。</p>
+        <p><em><strong><span style="color:#017001">方块实体是否存在于世界上，其实并不取决于方块实体对象是否存在于内存中</span></strong></em></p>
+        <p>正如前文所说，方块查找方块实体，区块更新方块实体都是靠一个哈希链表（Levelchunk的BlockEntities成员变量）查找的。这个表实际上只存储了指向真实对象的指针。</p>
+        <p>也就是方块实体能否被找到，改变实际上取决于这个指针。</p>
+        <p>很明显的一个例子就是movingblock在记录某个方块实体的指针后，对这个方块实体执行了removeblockentity函数，但实际上方块实体对象并没有被释放。同时在mb转b时也只是将方块实体重新加入了表中。</p>
+        <p>第二个特性是方块实体在去序列化时，执行去序列化的levelchunk::deserializeblockentities函数有很大概率会将同类的方块实体在内存上连续排列（可能是因为两个方块实体对象创建的时候之间没有别的分配和释放内存的操作，同时去序列化时游戏刚刚开始运行，堆上还有很多足够大的空闲块）</p>
+        <p>第三个特性是方块实体并不是在方块被破坏的时候释放的。方块实体会在方块被破坏时被加入区块的preservedBlockEntities列表。在Levelchunk::tickBlockEntities时才会遍历这个列表，释放其中的方块实体。</p>
+        <p>知道了这些特性，我们就可以想出第三种魔法——<em><strong><span style="color:#017001">通过操控堆布局，让多个方块实体在内存上形成一定结构从而使用类型混淆跨对象修改变量</span></strong></em></p>
+        <hr class="opus-pagebreak">
+        <h2>二、应用</h2>
+        <p>1，第一个应用就是活塞粘方块特性</p>
+        <p>这个特性是因为活塞方块在检测自己的推出状态时，是通过检测自身位置活塞方块实体的progress变量确定的。</p>
+        <p>progress变量在内存上距离活塞方块实体的虚表指针204字节</p>
+        <p>我们可以通过一个偏移204字节，并且值不为0的另一个方块实体伪装成活塞方块实体去让活塞以为它自己是推出状态。</p>
+        <p>同时活塞在推方块时，会检测这个方块有没有secondpart，如果有就会将secondpart的位置的方块检测并一起推动。</p>
+        <p>活塞在推出状态下，secondpart的位置就是活塞臂的位置，这时候可以换成别的方块，由于活塞并没有真正推出，所以它是可以被推动的，同时带着活塞臂的位置的方块一起动。</p>
+        <p>具体效果可以参考<a href="https://www.bilibili.com/video/BV1hqKGeZEnU/?spm_id_from=333.1387.homepage.video_card.click" target="_blank" rel="noopener noreferrer">https://www.bilibili.com/video/BV1hqKGeZEnU/?spm_id_from=333.1387.homepage.video_card.click</a></p>
+        <p>2 一直隔空推方块的“钟”</p>
+        <p>钟在被敲击时，如果自身的cooldown变量为0，则会将这个值设置为300.</p>
+        <p>在代码层面的行为是这样的：检测this指针偏移204字节的值，如果不为零，就将这之后的4字节的值设为整数300</p>
+        <p>前文提到了活塞的progress值也是在204字节。我们就可以用活塞方块实体伪造钟的方块实体，让钟修改活塞的progress</p>
+        <p>具体修改时因为progress是浮点数，活塞读取这个修改后的值后是4.2*10^43</p>
+        <p>由于progress会影响活塞推出，这就可以制作凭空推方块的“钟”了</p>
+        <p>参考<a href="https://www.bilibili.com/video/BV1Gno2YNEeh/?spm_id_from=333.1387.homepage.video_card.click" target="_blank" rel="noopener noreferrer">https://www.bilibili.com/video/BV1Gno2YNEeh/?spm_id_from=333.1387.homepage.video_card.click</a></p>
+        <p>还有一些其它的同类魔法，比如用活塞破坏箱子secondpart位置实现破坏几亿区块外的方块等等。</p>
+        <p>重要的是第三类魔法。</p>
+        <p>如何在内存中让两个对象连续排列？</p>
+        <p>这是一个很难的问题，因为operator new出来的对象会被随机分配到堆上（地址空间随机化）</p>
+        <p>但游戏中还是有些规律的，除了本文第一部分提到的以外，MovingBlock方块实体在去序列化时，会递归创建自身记录的所有方块实体（嵌套mb的情况）。</p>
+        <p>这几乎百分之百在内存上形成一个既是数组又是链表的结构。</p>
+        <p>而每个方块实体之间的距离，是352字节（计算参考<a href="https://www.bilibili.com/opus/1054434159340027957?spm_id_from=333.1387.0.0" target="_blank" rel="noopener noreferrer">https://www.bilibili.com/opus/1054434159340027957?spm_id_from=333.1387.0.0</a>）</p>
+        <p>巧的是，我们可以用炼药锅类型混淆修改方块实体偏移432字节的位置，也就是第一个方块实体会修改到第二个方块实体的第80字节的值，变成0</p>
+        <p>这个位置，正好决定了方块实体是什么类型（type变量）的。</p>
+        <p>用这个特性，成功创造了Type0方块实体</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv41321279/f5500fe619fb.webp" width="1173" height="507" alt="文章配图" loading="lazy">
+    </figure>
+        <p>Type0方块实体有很多用途（比如让自身方块无法操作它）</p>
+        <hr class="opus-pagebreak">
+        <p>最后，让我们展望一下这类方块实体的未来。</p>
+        <p>也许，可以通过第三类魔法修改type值至任意，实现所有类的类型混淆</p>
+        <p>也许，可以通过修改活塞progress到很大，真正实现全方向的远程0t推出</p>
+        <p>甚至，可以通过第三类魔法，将其它对象排列到方块实体后面修改值。影响到整个世界范围的规律。</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1055075582650351617">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv42093789.html" title="« 上一篇：无限方块的方块变化解析1.19.50+（尚未修复）" aria-label="« 上一篇：无限方块的方块变化解析1.19.50+（尚未修复）">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">无限方块的方块变化解析1.19.50+（尚未修复）</span>
+            </a>
+            <a class="pager-item is-next" href="cv42156752.html" title="下一篇 »：粘液块是如何破基岩的？基岩版魔法解析（一）" aria-label="下一篇 »：粘液块是如何破基岩的？基岩版魔法解析（一）">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">粘液块是如何破基岩的？基岩版魔法解析（一）</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

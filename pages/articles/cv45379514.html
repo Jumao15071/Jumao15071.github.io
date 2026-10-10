@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 区块系列机制解析（六）——区块生成，装饰与光照初始化（前半） - 橘猫的资源站</title>
+    <meta name="description" content="本文覆盖的内容为在加载线程执行的四种区块加载任务中的前两种和最后一种的逻辑。但是只包含了前半部分内容，因为后半部分是四种区块加载任务几乎统一的逻辑，到时候会一起说。区块数据替换的逻辑比较复杂而且都比较重要所以放到下篇说 一、区块生成 区块生成的处理很简单。加载">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>MCBE 区块系列机制解析（六）——区块生成，装饰与光照初始化（前半）</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/3546590734190596" target="_blank" rel="noopener noreferrer">Naytia_帕芙洛</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2026年02月06日 17:51</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1166225612519505922" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv45379514</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">区块机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv45367617.html" title="« 上一篇：MCBE 区块系列机制解析（五）——其它加载源" aria-label="« 上一篇：MCBE 区块系列机制解析（五）——其它加载源">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 区块系列机制解析（五）——其它加载源</span>
+            </a>
+            <a class="pager-item is-next" href="cv45421067.html" title="下一篇 »：MCBE 区块系列机制解析（七）——区块数据替换（上）" aria-label="下一篇 »：MCBE 区块系列机制解析（七）——区块数据替换（上）">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 区块系列机制解析（七）——区块数据替换（上）</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <blockquote><p>本文覆盖的内容为在加载线程执行的四种区块加载任务中的前两种和最后一种的逻辑。但是只包含了前半部分内容，因为后半部分是四种区块加载任务几乎统一的逻辑，到时候会一起说。区块数据替换的逻辑比较复杂而且都比较重要所以放到下篇说</p></blockquote>
+        <hr class="opus-pagebreak">
+        <h2><strong>一、区块生成</strong></h2>
+        <p>区块生成的处理很简单。加载线程会从维度的taskgroup的优先队列中取出区块加载的任务。当这个任务是区块生成时（记录的虚表指针包含区块生成的函数）便会执行区块生成逻辑（chunksource::loadChunk)，然后它会分五种生成方式，对应五种世界生成器：OverWorldGenerator，TheEndGenerator，NetherGenerator，FlatWorldGenerator，VoidGenerator。后续生成的细节就不展开了，因为这不属于区块加载机制。如果成功生成区块便将区块从状态1变成2，否则变回0。后续的处理放在后面的专栏说。</p>
+        <h2><strong>二、区块装饰（postprocessing）</strong></h2>
+        <p>当取出的任务函数是区块装饰的函数时（ChunkSource::_postProcessingTask），游戏会先取出任务结构包含的Chunkviewsource对象。以要处理的区块为中心遍历3*3的范围，给这些区块上一个互斥锁，通过mtx_trylock。这个锁记录在区块对象的第0字节。如果有任意一个区块锁上失败了（有别的线程持有锁）便会直接返回，并且把区块状态从3改回2。</p>
+        <p>上完锁后，它会新建一个Chunkviewsource，以任务结构里的chunkviewsource为父级，主区块管理器为根源，大小为3*3区块。然后会遍历这3*3的区块，检查它们是否存在loadstate大于等于5的区块（完成了区块装饰并至少开始数据替换的区块）。如果有，便将它们从这个chunkviewsource里剔除。</p>
+        <p>随后它会基于新建的这个chunkviewsource新建一个blocksource，用于处理区块装饰过程中的方块交互，以及跨区块方块交互。然后再建一个计划刻队列一个随机计划刻队列用于处理区块装饰中可能产生的计划刻。</p>
+        <p>这意味着正在区块装饰的区块发出的跨区块方块交互（如neighborchanged更新）只能在这3*3范围内传递，而且不会影响到至少加载到已经开始数据替换的区块。</p>
+        <p>之后就是区块装饰的逻辑了。比如放置结构里的箱子，在雪原放置雪片还有冰之类的。在它们都完成后会把区块加载状态从3变成4，然后再解除所有的锁。后面的逻辑后面的专栏会讲。</p>
+        <h3><strong>三、区块光照初始化（下篇讲数据替换）</strong></h3>
+        <p>当取出的任务函数是光照初始化的函数时（ChunkSource::_lightingTask），游戏会先取出任务结构包含的Chunkviewsource对象。然后遍历维度的PostprocessingManager（互斥锁管理器）里面的lockedChunk列表，检查是否有区块在3*3范围内，如果有就直接返回。</p>
+        <p>然后再给要处理的区块从最低到最高的非空气子区块遍历一遍，将这些子区块加入维度的子区块自旋锁列表。再以要处理的区块为中心遍历3*3的范围，给这些区块上一个互斥锁，通过mtx_trylock。这个锁记录在区块对象的第0字节。如果有任意一个区块锁上失败了（有别的线程持有锁）便会直接返回，并且把区块状态从7改回6。</p>
+        <p>随后它会根据任务结构里的Chunkviewsource创建一个新的blocksource用于处理跨区块的光照更改。后面的主要逻辑就是遍历每个方块为他们计算光照。</p>
+        <p>光照初始化的逻辑完成后会把子区块从自旋锁列表里挪走，并且把区块们解锁。</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1166225612519505922">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv45367617.html" title="« 上一篇：MCBE 区块系列机制解析（五）——其它加载源" aria-label="« 上一篇：MCBE 区块系列机制解析（五）——其它加载源">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 区块系列机制解析（五）——其它加载源</span>
+            </a>
+            <a class="pager-item is-next" href="cv45421067.html" title="下一篇 »：MCBE 区块系列机制解析（七）——区块数据替换（上）" aria-label="下一篇 »：MCBE 区块系列机制解析（七）——区块数据替换（上）">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 区块系列机制解析（七）——区块数据替换（上）</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

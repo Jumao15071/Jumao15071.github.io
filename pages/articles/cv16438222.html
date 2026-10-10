@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 关于漏斗的一些特性分析 - 橘猫的资源站</title>
+    <meta name="description" content="由于漏斗的一些特性（bug）实在让人费解，所以我们拜托了@hhhxiao_从源码级别来分析了一下漏斗的行为，以此推断出了一些漏斗的特性（bug）成因。 一、漏斗的范围 在代码中，首先定义了漏斗的吸取范围为1*1*1，这个范围在漏斗上方是1*0.625*1，漏斗">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv16438222.webp" alt="MCBE 关于漏斗的一些特性分析">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 关于漏斗的一些特性分析</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/413324281" target="_blank" rel="noopener noreferrer">Maple_枫溪</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2022年05月04日 00:58</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/656093590619947015" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv16438222</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv9201868.html" title="« 上一篇：MCJE 活塞BUD?QC?傻傻分不清？一篇文章讲清楚" aria-label="« 上一篇：MCJE 活塞BUD?QC?傻傻分不清？一篇文章讲清楚">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCJE 活塞BUD?QC?傻傻分不清？一篇文章讲清楚</span>
+            </a>
+            <a class="pager-item is-next" href="cv10249803.html" title="下一篇 »：MCBE 常见漏斗行为简述" aria-label="下一篇 »：MCBE 常见漏斗行为简述">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 常见漏斗行为简述</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p>由于漏斗的一些特性（bug）实在让人费解，所以我们拜托了@hhhxiao_从源码级别来分析了一下漏斗的行为，以此推断出了一些漏斗的特性（bug）成因。</p>
+        <hr class="opus-pagebreak">
+        <p><strong>一、漏斗的范围</strong></p>
+        <p>在代码中，首先定义了漏斗的吸取范围为1*1*1，<strong>这个范围在漏斗上方是1*0.625*1，漏斗中1*0.375*1</strong>（漏斗上表面碰撞箱有凹陷），在这之后，<strong>吸收范围往六个方向各收缩0.0001格，变为总体0.9998*0.9998*0.9998</strong>。（如图）</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16438222/720cfc5905ab.webp" width="391" height="462" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">下陷的区域保证了在漏斗内凹的物品也能被吸入</span></p>
+        <p>如图，假设漏斗（灰色）吸取范围为1，漏斗应该会吸取到处于隔壁方块边界的物品（如图橙色方块），而漏斗实际范围是0.9998，所以物品与漏斗吸取范围没有接触，不会吸取到这个物品。成功的防止了“误吸入”。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16438222/40e1c83a12dd.webp" width="391" height="313" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">物品与漏斗范围之间隔了0.0001格</span></p>
+        <p><strong>二、精度下溢导致的高xz区域漏斗范围增大</strong></p>
+        <p>在x.z坐标超过[-2049,+2048]（以下简称2048）的时候。<strong>因为精度下溢的问题，漏斗上方的吸取范围重新回到1*0.9998*1</strong>（y轴并不可能超过2048）。这导致的问题就是漏斗可以不正确的吸取到处于旁边方块边界的物品。</p>
+        <p>（仅有x坐标超过[-2049,+2048]，而z坐标不超过[-2049,+2048]时，漏斗仅x轴范围扩大，变为（1*0.9998*0.9998），<strong>可得x，z坐标的计算是独立的</strong>，当x，z坐标都超过[-2049,+2048]时，漏斗范围才会变为1*0.9998*1）</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16438222/9f2b672bdc36.webp" width="556" height="450" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">消失的0.0001距离让擦边的物品能进入漏斗（图黄色方块）</span></p>
+        <p><strong>3、区块边界限位失效问题的解释</strong></p>
+        <p>在代码研究中可以发现，<strong>漏斗的吸取范围仅限于本区块</strong>（漏斗遍历整个区块的实体）。也就是说，如果在区块边界（如图，漏斗和冰中间是区块边界）。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16438222/45b833cd73eb.webp" width="575" height="360" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">掉落物实体坐标以中心为准，所以归属于左边的区块</span></p>
+        <p>由于掉落物的坐标判定以中心点为准，则掉落物在冰侧的区块，而漏斗在另一区块。漏斗无法读取到另一个区块的掉落物（因为漏斗只读取本区块的掉落物），即物品限位后漏斗无法吸取到物品——这就是常说的区块边界漏斗bug。</p>
+        <p><strong>4、区域边界的归属判定</strong></p>
+        <p>区块、方块边界（以下简称区域边界），属于正方向的区域</p>
+        <p>听不懂不要紧，我们来画个图。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16438222/b485ea612bbd.webp" width="533" height="297" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">正方向指x，z的正坐标（坐标增）方向</span></p>
+        <p>区域与区域之间有交界处，但是在游戏里面这个交界处却会带来麻烦——如果一个实体正好处于交界处，那么到底如何去判定实体在哪个区域。</p>
+        <p>Mojang选择<strong>把边界归于正方向的区域</strong>——也就是橙色区域。</p>
+        <p>那就是假如有个掉落物实体中心正好在两个区域中间，这个掉落物实体会被判定为属于正方向的区域（橙色），例如说摩擦因素取值会取正方向的方块的摩擦。</p>
+        <p>了解了这点以后，我们再来看漏斗范围扩大和这个判定会产生什么奇妙的化学反应。</p>
+        <p><strong>5、bug修复了bug</strong></p>
+        <p>Mojang对于漏斗所处位置的判定是将漏斗吸取范围边界的坐标截断为整数，然后加载坐标所处区块内所有掉落物。值得注意的是漏斗范围在2048外会被不正确的扩大到1，然后处于区块边界负方向侧漏斗的正方向边界已经与区块边界重合，而这个区块边界属于正方向的区块，即这个漏斗范围同时处于左右两个区块，<strong>这个跨区块的漏斗会吸取两个区块（在区块角落可能是三个）的掉落物</strong>——即用bug去解决了区块边界的bug（特性）。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16438222/6f72f9e774c8.webp" width="503" height="365" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">扩大的漏斗范围边界与正方向区块边界重合</span></p>
+        <p>但是反方向（漏斗在正方向侧）则不能加载到另一侧区块（因为区块边界所属问题，可以自己尝试分析）</p>
+        <p>即在2048坐标外，区块边界的可用情况为</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv16438222/b5dc5fc174a9.webp" width="648" height="547" alt="文章配图" loading="lazy">
+    </figure>
+        <p style="text-align: center"><span style="color:#999999">学姐的珍贵手绘，斯哈斯哈</span></p>
+        <hr class="opus-pagebreak">
+        <p>    本次专栏主要是由 @hhhxiao_ 的代码研究推论而来，感谢学姐对游戏代码的挖掘让我们能更加深刻的理解游戏机制。
+</p>
+        <p>    本次专栏内容由车轴草@retrifolium 和影 @T0ShadowX 发现的bug延申讨论而成<s>（最后延申的是不是有点太长了）</s></p>
+        <p>    感谢@江雁苍穹 @钚钴鸟 @OEOTYAN 的大量猜想，讨论，测试。</p>
+        <p>    如果您对本文有异议或者发现勘误，请私信我，我会尽快改正。
+</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/656093590619947015">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv9201868.html" title="« 上一篇：MCJE 活塞BUD?QC?傻傻分不清？一篇文章讲清楚" aria-label="« 上一篇：MCJE 活塞BUD?QC?傻傻分不清？一篇文章讲清楚">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCJE 活塞BUD?QC?傻傻分不清？一篇文章讲清楚</span>
+            </a>
+            <a class="pager-item is-next" href="cv10249803.html" title="下一篇 »：MCBE 常见漏斗行为简述" aria-label="下一篇 »：MCBE 常见漏斗行为简述">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 常见漏斗行为简述</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

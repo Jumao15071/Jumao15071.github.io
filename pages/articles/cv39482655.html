@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 铁轨的搜索及无延迟铁轨的部分解释（1.20+） - 橘猫的资源站</title>
+    <meta name="description" content="本文的铁轨指充能铁轨或激活铁轨。 铁轨在红石系统中被单独分类为铁轨传输者。 在红石系统依赖更新阶段，游戏遍历待更新列表，以列表中的元件为起点开始搜索元件。 详细搜索过程举例见前文。本文介绍铁轨元件在搜索过程中的行为。 铁轨的搜索与添加信号源 由于铁轨添加信号源">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv39482655.webp" alt="MCBE 铁轨的搜索及无延迟铁轨的部分解释（1.20+）">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 铁轨的搜索及无延迟铁轨的部分解释（1.20+）</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/122391924" target="_blank" rel="noopener noreferrer">何以贯之</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">编辑于 2024年10月18日 15:59</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/989559923868172297" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv39482655</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv26326388.html" title="« 上一篇：MCBE 部分特殊性质方块汇总（红石相关）" aria-label="« 上一篇：MCBE 部分特殊性质方块汇总（红石相关）">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 部分特殊性质方块汇总（红石相关）</span>
+            </a>
+            <a class="pager-item is-next" href="cv29597163.html" title="下一篇 »：MCBE 红石火把与无线电底层分析" aria-label="下一篇 »：MCBE 红石火把与无线电底层分析">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 红石火把与无线电底层分析</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p>本文的铁轨指充能铁轨或激活铁轨。</p>
+        <p>铁轨在红石系统中被单独分类为铁轨传输者。</p>
+        <p>在红石系统依赖更新阶段，游戏遍历待更新列表，以列表中的元件为起点开始搜索元件。</p>
+        <p>详细搜索过程举例见前文。本文介绍铁轨元件在搜索过程中的行为。</p>
+        <p><strong>铁轨的搜索与添加信号源</strong></p>
+        <blockquote><p>由于铁轨添加信号源的代码流程过于混乱，以及考虑到其他一些问题，以下内容不涉及代码的实际逻辑，仅为简化的部分等效表述，用于分析。</p></blockquote>
+        <p>铁轨的保存的每个信号源包含以下信息：</p>
+        <ol>
+            <li>阻尼，信号源的输出强度减去阻尼结果为正数，说明自己被激活。</li>
+            <li>数据值 data，最高为 9，意为铁轨间信号最大传输距离为 9 格。</li>
+            <li>信号源信息。</li>
+        </ol>
+        <hr class="opus-pagebreak">
+        <p>如果由非铁轨元件搜索到铁轨，则铁轨正常添加信号源信息，保存阻尼等信息，其中 data 设为 9，指针指向搜索起点的元件。</p>
+        <p>除非，信号源列表已经包含重复的元件。</p>
+        <p>当同时满足以下 3 个条件时，认为信号源<strong>重复</strong>：</p>
+        <ol>
+            <li>阻尼相同；</li>
+            <li>数据值相同；</li>
+            <li>信号源坐标相同。</li>
+        </ol>
+        <hr class="opus-pagebreak">
+        <p>如果由铁轨搜索到铁轨，假设为 A 铁轨搜索到 B 铁轨，则将 A 铁轨信号源列表的最后一个 data 大于 1 的一项复制到 B 铁轨的信号源列表中，且 data 递减 1，并且覆盖 3. 信号源信息 为当前发起搜索的信号源。如果没有符合条件的则不添加。</p>
+        <p>此外，重复的信号源放弃添加。</p>
+        <p>当未添加任何信号源时，本条搜索线路终止。</p>
+        <p><strong>实例分析</strong></p>
+        <p>以下为一些实例分析，帮助你理解上面的过程。</p>
+        <p><strong>实例 1</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39482655/5f22f278ee2f.webp" width="2560" height="1486" alt="文章配图" loading="lazy">
+    </figure>
+        <p>以单个中继器指向若干相连的激活铁轨为例，从中继器开始搜索元件，搜索到第一个铁轨，因此 1 号铁轨包含一个信号源：阻尼 0，data:9，信号源是中继器，没有异常。</p>
+        <p>铁轨搜索到相邻的 2 号铁轨，1 号铁轨信号源列表中最后一个信号源 data 为 9，大于 1，于是复制给 2 号铁轨：阻尼 0，data:8，信号源还是中继器。</p>
+        <p>同理 2 号铁轨搜索到 3 号铁轨，于是 3 号铁轨包含一个信号源：阻尼 0，data:7，中继器。</p>
+        <p>依次类推：</p>
+        <p>4 号铁轨：阻尼 0，data:6，中继器</p>
+        <p>5 号铁轨：阻尼 0，data:5，中继器</p>
+        <p>6 号铁轨：阻尼 0，data:4，中继器</p>
+        <p>...</p>
+        <p>9 号铁轨：阻尼 0，data:1，中继器</p>
+        <p>直到 9 号铁轨，其包含的信号源 data 为 1，10 号铁轨如果继续复制信号源，则 data 降为 0，超出铁轨最大间传输距离，于是未能添加信号源，搜索终止。</p>
+        <p>此时，9 个铁轨的信号源均为中继器，且 data 大于 0。如果中继器输出信号强度 15，则 15 减去阻尼 0，仍为 15，则铁轨被激活。</p>
+        <p><strong>实例 2</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39482655/4d06595094fe.webp" width="2248" height="1225" alt="文章配图" loading="lazy">
+    </figure>
+        <p>现在我们添加 2 个信号源，11 号铁轨位置一个，1 号铁轨位置一个，为区分，11 号为中继器，1 号为拉杆。先放置中继器，再放置拉杆。</p>
+        <p>参照实例 1，我们可以快速得出：以中继器为中心两别各延申 8 格，中间 data 为 9，两边递减至 1，阻尼为 0。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39482655/435458e6a709.webp" width="2248" height="1225" alt="文章配图" loading="lazy">
+    </figure>
+        <p>现在放置拉杆，值得注意的是，当放下拉杆时，它会更新周围的红石元件，上一篇文章只讲述了放下非红石元件方块时，会更新周围 6 个面的红石元件。</p>
+        <p>至于放下红石元件时如何更新周围元件，那几篇不完全分析其实有讲，这里给出简单介绍：先将自己添加到待更新列表，再将下、中、上的 6 个面进行更新，如果自己是电容器，还要将同水平面上四个对角的电容器(如果有)加入更新。</p>
+        <p>总之拉杆更新到 1 号铁轨，铁轨把自己信号源列表内的所有元件加入更新，只不过刚好 1 号铁轨此时还没有信号源。</p>
+        <p>以拉杆为起点，搜索元件，易知 1、2、3 号铁轨均只是新添加拉杆进入信号源列表，阻尼均为 0，data 分别为 9、8、7。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39482655/c0f2a142bb90.webp" width="2248" height="1225" alt="文章配图" loading="lazy">
+    </figure>
+        <p>4 号铁轨被 3 号铁轨搜索到，复制 3 号铁轨最后一个信号源，data 递减后为 6，且也没有重复的信号源。</p>
+        <p>同理 5~9 号铁轨，依然只是正常添加拉杆为信号源，其中 data 逐个递减至 1。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39482655/c53fdda6345c.webp" width="2248" height="1225" alt="文章配图" loading="lazy">
+    </figure>
+        <p>10 号铁轨，重点来了，9 号铁轨最后一个信号源 data 等于 1，不符合要求，复制倒数第二个：阻尼 0，data:7，中继器。data 减一为 6，中继器改为当前发起搜索的信号源：拉杆。</p>
+        <p>这个新的信号源 data 为 6，所以没有重合的信号源，10 号铁轨多了一个阻尼 0，data:6，拉杆的信号源。</p>
+        <p>11 号铁轨，继续复制 10 号铁轨的最后一个信号源，11 号元件多了一个阻尼 0，data:5，拉杆的信号源。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39482655/3d92f43dc72b.webp" width="2248" height="1225" alt="文章配图" loading="lazy">
+    </figure>
+        <p>以此类推，直到 15 号元件有两个信号源：</p>
+        <ol>
+            <li>阻尼 0，data:5，中继器。</li>
+            <li>阻尼 0，data:1，拉杆。</li>
+        </ol>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv39482655/fd3d237b7532.webp" width="2248" height="1225" alt="文章配图" loading="lazy">
+    </figure>
+        <p>16 号复制 15 号，第二个信号源不合要求，复制第一个，但是信号源重复，于是停止添加，由于未添加任何信号源，搜索结束。</p>
+        <p>至此，1~15 号铁轨均包含 data 大于 0 的拉杆信号源，所以拉下拉杆后，有 15 个铁轨被激活。</p>
+        <p><strong>后记</strong></p>
+        <p>以上内容因经过大面积简化，只能代表铁轨的部分行为，对于大家已经见识过的某个魔法，本文不作解释。</p>
+        <hr class="opus-pagebreak">
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/989559923868172297">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv26326388.html" title="« 上一篇：MCBE 部分特殊性质方块汇总（红石相关）" aria-label="« 上一篇：MCBE 部分特殊性质方块汇总（红石相关）">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 部分特殊性质方块汇总（红石相关）</span>
+            </a>
+            <a class="pager-item is-next" href="cv29597163.html" title="下一篇 »：MCBE 红石火把与无线电底层分析" aria-label="下一篇 »：MCBE 红石火把与无线电底层分析">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 红石火把与无线电底层分析</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 红石系统运行不完全分析(1) - 橘猫的资源站</title>
+    <meta name="description" content="前言 MCBE的红石系统已经出了五年了，在此之后出现了很多优秀的玩家和优秀作品，在众多玩家的努力之下也产生了一个十分完善的基于实践和经验的理论体系。但是遗憾的是纯理论的源码级的分析还几乎是空白。在这篇专栏(系列)中我尝试着填补空白，尽量完成这一工作，并随时弃坑">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv7581645.webp" alt="MCBE 红石系统运行不完全分析(1)">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 红石系统运行不完全分析(1)</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/34227664" target="_blank" rel="noopener noreferrer">hhhxiao_</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2020年09月12日 21:20</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/434128551184764120" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv7581645</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv6013612.html" title="« 上一篇：世界是如何运行的--MCBE 方块更新机制不完整分析" aria-label="« 上一篇：世界是如何运行的--MCBE 方块更新机制不完整分析">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">世界是如何运行的--MCBE 方块更新机制不完整分析</span>
+            </a>
+            <a class="pager-item is-next" href="cv7876046.html" title="下一篇 »：MCBE 红石系统运行不完全分析(2)" aria-label="下一篇 »：MCBE 红石系统运行不完全分析(2)">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 红石系统运行不完全分析(2)</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="para">
+        <p><strong>前言</strong></p>
+        <p>MCBE的红石系统已经出了五年了，在此之后出现了很多优秀的玩家和优秀作品，在众多玩家的努力之下也产生了一个十分完善的基于实践和经验的理论体系。但是遗憾的是纯理论的源码级的分析还几乎是空白。在这篇专栏(系列)中我尝试着填补空白，尽量完成这一工作，并随时弃坑。</p>
+        <blockquote><p>有一说一，我自己连33门都不会做，所以这篇专栏几乎可以说出自云玩家之 手，请谨慎观看(</p></blockquote>
+        <p><strong>预备知识：</strong></p>
+        <ol>
+            <li>了解最基本的红石原件的基本功能</li>
+        </ol>
+        <p><strong>红石原件分类</strong></p>
+        <p>在游戏内部，红石原件的分类是这样一个树形结构，这也是整个红石系统运行的基础，详细信息见表。</p>
+        <p>BaseCircuitComponent       CSSC
+ BaseRailTransporter    MCPR   
+ ProducerComponent
+        CapacitorComponent   CSCA
+            ComparatorCapacitor
+            PulseCapacitor
+            RedstoneTorchCapacitor
+ ConsumerComponent    CSCC
+  PistonConsumer
+ PoweredBlockComponent   CSPB
+ ProducerComponent      CSPC
+ TransporterComponent   CSTR</p>
+        <p>看不懂英语不用管，看下面的几条就行了：</p>
+        <ol>
+            <li>producer就是自身发出信号的(比如红石块，拉杆等），下称生产者</li>
+            <li>capacitor就是比较器中继器火把和观察者</li>
+            <li>transporter就是红石线(传递信号)</li>
+            <li>cunsumer就是接受信号的,比如活塞，发射器等等，下面统称为消费者</li>
+            <li>铁轨?铁轨是啥</li>
+        </ol>
+        <p><strong>红石原件的信号源(Source)</strong></p>
+        <p><strong>信号源</strong></p>
+        <p>这里先要给出一个概念叫做<strong>信号源</strong>，说白了就是给该原件提供红石能量的原件。我们来看个例子：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7581645/19e84c0a8bd0.webp" width="949" height="554" alt="文章配图" loading="lazy">
+    </figure>
+        <ol>
+            <li>给比较器提供能量的是红石块和火把,所以它有两个信号源也就是右边的火把和红石线。</li>
+            <li>给中继器提供的能量的是比较器,所以它的源就是中间的比较器</li>
+            <li>同理红石灯和红石灯右边的红石线的信号源是中继器</li>
+        </ol>
+        <p>注意</p>
+        <ol>
+            <li>红石线不会作为信号源，因为它只能传递能量不产生能量</li>
+            <li>生产者本身就能提供能量，所以它没信号源</li>
+        </ol>
+        <p><strong>距离</strong></p>
+        <p>游戏中每个原件都维护着它自己的所有信号源以及和该信号源的<strong>距离</strong>。当红石原件发生增删的时候原件就会从重新搜索整个电路找到自己的信号源，并在这个过程中计算出自己和信号源的距离,这个距离在最简单的情况下就是曼哈顿距离减1，当然也会随着红石原件的各种连接细节等等有所调整。这些不是重点就不过多叙述了(也没认真看过)。比如我们打掉右下角的红石块，那么中继器就只有一个信号源--火把了。</p>
+        <p><strong>红石信号强度的计算</strong></p>
+        <p>这个算法其实非常简单：</p>
+        <p>首先计算每个信号源为自己提供的信号强度  ,说白了就是用<strong>信号源的信号强度减去信号源和自己的距离</strong>。然后从所有信号源提供的信号强度中选择最强的信号作为自己的信号(当然如果这个信号是负数就取0了)。来看个简单的例子：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7581645/7f87aa9844c7.webp" width="917" height="835" alt="文章配图" loading="lazy">
+    </figure>
+        <p>绿色方块上方的红石线有两个信号源，它和左上方的红石块的距离是3，所以该红石块为它提供的信号强度就是12，而左下侧的红石块的距离是1，提供的信号强度是15 - 1 = 14.最后该红石线的信号强度就是max(12,14) = 14.</p>
+        <blockquote><p>开胃小菜完成了后面就是稍微硬核的gt级别的微时序分分析了（</p></blockquote>
+        <p><strong>信号更新过程</strong></p>
+        <p><strong>红石刻</strong></p>
+        <p>看图说话如下图是游戏的运行，一个方格是1gt，我们把红色的gt称之为<strong>红石刻</strong>，白色的暂时叫做普通刻。。在这样的gt是会更新红石信号的。两个红石刻之间的间隔也叫红石刻(redstone tick,rt)，易得</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7581645/ee6ccdf0088a.webp" width="766" height="247" alt="文章配图" loading="lazy">
+    </figure>
+        <p><strong>信号的更新方式</strong></p>
+        <p>原件有两种更新方式:</p>
+        <ol>
+            <li>先根据当前电路状态计算出所有的信号值稍后再一起更新，暂时叫做缓存更新吧</li>
+            <li>立即更新，算出来值就马上更新了</li>
+        </ol>
+        <p><strong>capacitor(比较器，中继器，火把)和红石线是缓存更新</strong>的，其它的诸如<strong>生产者和消费者都是立即更新</strong>的。</p>
+        <p><strong>1rt做了什么</strong></p>
+        <p>在游戏内关于红石的1rt做的事情说多其实也不多，一共就下面三件事情(按照顺序)：</p>
+        <ol>
+            <li>根据当前电路状态(也就是上一个rt的电路)计算capacitor和红石线的信号,怎么计算也就是上面的算法(max(信号值 - 距离))。注意因为这几个是缓存更新的，因此算出来的新值其实是存起来了，原件的实际信号并没有进行更新。</li>
+            <li>计算和设置capacitor和和生产者的信号，到这一步才把capacitor的实际值进行更新(当前值 = 新值即可)。对于生产者没啥说的，是多少就多少，比如上1gt你拉了拉杆，到这时候就会把拉杆的值更新为15.</li>
+            <li>更新红石线和消费者的信号。对于红石线也是(当前值 = 新值)，而对于消费者就是当前值设置为max(信号值 - 距离)。</li>
+        </ol>
+        <p>为方便理解来举个例子：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7581645/e83d925b15e1.webp" width="1021" height="744" alt="文章配图" loading="lazy">
+    </figure>
+        <ol>
+            <li>拉下拉杆后拉杆的信号立即变为15(这个和红石系统无关):</li>
+            <li>然后等到下一个红石刻开始：</li>
+            <li>两根红石线和中继器的唯一信号源都是拉杆，然后他们就根据拉杆计算新值，这个值分别是14，15，14，但是这时候这三个器件的信号都还是0(因为新值缓存了没更新)</li>
+            <li>下一个行为拉杆信号还是15无事发生，这时候中继器新值和旧值同步了，它的信号变成了15(中继器虽然有延时，但是这个信号是立即更新的)</li>
+            <li>再到下一个行为，红石线同步自己的新旧值从0变到14和15；绿灯的唯一信号源是15，距离是1，因此它的信号从0变成15-1 = 14(注意这个值和与他连的红石线没啥关系)，蓝灯的唯一信号源是中继器，它和中继器的距离为0，因此信号更新为15 - 0 = 15</li>
+        </ol>
+        <p>然后这一rt结束了，等到下一个gt红石线和两个灯同时亮起(这个渲染细节和红石系统无关)。</p>
+        <p>？？？</p>
+        <p>你可能会疑惑为什么两个灯同时亮了，又或者你觉得中继器是有延时的，不会立即更新信号。但是<strong>事实就是如此</strong>。这个现象是<strong>由更新顺序和信号计算计算共同决定</strong>的。</p>
+        <p>再来做个简单练习，分析一下拉下拉杆后的所有原件的信号变化：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv7581645/8ec3b43c53fc.webp" width="815" height="492" alt="文章配图" loading="lazy">
+    </figure>
+        <p>未完待续</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/434128551184764120">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv6013612.html" title="« 上一篇：世界是如何运行的--MCBE 方块更新机制不完整分析" aria-label="« 上一篇：世界是如何运行的--MCBE 方块更新机制不完整分析">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">世界是如何运行的--MCBE 方块更新机制不完整分析</span>
+            </a>
+            <a class="pager-item is-next" href="cv7876046.html" title="下一篇 »：MCBE 红石系统运行不完全分析(2)" aria-label="下一篇 »：MCBE 红石系统运行不完全分析(2)">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 红石系统运行不完全分析(2)</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

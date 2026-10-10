@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基岩版/网易 资源存档的提取与转换 - 橘猫的资源站</title>
+    <meta name="description" content="大家好，我是橘猫sama，我会用几期专栏带大家熟悉基岩版的存档操作流程，学完了大家就不必QQ群里到处问人了！ 1.游戏概念 为了避免误解，我们需要了解《我的世界》这款游戏的结构。 《我的世界》，即大家所称呼的Minecraft、MC，这款游戏按照编写语言分为J">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv18509849.webp" alt="基岩版/网易 资源存档的提取与转换">
+        </figure>
+        <div class="article-head">
+            <h1>基岩版/网易 资源存档的提取与转换</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/37691488" target="_blank" rel="noopener noreferrer">橘猫sama</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2022年09月09日 12:00</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/703763054796472489" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv18509849</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">存档操作教程</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv16837006.html" title="« 上一篇：浅谈 MCBE 恶魂炮" aria-label="« 上一篇：浅谈 MCBE 恶魂炮">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">浅谈 MCBE 恶魂炮</span>
+            </a>
+            <a class="pager-item is-next" href="cv42374945.html" title="下一篇 »：网易手机版存档导出/导入/转国际版（2025）" aria-label="下一篇 »：网易手机版存档导出/导入/转国际版（2025）">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">网易手机版存档导出/导入/转国际版（2025）</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="html">
+        <p>大家好，我是橘猫sama，我会用几期专栏带大家熟悉基岩版的存档操作流程，学完了大家就不必QQ群里到处问人了！</p>
+        <h2><strong><span class="font-size-23">1.游戏概念</span></strong><br></h2>
+        <p>为了避免误解，我们需要了解《我的世界》这款游戏的结构。</p>
+        <p>《我的世界》，即大家所称呼的Minecraft、MC，这款游戏按照编写语言分为Java语言编写的<strong>Java版</strong>和C++语言编写的<strong>基岩版</strong></p>
+        <p>基岩版可以在全平台运行，包括win10/11，Android，iOS，PlayStation 4，Nintendo Switch，VR等平台</p>
+        <p>《我的世界》基岩版原生支持添加各种附加包，附加包主要的类型有<strong>资源包</strong>、<strong>行为包</strong>（对应数据包）、<strong>皮肤包</strong>、<strong>地图</strong>、<strong>世界模板</strong>等。</p>
+        <p>以下是其对应的英语名字：</p>
+        <ul>
+            <li>资源包 resource_packs</li>
+            <li>行为包 behavior_packs</li>
+            <li>皮肤包 skin_packs</li>
+            <li>地图 minecraftWorlds</li>
+            <li>世界模板 world_templates</li>
+        </ul>
+        <p>另外，<strong>网易代理了《我的世界》国区</strong>，电脑能玩Java版和基岩版，手机上的则是基岩版。mojang为基岩版开发了一系列接口，这种接口属于微软接口，但是网易也为基岩版开发了一系列网易组件接口，网易的模组通常使用了网易接口，所以<strong><span class="color-pink-03">网易的模组不能在国际版中使用</span></strong>！</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv18509849/8fcd43a51f1e.webp" width="381" height="263" alt="hmcl和pcl2是常见的Java版启动器，Minecraft和Minecraft preview是基岩版及其预览版，下方是网易启动器以及网易开发者启动器" loading="lazy">
+        <figcaption class="fig-caption">hmcl和pcl2是常见的Java版启动器，Minecraft和Minecraft preview是基岩版及其预览版，下方是网易启动器以及网易开发者启动器</figcaption>
+    </figure>
+        <h2><span class="font-size-20"><strong>2.游戏位置&amp;资源导入导出</strong></span><span class="font-size-23"></span><br></h2>
+        <p>《我的世界》基岩版原生支持导入各类附加包，本文主要介绍Windows平台和Android平台，iOS玩家请在B站搜索相应的教程，都能找到</p>
+        <p><span class="font-size-20"><strong>Windows平台</strong></span></p>
+        <p>基岩版默认下载到C盘，位置是C:\Users\用户名\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang</p>
+        <p>请学习简单的英语并勤用翻译软件，对于接下来的检索很有帮助</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv18509849/419fe4b647f6.webp" width="812" height="507" alt="这就是我们平常接触的可供修改内容了" loading="lazy">
+        <figcaption class="fig-caption">这就是我们平常接触的可供修改内容了</figcaption>
+    </figure>
+        <p>这些是游戏的根目录，下载的文件资源需要放入相应的文件夹内</p>
+        <p>behavior_packs<strong>行为包</strong>，常见的类型有修改生物生成规则、自定义方块和生物、修改世界生成、修改合成表&amp;战利品、指令函数等。</p>
+        <p>resource_packs<strong>资源包</strong>，常见的类型有方块纹理、生物模型、着色器、材质、粒子、动画等。</p>
+        <p>skin_packs<strong>皮肤包</strong>，另外，角色创建器界面也可以直接导入皮肤图片</p>
+        <p>minecraftWorlds<strong>地图</strong>，我们所有的游戏地图都在这里</p>
+        <p>另外，基岩版游戏本体位于C:\Program Files\WindowsApps\Microsoft.MinecraftUWP_1.19.2002.0_x64__8wekyb3d8bbwe</p>
+        <p>本体名称和你所在的游戏版本相关，内含基岩版数据内容</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv18509849/a834c723df4c.webp" width="819" height="508" alt="在这里可以扒mojang的底裤，看看mojang到底改了啥" loading="lazy">
+        <figcaption class="fig-caption">在这里可以扒mojang的底裤，看看mojang到底改了啥</figcaption>
+    </figure>
+        <p>仿照官方的内容和微软文档，我们可以制作自己的纹理包/行为包！</p>
+        <p>微软官方文档 https://learn.microsoft.com/en-us/minecraft/creator/</p>
+        <p><span class="font-size-20"><strong>Android平台</strong></span></p>
+        <p>1.17以前，我们打开文件管理器，找到games/com.mojang即可</p>
+        <p>但是应谷歌要求，1.18将文件挪入Android文件夹，位置在/emulated/0/Android/data/com.mojang.minecraftpe/files/games/com.mojang/</p>
+        <p>除了华为基于安卓10开发鸿蒙系统，其他安卓厂商升级安卓11/12以后遇到了Android文件权限限制，但是我们依旧可以通过第三方管理器，如MT管理器 修改Android/data内容</p>
+        <p>网易我的世界和国际版都是可以的！<br></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv18509849/673fbfde94b6.webp" width="1920" height="1080" alt="一图流" loading="lazy">
+        <figcaption class="fig-caption">一图流</figcaption>
+    </figure>
+        <p>请注意：由于猎豹清理大师以及一众杀毒软件的暴力杀毒，所以1.18存档位置变了以后清理内存有可能直接<strong><span class="color-pink-03">把地图当做垃圾缓存处理掉</span></strong>，手机清理内存一定要小心！</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv18509849/c267cd6a140e.webp" width="942" height="435" alt="强烈建议把文件存储位置放在外部，以防找不见" loading="lazy">
+        <figcaption class="fig-caption">强烈建议把文件存储位置放在外部，以防找不见</figcaption>
+    </figure>
+        <p><span class="font-size-20"><strong>网易手机版</strong></span><span class="font-size-20"></span></p>
+        <p>国际版MC的附近就是网易的文件了，非常好找<br></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv18509849/65678b7430ea.webp" width="1080" height="1144" alt="网易也是可以找到文件的，很遗憾网易已经不能导入(import)纹理包和地图了" loading="lazy">
+        <figcaption class="fig-caption">网易也是可以找到文件的，很遗憾网易已经不能导入(import)纹理包和地图了</figcaption>
+    </figure>
+        <p>网易个人创建的地图有加密，但是可以用MCstudio导出；资源中心下载的地图和模组有加密，无法在国际版加载。</p>
+        <p>如果你想<strong>导出网易单人地图到国际版</strong>玩，教程在BV12a411H7JE ，不过鉴于很多人没有电脑，我提供<strong>单人地图</strong>转出服务</p>
+        <p>投20个硬币，即可转出你的单人地图，q群号205097309</p>
+        <h2>3.MC资源的使用<br></h2>
+        <p><strong>手动导入</strong></p>
+        <p>建议手机端用户使用MT管理器完成操作，电脑端使用任务管理器操作同理</p>
+        <p>例如你想导入地图的话，先找到游戏的根目录（见步骤1）将文件夹或压缩包导入进来，<strong>游戏不能识别压缩包</strong>，因此如果是压缩包需要解压缩文件</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv18509849/01d83eb0e4e2.webp" width="1080" height="2408" alt="压缩包一定要解压缩" loading="lazy">
+        <figcaption class="fig-caption">压缩包一定要解压缩</figcaption>
+    </figure>
+        <p>我们需要<strong>保证地图的格式正确</strong>，点击地图后需要包含db玩家和若干json，<span class="color-pink-03">不能文件夹套娃</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv18509849/3f20a240c4e9.webp" width="1080" height="2408" alt="文章配图" loading="lazy">
+    </figure>
+        <p>如果是行为包或资源包，也需要保证正确的格式，里面不能套娃</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv18509849/abeba2ce7a75.webp" width="1080" height="2408" alt="正确的行为包格式" loading="lazy">
+        <figcaption class="fig-caption">正确的行为包格式</figcaption>
+    </figure>
+        <p><strong>自动导入</strong><br></p>
+        <p>在Java版中，我们一般直接把.zip文件.jar文件塞入文件夹。<br></p>
+        <p>而在基岩版中，mojang加入了独特的.mcpack .mcaddon .mcworld格式文件，电脑端双击或者手机端选择“其他应用打开”中的“Minecraft”也可以直接导入文件</p>
+        <p>实际上，以上这些格式的文件其实是一种特殊的.zip文件变种，文件压缩后只要格式合适，把.zip后缀名改成以上的即可导入游戏。</p>
+        <p>例如“去除buff粒子.zip”直接改成“去除buff粒子.mcpack”，<strong>只要格式符合</strong>，就可以直接导入</p>
+        <p>但是！但是！这里的文件一定要符合格式规范！否则会导入失败！</p>
+        <p><span>（当然另一种原因是部分组件对于版本有要求，版本不对可能不识别）</span></p>
+        <p>下面我们来讲解一下规范的格式以及常见错误</p>
+        <p>这里拿电脑演示了，<span class="color-pink-03">手机是一样的流程</span><br></p>
+        <p><strong>地图.mcworld</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv18509849/243b8132f8a3.webp" width="798" height="308" alt="我们点开一个地图" loading="lazy">
+        <figcaption class="fig-caption">我们点开一个地图</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv18509849/f31a71a4a8da.webp" width="829" height="616" alt="选中所有的文件进行压缩" loading="lazy">
+        <figcaption class="fig-caption">选中所有的文件进行压缩</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv18509849/3427ac68e165.webp" width="877" height="475" alt="正常压缩的文件点开应该就是一样的结构" loading="lazy">
+        <figcaption class="fig-caption">正常压缩的文件点开应该就是一样的结构</figcaption>
+    </figure>
+        <p><span class="color-default"><strong>随后，将.zip的后缀改为.mcworld即可。</strong></span></p>
+        <p><strong><span class="color-pink-03">为什么资源会导入失败呢？</span></strong>主要原因有三：</p>
+        <p>1.文件套娃，比如你直接压缩前边的文件夹，这个压缩包里面就一个文件夹，系统也不认识这是个啥玩意，然后就会显示导入失败</p>
+        <p>2.另一种可能是，手机系统抽风，比如你的文件叫做“某建筑v0.1.mcworld”，手机抽风把v0.1的那个“.”当做文件格式了，然后不认识文件就导入失败；那遇见这种情况就只能手动改成.zip格式，弄成文件夹然后按照上文所述位置挪入behavior_packs/resource_packs/minecraftWorlds里面，别无他法，<span class="color-pink-03">手动导入也是经常用得上的</span></p>
+        <p><span class="color-default">3.版本不匹配，比如基岩版工业1模组用了脚本引擎，而脚本引擎只能在Windows平台使用并在1.18.30废除掉了；单人假人模组用了ScriptAPI（拿来替代脚本引擎的且全平台适用），而且该框架mojang没做完，所以换游戏版本还得换模组版本<br></span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv18509849/006bf77a7f03.webp" width="773" height="362" alt="系统很傻，压缩的时候注意点" loading="lazy">
+        <figcaption class="fig-caption">系统很傻，压缩的时候注意点</figcaption>
+    </figure>
+        <p><strong>纹理包.mcpack</strong></p>
+        <p><strong>行为包.mcpack</strong></p>
+        <p><strong>附加包.mcaddon</strong></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv18509849/307cbbcac40c.webp" width="756" height="65" alt=".mcpack等格式与.zip可以通过改后缀的形式直接转换" loading="lazy">
+        <figcaption class="fig-caption">.mcpack等格式与.zip可以通过改后缀的形式直接转换</figcaption>
+    </figure>
+        <p>以红石大杂烩为例，我们可以把这个资源包在“.zip”和“.mcpack”两种形式互相转换，其实都是一码事；打开压缩包，可以看到这些文件都是属于纹理包的范围，.zip打包这些文件再改后缀就可以直接制成资源包（意思 =材质包 =纹理包），发给其他玩家</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv18509849/87184f4e5d12.webp" width="760" height="519" alt="红石大杂烩是非常优秀的材质哦" loading="lazy">
+        <figcaption class="fig-caption">红石大杂烩是非常优秀的材质哦</figcaption>
+    </figure>
+        <p>某些附加包中既有资源包也有行为包，亦或者有多个资源包/行为包，那么这种文件就会做成.mcaddon格式，直接把这几个资源包文件夹一起打成.zip，然后改后缀变成.mcaddon即可，游戏自动会分成几个包的</p>
+        <p>另外，网易的组件是和地图分开储存的；而国际版中，加入资源包/行为包，这些包会直接塞入地图文件一起加载，在全局也可以加装资源包以便服务器使用同时调用一些按键！</p>
+        <p>注：有些行为包会出现删不掉的问题，删去行为包和带有behavior的.json文件就行了</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv18509849/11494c8303ac.webp" width="1920" height="1080" alt="QQ导入资源包示例" loading="lazy">
+        <figcaption class="fig-caption">QQ导入资源包示例</figcaption>
+    </figure>
+        <p>除此以外，QQ等软件也可以直接导入文件，不过有一些bug</p>
+        <p>蓝奏云因为只能上传.zip所以我一般上传的文件命名为“阿巴阿巴.mcaddon.zip”，删去.zip就能导入，不删可以直接弄成行为包，还是蛮好用的<br></p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/703763054796472489">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv16837006.html" title="« 上一篇：浅谈 MCBE 恶魂炮" aria-label="« 上一篇：浅谈 MCBE 恶魂炮">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">浅谈 MCBE 恶魂炮</span>
+            </a>
+            <a class="pager-item is-next" href="cv42374945.html" title="下一篇 »：网易手机版存档导出/导入/转国际版（2025）" aria-label="下一篇 »：网易手机版存档导出/导入/转国际版（2025）">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">网易手机版存档导出/导入/转国际版（2025）</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 区块系列机制解析（三）——区块的创建与加载之前的准备 - 橘猫的资源站</title>
+    <meta name="description" content="区块加载机制的整个流程是目前基岩版MC已知的最复杂游戏机制，我将会将区块加载的流程分成一个个小块去讲解。同时看本文之前请先看系列序章 一、管理器及其创建 游戏中的各种不同对象想要相互交互要经过各类的管理器，如chunksource（区块管理器）、blockso">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>MCBE 区块系列机制解析（三）——区块的创建与加载之前的准备</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/3546590734190596" target="_blank" rel="noopener noreferrer">Naytia_帕芙洛</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2026年02月02日 12:49</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1164663678920818689" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv45221746</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">区块机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv45119486.html" title="« 上一篇：MCBE 区块系列机制解析应用篇——流传多年的区块刷物到底是什么原理" aria-label="« 上一篇：MCBE 区块系列机制解析应用篇——流传多年的区块刷物到底是什么原理">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 区块系列机制解析应用篇——流传多年的区块刷物到底是什么原理</span>
+            </a>
+            <a class="pager-item is-next" href="cv45223744.html" title="下一篇 »：MCBE 区块系列机制解析（四）——区块加载任务发布流程" aria-label="下一篇 »：MCBE 区块系列机制解析（四）——区块加载任务发布流程">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 区块系列机制解析（四）——区块加载任务发布流程</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="delta">
+        <blockquote><p>区块加载机制的整个流程是目前基岩版MC已知的最复杂游戏机制，我将会将区块加载的流程分成一个个小块去讲解。同时看本文之前请先看系列序章</p></blockquote>
+        <hr class="opus-pagebreak">
+        <h2><strong>一、管理器及其创建</strong></h2>
+        <p>游戏中的各种不同对象想要相互交互要经过各类的管理器，如chunksource（区块管理器）、blocksource（方块管理器）等。例如如果游戏想在一个坐标放置一个方块。首先要查询这个坐标的方块，然后再放置替换，这个过程需要经过blocksource访问。由于方块都是存储在区块的子区块里的二维数组里，blocksource需要通过其所对应的chunksource获取这个位置的区块，然后再访问区块内的内容。这意味着，通过某一个blocksource放置查询方块只能访问其所对应的chunksource管理的区块里的方块。例如某一个blocksource所对应的区块管理器只记录了一定范围内的区块，然后在这个范围的边缘有一个方块变化导致这个方块六面的其它方块更新。但如果有一个需要更新的位置在这个chunksource之外，便无法被访问到。</p>
+        <p>所有类型的区块管理器会记录它所在的维度，世界，区块边长，父级，祖先，以及区块加载数据。</p>
+        <h2>二、主区块管理器及其创建</h2>
+        <p>主区块管理器（mainchunksource）是管理一个维度内所有区块的总管理器，在维度初始化时创建，每个维度有一个。服务器线程内的所有区块数据更新都要经主区块管理器进行。这意味着游戏内的所有数据更新都通过主区块管理器进行，而其它区块管理器则只负责管理范围、充当容器以及数据的加载。主区块管理器通过unordered_map记录维度内的所有区块</p>
+        <p>主区块是所有局域区块管理器的根源祖先（不是类继承意义上的）。</p>
+        <p>主区块管理器总管维度内的所有区块加载。它记录了维度内区块加载的一个map：ChunkGenerationGridMap（所有区块管理器都有，但是只有主区块管理器的起作用）。这个map用于通过坐标访问正在加载的区块。它还记录了准备好加载的区块的区块坐标及其加载状态的列表以及正要执行的区块加载任务的数量。</p>
+        <h2>三、局域区块管理器与区块加载的触发</h2>
+        <p>局域区块管理器（chunkviewsource）用于管理一定范围内的区块。它通过二维数组记录记录局域内的区块。局域区块管理器管理的区域存储了区域内每一个区块的共享指针，是从其父级区块管理器获取的，而所有局域区块管理器的根源祖先是主区块管理器。</p>
+        <p>它有许多用途，也有许多创建的地方，这里主要讲述玩家所对应的局域区块管理器。</p>
+        <p>当玩家进入游戏时，游戏会为其创建一个局域区块管理器。这个局域区块管理器管理玩家加载范围内的区块。</p>
+        <p>在玩家行为更新阶段（世界级更新阶段）里，玩家移动视角、调整视距和移动等行为时会触发局域区块管理器的更新（Chunkviewsource::move）。玩家进入游戏也会触发这个。首先，它会计算出更新后自己区域的新范围。这个范围是以玩家所在区块为中心半径max(视距, 模拟距离)+5个区块的范围。</p>
+        <p>计算出新范围后，会把新进入范围内的区块坐标加入一个列表，还会把出范围的旧区块坐标加入一个列表。然后它会遍历新区块坐标列表，尝试通过自己的父级区块管理器获取这些坐标上的区块，如果获取到区块就查询它的加载状态。如果加载状态是9（完全加载）就直接返回，如果不为0但也不为9就进行邻域更新流程（ChunkSource::_checkForUnBlockingChunks, 这个内容会在后面的专栏讲解)并将其加入区块加载map。如果区块加载阶段为0，便将其加入区块加载map，并且加入准备好加载的区块的列表。如果没有获取到区块，便构建levelchunk对象，初始化加载状态为0并且将其加入区块加载map，并且加入准备好加载的区块的列表。</p>
+        <p>在加入完新区块位置后，玩家对应的局域区块管理器会进行区块加载任务发布流程（下一篇专栏讲）。然后遍历出范围的旧区块列表，执行卸载流程（详见保存与卸载专栏。</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1164663678920818689">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv45119486.html" title="« 上一篇：MCBE 区块系列机制解析应用篇——流传多年的区块刷物到底是什么原理" aria-label="« 上一篇：MCBE 区块系列机制解析应用篇——流传多年的区块刷物到底是什么原理">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 区块系列机制解析应用篇——流传多年的区块刷物到底是什么原理</span>
+            </a>
+            <a class="pager-item is-next" href="cv45223744.html" title="下一篇 »：MCBE 区块系列机制解析（四）——区块加载任务发布流程" aria-label="下一篇 »：MCBE 区块系列机制解析（四）——区块加载任务发布流程">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 区块系列机制解析（四）——区块加载任务发布流程</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

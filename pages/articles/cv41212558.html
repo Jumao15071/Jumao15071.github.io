@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活塞-方块系统源码解析二：活塞方块实体的作用（其一） - 橘猫的资源站</title>
+    <meta name="description" content="活塞方块实体储存的内容 一、两个列表，推出列表和破坏列表（只有在决定推出时才会创建） 推出列表：活塞推动方块的坐标的一个列表（即活塞推出列表按坐标记录，这就意味着活塞可以给别的活塞生成的MB转b） 破坏列表：活塞破坏方块的坐标的一个列表（即活塞破坏列表按坐标记">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv41212558.webp" alt="活塞-方块系统源码解析二：活塞方块实体的作用（其一）">
+        </figure>
+        <div class="article-head">
+            <h1>活塞-方块系统源码解析二：活塞方块实体的作用（其一）</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/521607430" target="_blank" rel="noopener noreferrer">樱银音_</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2025年04月02日 19:36</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1051216438551904278" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv41212558</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv40157045.html" title="« 上一篇：方块替换中方块和方块实体的变化解析" aria-label="« 上一篇：方块替换中方块和方块实体的变化解析">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">方块替换中方块和方块实体的变化解析</span>
+            </a>
+            <a class="pager-item is-next" href="cv12809481.html" title="下一篇 »：MCBE 生成机制讲解（1.16.40）" aria-label="下一篇 »：MCBE 生成机制讲解（1.16.40）">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 生成机制讲解（1.16.40）</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="html">
+        <p><span class="font-size-20"><strong>活塞方块实体储存的内容</strong></span></p>
+        <p><strong>一、两个列表，推出列表和破坏列表（只有在决定推出时才会创建）</strong></p>
+        <p>推出列表：活塞推动方块的坐标的一个列表（即活塞推出列表按坐标记录，这就意味着活塞可以给别的活塞生成的MB转b）</p>
+        <p>破坏列表：活塞破坏方块的坐标的一个列表（即活塞破坏列表按坐标记录）</p>
+        <p><strong>二、记录活塞状态的标签</strong></p>
+        <p><strong>（state，progress，newstate，lastprogress）</strong></p>
+        <p><strong>1.state</strong></p>
+        <p>state0(活塞静止时)</p>
+        <p>state1(推出)</p>
+        <p>state2(推出完成)</p>
+        <p>state3(收回)</p>
+        <p><strong>2.newstate</strong></p>
+        <p>newstate由红石信号决定，state根据newstate调整的而不是直接通过红石信号（也就是<span class="font-size-16"><strong>活塞可以在没有信号时推出，阻挡式二归就利用了这个特性</strong></span>）</p>
+        <p><strong>3.progress</strong></p>
+        <p>progress是一个浮点数，代表了活塞的推出进度，<strong>控制函数movecollidedenetity</strong></p>
+        <p>常规情况下有</p>
+        <p>0（未推出） 对应state0</p>
+        <p>0.5（推出一半） state1或3</p>
+        <p>1（完全推出） state2</p>
+        <p>progress标签的计算规则：</p>
+        <p><span class="color-pink-03">当活塞为state0或3时，progress=max(progress-0.5, 0)</span></p>
+        <p><span class="color-pink-03">当活塞为state1时progress=min(progress+0.5, 1)</span></p>
+        <p><span class="color-pink-03">当活塞为state2时</span></p>
+        <p><span class="color-pink-03">progress小于1就把它变成1</span></p>
+        <p><strong>4.lastprogress</strong></p>
+        <p>上一次更新时的progress</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv41212558/d559a01e06dc.webp" width="333" height="528" alt="活塞nbt实例" loading="lazy">
+        <figcaption class="fig-caption">活塞nbt实例</figcaption>
+    </figure>
+        <hr class="opus-pagebreak">
+        <p><strong>活塞正常推出时序</strong></p>
+        <p>0gt 红石刻 state0 活塞收到红石信号<span class="font-size-20"></span></p>
+        <p>1gt 非红石刻 state0</p>
+        <p>2gt 红石刻 state1 活塞推出</p>
+        <p>3gt 非红石刻 state1</p>
+        <p>4gt 红石刻 state2 转b</p>
+        <hr class="opus-pagebreak">
+        <p><span class="font-size-20"><strong>函数movecollidedentity</strong></span></p>
+        <p><strong>（这个函数的主要目的是移动被活塞推的实体，只在state1时每gt执行）：</strong></p>
+        <p><strong>movecollidedentity函数会遍历推出列表的每个位置，</strong></p>
+        <p><strong>检测那些位置往活塞推出方向前进一格的位置是不是包含空气的mb方块实体（在1.19.50是直接检测那个位置是不是mb方块实体或者包含空气的mb方块实体）</strong></p>
+        <p><span class="color-pink-03"><strong>如果是就将检测的位置再生成一次mb</strong></span></p>
+        <hr class="opus-pagebreak">
+        <p>活塞方块实体每gt会更新一次，检查newstate标签</p>
+        <p>如果newstate是1，而state是0就推出</p>
+        <p>如果newstate是3，state是2就收回</p>
+        <p>如果决定推出或收回，就先检查是否能推出</p>
+        <p>条件有：</p>
+        <p><strong>所有推出方块都是可以推动的，总数不超过12格以及所有推出方块（如果是可以创建方块实体的方块）的方块实体是ismovable(决定方块实体能否被推出的标签，只有推出的活塞的方块实体不能被推出)的</strong></p>
+        <p>满足条件后，会把所有要推出方块的位置记录到推出列表里，把所有要破坏的方块的位置记录到破坏列表里</p>
+        <p>然后遍历破坏列表里的所有位置，破坏破坏列表记录的坐标的方块，</p>
+        <p><strong>活塞破坏方块时，会先遍历破坏列表，</strong></p>
+        <p><strong>一个一个取出坐标并检查坐标上的方块是否有secondpart（方块的另一半）</strong></p>
+        <p><strong>如果有就获取secondpart的位置，破坏secondpart的位置的方块，然后再破坏破坏列表的位置的方块</strong></p>
+        <p>（比如在0，1，0位置有一个上半门，这个位置在活塞的破坏列表里，活塞遍历破坏列表，遍历到这个坐标了，检查发现这个位置的方块是个上半门，他就获取这个上半门的secondpart位置，也就是0，0，0这个位置，然后破坏，再破坏0，1，0这个位置）</p>
+        <p>破坏完所有要破坏的方块之后</p>
+        <p>开始按推出列表记录的坐标依次推出方块</p>
+        <p>生成活塞臂方块，</p>
+        <p><strong>然后执行函数movecollidedentity</strong></p>
+        <p><strong>转b时遍历列表的每个位置，再给这个位置加上推出方向的向量的位置然后转b</strong></p>
+        <hr class="opus-pagebreak">
+        <p><span class="font-size-20"><strong>一些简单的魔法原理讲解：</strong></span></p>
+        <p><strong>1<strong>、</strong>移动可成为extrablock的方块</strong></p>
+        <p>首先做一个PT堆积器延迟高草连带破坏，然后在0，0，0的位置放置一个高草，</p>
+        <p>上半草在0，1，0</p>
+        <p>下半草在0，0，0</p>
+        <p>然后把下半草打掉，放置一个可以被加入推出列表的方块，从旁边用粘液块粘住，推的时候粘走，</p>
+        <p>这时，如果活塞决定推出，</p>
+        <p>使它在0，1，0的位置记录进破坏列表</p>
+        <p>在0，0，0的位置记录进推出列表</p>
+        <p>然后活塞破坏破坏列表里的所有方块，并破坏破坏列表里的方块的secondpart的位置，也就是上半草对应的下半草的位置（0，0，0）</p>
+        <p>然后0，0，0位置的方块被破坏掉变成空气，</p>
+        <p>接下来，执行推出推出列表里的方块，</p>
+        <p>因为0，0，0的位置在推出列表里，并且那个位置是空气，所以空气会被往活塞推出方向推出一格</p>
+        <p><strong>2<strong>、</strong>MB瞬间到位（通过a活塞给b活塞推出的mb转b）</strong></p>
+        <p>首先有两个活塞，活塞a和活塞b，</p>
+        <p>活塞b的优先级比活塞a高</p>
+        <p>第0 gt，a活塞推出，然后用任意手法破坏掉其中的一个MB，</p>
+        <p>第1gt，在这1 gt内破坏掉那个MB也可以，总之要在a活塞执行转b之前破坏</p>
+        <p>第2gt，b活塞推出，把b活塞生成的MB推进a活塞被破坏掉的MB的位置中，然后a活塞执行推出列表里活塞方向加一的位置全部转b</p>
+        <hr class="opus-pagebreak">
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv41212558/0b3471147bfb.webp" width="889" height="324" alt="movingblock方块实体类的所有成员变量" loading="lazy">
+        <figcaption class="fig-caption">movingblock方块实体类的所有成员变量</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv41212558/0342d1b3bc37.webp" width="1120" height="391" alt="活塞方块实体类实例的所有成员变量的表" loading="lazy">
+        <figcaption class="fig-caption">活塞方块实体类实例的所有成员变量的表</figcaption>
+    </figure>
+        <p><span class="font-size-23"><strong>笔者：樱银音</strong></span></p>
+        <p><span class="font-size-23"><strong>代码分析：<a href="https://space.bilibili.com/3546590734190596?spm_id_from=333.1387.follow.user_card.click" target="_blank" rel="noopener noreferrer">奈茶泡芙</a></strong></span></p>
+        <hr class="opus-pagebreak">
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1051216438551904278">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv40157045.html" title="« 上一篇：方块替换中方块和方块实体的变化解析" aria-label="« 上一篇：方块替换中方块和方块实体的变化解析">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">方块替换中方块和方块实体的变化解析</span>
+            </a>
+            <a class="pager-item is-next" href="cv12809481.html" title="下一篇 »：MCBE 生成机制讲解（1.16.40）" aria-label="下一篇 »：MCBE 生成机制讲解（1.16.40）">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 生成机制讲解（1.16.40）</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCBE 岩浆怪和史莱姆的空间检测机制1.19.60- - 橘猫的资源站</title>
+    <meta name="description" content="首先我们来看一下维基上关于岩浆怪和史莱姆的空间检测机制的内容 史莱姆 岩浆怪 这看起来很合理，对吧？，我们开始也是这么想的而且大部分人也都是这么想的，甚至现在，很多设计依然也是按照这个理念来的，最明显的就是用固体方块的时候，中间空三格，用半砖就只要空两格，这样">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv19417088.webp" alt="MCBE 岩浆怪和史莱姆的空间检测机制1.19.60-">
+        </figure>
+        <div class="article-head">
+            <h1>MCBE 岩浆怪和史莱姆的空间检测机制1.19.60-</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/565837815" target="_blank" rel="noopener noreferrer">离殇之枫</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2022年10月30日 18:13</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/722784567352623136" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv19417088</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">实体机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv36068660.html" title="« 上一篇：MCBE 守卫者的两种生成机制" aria-label="« 上一篇：MCBE 守卫者的两种生成机制">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 守卫者的两种生成机制</span>
+            </a>
+            <a class="pager-item is-next" href="cv20546105.html" title="下一篇 »：MCBE 岩浆怪和史莱姆的空间检测机制1.19.60+" aria-label="下一篇 »：MCBE 岩浆怪和史莱姆的空间检测机制1.19.60+">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 岩浆怪和史莱姆的空间检测机制1.19.60+</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="delta">
+        <p>首先我们来看一下维基上关于岩浆怪和史莱姆的空间检测机制的内容</p>
+        <p>                              史莱姆</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv19417088/780d14b13e2a.webp" width="1080" height="632" alt="文章配图" loading="lazy">
+    </figure>
+        <p>                              岩浆怪</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv19417088/d333a30a1a90.webp" width="1070" height="794" alt="文章配图" loading="lazy">
+    </figure>
+        <p>这看起来很合理，对吧？，我们开始也是这么想的而且大部分人也都是这么想的，甚至现在，很多设计依然也是按照这个理念来的，最明显的就是用固体方块的时候，中间空三格，用半砖就只要空两格，这样中间刚好就有2.5格的空间了，这一切看起来都非常合理，之前我们也从来没有怀疑过，直到上次我们去测试烈焰人农场的时候，突然发现一个很奇怪的事情，这是我们当時的设计</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv19417088/e83887b329de.webp" width="2400" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>这是我们理想中的烈焰人农场，活板门限高，保证只能生成烈焰人和中小型的岩浆怪，然后通过栅栏，保证只生成烈焰人和小型的岩浆怪，然后小型的岩浆怪就到主世界之后再进一步处理，但是当我们测试的時候，居然发现一个很严重的问题，为什么三种大小的岩浆怪都可以正常生成？</p>
+        <p>我们当时就感觉一脸懵逼，但是由于当時的重点并不是在做岩浆怪农场，所以我们在发现了烈焰人的宽度只有0.5格，比正常生物的0.6格要窄之后，就使用了墙壁或小型紫水晶，从而刚好可以不限制烈焰人的生成，但是我们惊讶的发现，这个時候岩浆怪居然也被限制了，然后就做出了纯烈焰人农场</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv19417088/47e171949eb9.webp" width="2400" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>然后事后我们再发完烈焰人农场的视频之后，经过仔细的思考和推理，得出了一个猜想，三种大小的岩浆怪使用的是同一套空间检测机制，而并不是像维基上所说的，分别有一套独自的空间检测机制</p>
+        <p>首先在之前做烈焰人农场的过程中，我们测试出了，岩浆怪的空间检测机制的宽度是与普通生物相同的0.6格，并且高度是已知在有活板门的情况下可以生成，也就是说，至少有苦力怕的高度</p>
+        <p>然后我们在经过了一系列的测试之后，首先确定了他在自然生成下也是同样的检测机制</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv19417088/9e288745a691.webp" width="2400" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>然后测试了这一系列高度从高到低</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv19417088/363a286500aa.webp" width="2400" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>最终，它可以生成的最低的高度就是小型紫水晶，而这一点和苦力怕一致，并且在可以生成的情况下，都是三种大小均可以生成</p>
+        <p>所以将它们的高度和宽度结合在一起，就可以得出来，三种岩浆怪共用一套空间检测机制，岩浆怪的空间检测范围，与苦力怕一致</p>
+        <p>这个時候我们想到了与岩浆怪几乎一模一样的史莱姆，这个大家应该更加熟悉，而且我们之前看到的众多视频当中，也都是认为史莱姆的空间检测范围与维基所说的一致，所以我们便立马去测试了史莱姆</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv19417088/f0b7354bf036.webp" width="2400" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>果然，与猜想的一致，可以正常生成，并且之后又经过了一系列测试，发现确实和岩浆怪的是一致的，这个就不放出来了，但是发现一个比较有趣的东西，中间没有加栅栏的時候（准确的说应该是头顶上方的那一层），大型的跳动并不会受伤，但是加了之后，大型的跳动的時候会受到窒息伤害</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv19417088/a4bb19a06829.webp" width="2400" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>所以最后就得出了一个结论，岩浆怪和史莱姆，它们的空间检测机制是一样的，并且都是三种大小共用同一套空间检测机制，并且这套空间检测机制的检测范围，基本确定与苦力怕一致</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv19417088/54847456c1f6.webp" width="2400" height="1080" alt="文章配图" loading="lazy">
+    </figure>
+        <p>所以也就是说，之前的那些用半砖来保证两层之间间隔为2.5格的设计，实际上，除了保证生成的史莱姆和岩浆怪不会卡在生成架上之外，其实和两层之间空两格的完整方块生成架没有任何区别</p>
+        <p>不过实际上，利用这一点的话，其实你可以设计出一个看起来很奇怪的组合，那就是史莱姆苦力怕农场，两个绿油油的东西集中在一块，问题不大</p>
+        <p>总之，具体有什么用的话，就带大家去开发了，这篇专栏的意义就是让大家不要再被维基给误导了，因为上面基本上很多东西都是JE专属的特性，但是上面并不会标明出来，总之就是想让大家了解一下岩浆怪和史莱姆真正的空间检测机制，行吧，那就这样，到此结束，问题不大</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/722784567352623136">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv36068660.html" title="« 上一篇：MCBE 守卫者的两种生成机制" aria-label="« 上一篇：MCBE 守卫者的两种生成机制">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 守卫者的两种生成机制</span>
+            </a>
+            <a class="pager-item is-next" href="cv20546105.html" title="下一篇 »：MCBE 岩浆怪和史莱姆的空间检测机制1.19.60+" aria-label="下一篇 »：MCBE 岩浆怪和史莱姆的空间检测机制1.19.60+">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">MCBE 岩浆怪和史莱姆的空间检测机制1.19.60+</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活塞-方块系统源码解析一：mb和方块实体的性质 - 橘猫的资源站</title>
+    <meta name="description" content="extrablock:被包含的方块 setblock:放置方块 block：方块对象 blockEntity或blockactor: 方块实体 首先要知道在整个游戏的同类方块都指向一个方块对象， 在这种情况下，方块实体有两个作用， 1.方块实体能让某个位置的方">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv40738765.webp" alt="活塞-方块系统源码解析一：mb和方块实体的性质">
+        </figure>
+        <div class="article-head">
+            <h1>活塞-方块系统源码解析一：mb和方块实体的性质</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/521607430" target="_blank" rel="noopener noreferrer">樱银音_</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2025年02月18日 03:04</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1035004208294658055" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv40738765</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">红石机制</span>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv15587328.html" title="« 上一篇：如何建造一条无延迟投掷器链––MCBE 计划刻机制详解" aria-label="« 上一篇：如何建造一条无延迟投掷器链––MCBE 计划刻机制详解">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">如何建造一条无延迟投掷器链––MCBE 计划刻机制详解</span>
+            </a>
+            <a class="pager-item is-next" href="cv40157045.html" title="下一篇 »：方块替换中方块和方块实体的变化解析" aria-label="下一篇 »：方块替换中方块和方块实体的变化解析">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">方块替换中方块和方块实体的变化解析</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="html">
+        <p>extrablock:被包含的方块</p>
+        <p>setblock:放置方块</p>
+        <p>block：方块对象</p>
+        <p>blockEntity或blockactor: 方块实体</p>
+        <hr class="opus-pagebreak">
+        <p><strong>首先要知道在整个游戏的同类方块都指向一个方块对象，</strong></p>
+        <p><strong>在这种情况下，方块实体有两个作用，</strong></p>
+        <p><strong>1.方块实体能让某个位置的方块储存独属于自己的数据</strong></p>
+        <p><strong>2.每gt定期更新一次，执行特定的行为（并不是所有方块实体每gt都执行事件，大部分只是存储数据）</strong></p>
+        <p>不过要补充说明一下，末地传送门的方块实体没有任何作用</p>
+        <p>方块实体的数据初始化有两种</p>
+        <p>1.直接将数据作为参数传入setblock函数中</p>
+        <p>2.setblock初始化一个默认的方块实体，然后再录入进去</p>
+        <hr class="opus-pagebreak">
+        <p><span class="font-size-20"><strong>方块实体和方块的关系，</strong></span></p>
+        <p>方块实体只能被一类方块创建，这类方块是可以创建方块实体的方块，（方块实体基本上都是在setblock函数被创建的）</p>
+        <p><strong>方块实体创建时，</strong></p>
+        <p>是根据坐标储存的，会将坐标录入区块的方块实体表里面（哈希表）</p>
+        <p>这个过程中，函数会将方块实体要创建的坐标转换为键，根据键搜索表里这个位置是否已经存在值了</p>
+        <p>如果存在就不创建了</p>
+        <p><span class="color-pink-03">也就是每个位置只能有一个方块实体</span></p>
+        <p><span class="color-pink-03">而且新的方块实体永远无法顶掉旧的</span></p>
+        <p><span class="color-pink-03">（方块实体自己和没方块实体的方块都不能影响方块实体的存在</span></p>
+        <p><span class="color-pink-03">方块实体的创建和删除都依赖于“可以创建方块实体的方块”）</span></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40738765/fea2f5432556.webp" width="1080" height="2804" alt="可以创建方块实体的方块" loading="lazy">
+        <figcaption class="fig-caption">可以创建方块实体的方块</figcaption>
+    </figure>
+        <hr class="opus-pagebreak">
+        <p>举个例子</p>
+        <p>比如往mb的方块实体的位置setblock一个活塞，那么因为那个位置已经有了一个方块实体，所以活塞的方块实体就没法被创建出来，而活塞的方块实体负责着活塞的运作</p>
+        <p>所以会出现活塞无法推出的现象</p>
+        <hr class="opus-pagebreak">
+        <p>接下来解释下方块被推为什么内部的方块实体可以跟着走</p>
+        <p><strong>这是因为方块实体每gt会检测自己位置上的方块，然后把它记录起来</strong></p>
+        <p><strong>所有的方块实体还会存储一个ismovable标签，</strong>这个是来判断方块实体能否被移动的，</p>
+        <p>当ismovable标签为零时不可以被推动，</p>
+        <p>这个标签可以说是专门为了活塞设置的（<span class="color-pink-03">实际上活塞在方块层面是可以被推动的，mc并没有推出的活塞方块</span>）</p>
+        <p>在活塞未推出时，活塞的方块实体的ismovable标签是1</p>
+        <p>在活塞推出时，ismovable标签变成0</p>
+        <hr class="opus-pagebreak">
+        <p><span class="font-size-20"><strong>MB（Moving block）的性质</strong></span>，</p>
+        <p>MB属于可以创建方块实体（这个方块实体是每gt执行特定行为的）的方块，</p>
+        <p>MB的方块实体存储的内容有，</p>
+        <p><strong>1.推动的方块（Moving block标签）</strong></p>
+        <p><strong>2.推动的额外方块（Moving extra标签）</strong></p>
+        <p><strong>3.推动的方块实体（Moving entity标签）</strong></p>
+        <p><strong>4.记录推动它的活塞是否伸出的标签（expanding标签），</strong>伸出时为1，不伸出时为0，</p>
+        <p>如果伸出就调整MB记录的碰撞箱的位置（为1就往推出方向进一格，为0就停在原地）</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv40738765/c73c2f93a23d.webp" width="365" height="357" alt="这是一个mb的方块实体储存的信息的实例，蓝色部分是所有方块实体都会有的，剩下是mb独有的" loading="lazy">
+        <figcaption class="fig-caption">这是一个mb的方块实体储存的信息的实例，蓝色部分是所有方块实体都会有的，剩下是mb独有的</figcaption>
+    </figure>
+        <hr class="opus-pagebreak">
+        <p>比如说箱子被推了，那么MB的方块实体就储存了</p>
+        <p>箱子的方块信息（Moving block）</p>
+        <p>箱子的包含的方块信息（Moving extra)</p>
+        <p>一般默认是空气，也可以是别的，这部分看</p>
+        <a class="jump-card" href="cv40157045.html">
+    <img src="../../assets/articles/cv40738765/5d26e798acbf.webp" width="1320" height="224" alt="站内专栏 cv40157045" loading="lazy">
+    <span class="jump-card-badge">站内专栏 »</span>
+</a>
+        <p>箱子的方块实体信息（Moving entity），</p>
+        <p>而箱子的方块实体负责储存箱子里的内容，被推了之后再转b，就会放出来箱子和之前储存的那个箱子的方块实体，所以打开箱子还是那些内容</p>
+        <hr class="opus-pagebreak">
+        <p>其实这个<span class="color-pink-03">moving entity不区分属于moving block还是moving extra</span>，</p>
+        <p>这就导致了一个很有意思的现象，</p>
+        <p>就是如果一个moving extra有方块实体，并且在转b的时候判断为不能成为一个extrablock就会放不出来</p>
+        <p>但是被推动的方块和extrablock的方块实体却被放出来了，</p>
+        <p>前面也讲到了一个结论，方块实体自己和无法创建方块实体的方块都不能影响方块实体的存在，</p>
+        <p>这就做到了方块实体分离</p>
+        <hr class="opus-pagebreak">
+        <p><span class="font-size-20"><strong>mb的方块实体每gt执行特定行为有</strong></span>：</p>
+        <p>1.MB的方块实体在每gt更新时，</p>
+        <p><strong>首先会检测自己记录的movingblock和movingextra是否是不可推动的</strong></p>
+        <p><strong>如果是就把他们变成空气，</strong></p>
+        <p>这就意味着，如果你推动任何一个从方块层面上不可被推动的方块，或者说把它记录到MB里，那么当这个MB更新的时候，这个方块就会变成空气，但是这个方块的方块实体却会存储在MB里，放置出来就变成了带有那个方块的方块实体的air</p>
+        <p>这就做到了方块实体分离</p>
+        <p>2.MB的方块实体每gt更新时还会<strong>检测它记录的活塞位置上是否存在活塞，如果不存在就直接转b</strong></p>
+        <p>转b先放block再放extrablock</p>
+        <p>这里是直接setblock传递方块实体数据，不是先创建默认再录入数据</p>
+        <p><span class="font-size-20"><strong>代码分析：奈茶泡芙</strong></span></p>
+        <hr class="opus-pagebreak">
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1035004208294658055">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="cv15587328.html" title="« 上一篇：如何建造一条无延迟投掷器链––MCBE 计划刻机制详解" aria-label="« 上一篇：如何建造一条无延迟投掷器链––MCBE 计划刻机制详解">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">如何建造一条无延迟投掷器链––MCBE 计划刻机制详解</span>
+            </a>
+            <a class="pager-item is-next" href="cv40157045.html" title="下一篇 »：方块替换中方块和方块实体的变化解析" aria-label="下一篇 »：方块替换中方块和方块实体的变化解析">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">方块替换中方块和方块实体的变化解析</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>
