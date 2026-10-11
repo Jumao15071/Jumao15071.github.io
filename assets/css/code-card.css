@@ -1,0 +1,77 @@
+/* 深色代码卡片（与文章页 .opus .code-card 同款，供非 Bulma 页面如 pages/shaderlist.html 复用）
+   不加 .opus 前缀，直接作用于 .code-card */
+.code-card {
+    margin: 1.5rem 0;
+    border: 1px solid #3a3f4b;
+    border-radius: 0.6rem;
+    overflow: hidden;
+    background-color: #282c34;
+}
+
+.code-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.3rem 0.5rem 0.3rem 0.8rem;
+    background-color: #21252b;
+}
+
+.code-lang {
+    color: #9da5b4;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+}
+
+.code-btn {
+    cursor: pointer;
+    padding: 0.12rem 0.6rem;
+    border: 1px solid #3f4654;
+    border-radius: 0.35rem;
+    background-color: transparent;
+    color: #abb2bf;
+    font-size: 0.75rem;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.code-btn:hover {
+    background-color: #2f3540;
+    color: #fff;
+}
+
+.code-btn.is-done {
+    color: #98c379;
+    border-color: #98c379;
+}
+
+.code-body {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    overflow-x: auto;
+    background-color: transparent;
+}
+
+.code-body code {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background: none;
+    color: #e6e9ef;
+    font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+    font-size: 0.86rem;
+    line-height: 1.65;
+    white-space: pre;
+    tab-size: 4;
+}
+
+/* 窄屏：代码卡字号略收，避免横向溢出卡片 */
+@media screen and (max-width: 768px) {
+    .code-body {
+        padding: 0.7rem 0.75rem;
+    }
+
+    .code-body code {
+        font-size: 0.78rem;
+    }
+}

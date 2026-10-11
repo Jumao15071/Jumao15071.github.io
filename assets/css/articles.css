@@ -748,3 +748,50 @@
     }
 }
 
+/* ---------- 站内文档（由本地 docx/doc/pdf/图片转换而来） ---------- */
+.doc-badge {
+    display: inline-block;
+    padding: 0.05rem 0.55rem;
+    border-radius: 999px;
+    background-color: rgba(235, 74, 106, 0.12);
+    color: #eb4a6a;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.doc-source {
+    margin: 0.45rem 0 0;
+    color: #8a8a8a;
+    font-size: 0.85rem;
+    word-break: break-word;
+}
+
+.doc-note {
+    margin: 0.35rem 0 0;
+    padding: 0.5rem 0.8rem;
+    border-left: 3px solid #eb4a6a;
+    border-radius: 0 0.3rem 0.3rem 0;
+    background-color: rgba(235, 74, 106, 0.07);
+    color: #6a6a6a;
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+/* PDF 原页面：整页图（可点击看原尺寸） */
+.opus-fig.is-fullpage {
+    margin: 1.1rem 0;
+}
+
+.opus-fig.is-fullpage a {
+    display: block;
+    line-height: 0;
+}
+
+.opus-fig.is-fullpage img {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 0.35rem;
+    box-shadow: 0 1px 6px rgba(26, 29, 32, 0.16);
+}
+
+

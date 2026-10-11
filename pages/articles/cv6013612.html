@@ -79,7 +79,7 @@
         <p>前排提示:</p>
         <ol>
             <li>所有内容来自<strong>1.14.21</strong>的BDS反编译后的伪源码，但是全文不会直接出现代码,大可放心阅读</li>
-            <li>部分内容参考了国外玩家earthcomputer和Floan的一篇文档:https://docs.google.com/document/d/17B0ecrI8BSU1VWpfUNQOoco9l6rhkx1U6S4J1ihFRNg/edit</li>
+            <li>部分内容参考了国外玩家earthcomputer和Floan的一篇文档:<a href="https://docs.google.com/document/d/17B0ecrI8BSU1VWpfUNQOoco9l6rhkx1U6S4J1ihFRNg/edit" target="_blank" rel="noopener noreferrer">https://docs.google.com/document/d/17B0ecrI8BSU1VWpfUNQOoco9l6rhkx1U6S4J1ihFRNg/edit</a></li>
             <li>（免责声明）所有内容不保证完全正确，仅供参考</li>
         </ol>
         <p>下面是正文:
@@ -144,7 +144,7 @@
             <li>按照特定顺序依次取出更新队列中的更新项目然后执行其对应的tick() 函数。顺序是这样的：每次优先更新时间戳小(也就是更新项里面的游戏内时间)的更新项,如果两个更新的时间相同，先后顺序未知。（当然不排除针对某些更新的特意的随机行为）</li>
         </ol>
         <p><strong>这个过程每gt每个区块会执行两次</strong></p>
-        <p>当退出游戏的时候每个区块的更新队列会被完整地写入到存档文件(你可以用mcctool[http://mcctoolchest.com/]在存档的区块数据文件内看到这个更新队列的信息，包括所有更新项的具体数据)，加载世界的时候这些数据也会被完整读取出来.</p>
+        <p>当退出游戏的时候每个区块的更新队列会被完整地写入到存档文件(你可以用mcctool[<a href="http://mcctoolchest.com/" target="_blank" rel="noopener noreferrer">http://mcctoolchest.com/</a>]在存档的区块数据文件内看到这个更新队列的信息，包括所有更新项的具体数据)，加载世界的时候这些数据也会被完整读取出来.</p>
         <p>不难发现,当<strong>更新的速度大于消耗的速度</strong>的时候,更新队列<strong>越来越长越来越长越来越长</strong>的情况,轻则出现更新延迟,当然这个特性已经被云龙大叔发现了:</p>
         <a class="jump-card is-text" href="https://www.bilibili.com/video/BV1cJ411p7NV" target="_blank" rel="noopener noreferrer">
     <span class="jump-card-cover"><img src="../../assets/articles/cv6013612/eba7cb24f4e0.webp" alt="" loading="lazy"></span><span class="jump-card-main">

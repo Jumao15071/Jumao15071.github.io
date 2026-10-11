@@ -339,6 +339,9 @@ https://www.bilibili.com/opus/1091172227262447617
 BRTX光追安装说明
 https://www.bilibili.com/opus/795968658384879625
 
+渲染龙光影安装指南
+https://www.bilibili.com/opus/1257949350705758209
+
 =========
 科技史
 

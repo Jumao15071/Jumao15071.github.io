@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JE/MCBE 粘液块飞船教程（未完成） - 橘猫的资源站</title>
+    <meta name="description" content="新人推荐（零基础的可以好好看看） 如果你想达到群里高管的水平，那么推荐你读一读我。 AS warning：入门很难，请有毅力！学会基本剩下的都简单了！ ———————第一单元 方块与特性———————— 两大主流版本 可推动方块 常用材料 JE版和BE版 JE">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>JE/MCBE 粘液块飞船教程（未完成）</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：佚名</span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2026年10月11日</span>
+                <span class="doc-badge" title="由本地文档转换而来">站内文档</span>
+                <span class="art-sep">·</span>
+                <span class="art-cat">绿萌科技</span>
+            </div>
+            <p class="doc-source">来源：JE.BE粘液块飞船教程（未完成）.doc</p>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="vector-theory.html" title="« 上一篇：矢量理论及其三维拓展" aria-label="« 上一篇：矢量理论及其三维拓展">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">矢量理论及其三维拓展</span>
+            </a>
+            <a class="pager-item is-next" href="flight-basics.html" title="下一篇 »：从零开始学航械——飞行器技术基础图文教程" aria-label="下一篇 »：从零开始学航械——飞行器技术基础图文教程">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">从零开始学航械——飞行器技术基础图文教程</span>
+            </a>
+        </nav>
+
+        <div class="opus" data-content-kind="doc">
+        <p>新人推荐（零基础的可以好好看看）</p>
+        <p>如果你想达到群里高管的水平，那么推荐你读一读我。</p>
+        <p>AS warning：入门很难，请有毅力！学会基本剩下的都简单了！</p>
+        <p>———————第一单元 方块与特性————————</p>
+        <p>两大主流版本 可推动方块 常用材料</p>
+        <ul>
+    <li>JE版和BE版</li>
+</ul>
+        <p>JE版，就是常说的java版，java edition，指电脑版非win10版的Minecraft.在这个版本中，1.15版建造飞船用的元件基本完备，也就是说如果你想获得较好的飞船建造体验，请选择1.15+的版本。而BE版，即Bedrock Edition（基岩版），指win10版或手机端的Minecraft.在这个版本中，1.14版以后建造飞船用的元件基本完备。<span style="color:#ff0000">这里有一个好分的方法——手机版一定是BE版，从win10应用商店下的也是BE版。</span><span style="color:#8db3e2">网易就给爷爬好了</span><span style="color:#ff0000">。</span></p>
+        <p>这些东西都是无法装上飞船的，原因是它们无法被活塞推动。这些请你记住：（<span style="color:#00b0f0">蓝色字体</span>为仅JE版无法推动，<span style="color:#ff0000">红色字体</span>为JE版和BE版都无法推动）</p>
+        <ul>
+    <li><span style="color:#ff0000">TNT炸不坏的东西</span>  <span style="color:#ff0000">3.激活的活塞/粘性活塞（可以让它们先收回，再移动） </span><span style="color:#00b0f0">4.能存储物品的方块（比如发射器，投掷器等） </span><span style="color:#ff0000">5.能被水冲掉的方块 </span><span style="color:#00b0f0">6.阳光传感器</span></li>
+</ul>
+        <p><span style="color:#ff0000">2.记</span><span style="color:#333333">住这个常用概念：1</span><span style="color:#ff0000">红石刻：1tick，tick简称t，相当于0.1秒。1游戏刻：1gametick，gametick简称gt，1gt=0.5t，也就是0.05秒</span></p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image1.webp" alt="">
+</figure>
+        <p>2粘液块飞船用材料的基本特性</p>
+        <ul>
+    <li>活塞</li>
+</ul>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image2.webp" alt="">
+</figure>
+        <p>活塞收到红石信号后可以把木头端那端的方块往外推一格，但是<span style="color:#ff0000">只能推动12个方块。</span></p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image3.webp" alt="">
+</figure>
+        <p>推动方块的活塞</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image4.webp" alt="">
+</figure>
+        <p>超载的活塞</p>
+        <ul>
+    <li>粘性活塞</li>
+</ul>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image5.webp" alt="">
+</figure>
+        <p>与活塞类似，不同的是红石信号消失时它可以<span style="color:#ff0000">把推出的方块拉回</span>。同样，只能推动12个方块。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image6.webp" alt="">
+</figure>
+        <p>激活的粘性活塞</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image7.webp" alt="">
+</figure>
+        <p>收回时带走方块的粘性活塞</p>
+        <p><span style="color:#ff0000">但是在JE版，当粘性活塞接收到的红石信号小于3gt时，会仅仅推出方块或拉回方块。</span></p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image8.webp" alt="">
+</figure>
+        <p>粘性活塞接收到侦测器的1t信号时仅仅推出方块</p>
+        <ul>
+    <li>粘液块</li>
+</ul>
+        <p>俗称绿萌，可以<span style="color:#ff0000">粘动与自己相邻的方块（包括相邻的粘液块）</span>。但<span style="color:#ff0000">无法粘动陶瓦和活塞本来就无法推动的方块。</span></p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image9.webp" alt="">
+</figure>
+        <p>活塞和这一坨</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image10.webp" alt="">
+</figure>
+        <p>活塞推动这一坨</p>
+        <ul>
+    <li>侦测器（也叫观察者）</li>
+</ul>
+        <p><span style="color:#333333">侦测器方块的材质含有两个特殊面，这两个特殊面当方块被放置时在正反两面。</span></p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image11.webp" alt="">
+</figure>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image12.webp" alt="">
+</figure>
+        <p><span style="color:#ff0000">当长得像脸的那端检测到方块更新时，另一端会输出一个红石信号。（JE版在方块更新后经过2gt，在第3gt时激活）</span><span style="color:#333333">激活在它反面的红石器械时，发出的信号持续 </span><span style="color:#ff0000">1t</span><span style="color:#333333">。</span></p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image13.webp" alt="">
+</figure>
+        <p><span style="color:#333333">侦测器在侦测到后方的方块更新时输出1t信号来驱动活塞</span></p>
+        <p><span style="color:#333333">当侦测器本身被活塞移动时，这</span><span style="color:#ff0000">也算作一次方块更新</span><span style="color:#333333">。在这发生时，侦测器在被推或被拉时发出一次1t信号，但并不提前。也就是说，你可以把活塞接在侦测器的输出端，另一个活塞推动侦测器时，输出端的活塞会激活一次。</span></p>
+        <ul>
+    <li>蜂蜜方块</li>
+</ul>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image14.webp" alt="">
+</figure>
+        <p>蜂蜜方块和粘液块一样，但是<span style="color:#ff0000">不会被粘液块粘动，同时粘液块也无法粘动蜂蜜方块</span>。</p>
+        <ul>
+    <li>活塞能推动的一般方块（按个人喜好使用就好，只要活塞能推动）</li>
+    <li>陶瓦</li>
+</ul>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image15.webp" alt="">
+</figure>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image16.webp" alt="">
+</figure>
+        <p>陶瓦可以直接被后面的方块推动，但是无法被粘性方块影响。</p>
+        <ul>
+    <li>红石块</li>
+</ul>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image17.webp" alt="">
+</figure>
+        <p>红石信号的载体，贴着它放置的元件会被激活并持续受到红石信号。</p>
+        <p>典例</p>
+        <ul>
+    <li>如图，这里有一个粘液块和一块石英，它们后方各有两个活塞，现只能启动一个活塞，要求两个方块全部被推动，应当启动哪个活塞？</li>
+</ul>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image18.webp" alt="">
+</figure>
+        <ul>
+    <li>（<span style="color:#ff0000">JE版</span>）：你眼前的是一个简易的机械结构，石英块后的活塞是粘性活塞，拉下拉杆后，方块会在推出后被收回吗？</li>
+</ul>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image19.webp" alt="">
+</figure>
+        <p>3这里有两幅图，图（1）和图（2），请试推断（1）（2）中的活塞能否顺利推出。</p>
+        <p>图1</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image20.webp" alt="">
+</figure>
+        <p>图2</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image21.webp" alt="">
+</figure>
+        <p>4同时激活两个活塞，能推动它吗？</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image22.webp" alt="">
+</figure>
+        <p><span style="color:#ff0000">ANSWER</span></p>
+        <p><span style="color:#ff0000">1.</span><span style="color:#00b0f0">启动左边的活塞</span><span style="color:#ff0000">。本例有关粘液块的性质，粘液块可以带动贴着自己的方块，当左边的活塞激活之后，会带动粘液块，粘液块又带动右侧的石英。若启动右边的活塞，石英块被推动，但石英块无法带动粘液块，这里就需要补一个东西：</span></p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image23.webp" alt="">
+</figure>
+        <p></span><span style="color:#ff0000">粘液块的外壁很粘，但这不代表它能被周边的普通方块带走！</span></p>
+        <p><span style="color:#ff0000">2.</span><span style="color:#00b0f0">不会</span><span style="color:#ff0000">。拉杆激活活塞，活塞推动方块给予侦测器方块更新，侦测器检测到更新后输出1t的红石信号，1t=2gt小于3gt，粘性活塞只会推出不会拉回。</span></p>
+        <p><span style="color:#ff0000">3.</span><span style="color:#00b0f0">图（1）活塞可推出。图（2）活塞无法推出。</span></p>
+        <p><span style="color:#ff0000"> 粘液块无法粘动活塞推不动的方块，但是自身在这种状况下仍然可以被推动。</span></p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image24.webp" alt="">
+</figure>
+        <p><span style="color:#ff0000">图2中基岩已经挡住了活塞的推动路线。无法推动。</span></p>
+        <p><span style="color:#ff0000">4.</span><span style="color:#00b0f0">不能。</span><span style="color:#ff0000">你以为活塞能帮同伴分担东西？你想屁吃呢？</span></p>
+        <h3><span style="color:#ff0000">JE必看，BE选看——JE独有特性 BUD</span></h3>
+        <p>BUD，即Block Update Detecter，方块更新检测器。当你看到这个陌生的名字，不要担心，如果你只想学对于粘液块飞船有用的，那么这东西很好学。下面就讲讲BUD与粘液块飞船有关的东西。</p>
+        <p>我们拿活塞举例</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image25.webp" alt="">
+</figure>
+        <p>如果你想激活这个活塞，那么你会认为这五个玻璃处是绝佳的选择。这个没错，的确是这样。</p>
+        <p>但我们可以试试在这些玻璃处放下红石块！</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image26.webp" alt="">
+</figure>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image27.webp" alt="">
+</figure>
+        <p>现在我们已经在这个活塞上方隔一格放下了红石块，可见它没有任何反应。但如果你在它的旁边贴一个方块，它便会激活。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image28.webp" alt="">
+</figure>
+        <p>我们可以用文字描述这段过程——</p>
+        <p>当你在活塞隔一格上方放下了红石块，<span style="color:#ff0000">它便进入了BUD态</span>，也叫亚稳态。一旦它六个面中的任何一个面受到了方块更新，该活塞便会推出。</p>
+        <p>同样的，当你在常规的激活位置放下红石块，同时用活塞推不动的方块想方设法挡住活塞时，BUD态也会出现。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image29.webp" alt="">
+</figure>
+        <p>简而言之，一旦活塞进入亚稳态，在这个状态下给它一个方块更新，它便会激活——这也是为什么这个特性叫方块更新检测器！</p>
+        <p>鉴于它的特性，我们可以大致推测出它带来的危害和好处。这些后面都会讲到。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image30.webp" alt="">
+</figure>
+        <p>请记住上文讲到的特性，它们会为你建造一艘飞船打下良好的基础！</p>
+        <p>别光顾着看妹子，你这个小猪！</p>
+        <p>———————第一单元 方块特性 完——————</p>
+        <p>———————第二单元 简单部件———————</p>
+        <p>分离器、基础传动装置、基础引擎</p>
+        <ul>
+    <li>为什么你的战舰可以有那么多方块？</li>
+</ul>
+        <p>——分离器，各种传动结构可以帮你解决这个问题！</p>
+        <p>我们先从分离器开始。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image31.webp" alt="">
+</figure>
+        <p>这个活塞想要推巨多的方块，可他推不动！他是个小猪！</p>
+        <p>可他不想成为小猪！</p>
+        <p>那么，可不可以多加一个活塞，同时把这个结构分成两段来驱动呢？</p>
+        <p>我们不妨运用一下上一单元的知识——我们来想想侦测器。侦测器在被推动时会输出1t信号，也就是说他被推一下会激活自己前面的活塞。</p>
+        <p>所以，我们可以把这些方块中间改装成一个侦测器和一个活塞，这样再去推动它。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image32.webp" alt="">
+</figure>
+        <p>这时，左边的活塞需要推动6个方块，右边的活塞也只需要推7个方块。这个时候再激活右侧的活塞，就可以顺利地推动这些方块了。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image33.webp" alt="">
+</figure>
+        <p>当然，你也可以用粘液块和红石块，但是不提倡。不过有时必须要这么用。如下。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image34.webp" alt="">
+</figure>
+        <p>但有一些人会遇到新的问题——下面这东西怎么推？</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image35.webp" alt="">
+</figure>
+        <p>也许你会头疼，这些粘液块无法再用刚才的结构带动了，因为刚才的结构只能推动向前的东西！</p>
+        <p>不要担心，你忘了粘性活塞吗？它也许可以救你们的命。</p>
+        <p>粘性活塞可以拉方块，把离自己一格远的方块拉回来。</p>
+        <p>为什么不试试这样呢？</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image36.webp" alt="">
+</figure>
+        <p>同样的，粘液块也被分成了两段，它被一个向后的粘性活塞拉着走了。<span style="color:#ff0000">不妨自己动手造一个体验一下！</span></p>
+        <p>——虽说上面的两个结构一个是向前的活塞，一个是向后的粘性活塞，但它们的作用都是一样的——为了控制自己的推进范围在1-12方块以内，多用一些活塞来牺牲推动时间换来推动负荷。</p>
+        <p><span style="color:#ff0000">这种在连续方块结构中穿插推动装置以减轻负荷，把一段结构分离成两段的系统叫做分离器。</span></p>
+        <p>但在分离器中，有一常见的，但也低级的错误架构——</p>
+        <p>它能正常运行吗？</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image37.webp" alt="">
+</figure>
+        <p>——它不能！</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image38.webp" alt="">
+</figure>
+        <p>我们现在先从右向左把这三个活塞称为第一节活塞，第二节活塞和第三节活塞。</p>
+        <p>知道为什么第二节活塞推不动前面吗？</p>
+        <p>当你把第一节活塞激活时，第二节活塞被推动着前移了一格，但活塞头撞到了前面侦测器的“脸”上，侦测器当即放出信号，使得第三节活塞推出，但激活的活塞不能被推动，所以第二节活塞就无法推动第三节了。</p>
+        <p>——别让你的活塞头往侦测器脸上糊！</p>
+        <p>至于让它正常运行的方法也很简单。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image39.webp" alt="">
+</figure>
+        <p>别误激活观察者就好了。</p>
+        <p>传动器，不是只有分离器一种。</p>
+        <p>如果你想试试花样，来玩玩它吧。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image40.webp" alt="">
+</figure>
+        <p>这也是粘液块飞船中常见的传动装置，将粘性活塞激活一次，让它前进一格！</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image41.webp" alt="">
+</figure>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image42.webp" alt="">
+</figure>
+        <p>激活一次粘性活塞，它便可以前进一格，手动激活的话，激活几次便会前进几格。</p>
+        <p>这种东西我们可以管它叫半自动移动装置，也叫<span style="color:#ff0000">半动机。</span></p>
+        <p>在船架子上，你可以把它这样用</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image43.webp" alt="">
+</figure>
+        <p>要想应用它也到处都是用途</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image44.webp" alt="">
+</figure>
+        <p>有一天，你想推一个大长条，这时候你不但可以选择用分离器，也可以选择用半动机！</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image45.webp" alt="">
+</figure>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image46.webp" alt="">
+</figure>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image47.webp" alt="">
+</figure>
+        <p>但如果你不是闲着蛋疼，还是用分离器吧。半动机的延迟有些高，如果不是刻意要延迟，建议从简出发。</p>
+        <p>鉴于用处，这种半动机要链接整体的话，延迟相对会高一些，如果两个完全一样的结构，一个全是分离器驱动，另一个全是半动机，那么全是分离器的结构移动耗的时间会比半动机少很多。</p>
+        <p>有人可能不懂慢了有什么用，路还长呢，迟早会懂的。</p>
+        <p>但半动机要慢也是有驱动条件的</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image47.webp" alt="">
+</figure>
+        <p>请观察这个结构，它的“传动轴”就是半动机。</p>
+        <p>要移动时，中央的活塞先推出，与中间粘液块相连的两个侦测器前移一格，方块更新，输出信号，驱动粘性活塞拉回自身后方的结构，同时被拉回的结构上侦测器移动后输出一rt信号，活塞推出，才算移动完成。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image46.webp" alt="">
+</figure>
+        <p>再来看看这个。它“传动轴”同样是半动机。</p>
+        <p>要移动时，中央的活塞先推出，红石块前移一格，粘性活塞拉回自身后方的结构，同时被拉回的结构上侦测器移动后输出1rt信号，活塞推出，移动完成。</p>
+        <p>我们对比一下吧。</p>
+        <p>第一个结构比第二个结构多出了观察者的反应时间与粘性活塞推出的时间，而第二组实际上并没有多大延迟，比分离器稍慢一些就是了。</p>
+        <p>所以如果你想要延迟，别忘了结构上的问题。</p>
+        <p><span style="color:#ff0000">——JE用半动机——</span></p>
+        <p>嘿，电脑端的朋友，想来试试无侦测器而且更屌的半动机吗？这里有两种功能截然不同的半动机供你选择！</p>
+        <p>1.标准式半动机</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image48.webp" alt="">
+</figure>
+        <p>这是一个BUD态的粘性活塞，你更新它的话，它会不停地乱抽抽，<span style="color:#ff0000">不信试试</span></p>
+        <p>这时，你在后面一格怼上个普通活塞</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image49.webp" alt="">
+</figure>
+        <p>再对粘性活塞进行方块更新，粘性活塞会伸出，然后因为失去红石信号立马缩回，此时后方的活塞被粘液块向前拉动了一格，同时接收到了红石块来的红石信号，向前推动一格。</p>
+        <p>你也许会问：为什么粘性活塞不会继续抽抽？</p>
+        <p>这个就牵扯到另一个只需要记的东西</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image50.webp" alt="">
+</figure>
+        <p><span style="color:#ff0000">如果你在粘性活塞的对面放上一个方块，再去更新BUD态的粘性活塞，那么它就只会抽一下，然后继续进入BUD状态。</span></p>
+        <p><span style="color:#0d0d0d">同理，上图的半动机就是这样，粘性活塞驱动粘液块把普通活塞拉回来，就相当于第二张图上面的铁块。粘性活塞就不再乱抽，这时活塞就会向前推一次。</span></p>
+        <p><span style="color:#0d0d0d">看到这，你可能好奇地贴着粘性活塞拆放方块进行方块更新——别再拆放方块了！</span></p>
+        <p><span style="color:#ff0000">火焰弹是个方块更新的更好选择！</span><span style="color:#0d0d0d">拿着它对着BUD态的活塞侧面右击，会在粘性活塞的侧面生成极为短暂的火焰，这其实就已经给了粘性活塞一次方块更新，粘性活塞会相应地抽一次。</span></p>
+        <p><span style="color:#0d0d0d">这种半动机的延迟也比较可观。</span><span style="color:#ff0000">在JE端没出侦测器的时候，它可是经典。</span></p>
+        <p><span style="color:#0d0d0d">我们来看下一种。</span></p>
+        <ul>
+    <li><span style="color:#0d0d0d">无延迟半动机</span></li>
+</ul>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image51.webp" alt="">
+</figure>
+        <p><span style="color:#0d0d0d">看看它，美吗？美就在你的JE版临摹一个出来吧！</span></p>
+        <p><span style="color:#0d0d0d">临摹出来以后记得激活一次上面的活塞让它推一下结构，观察一下移动。</span></p>
+        <p><span style="color:#0d0d0d">你会发现和第二种通用的半动机差不多。</span></p>
+        <p><span style="color:#0d0d0d">因为重点还没来。</span></p>
+        <p><span style="color:#0d0d0d">现在，请把后面的一排粘液块换掉，换成这堆机器。</span></p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image52.webp" alt="">
+</figure>
+        <p><span style="color:#0d0d0d">现在请你观察一下这三个半动机，不难发现——他们是同时活动的！</span></p>
+        <p><span style="color:#0d0d0d">你可以继续向任意方向延伸，让它成为一个没有延迟的大结构！</span></p>
+        <p><span style="color:#0d0d0d">不必觉得神奇，这是常规操作。刚开始红石块前移时，粘性活塞拉回，一旦拉回，后面的红石块也会同时拉回，这样又会导致后方的粘性活塞和前方的粘性活塞几乎同时拉回以做到同时的效果！</span></p>
+        <p><span style="color:#0d0d0d">但其实是有极其微小的延迟的，不过肉眼看不出。</span></p>
+        <p><span style="color:#0d0d0d">BE版也是可以做这种结构的，但是并没有无延迟效果。</span></p>
+        <p><span style="color:#0d0d0d">2.为啥你的战舰可以一直开？</span></p>
+        <p>——我叫引擎！你们叫我引擎就好了！</p>
+        <p>引擎与现实中一样，是战舰的“心脏”，控制着全舰的动力来源。没有引擎，你的舰船就无法持续移动。</p>
+        <p><span style="color:#ff0000">1.引擎的持续运转</span></p>
+        <p>怎么实现持续移动？很简单！</p>
+        <p>记得半动机吗？</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image40.webp" alt="">
+</figure>
+        <p>激活粘性活塞一次，它便会前移一格。</p>
+        <p>我们的任务就是将它的半自动改装为全自动。</p>
+        <p>不急，先来看看半动机是如何工作的。</p>
+        <p>粘性活塞收回，侦测器被拉动，输出1t的红石信号，活塞接收信号，推出。将粘性活塞和连着它的粘液块<span style="color:#ff0000">前移一格。</span></p>
+        <p>关键就在于它运行的最后一步。既然前移了一格，就意味着如果粘性活塞与粘液块上有侦测器，那么这个侦测器必然会在前移后放出红石信号。</p>
+        <p>想想吧，如果这个信号作用在粘性活塞上——</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image53.webp" alt="">
+</figure>
+        <p>一个简单的引擎就做成了！</p>
+        <p>在完成半动机的所有操作<span style="color:#ff0000">后</span>，这种简单引擎只多了一项工作——粘性活塞又拉回，再次驱使普通活塞推出。周而复始。每当完成一个引擎周期，下一个周期自动进行。如果你不采用暴力的方法关掉这个引擎，它将继续运动下去——直到区块不允许！</p>
+        <p>当然，在JE版，BUD也可以用来做引擎。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image54.webp" alt="">
+</figure>
+        <p>至于原理，相信JE玩家在看过前文之后可以很快弄懂吧，也许需要提醒一下——<span style="color:#ff0000">活塞的伸出/缩回也算一次方块更新</span>！</p>
+        <p><span style="color:#ff0000">2.引擎的速度——周期长短</span></p>
+        <p>也许你会认为上面引擎的速度过快，接不到大型战舰上——它们过快的速度会导致你的手机或电脑炸掉。你现在需要一个速度较慢的引擎来赶上你的电脑配置。</p>
+        <p>观察一下它。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image53.webp" alt="">
+</figure>
+        <p>速度过快？不快就有鬼了！</p>
+        <p>仅仅两个活塞推动耗费的时间，它便前进了一格。</p>
+        <p>如果我们把两个活塞推动后前进一格，用新结构改变为多个活塞依次推动后才前进一格会怎样？</p>
+        <p>是更长的时间</p>
+        <p>这意味着它的速度将更慢！</p>
+        <p>来试试看它，一堆分离器组成的结构。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image55.webp" alt="">
+</figure>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image56.webp" alt="">
+</figure>
+        <p>激活红石块旁边的活塞，观察现象。</p>
+        <p>活塞被激活后，带动粘液块，三个分离器依次向前移动了一格。</p>
+        <p>（<span style="color:#ff0000">如果没看懂推荐照着图做一个，自己先琢磨明白再往下看</span>！照着图都做不出来你就爬吧）</p>
+        <p>这样，我们针对最后前移的分离器结构，进行拓展。</p>
+        <p>把它拓展成这样。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image57.webp" alt="">
+</figure>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image58.webp" alt="">
+</figure>
+        <p>再激活一下刚刚你激活的活塞，试试。</p>
+        <p>你拓展出的几个分离器也会照前几个分离器那样，依次移动。</p>
+        <p>找到最晚移动完成的分离器，拓展它，把它变成这样。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image59.webp" alt="">
+</figure>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image60.webp" alt="">
+</figure>
+        <p>现在，你已经完成了一个较慢的引擎。</p>
+        <p>想要启动它吗？</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image61.webp" alt="">
+</figure>
+        <p>把它这儿这样摆，方块更新一下活塞。（这一处结构只适合JE，BE玩家请运用以前学过的知识自行处理！不会的把分离器那节看十遍！再不会就爬！）</p>
+        <p>它成功地动起来了？没有？那是你没做好。</p>
+        <p>如果它成功地动了，那么你已经完成了你粘液块生涯中的第一个慢速引擎——环形引擎。它减速的方式，就是把大量的分离器结构排布成一个环形，大大增加了移动一格所需要的活塞数量，以延长活塞运行的时间——这使得它在较长的时间内才能移动一格。如果你想继续降低它的速度——扩大它身后美丽的环吧！</p>
+        <p>所以，降低引擎速度的办法，就是想方设法地增加一个周期的移动所需要的时间，而这个时间，就是引擎中所有活塞依次推动所耗的时间，活塞越多，时间越慢！</p>
+        <p>从物理的速度位移公式X=vt上，如果X（位移）=1m，那么t（时间）越大，v（速度）就越小！<span style="color:#ff0000">这就是引擎的速度调控。</span></p>
+        <p><span style="color:#ff0000">如果你要它停止——只需要打掉红石块就好。至于更好的控制方法以后会讲！</span></p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image62.webp" alt="">
+</figure>
+        <p><span style="color:#ff0000">以上的部件请理解、熟记其原理，只要你会了这些，距离徒手造一艘船便只有一步之遥了。</span></p>
+        <p>———————第二单元 简单部件 完————————</p>
+        <p>————————第三单元 战舰与结构————————</p>
+        <p>飞船、传动结构与船体简化、飞船分类</p>
+        <p>朋友，看到这里了？</p>
+        <p>那么，来一起做一艘船吧！</p>
+        <p>根据上单元，我们已经知道船体需要的各种传动装置与动力来源，如果你想做成一艘船，那你只需要把它们草草地拼在一起——</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image63.webp" alt="">
+</figure>
+        <p><span style="color:#ff0000">开玩笑的。</span></p>
+        <p>把简单的结构装在一起后，它们就成了你的粘液块生涯中的第一艘可以叫“飞船”的东西了。</p>
+        <ul>
+    <li>简单的飞船</li>
+</ul>
+        <p>“武器”这个词对于现在的你或许还很遥远，不过没关系，我们可以做一艘看起来很好看的飞船。</p>
+        <p>飞船——引擎与传动系统的产物，现在我们要利用的就是引擎与传动。如果你传动没学好，还有机会再回头看看！如果你方块特性学了也不会——</p>
+        <p>爬。</p>
+        <p>我们开始。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image64.webp" alt="">
+</figure>
+        <p>为了你的电脑和手机，做个慢速引擎吧！</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image65.webp" alt="">
+</figure>
+        <p>把你们的分离器准备好，我们要开始拓展了！</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image66.webp" alt="">
+</figure>
+        <p>装翅膀吧。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image67.webp" alt="">
+</figure>
+        <p>缺点什么吗？也许你觉得中间缺东西。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image68.webp" alt="">
+</figure>
+        <p>很庆幸，这个区域还没有推够12个方块。我们可以拓展它。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image69.webp" alt="">
+</figure>
+        <p>打火石与落地爆炸的TNT将是追求刺激可暂时无实力者的不二之选，如果你有打火石的话。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image70.webp" alt="">
+</figure>
+        <p>启动它吧，在活塞旁边放下红石块！</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image71.webp" alt="">
+</figure>
+        <p>它便是你的第一艘船了。虽然它的武器简直称不上是武器，不过为自己有造飞船的实力，不应该感到高兴吗？</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image72.webp" alt="">
+</figure>
+        <p>激活船上的TNT，让它们找到自己的归宿吧！</p>
+        <p>看到这里，也许你会做一些小船了。</p>
+        <p>但新人们在做船的时候，往往会犯一些小错误。</p>
+        <p>二.传动系统与舰体简化</p>
+        <p>你也许在为做出这艘船沾沾自喜，知道它是什么传动结构吗？不知道你喜蛇皮，你其实会个皮毛你会。</p>
+        <ul>
+    <li>推动式传动系统</li>
+</ul>
+        <p>飞船中，有一些传动机构类似这样，后面推着前面走。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image73.webp" alt="">
+</figure>
+        <p>这部分的结构就是推动式传动系统。这种传动系统优点就是方便向战舰上安装武器，省时又省力，但是对后期布线是一种极大的折磨。它主要由向前的分离器构成。</p>
+        <ul>
+    <li>拉动式传动系统</li>
+</ul>
+        <p>也叫拉驱，与推动相反，它们的前进方式是前面“拉”着后面跑，这部分结构就叫做拉动式传动系统。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image74.webp" alt="">
+</figure>
+        <p>它主要由向后的粘性活塞分离器和半动机构成。这种结构相比前者就比较吃香了，虽然在安装武器时会稍微逊色于前者，但布线和时序的调控，它绝对是首选！但如果想使用它，请先玩透推动式，有手感了再来尝试它。否则将是个不小的挑战。</p>
+        <ul>
+    <li>混合推拉驱动系统</li>
+</ul>
+        <p>这种驱动系统就无需多说，在一艘飞船上既有推动系统又有拉动系统，即为混合推拉。这两种结构视情况混合搭配，相互补益，这是对于一个合格的布线者的基本要求。我们上文搭建的简易飞船就属于混合推拉——虽然它拉动用得不多。对于一艘引擎放在中间的船来说，前半部分用推，后半部分用拉，这可以是一种方法。当然，实际还得看个人手感与习惯。</p>
+        <p>其次，就是舰体简化了。</p>
+        <p>萌新常常会把一些简单的结构做得很复杂，我们不需要太复杂的东西。</p>
+        <p>比如这个结构，这是个典型错误。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image75.webp" alt="">
+</figure>
+        <p>看看，11个方块，血亏！</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image76.webp" alt="">
+</figure>
+        <p>但如果我们把它改成这样，岂不是一样的效果？不仅效果未减，还减小了第一节活塞的负荷量。结构简化<span style="color:#ff0000">有时可以救命！</span></p>
+        <p><span style="color:#ff0000">再就是像这种，你该打！</span></p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image77.webp" alt="">
+</figure>
+        <p>足足三个分离器，你以为你要干什么？推动地球吗？</p>
+        <p>一下过来不好吗？</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image78.webp" alt="">
+</figure>
+        <p>结构简化这种东西，其实不需要多讲，多造飞船慢慢就能明白它的意义所在了。</p>
+        <p>它最大的好处有两点：1.简化后的结构更利于后期排障。 2.有一些结构在简化后活塞会拥有更少的负重，可以为后期拓展做好准备。</p>
+        <p>简化不一定只是简化这两种结构，也许你发现自己某处操作脑残了，肯定是会去简化它的。这个要靠后天的手感。</p>
+        <p>三.战舰的分类</p>
+        <p>它们叫做“战舰”，可你知道吗？有些“战舰”并不是用来实战的。</p>
+        <p>技术向战舰</p>
+        <p>超高难度的搭建，刺激的体积压缩——如果你想变亮（指头顶）的话，来尝试它们吧！在你的封闭实验室中做出无与伦比的技术验证机，好好地展示一番！</p>
+        <p>技术向战舰凸显其内的技术含量，武器的新颖程度。总之，它与建造高难度挂钩。一艘技术向舰一般有极为精密的结构，密集的布线。体积大小不定。</p>
+        <p>它们也有很多子分类，单向与多向等。现在不建议了解。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image79.webp" alt="">
+</figure>
+        <p>一艘典型的技术向战舰，它装备了当时最先进的武器与机关，布线也十分精密。</p>
+        <p>物竞天择号 By Angel-Striker</p>
+        <p>性能向战舰</p>
+        <p>追求刺激吗？想要驾驶着你的飞船和敌舰狠狠撕一架吗？如果你想，那你看对地方了！来试试它们吧！如果说技术向是可爱的女孩们，那它们就是野性的恶魔。</p>
+        <p>性能向，分为实战和竞技。实战，即为在MC中相对真实的环境中与各种敌军战斗。在战舰这行来看，它们的体积相对较小，但火力与覆盖度绝对与它们小巧的体积完全不符——重火力，小体积，高航速，多样化，这是性能向的代名词。但同时，也会出现体型稍大的重甲战舰。</p>
+        <p>而竞技，不多说了自己看着办。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image80.webp" alt="">
+</figure>
+        <p>一艘实战用舰，其小巧的体积与火力将形成反差。它具有实战性能。</p>
+        <p>暴风雪号 By Wayfarer_Jat</p>
+        <p>观赏向战舰</p>
+        <p>想帅吗？想帅就玩。不玩算了。</p>
+        <p>想帅就加个花里胡哨的外壳，没人屌你。观赏向战舰的唯一指标就是帅就够了。</p>
+        <p>但如果观赏向与技术向并存，那就是比技术向更大的成功！</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image81.webp" alt="">
+</figure>
+        <p>一艘观赏与新技术并存的船只</p>
+        <p>黑珍珠号By Angel-Striker&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        <p>在一艘战舰上，观赏向与技术向可以并存，但如果你想做性能向与观赏向并存——抱歉，性能向不接受花里胡哨的东西。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image82.webp" alt="">
+</figure>
+        <p>定位好了船只分类，你就可以更好地明确自己造船的目的！在造船的时候，可不要忘了简化！</p>
+        <p>———————第三单元 战舰与结构 完———————</p>
+        <p>———————第四单元 武器与“模块”———————</p>
+        <p>简单的武器与基础模块</p>
+        <p>想让你的战舰挂载各式各样的武器吗？</p>
+        <ul>
+    <li>我是个引擎，但我撞到东西会爆炸！——导弹</li>
+</ul>
+        <p>导弹的结构有些精巧，它融合了三种较小结构。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image83.webp" alt="">
+</figure>
+        <p>这枚导弹从左至右分为<span style="color:#ff0000">引信（红石块），弹头（TNT），引擎（永动机）</span></p>
+        <p><span style="color:#ff0000">导弹唯一可以重点说说的，就是引信。</span></p>
+        <p><span style="color:#ff0000">引信</span>，在导弹中的任务就是在导弹击中目标时，引爆导弹。</p>
+        <p>引信通常由激活装置和引爆器两部分组成。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image84.webp" alt="">
+</figure>
+        <p>一副简单的引信↑</p>
+        <p>上方的观察者即为<span style="color:#ff0000">激活装置，</span>观察者前方的TNT即为<span style="color:#ff0000">引爆装置</span>。</p>
+        <p>导弹前进时，激活装置和引爆装置同时前进，在移动期间，观察者始终距离前方TNT一格远，无法激活TNT。</p>
+        <p>但当导弹撞击目标的时候，下面的活塞由于推动的东西碰到了障碍物超载，无法再推动引爆装置。同时，上方活塞仍然仅仅推动观察者，可以继续推动一次。观察者立刻激活TNT，导弹爆炸。</p>
+        <p>把这幅装置安装到引擎上，它就成为了极为简单的导弹。同时，在保证活塞推动12方块的情况下把你的引爆装置多增加一些TNT以增强导弹的攻击力。</p>
+        <p>目前，2x2导弹是较为受欢迎的一种导弹，它们的特征就是把<span style="color:#ff0000">宽与高</span>都严格控制在2格。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image85.webp" alt="">
+</figure>
+        <p>2 x 2导弹</p>
+        <p>导弹引信和弹头不一定必须是这样的传统结构，你大可以动脑子做一些不同的东西——比如用TNT矿车作引爆器，想想怎么办！</p>
+        <p>在BE，你大可以把激活装置换作“脸贴脸”的观察者高频，把引爆装置换作发射器，填满TNT会有意想不到的效果！</p>
+        <ul>
+    <li>我想把导弹挂载到战舰上，可我要怎么控制它发射？</li>
+</ul>
+        <p>玩具都有开关，为什么导弹不能有开关呢？</p>
+        <p>开关是战舰上必不可少的东西，如果你不想手放红石块激活你的武器，那请务必把这里细心看看。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image86.webp" alt="">
+</figure>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image87.webp" alt="">
+</figure>
+        <p>（第二幅图仅je可用）这是两种常见的开关</p>
+        <p>先来讲第一种吧。</p>
+        <p>观察者开关</p>
+        <p>使用火焰弹使观察者激活活塞。</p>
+        <p>这种开关在移动时要注意，不要在移动期间使得观察者把开关活塞激活，比如你仔细看上图会发现其实那个开关用不了。</p>
+        <p>第二种</p>
+        <p>JE用的BUD开关，与第一种用法基本一致，打火石右击粘性活塞。</p>
+        <p>在红石块末端连上你想要的东西就好。</p>
+        <p>讲完了开关，来实际应用一下吧。</p>
+        <p>整个导弹发射器。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image88.webp" alt="">
+</figure>
+        <p>首先要将导弹挂载起来。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image89.webp" alt="">
+</figure>
+        <p>其实 现在已经可以通过放红石块激活活塞来使导弹发射了。</p>
+        <p>谁想这么土呢。</p>
+        <p>装开关吧！</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image90.webp" alt="">
+</figure>
+        <p>现在，只要右击观察者就能发射导弹了。同时，如果你激活红石块旁边的活塞，整个装置都可以一起移动。</p>
+        <p>现在，这套系统就可以独立运作了。在它停止期间，启动开关也可发射导弹。</p>
+        <p>这时，你们就应当发觉自己成功地做出了你的粘液块战舰生涯中的第一种、也是最基本的<span style="color:#ff0000">模块。模块在做好后是可以直接接在飞船上使用的。</span></p>
+        <p>我们一般把<span style="color:#ff0000">战舰所拥有的一部分结构</span>叫做模块，这一部分的结构一般<span style="color:#ff0000">承担一种专门的功能</span>，并且它们一般被单独制造出来，所以<span style="color:#ff0000">单个模块也具有完备的移动能力</span>。等模块的移动与功能全部稳定后，才被装配到战舰上。</p>
+        <p>想让你的船射击吗？</p>
+        <p>下面你将学会一门最基础但最扎实的舰炮！</p>
+        <p>如何在je做一门合格的“舰炮”模块？</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image91.webp" alt="">
+</figure>
+        <p>这是一门普通不过再普通的红石大炮，用TNT来推动TNT。</p>
+        <p>现在我们只需要把它改装成可移动式。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image92.webp" alt="">
+</figure>
+        <p>由于JE无法推动发射器，我们只能用TNT链来供弹，同时用红石块激活TNT（其实供弹方法还有TNT的无限复制，但你们一时半会应该接受不了）</p>
+        <p>同时，你需要一个拥有水的炮膛，至于水，粘性活塞推动含水方块可以保持水不消失。</p>
+        <p>而关于移动水源的问题，你只需要用一个受到信号小于3gt的粘性活塞直接推动一个含水方块就好了。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image93.webp" alt="">
+</figure>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image94.webp" alt="">
+</figure>
+        <p>大量的半动机使得推进药与供弹之间产生延迟，JE的大部分弹夹舰炮都是通过这种结构运作的。</p>
+        <p>对于这种半动机延迟，我们可以单拉出来看看。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image95.webp" alt="">
+</figure>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image96.webp" alt="">
+</figure>
+        <p>作为模块，它必须具有单独移动功能。炮膛与供弹之间要用总线连接。启动连接推进药的半动机，即可击发弹药。<span style="color:#ff0000">在这里要注意的是，移动时，TNT不能碰到前方的红石块，因此你的推动顺序要掐好，如果TNT碰到红石块，大概率会炸膛。总之很不好。你可以选择让炮膛先向前移动，然后再移动TNT。</span>（舰炮创意提出与实践：Cubster）</p>
+        <p>与普通红石炮相同，舰炮也是利用推进与弹头间错开的延迟以及TNT的推力将弹药发射出去。仅仅是增加了移动装置与弹仓。相信你们已经懂了吧，去之前做的小飞船上加装一个吧！</p>
+        <p>当然，这种普通舰炮可以通过叠加推力来增加射程，叠加供弹来增加推进。</p>
+        <p>下面的内容可以供你们参考一下，如果你做出上面的东西就沾沾自喜，自己看看下面的图吧。想装逼，早了。<span style="color:#ff0000">你只不过会了点皮毛而已——致这届新人，快清醒一下吧，别狂了。</span></p>
+        <p>比如下面巡洋舰的重型舰炮，它们就是这种最基础的舰炮拓展来的。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image97.webp" alt="">
+</figure>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image98.webp" alt="">
+</figure>
+        <p>它们用更大的体积增加了推进TNT和供弹TNT的数量。</p>
+        <p>高端的舰炮，则是采用TNT复制机供弹（By：邪恶の瓜君，Cubster，Angel-Striker）</p>
+        <p>这门炮拥有无限的弹药，但由于复制机的体积过大且无法压缩，整门炮会略大一些。但非常实用。在无限弹药中，这门炮基本已经把体积做到了极致。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image99.webp" alt="">
+</figure>
+        <p>同样的，TNT矿车作为推进药，手动装填TNT炮弹也是个不错的选择。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image100.webp" alt="">
+</figure>
+        <p>它使用TNT矿车推动弹药发射，TNT矿车可以大量聚集在一格内，省下了大量的体积。</p>
+        <p>Je其实是一个不太适合做重型舰炮的版本，在JE版1.11+版本中，TNT推力变得极小，并且无法推动发射器是一大硬伤。所以JE版本中一般适合做技术向战舰而不是性能向。</p>
+        <p>但如果你喜欢发射TNT，那么尽情拓展它吧！</p>
+        <p>而在BE，舰炮根本没有那么麻烦。</p>
+        <p>鉴于BE版能推动容器的优势，舰炮普遍使用发射器。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image101.webp" alt="">
+</figure>
+        <p>BE舰炮的炮膛融合了推进部分与发射部分，像传统的固定式TNT炮一样。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image102.webp" alt="">
+</figure>
+        <p>同样，它的延迟系统也不是JE版的一堆半动机，直接通过投掷器投掷物品进入漏斗（同时激活推进），一段时间后物品落入箱子，侦测器检测到箱子中的物品变化，输出信号激活炮弹发射器。</p>
+        <p>至于它的延迟系统，可以看看下面这幅图。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image103.webp" alt="">
+</figure>
+        <p>漏斗传输物品的延迟是4t，也就是说从第一个漏斗传到第二个就需要0.4s的时间，相当于一个满档中继器。图中，投掷器输出物品，1.6s后到达箱子内，侦测器检测到箱子内的物品变化，输出1t信号。</p>
+        <p>在Be版，舰炮技术极为发达。但是上面那个炮可以说简单到入门级别，是人都会做。</p>
+        <p><span style="color:#ff0000">作为新人的你，推荐了解一下图中的【半高频】【霰弹炮】，其他炮种可暂时放下。</span></p>
+        <p>有一些舰炮，虽然开启一次开关发射一次，但是其炮弹却在推进TNT点燃期间连续被发射器放出，这种舰炮的供弹系统可以叫【半高频】（命名By  Wayfarer_Jat）</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image104.webp" alt="">
+</figure>
+        <p>半高频系统放出的供弹TNT</p>
+        <p>有一些舰炮因为供弹系统等原因，发射出去后打击范围呈一个散面，即为常说的【霰弹炮】。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image105.webp" alt="">
+</figure>
+        <p>霰弹炮的轨迹</p>
+        <p>有一些舰炮可以在一个范围内随意调节发射位置，并且弹坑呈规则分布，这类舰炮叫【矢量炮】</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image106.webp" alt="">
+</figure>
+        <p>矢量炮打出的一部分规则弹坑</p>
+        <p>至于矢量炮的教程，可以看这里</p>
+        <p><a href="https://www.bilibili.com/video/av84675233" target="_blank" rel="noopener noreferrer">https://www.bilibili.com/video/av84675233</a></p>
+        <p><a href="https://www.bilibili.com/video/av85992503" target="_blank" rel="noopener noreferrer">https://www.bilibili.com/video/av85992503</a></p>
+        <p>有一些舰炮支持连射功能，射速较低的是中频炮，射速较高即为高频炮。</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image107.webp" alt="">
+</figure>
+        <p>高频炮的超高射速</p>
+        <p>除开这些炮外，还有一类比较恐怖的类型——<span style="color:#ff0000">泛用</span>炮。<span style="color:#ff0000">（注：泛用炮是大佬级别的东西！）</span></p>
+        <p>泛用，即为适应多种作战环境，为了拥有这种能力，这种炮拥有多功能的发射模式，即便是最简易的泛用炮，也可以调节射击对象倾向与射距，甚至是炮弹往哪里飞。</p>
+        <p>这是在BE版几门强大的泛用炮</p>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image108.webp" alt="">
+</figure>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image109.webp" alt="">
+</figure>
+        <figure class="opus-fig"><img src="../../assets/docs/slimeblock-ship/image110.webp" alt="">
+</figure>
+        <p>多功能轻型泛用炮 By Susan</p>
+        <p>作为功能强大的舰炮，它具有足足六个档位的射速调控，射程大致范围可在100-300米之间随意切换，单发模式下可以调节对地与对空，可在电磁模式下拥有电磁炮的打击效果，</p>
+        <p>也可当做一维矢量炮来使用。在低档位射速下，可以随意调节打击范围。</p>
+        <p>二向泛用炮 By Eve·Knowledge</p>
+        <p><a href="https://www.bilibili.com/video/av42235407" target="_blank" rel="noopener noreferrer">https://www.bilibili.com/video/av42235407</a></p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="上一篇 / 下一篇">
+            <a class="pager-item is-prev" href="vector-theory.html" title="« 上一篇：矢量理论及其三维拓展" aria-label="« 上一篇：矢量理论及其三维拓展">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">矢量理论及其三维拓展</span>
+            </a>
+            <a class="pager-item is-next" href="flight-basics.html" title="下一篇 »：从零开始学航械——飞行器技术基础图文教程" aria-label="下一篇 »：从零开始学航械——飞行器技术基础图文教程">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">从零开始学航械——飞行器技术基础图文教程</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>
