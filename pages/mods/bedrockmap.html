@@ -1,0 +1,2987 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BedrockMap - 模组专区 - 橘猫的资源站</title>
+    <meta name="description"
+        content="基于 Qt6 与 C++17 构建的开源《我的世界》基岩版地图编辑器：浏览、检查与编辑基岩版存档（LevelDB 格式），支持主世界、下界、末地与自定义维度，可查看修改 NBT、框选复制粘贴区块、导出 mcstructure 与 3D 体素预览。">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="stylesheet" href="../../assets/css/mods.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white"
+                                href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>BedrockMap</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://github.com/bedrock-dev/BedrockMap" target="_blank"
+                        rel="noopener noreferrer">bedrock-dev</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2026年10月12日</span>
+                <span class="doc-badge" title="模组专区收录">模组</span>
+                <span class="art-sep">·</span>
+                <span class="art-cat">模组专区</span>
+            </div>
+            <p class="doc-source">来源：<a href="https://github.com/bedrock-dev/BedrockMap" target="_blank"
+                    rel="noopener noreferrer">bedrock-dev/BedrockMap</a> · 许可 AGPL-3.0</p>
+            <p class="doc-note">本页为 BedrockMap 仓库原文说明书（README 与 docs/ 目录）的完整呈现，未改动原文内容。</p>
+        </div>
+
+        <div class="mods-card">
+            <div class="mods-card-head">
+                <img class="mods-icon" src="../../assets/img/mods/bedrockmap.png" alt="BedrockMap">
+                <div>
+                    <p class="mods-card-title">BedrockMap</p>
+                    <p class="mods-tags"><span class="mods-tag">基岩版地图编辑器</span><span class="mods-tag">Qt6 /
+                            C++17</span><span class="mods-tag">开源</span></p>
+                </div>
+            </div>
+            <p class="mods-summary">基于 Qt6 与 C++17 构建的开源《我的世界》基岩版地图编辑器：浏览、检查与编辑基岩版存档（LevelDB 格式），支持主世界、下界、末地与自定义维度，可查看修改
+                NBT、框选复制粘贴区块、导出 mcstructure 与 3D 体素预览。</p>
+            <p class="mods-links">
+                <a class="button is-danger has-text-white" href="https://github.com/bedrock-dev/BedrockMap"
+                    target="_blank" rel="noopener noreferrer">GitHub 仓库 »</a>
+                <a class="button is-danger is-outlined" href="https://github.com/bedrock-dev/BedrockMap/releases"
+                    target="_blank" rel="noopener noreferrer">Release 下载页 »</a>
+                <a class="button is-danger is-outlined" href="https://github.com/bedrock-dev/bedrock-level"
+                    target="_blank" rel="noopener noreferrer">bedrock-level（后端库） »</a>
+            </p>
+        </div>
+
+        <nav class="mods-toc" aria-label="本页目录">
+            <p class="mods-toc-title">本页目录（4 个章节，说明书原文 38 节）</p>
+            <div class="mods-toc-list">
+                <div class="mods-toc-group">
+                    <a class="mods-toc-item is-chapter" href="#readmezh-cn" title="来自 README.zh-CN.md">BedrockMap <span
+                            class="mods-toc-file">README.zh-CN.md</span></a>
+                    <div class="mods-toc-subs">
+                        <a class="mods-toc-item is-sub" href="#功能特性" title="来自 README.zh-CN.md">功能特性</a>
+                        <a class="mods-toc-item is-sub" href="#下载" title="来自 README.zh-CN.md">下载</a>
+                        <a class="mods-toc-item is-sub" href="#系统要求" title="来自 README.zh-CN.md">系统要求</a>
+                        <a class="mods-toc-item is-sub" href="#快速上手" title="来自 README.zh-CN.md">快速上手</a>
+                        <a class="mods-toc-item is-sub" href="#构建" title="来自 README.zh-CN.md">构建</a>
+                        <a class="mods-toc-item is-sub" href="#支持的-mcbe-版本" title="来自 README.zh-CN.md">支持的 MCBE 版本</a>
+                        <a class="mods-toc-item is-sub" href="#参与贡献" title="来自 README.zh-CN.md">参与贡献</a>
+                        <a class="mods-toc-item is-sub" href="#许可证" title="来自 README.zh-CN.md">许可证</a>
+                        <a class="mods-toc-item is-sub" href="#credits" title="来自 README.zh-CN.md">Credits</a>
+                    </div>
+                </div>
+                <div class="mods-toc-group">
+                    <a class="mods-toc-item is-chapter" href="#bedrockmap" title="来自 BedrockMap.md">BedrockMap <span
+                            class="mods-toc-file">BedrockMap.md</span></a>
+                    <div class="mods-toc-subs">
+                        <a class="mods-toc-item is-sub" href="#目录" title="来自 BedrockMap.md">目录</a>
+                        <a class="mods-toc-item is-sub" href="#1-项目概览" title="来自 BedrockMap.md">1. 项目概览</a>
+                        <a class="mods-toc-item is-sub" href="#2-构建与运行" title="来自 BedrockMap.md">2. 构建与运行</a>
+                        <a class="mods-toc-item is-sub" href="#3-项目结构" title="来自 BedrockMap.md">3. 项目结构</a>
+                        <a class="mods-toc-item is-sub" href="#4-架构设计" title="来自 BedrockMap.md">4. 架构设计</a>
+                        <a class="mods-toc-item is-sub" href="#5-核心模块详解" title="来自 BedrockMap.md">5. 核心模块详解</a>
+                        <a class="mods-toc-item is-sub" href="#6-数据模型" title="来自 BedrockMap.md">6. 数据模型</a>
+                        <a class="mods-toc-item is-sub" href="#7-渲染管线" title="来自 BedrockMap.md">7. 渲染管线</a>
+                        <a class="mods-toc-item is-sub" href="#8-编辑功能" title="来自 BedrockMap.md">8. 编辑功能</a>
+                        <a class="mods-toc-item is-sub" href="#9-配置文件" title="来自 BedrockMap.md">9. 配置文件</a>
+                        <a class="mods-toc-item is-sub" href="#10-多语言国际化" title="来自 BedrockMap.md">10. 多语言/国际化</a>
+                        <a class="mods-toc-item is-sub" href="#11-todo-与已知问题" title="来自 BedrockMap.md">11. TODO
+                            与已知问题</a>
+                        <a class="mods-toc-item is-sub" href="#附录" title="来自 BedrockMap.md">附录</a>
+                    </div>
+                </div>
+                <div class="mods-toc-group">
+                    <a class="mods-toc-item is-chapter" href="#complieguide" title="来自 complieGuide.md">编译指南</a>
+                </div>
+                <div class="mods-toc-group">
+                    <a class="mods-toc-item is-chapter" href="#newmaprender" title="来自 newMapRender.md">2.5D
+                        体素大地图渲染方案文档</a>
+                    <div class="mods-toc-subs">
+                        <a class="mods-toc-item is-sub" href="#一方案概述" title="来自 newMapRender.md">一、方案概述</a>
+                        <a class="mods-toc-item is-sub" href="#二数据设计" title="来自 newMapRender.md">二、数据设计</a>
+                        <a class="mods-toc-item is-sub" href="#三渲染管线" title="来自 newMapRender.md">三、渲染管线</a>
+                        <a class="mods-toc-item is-sub" href="#四ao-烘焙" title="来自 newMapRender.md">四、AO 烘焙</a>
+                        <a class="mods-toc-item is-sub" href="#五阴影烘焙" title="来自 newMapRender.md">五、阴影烘焙</a>
+                        <a class="mods-toc-item is-sub" href="#六动态加载可选" title="来自 newMapRender.md">六、动态加载（可选）</a>
+                        <a class="mods-toc-item is-sub" href="#七vulkan-qt-实现" title="来自 newMapRender.md">七、Vulkan / Qt
+                            实现</a>
+                        <a class="mods-toc-item is-sub" href="#八性能预期" title="来自 newMapRender.md">八、性能预期</a>
+                        <a class="mods-toc-item is-sub" href="#九方案对比" title="来自 newMapRender.md">九、方案对比</a>
+                        <a class="mods-toc-item is-sub" href="#十实施步骤" title="来自 newMapRender.md">十、实施步骤</a>
+                        <a class="mods-toc-item is-sub" href="#十一关键注意事项" title="来自 newMapRender.md">十一、关键注意事项</a>
+                        <a class="mods-toc-item is-sub" href="#十二总结" title="来自 newMapRender.md">十二、总结</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="opus" data-content-kind="mod">
+            <p align="center">
+                <img src="../../assets/mods/bedrockmap/sample.webp" alt="BedrockMap 截图" width="720">
+            </p>
+            <h2 id="readmezh-cn">BedrockMap</h2>
+            <p class="mods-file-src">来源：<code>README.zh-CN.md</code></p>
+            <p align="center">
+
+
+            </p>
+            <p><a href="https://github.com/bedrock-dev/BedrockMap/blob/main/README.md" target="_blank"
+                    rel="noopener noreferrer">English</a> | <strong>简体中文</strong></p>
+            <p><strong>BedrockMap</strong> 是一款基于 Qt6 和 C++17
+                构建的、完全开源的《我的世界》基岩版地图编辑器。它提供了一套全面的工具，用于浏览、检查和编辑基岩版世界存档（LevelDB 格式），支持所有维度。</p>
+            <h3 id="功能特性">功能特性</h3>
+            <ul>
+                <li><strong>世界浏览</strong> — 打开并探索主世界、下界和末地，以及自定义维度的基岩版世界</li>
+                <li><strong>地形可视化</strong> — 生物群系地图和地形叠加层，支持可配置的渲染过滤</li>
+                <li><strong>区块编辑器</strong> — 选择、检查和删除区块；可视化区块实体、方块实体和计划刻（pending ticks）</li>
+                <li><strong>区块复制粘贴</strong> — 复制选中区域并粘贴到其他世界，甚至跨存档，支持交互式放置</li>
+                <li><strong>NBT 编辑器</strong> — 查看和修改 NBT 数据，包括 <code>level.dat</code>、玩家物品栏、村庄、地图物品等</li>
+                <li><strong>mcstructure 支持</strong> — 浏览和编辑 <code>.mcstructure</code> 文件（带 3D 体素预览），并可将选中区域或区块导出为
+                    <code>.mcstructure</code> 文件</li>
+                <li><strong>体素渲染</strong> — 选中区域的 3D 体素可视化，可导出为 GLB 模型</li>
+                <li><strong>多标签工作区</strong> — 同时打开和管理多个世界</li>
+            </ul>
+            <h3 id="下载">下载</h3>
+            <p>从 <a href="https://github.com/bedrock-dev/BedrockMap/releases" target="_blank"
+                    rel="noopener noreferrer">Release 页面</a> 下载最新版本。</p>
+            <h3 id="系统要求">系统要求</h3>
+            <ul>
+                <li><strong>操作系统</strong> — Windows 10</li>
+            </ul>
+            <h3 id="快速上手">快速上手</h3>
+            <p>通过 <strong>文件 →
+                    打开世界</strong>（<code>Ctrl+O</code>）打开世界，或直接将世界文件夹、<code>.mcstructure</code>、<code>.nbt</code> 文件拖入窗口。
+            </p>
+            <p>地图视图中：<strong>左键拖动</strong>平移，<strong>右键</strong>打开菜单，<strong>滚轮按下拖动</strong>框选区域，<strong>滚动滚轮</strong>缩放。
+            </p>
+            <p>常用快捷键：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>快捷键</th>
+                        <th>功能</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Ctrl+O</code> / <code>Ctrl+Shift+O</code></td>
+                        <td>打开世界 / 打开文件（<code>.mcstructure</code>、<code>.nbt</code>、<code>.nbts</code>）</td>
+                    </tr>
+                    <tr>
+                        <td><code>Ctrl+C</code> / <code>Ctrl+V</code></td>
+                        <td>复制 / 粘贴选中区域（支持跨存档）</td>
+                    </tr>
+                    <tr>
+                        <td><code>Ctrl+E</code> / <code>Ctrl+I</code></td>
+                        <td>导出 / 导入选区</td>
+                    </tr>
+                    <tr>
+                        <td><code>Ctrl+D</code></td>
+                        <td>删除选中的区块</td>
+                    </tr>
+                    <tr>
+                        <td><code>Ctrl+H</code></td>
+                        <td>打开 3D 体素视图</td>
+                    </tr>
+                    <tr>
+                        <td><code>Alt+1</code>–<code>Alt+4</code></td>
+                        <td>切换维度（主世界 / 下界 / 末地 / 自定义）</td>
+                    </tr>
+                    <tr>
+                        <td><code>Ctrl+G</code></td>
+                        <td>跳转到坐标</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 id="构建">构建</h3>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">powershell</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code># 使用子模块克隆
+git clone --recursive https://github.com/bedrock-dev/BedrockMap.git
+
+# 构建 BedrockMap
+.\scripts\build.ps1 -buildBL</code></pre>
+            </div>
+            <h3 id="支持的-mcbe-版本">支持的 MCBE 版本</h3>
+            <p>支持 Minecraft 基岩版 1.2（可能更早）及以后的世界，直到 1.21 系列（不同版本的区块格式可能不同）。</p>
+            <h3 id="参与贡献">参与贡献</h3>
+            <p>欢迎通过 <a href="https://github.com/bedrock-dev/BedrockMap/issues" target="_blank"
+                    rel="noopener noreferrer">Issues</a> 提交 Bug 报告和功能建议。规划中的功能和已知问题见 <a
+                    href="https://github.com/bedrock-dev/BedrockMap/blob/main/TODO.md" target="_blank"
+                    rel="noopener noreferrer">TODO.md</a>。</p>
+            <h3 id="许可证">许可证</h3>
+            <p>BedrockMap 基于 <a href="https://github.com/bedrock-dev/BedrockMap/blob/main/LICENSE" target="_blank"
+                    rel="noopener noreferrer">GNU Affero General Public License v3.0</a> 许可证发布。</p>
+            <h3 id="credits">Credits</h3>
+            <ul>
+                <li><a href="https://github.com/bedrock-dev/bedrock-level" target="_blank"
+                        rel="noopener noreferrer">bedrock level</a> 用于软件后端</li>
+                <li><a href="https://minecraft.wiki/" target="_blank" rel="noopener noreferrer">Minecraft Wiki</a>
+                    提供生物、NBT以及方块实体等图标</li>
+            </ul>
+
+            <h2 id="bedrockmap">BedrockMap</h2>
+            <p class="mods-file-src">来源：<code>BedrockMap.md</code></p>
+            <p><strong>BedrockMap</strong> 是一个用于 Minecraft Bedrock 版的地图查看和编辑器，基于 Qt6 + C++17 开发。它可以打开、浏览和编辑 Bedrock
+                版存档（LevelDB 格式），支持多维度和多层渲染。</p>
+            <hr>
+            <h3 id="目录">目录</h3>
+            <ol>
+                <li><a href="#1-%E9%A1%B9%E7%9B%AE%E6%A6%82%E8%A7%88">项目概览</a></li>
+                <li><a href="#2-%E6%9E%84%E5%BB%BA%E4%B8%8E%E8%BF%90%E8%A1%8C">构建与运行</a></li>
+                <li><a href="#3-%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84">项目结构</a></li>
+                <li><a href="#4-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1">架构设计</a></li>
+                <li><a href="#5-%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3">核心模块详解</a>
+                    <ul>
+                        <li><a href="#51-bedrock-level-%E5%BA%93">5.1 bedrock-level 库</a></li>
+                        <li><a href="#52-gui-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F">5.2 GUI 应用程序</a></li>
+                    </ul>
+                </li>
+                <li><a href="#6-%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B">数据模型</a></li>
+                <li><a href="#7-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF">渲染管线</a></li>
+                <li><a href="#8-%E7%BC%96%E8%BE%91%E5%8A%9F%E8%83%BD">编辑功能</a></li>
+                <li><a href="#9-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">配置文件</a></li>
+                <li><a href="#10-%E5%A4%9A%E8%AF%AD%E8%A8%80%E5%9B%BD%E9%99%85%E5%8C%96">多语言/国际化</a></li>
+                <li><a href="#11-todo-%E4%B8%8E%E5%B7%B2%E7%9F%A5%E9%97%AE%E9%A2%98">TODO 与已知问题</a></li>
+            </ol>
+            <hr>
+            <h3 id="1-项目概览">1. 项目概览</h3>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>属性</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>项目名称</td>
+                        <td>BedrockMap</td>
+                    </tr>
+                    <tr>
+                        <td>编程语言</td>
+                        <td>C++17</td>
+                    </tr>
+                    <tr>
+                        <td>GUI 框架</td>
+                        <td>Qt6 (Core, Widgets, Concurrent, OpenGL)</td>
+                    </tr>
+                    <tr>
+                        <td>数据存储</td>
+                        <td>LevelDB (Minecraft Bedrock 格式)</td>
+                    </tr>
+                    <tr>
+                        <td>构建系统</td>
+                        <td>CMake + MinGW Makefiles</td>
+                    </tr>
+                    <tr>
+                        <td>许可证</td>
+                        <td>AGPL</td>
+                    </tr>
+                    <tr>
+                        <td>最低依赖</td>
+                        <td>mingw64, Qt6, LevelDB, zstd</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4 id="主要功能">主要功能</h4>
+            <ul>
+                <li>打开和浏览 Bedrock 版存档（支持主世界/下界/末地）</li>
+                <li>地形渲染（高度图、群系图、地形图）</li>
+                <li>区块选择和编辑（删除区块）</li>
+                <li>NBT 数据查看和修改（level.dat、玩家、村庄、地图物品、方块实体、pending ticks 等）</li>
+                <li>实体位置可视化</li>
+                <li>硬编码生成区域（HSA）可视化</li>
+                <li>史莱姆区块高亮</li>
+                <li>村庄边界可视化</li>
+                <li>3D 体素渲染（选中区域）</li>
+                <li>多存档同时打开（标签页管理）</li>
+                <li>地图过滤（按方块/群系/实体类型过滤）</li>
+                <li>截图导出</li>
+            </ul>
+            <hr>
+            <h3 id="2-构建与运行">2. 构建与运行</h3>
+            <h4 id="21-环境要求">2.1 环境要求</h4>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>依赖</th>
+                        <th>版本要求</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>mingw64</td>
+                        <td>推荐</td>
+                        <td>不支持 MSVC</td>
+                    </tr>
+                    <tr>
+                        <td>Qt6</td>
+                        <td>&gt;= 6.0</td>
+                        <td>需要 Core, Widgets, Concurrent, OpenGL, OpenGLWidgets 模块</td>
+                    </tr>
+                    <tr>
+                        <td>CMake</td>
+                        <td>&gt;= 3.16</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>LevelDB</td>
+                        <td>mcpe 定制版</td>
+                        <td>预编译库在 <code>bedrock-level/libs/</code></td>
+                    </tr>
+                    <tr>
+                        <td>zstd</td>
+                        <td>匹配版本</td>
+                        <td>预编译库在 <code>bedrock-level/libs/</code></td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4 id="22-编译步骤">2.2 编译步骤</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">powershell</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code># 1. 克隆仓库
+git clone --recursive https://github.com/bedrock-dev/BedrockMap.git
+
+# 2. 编译 bedrock-level 静态库
+cd bedrock-level
+.\build.ps1
+
+# 3. 编译 BedrockMap 主程序
+cd ..
+.\scripts\build.ps1
+
+# 4. 编译并运行（含翻译更新）
+.\scripts\build_run.ps1</code></pre>
+            </div>
+            <h4 id="23-环境变量">2.3 环境变量</h4>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>变量名</th>
+                        <th>说明</th>
+                        <th>示例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>QT_ROOT</code></td>
+                        <td>Qt6 安装根目录</td>
+                        <td><code>D:/Qt/6.5.0/mingw64_64</code></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>CMake 通过 <code>$env:QT_ROOT</code> 查找 Qt6。</p>
+            <hr>
+            <h3 id="3-项目结构">3. 项目结构</h3>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>BedrockMap/
+├── CMakeLists.txt              # 顶层 CMake 构建文件
+├── config.ini                  # 运行时配置文件
+├── icon.rc                     # Windows 应用程序图标
+├── res.qrc                     # 动态生成的 Qt 资源文件
+├── README.md
+├── TODO.md
+│
+├── bedrock-level/              # Bedrock 存档数据层（静态库）
+│   ├── CMakeLists.txt
+│   ├── build.ps1               # 编译脚本
+│   ├── libs/                   # 预编译第三方库 (leveldb, zstd)
+│   ├── third/                  # 第三方头文件
+│   ├── app/                    # 辅助工具
+│   │   ├── biome_png.cpp       # 群系颜色导出工具
+│   │   ├── level_stater.cpp    # 存档统计工具
+│   │   └── missing_color_finder.cpp  # 缺失颜色查找工具
+│   ├── src/
+│   │   ├── include/            # 头文件
+│   │   ├── bedrock_level.cpp   # 存档管理器
+│   │   ├── bedrock_key.cpp     # LevelDB Key 编解码
+│   │   ├── chunk.cpp           # 区块数据
+│   │   ├── sub_chunk.cpp       # 子区块数据
+│   │   ├── nbt.cpp            # NBT 标签库
+│   │   ├── color.cpp           # 颜色表与颜色计算
+│   │   ├── data_3d.cpp         # 3D 数据（群系/高度图）
+│   │   ├── actor.cpp           # 实体解析
+│   │   ├── player.cpp          # 玩家数据（框架）
+│   │   ├── global.cpp          # 全局数据（村庄等）
+│   │   ├── level_dat.cpp       # level.dat 解析
+│   │   ├── scoreboard.cpp      # 计分板
+│   │   └── utils.cpp           # 工具函数
+│   ├── tests/                  # Google Test 单元测试
+│   │   ├── actor_test.cpp
+│   │   ├── bedrock_level_test.cpp
+│   │   ├── bit_tools_test.cpp
+│   │   ├── chunk_test.cpp
+│   │   ├── color_test.cpp
+│   │   ├── data3d_test.cpp
+│   │   ├── data_dump_test.cpp
+│   │   ├── key_test.cpp
+│   │   ├── level_dat_test.cpp
+│   │   ├── palette_test.cpp
+│   │   ├── sub_chunk_test.cpp
+│   │   └── utils_test.cpp
+│   └── data/colors/            # 方块和群系颜色数据文件
+│
+├── src/                        # GUI 应用程序
+│   ├── include/                # 头文件
+│   ├── main.cpp                # 入口
+│   ├── mainwindow.cpp/h       # 主窗口
+│   ├── leveltabwidget.cpp/h   # 多存档标签页管理
+│   ├── levelpagewidget.cpp/h  # 单存档页面
+│   ├── maphost.cpp/h          # 地图共享状态 + 编辑操作（非 widget）
+│   ├── cpumapwidget.cpp/h     # 地图渲染器：QPainter 后端
+│   ├── gpumapwidget.cpp/h     # 地图渲染器：OpenGL 后端
+│   ├── toolbar.cpp            # 工具栏（几乎未使用）
+│   ├── floatingtoolbar.cpp/h  # 浮动工具栏
+│   ├── selectionregion.h      # 选区管理
+│   ├── asynclevelloader.cpp/h # 异步存档加载器
+│   ├── chunk_task.cpp/h       # 区块加载任务
+│   ├── chunkeditorwidget.cpp/h# 区块编辑器
+│   ├── chunksectionwidget.cpp/h # 子区块截面视图
+│   ├── voxelwidget.cpp/h      # 3D 体素渲染器
+│   ├── mapitemeditor.cpp/h    # 地图物品编辑器
+│   ├── nbtwidget.cpp/h        # NBT 树形编辑器
+│   ├── nbtmodifydialog.cpp/h  # NBT 值修改对话框
+│   ├── renderfilterdialog.cpp/h # 渲染过滤器
+│   ├── gotopositiondialog.cpp/h # 坐标跳转对话框
+│   ├── aboutdialog.cpp/h      # 关于对话框
+│   ├── config.cpp/h           # 配置管理
+│   ├── resourcemanager.cpp/h  # 资源管理与翻译
+│   ├── maptile.cpp/h          # 地图瓦片数据
+│   └── msg.cpp                # 消息/字符串常量
+│
+├── res/                       # 资源文件（图标、纹理、着色器、字体）
+│   ├── ui/                    # UI 图标
+│   ├── shaders/               # OpenGL 着色器
+│   ├── fonts/                 # 字体文件
+│   ├── block_actor/           # 方块实体图标
+│   ├── entity/                # 实体图标
+│   ├── nbt/                   # NBT 图标
+│   └── village/               # 村庄图标
+│
+├── translations/              # 翻译文件
+│   ├── en.ts                  # 英文
+│   └── zh_CN.ts               # 简体中文
+│
+├── scripts/                   # 构建/部署脚本
+│   ├── build.ps1
+│   ├── build_run.ps1
+│   ├── deploy.ps1
+│   └── scale_icon.py
+│
+├── docs/                      # 文档
+│   └── complie_guide.md
+│
+├── build/                     # 构建输出目录
+└── build_rls/                 # Release 构建输出目录</code></pre>
+            </div>
+            <hr>
+            <h3 id="4-架构设计">4. 架构设计</h3>
+            <h4 id="41-分层架构">4.1 分层架构</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>┌──────────────────────────────────────────────────────────┐
+│                     GUI 应用层 (src/)                      │
+│  MainWindow → LevelTabWidget → LevelPageWidget            │
+│     ├── MapHost (共享状态: MapView/MapOverlays/编辑操作)   │
+│     ├── CpuMapWidget 或 GpuMapWidget (二选一的渲染器)      │
+│     ├── FloatingToolBar (维度/图层/覆盖控制)              │
+│     ├── NbtWidget (NBT 编辑器)                            │
+│     ├── ChunkEditorWidget (区块编辑)                      │
+│     └── VoxelWidget (3D 体素渲染)                         │
+└──────────────────────┬────────────────────────────────────┘
+                       │ AsyncLevelLoader
+                       ▼
+┌──────────────────────────────────────────────────────────┐
+│                  数据加载层 (src/)                         │
+│  AsyncLevelLoader                                         │
+│     ├── LoadRegionTask/ChunkRegion (异步渲染任务)         │
+│     ├── 多级缓存 (region_cache, ...)                       │
+│     └── MapFilter (渲染过滤控制)                          │
+└──────────────────────┬────────────────────────────────────┘
+                       │ bl::bedrock_level
+                       ▼
+┌──────────────────────────────────────────────────────────┐
+│               Bedrock 数据层 (bedrock-level/)              │
+│  bl::bedrock_level                                        │
+│     ├── LevelDB 接口                                      │
+│     ├── bl::chunk / bl::sub_chunk                         │
+│     ├── bl::actor / bl::village_data                      │
+│     ├── bl::nbt (NBT 编解码)                          │
+│     └── bl::level_dat                                     │
+└──────────────────────┬────────────────────────────────────┘
+                       │ LevelDB C API
+                       ▼
+┌──────────────────────────────────────────────────────────┐
+│                   存储层                                    │
+│        LevelDB (Minecraft Bedrock 格式)                   │
+└──────────────────────────────────────────────────────────┘</code></pre>
+            </div>
+            <h4 id="42-核心类关系">4.2 核心类关系</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>MainWindow
+  └── LevelTabWidget (QTabWidget)
+       ├── [Welcome Tab]
+       └── LevelPageWidget × N
+            ├── AsyncLevelLoader ─── bl::bedrock_level ─── LevelDB
+            ├── MapHost (共享 MapView / MapOverlays / ImportOverlay / 编辑操作)
+            │    └── 选择 CpuMapWidget 或 GpuMapWidget 之一作为渲染器
+            │         ├── FloatingToolBar (维度/图层/覆盖)
+            │         ├── FloatingToolBar (选区模式)
+            │         ├── RenderFilterDialog
+            │         ├── GoToPositionDialog
+            │         ├── VoxelWidget (3D渲染)
+            │         └── ChunkEditorWidget
+            │         ├── ChunkSectionWidget
+            │         ├── NbtWidget (方块实体)
+            │         ├── NbtWidget (实体)
+            │         ├── NbtWidget (PendingTicks)
+            │         └── VoxelWidget (3D预览)
+            ├── LevelStatusBar
+            └── QTabWidget (NBT数据)
+                 ├── NbtWidget (level.dat)
+                 ├── NbtWidget (players)
+                 ├── NbtWidget (villages)
+                 ├── NbtWidget (other)
+                 └── NbtWidget (Map)</code></pre>
+            </div>
+            <h4 id="43-多存档支持">4.3 多存档支持</h4>
+            <ul>
+                <li><code>LevelTabWidget</code> 管理多个存档标签页，每个标签页包含独立的 <code>LevelPageWidget</code></li>
+                <li><code>LevelPageWidget</code> 拥有独立的 <code>AsyncLevelLoader</code>、<code>MapHost</code>
+                    和一个地图渲染器（<code>CpuMapWidget</code> 或 <code>GpuMapWidget</code>，由设置决定）以及 NBT 编辑器</li>
+                <li>每个存档的维度/图层/覆盖层状态相互独立</li>
+            </ul>
+            <hr>
+            <h3 id="5-核心模块详解">5. 核心模块详解</h3>
+            <h4 id="51-bedrock-level-库">5.1 bedrock-level 库</h4>
+            <p>该库是一个独立的静态库，封装了 Minecraft Bedrock 版存档的底层数据操作，不依赖 Qt。</p>
+            <h5 id="511-blbedrock_level-存档管理器">5.1.1 <code>bl::bedrock_level</code> — 存档管理器</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre
+                    class="code-body"><code>路径: bedrock-level/src/bedrock_level.cpp / include/bedrock_level.h</code></pre>
+            </div>
+            <p>核心职责：</p>
+            <ul>
+                <li>打开/关闭存档文件夹（读取 <code>level.dat</code> + 打开 LevelDB 数据库）</li>
+                <li>提供 <code>get_chunk(chunk_pos)</code> 加载区块，支持内部缓存</li>
+                <li>提供 <code>load_raw(key)</code> 读取原始 LevelDB 数据</li>
+                <li>提供 <code>foreach_global_keys()</code> 遍历全局键</li>
+                <li>提供 <code>remove_chunks(positions)</code> 批量删除区块</li>
+                <li>管理全局数据：玩家数据、村庄数据、地图物品、其他 NBT</li>
+            </ul>
+            <p>主要方法：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>方法</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>open(const std::string&amp; root)</code></td>
+                        <td>打开存档</td>
+                    </tr>
+                    <tr>
+                        <td><code>close()</code></td>
+                        <td>关闭存档</td>
+                    </tr>
+                    <tr>
+                        <td><code>get_chunk(const chunk_pos&amp;, chunk_load_policy)</code></td>
+                        <td>加载区块（位掩码：Terrain/PendingTick/Actor/BlockActor/Others，默认 All）</td>
+                    </tr>
+                    <tr>
+                        <td><code>load_raw(const std::string&amp; key, string&amp; value)</code></td>
+                        <td>读取原始数据</td>
+                    </tr>
+                    <tr>
+                        <td><code>load_actor(const std::string&amp; raw_uid)</code></td>
+                        <td>加载实体</td>
+                    </tr>
+                    <tr>
+                        <td><code>load_global_data()</code></td>
+                        <td>加载全局数据</td>
+                    </tr>
+                    <tr>
+                        <td><code>foreach_global_keys(f)</code></td>
+                        <td>遍历全局键</td>
+                    </tr>
+                    <tr>
+                        <td><code>remove_chunks(std::set&lt;chunk_pos&gt;&amp;)</code></td>
+                        <td>删除区块</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5 id="512-blchunk-区块">5.1.2 <code>bl::chunk</code> — 区块</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: bedrock-level/src/chunk.cpp / include/chunk.h</code></pre>
+            </div>
+            <p>表示一个区块（16×256(或384)×16 区域）。</p>
+            <p>核心数据成员：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>成员</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>sub_chunks_</code></td>
+                        <td><code>std::map&lt;int, sub_chunk*&gt;</code></td>
+                        <td>子区块按 Y 索引</td>
+                    </tr>
+                    <tr>
+                        <td><code>d3d_</code></td>
+                        <td><code>biome3d</code></td>
+                        <td>群系和高度图数据</td>
+                    </tr>
+                    <tr>
+                        <td><code>entities_</code></td>
+                        <td><code>std::vector&lt;bl::actor*&gt;</code></td>
+                        <td>实体列表</td>
+                    </tr>
+                    <tr>
+                        <td><code>block_entities_</code></td>
+                        <td><code>std::vector&lt;palette::compound_tag*&gt;</code></td>
+                        <td>方块实体 NBT</td>
+                    </tr>
+                    <tr>
+                        <td><code>pending_ticks_</code></td>
+                        <td><code>std::vector&lt;palette::compound_tag*&gt;</code></td>
+                        <td>计划刻 NBT</td>
+                    </tr>
+                    <tr>
+                        <td><code>HSAs_</code></td>
+                        <td><code>std::vector&lt;bl::hardcoded_spawn_area&gt;</code></td>
+                        <td>硬编码生成区域</td>
+                    </tr>
+                    <tr>
+                        <td><code>chunk_format_</code></td>
+                        <td><code>LevelChunkFormat</code></td>
+                        <td>区块存储格式</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>主要方法：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>方法</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>get_block_with_color(cx, y, cz)</code></td>
+                        <td>获取方块信息（名称+颜色）</td>
+                    </tr>
+                    <tr>
+                        <td><code>get_block_raw(cx, y, cz)</code></td>
+                        <td>获取方块原始 NBT</td>
+                    </tr>
+                    <tr>
+                        <td><code>get_block_color(cx, y, cz)</code></td>
+                        <td>获取方块颜色</td>
+                    </tr>
+                    <tr>
+                        <td><code>get_biome(cx, y, cz)</code></td>
+                        <td>获取群系</td>
+                    </tr>
+                    <tr>
+                        <td><code>get_top_biome(cx, cz)</code></td>
+                        <td>获取地表群系</td>
+                    </tr>
+                    <tr>
+                        <td><code>get_height(cx, cz)</code></td>
+                        <td>获取高度</td>
+                    </tr>
+                    <tr>
+                        <td><code>map_y_to_subchunk(y, index, offset)</code></td>
+                        <td>[静态] Y 坐标到子区块索引映射</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>区块版本：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>版本</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Old</code></td>
+                        <td>1.12~1.17 (Y: 0~255)</td>
+                    </tr>
+                    <tr>
+                        <td><code>New</code></td>
+                        <td>1.18+ (Y: -64~319)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5 id="513-blsub_chunk-子区块">5.1.3 <code>bl::sub_chunk</code> — 子区块</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: bedrock-level/src/sub_chunk.cpp / include/sub_chunk.h</code></pre>
+            </div>
+            <p>表示 16×16×16 的区域，存储方块调色板。</p>
+            <p>内部结构：</p>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>sub_chunk
+├── version_: uint8_t
+├── y_index_: int8_t          // 子区块 Y 索引
+└── layers_: vector&lt;layer*&gt;
+     └── layer
+          ├── bits: uint8_t           // 每个方块的位数
+          ├── type: uint8_t           // 调色板类型
+          ├── palette_len: uint32_t   // 调色板长度
+          ├── blocks: vector&lt;uint16_t&gt; // 方块索引数组 (4096)
+          └── palettes: vector&lt;compound_tag*&gt; // 方块调色板</code></pre>
+            </div>
+            <p>主要方法：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>方法</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>load(data, len)</code></td>
+                        <td>从二进制数据加载子区块</td>
+                    </tr>
+                    <tr>
+                        <td><code>get_block_with_color(rx, ry, rz)</code></td>
+                        <td>获取方块（名称+颜色）</td>
+                    </tr>
+                    <tr>
+                        <td><code>get_block_raw(rx, ry, rz)</code></td>
+                        <td>获取方块原始 NBT</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5 id="514-blnbt-nbt-标签库">5.1.4 <code>bl::nbt</code> — NBT 标签库</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: bedrock-level/src/nbt.cpp / include/nbt.h</code></pre>
+            </div>
+            <p>自实现的 NBT（Named Binary Tag）编解码库，支持 Bedrock 版使用的所有标签类型。</p>
+            <p>标签类型枚举：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>类型</th>
+                        <th>值</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>End</code></td>
+                        <td>0</td>
+                        <td>结束标记</td>
+                    </tr>
+                    <tr>
+                        <td><code>Byte</code></td>
+                        <td>1</td>
+                        <td>字节</td>
+                    </tr>
+                    <tr>
+                        <td><code>Short</code></td>
+                        <td>2</td>
+                        <td>短整数</td>
+                    </tr>
+                    <tr>
+                        <td><code>Int</code></td>
+                        <td>3</td>
+                        <td>整数</td>
+                    </tr>
+                    <tr>
+                        <td><code>Long</code></td>
+                        <td>4</td>
+                        <td>长整数</td>
+                    </tr>
+                    <tr>
+                        <td><code>Float</code></td>
+                        <td>5</td>
+                        <td>浮点数</td>
+                    </tr>
+                    <tr>
+                        <td><code>Double</code></td>
+                        <td>6</td>
+                        <td>双精度</td>
+                    </tr>
+                    <tr>
+                        <td><code>ByteArray</code></td>
+                        <td>7</td>
+                        <td>字节数组</td>
+                    </tr>
+                    <tr>
+                        <td><code>String</code></td>
+                        <td>8</td>
+                        <td>字符串</td>
+                    </tr>
+                    <tr>
+                        <td><code>List</code></td>
+                        <td>9</td>
+                        <td>列表</td>
+                    </tr>
+                    <tr>
+                        <td><code>Compound</code></td>
+                        <td>10</td>
+                        <td>复合标签</td>
+                    </tr>
+                    <tr>
+                        <td><code>IntArray</code></td>
+                        <td>11</td>
+                        <td>整数数组</td>
+                    </tr>
+                    <tr>
+                        <td><code>LongArray</code></td>
+                        <td>12</td>
+                        <td>长整数数组</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>类继承结构：</p>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>abstract_tag (基类)
+├── compound_tag  (键值对容器)
+├── list_tag      (有序标签列表)
+├── byte_tag / short_tag / int_tag / long_tag
+├── float_tag / double_tag
+├── string_tag
+├── byte_array_tag / int_array_tag / long_array_tag
+└── end_tag</code></pre>
+            </div>
+            <h5 id="515-blchunk_pos-blblock_pos-坐标系统">5.1.5 <code>bl::chunk_pos</code> / <code>bl::block_pos</code> —
+                坐标系统</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: bedrock-level/src/include/bedrock_key.h</code></pre>
+            </div>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>类型</th>
+                        <th>成员</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>chunk_pos</code></td>
+                        <td><code>x, z</code> (int32), <code>dim</code> (int32)</td>
+                        <td>区块坐标 + 维度（0=主世界,1=下界,2=末地）</td>
+                    </tr>
+                    <tr>
+                        <td><code>block_pos</code></td>
+                        <td><code>x, y, z</code> (int)</td>
+                        <td>方块坐标，提供 <code>to_chunk_pos()</code> 和 <code>in_chunk_offset()</code> 方法</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>维度常量：<code>OverWorld=0</code>, <code>Nether=1</code>, <code>TheEnd=2</code></p>
+            <h5 id="516-blchunk_key-leveldb-键解析">5.1.6 <code>bl::chunk_key</code> — LevelDB 键解析</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: bedrock-level/src/include/bedrock_key.h</code></pre>
+            </div>
+            <p>Bedrock 版使用复合键结构存储区块数据，不同 Tag 表示不同类型的数据。</p>
+            <p>主要键类型：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>类型</th>
+                        <th>ID</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Data3D</code></td>
+                        <td>43</td>
+                        <td>3D 数据（群系+高度）</td>
+                    </tr>
+                    <tr>
+                        <td><code>VersionNew</code></td>
+                        <td>44</td>
+                        <td>新版本号</td>
+                    </tr>
+                    <tr>
+                        <td><code>Data2D</code></td>
+                        <td>45</td>
+                        <td>2D 数据（旧版高度+群系）</td>
+                    </tr>
+                    <tr>
+                        <td><code>SubChunkTerrain</code></td>
+                        <td>47</td>
+                        <td>子区块地形数据</td>
+                    </tr>
+                    <tr>
+                        <td><code>BlockEntity</code></td>
+                        <td>49</td>
+                        <td>方块实体</td>
+                    </tr>
+                    <tr>
+                        <td><code>Entity</code></td>
+                        <td>50</td>
+                        <td>实体（旧版）</td>
+                    </tr>
+                    <tr>
+                        <td><code>PendingTicks</code></td>
+                        <td>51</td>
+                        <td>计划刻</td>
+                    </tr>
+                    <tr>
+                        <td><code>HardCodedSpawnAreas</code></td>
+                        <td>57</td>
+                        <td>硬编码生成区域</td>
+                    </tr>
+                    <tr>
+                        <td><code>VersionOld</code></td>
+                        <td>118</td>
+                        <td>旧版本号</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5 id="517-bldata_3d-biome3d-群系和高度图">5.1.7 <code>bl::data_3d</code> / <code>biome3d</code> — 群系和高度图</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: bedrock-level/src/data_3d.cpp / include/data_3d.h</code></pre>
+            </div>
+            <p>存储和管理区块的 3D 群系数据和高度图。群系枚举包含所有标准 Minecraft 群系类型（0~188+）。</p>
+            <h5 id="518-blcolor-颜色系统">5.1.8 <code>bl::color</code> — 颜色系统</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: bedrock-level/src/color.cpp / include/color.h</code></pre>
+            </div>
+            <p>从数据文件加载方块和群系的颜色映射，提供颜色混合、方块颜色查找等功能。</p>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">cpp</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>struct color {
+    uint8_t r, g, b, a;  // RGBA 颜色
+};</code></pre>
+            </div>
+            <p>关键函数：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>函数</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>init_block_color_from_file(filename)</code></td>
+                        <td>从文件加载方块颜色表</td>
+                    </tr>
+                    <tr>
+                        <td><code>init_biome_color_palette_from_file()</code></td>
+                        <td>从文件加载群系颜色表</td>
+                    </tr>
+                    <tr>
+                        <td><code>get_block_by_name_tag(name, tag)</code></td>
+                        <td>根据名称和标签获取方块颜色</td>
+                    </tr>
+                    <tr>
+                        <td><code>get_biome_color(biome)</code></td>
+                        <td>获取群系颜色</td>
+                    </tr>
+                    <tr>
+                        <td><code>blend_color_with_biome(name, color, biome)</code></td>
+                        <td>将方块颜色与群系颜色混合</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5 id="519-blactor-实体">5.1.9 <code>bl::actor</code> — 实体</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: bedrock-level/src/actor.cpp / include/actor.h</code></pre>
+            </div>
+            <p>从 NBT 数据解析实体信息，提取 UID、位置、标识符。</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>方法</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>load(data, len)</code></td>
+                        <td>从二进制加载</td>
+                    </tr>
+                    <tr>
+                        <td><code>load_from_nbt(nbt)</code></td>
+                        <td>从 NBT 加载</td>
+                    </tr>
+                    <tr>
+                        <td><code>uid()</code></td>
+                        <td>获取 UID</td>
+                    </tr>
+                    <tr>
+                        <td><code>pos()</code></td>
+                        <td>获取位置</td>
+                    </tr>
+                    <tr>
+                        <td><code>identifier()</code></td>
+                        <td>获取标识符</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5 id="5110-bllevel_dat-leveldat">5.1.10 <code>bl::level_dat</code> — level.dat</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: bedrock-level/src/level_dat.cpp / include/level_dat.h</code></pre>
+            </div>
+            <p>解析 <code>level.dat</code> 文件，提取世界生成点、存储版本、世界名称等信息。提供 NBT 根标签的读写接口。</p>
+            <hr>
+            <h4 id="52-gui-应用程序">5.2 GUI 应用程序</h4>
+            <h5 id="521-maincpp-入口">5.2.1 <code>main.cpp</code> — 入口</h5>
+            <p>应用程序入口，负责：</p>
+            <ul>
+                <li>初始化配置 (<code>cfg::initConfig()</code>)</li>
+                <li>加载资源 (<code>initResources()</code>)</li>
+                <li>设置字体（支持自定义字体族和大小）</li>
+                <li>设置日志系统（输出到 <code>logs/</code> 目录）</li>
+                <li>设置 DPI 缩放策略</li>
+                <li>初始化翻译管理器</li>
+                <li>启动主窗口</li>
+            </ul>
+            <h5 id="522-mainwindow-主窗口">5.2.2 <code>MainWindow</code> — 主窗口</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: src/mainwindow.cpp / include/mainwindow.h</code></pre>
+            </div>
+            <p>顶层窗口，包含：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>成员</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>LevelTabWidget</code></td>
+                        <td>存档标签页管理器</td>
+                    </tr>
+                    <tr>
+                        <td><code>MapItemEditor</code></td>
+                        <td>地图物品编辑器</td>
+                    </tr>
+                    <tr>
+                        <td><code>AboutDialog</code></td>
+                        <td>关于对话框</td>
+                    </tr>
+                    <tr>
+                        <td><code>write_mode_</code></td>
+                        <td>写入模式开关</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>主要操作：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>操作</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>打开存档</td>
+                        <td>打开文件夹选择对话框，选择存档目录</td>
+                    </tr>
+                    <tr>
+                        <td>关闭存档</td>
+                        <td>关闭当前存档</td>
+                    </tr>
+                    <tr>
+                        <td>NBT 编辑器</td>
+                        <td>打开独立 NBT 编辑器窗口</td>
+                    </tr>
+                    <tr>
+                        <td>快捷键</td>
+                        <td>支持自定义快捷键绑定</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5 id="523-leveltabwidget-多存档标签页">5.2.3 <code>LevelTabWidget</code> — 多存档标签页</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: src/leveltabwidget.cpp / include/leveltabwidget.h</code></pre>
+            </div>
+            <p>基于 <code>QTabWidget</code>，管理多个 <code>LevelPageWidget</code> 实例。</p>
+            <p>功能：</p>
+            <ul>
+                <li>从 <code>MainWindow</code> 接收打开存档请求，创建新的标签页</li>
+                <li>通过信号 <code>currentLevelChanged</code> 通知侧边栏切换</li>
+                <li>支持关闭标签页并异步清理资源</li>
+                <li>包含 <code>LevelDBDebugDialog</code> 用于显示 LevelDB 统计信息</li>
+            </ul>
+            <h5 id="524-levelpagewidget-单存档页面">5.2.4 <code>LevelPageWidget</code> — 单存档页面</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: src/levelpagewidget.cpp / include/levelpagewidget.h</code></pre>
+            </div>
+            <p>每个打开的存档对应一个 <code>LevelPageWidget</code>，是功能的核心容器。</p>
+            <p>布局：</p>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>LevelPageWidget (QVBoxLayout)
+├── QSplitter (Vertical)
+│   ├── 活跃的地图渲染器：CpuMapWidget 或 GpuMapWidget (包含浮动工具栏)
+│   │   ├── FloatingToolBar (维度/图层/覆盖层) [左上角]
+│   │   └── FloatingToolBar (选区模式) [顶部居中]
+│   └── QTabWidget (NBT数据) [可折叠]
+│       ├── level.dat
+│       ├── players
+│       ├── villages
+│       ├── other
+│       └── Map
+└── LevelStatusBar (坐标+状态信息)</code></pre>
+            </div>
+            <p>主要方法：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>方法</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>loadLevel(path)</code></td>
+                        <td>打开存档并加载全局数据</td>
+                    </tr>
+                    <tr>
+                        <td><code>closeLevel()</code></td>
+                        <td>关闭存档</td>
+                    </tr>
+                    <tr>
+                        <td><code>mapHost()</code></td>
+                        <td>获取地图共享状态与编辑操作</td>
+                    </tr>
+                    <tr>
+                        <td><code>activeMapPane()</code></td>
+                        <td>获取屏幕上那个地图渲染器</td>
+                    </tr>
+                    <tr>
+                        <td><code>levelLoader()</code></td>
+                        <td>获取异步加载器</td>
+                    </tr>
+                    <tr>
+                        <td><code>openFilterDialog()</code></td>
+                        <td>打开渲染过滤器对话框</td>
+                    </tr>
+                    <tr>
+                        <td><code>toggleGlobalDataWidget()</code></td>
+                        <td>切换 NBT 数据面板可见性</td>
+                    </tr>
+                    <tr>
+                        <td><code>collectVillagesGuiData(vs)</code></td>
+                        <td>收集村庄数据用于渲染</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5 id="525-cpumapwidget-gpumapwidget-地图渲染器">5.2.5 <code>CpuMapWidget</code> / <code>GpuMapWidget</code> —
+                地图渲染器</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: src/cpumapwidget.cpp / include/ui/cpumapwidget.h   （CPU 渲染器）
+      src/gpumapwidget.cpp / include/ui/gpumapwidget.h   （GPU 渲染器）</code></pre>
+            </div>
+            <p>两个渲染器<strong>是同级、可互换的</strong>：<code>CpuMapWidget</code> 用 <code>QPainter</code>
+                画烘焙好的区块贴图，<code>GpuMapWidget</code> 把同样的烘焙数据上传进一张图集然后用 GLSL 逐像素着色（斜面光照 / AO / 阴影）。</p>
+            <blockquote>
+                <p>GPU 渲染器的完整流程（每帧顺序、图集与槽位、分辨率选择、瓦片降采样与上传、着色、概览模式、诊断与 bench）见 <a
+                        href="https://github.com/bedrock-dev/BedrockMap/blob/main/gpuMapRenderer.md" target="_blank"
+                        rel="noopener noreferrer"><code>docs/gpuMapRenderer.md</code></a>。</p>
+            </blockquote>
+            <p>它们都只负责自己那份绘制，通过构造函数接收同一组共享对象：</p>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">cpp</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre
+                    class="code-body"><code>(parent, AsyncLevelLoader*, MapView*, MapOverlays*, ImportOverlay*, MapHost*)</code></pre>
+            </div>
+            <p>共享状态、编辑操作和 overlay 由 <code>MapHost</code> 持有（见 5.2.5.1），<code>LevelPageWidget</code>
+                只构造其中的<strong>一个</strong>渲染器，所以不存在“哪个 widget 定义相机”的歧义。</p>
+            <blockquote>
+                <p>为什么不用公共基类：<code>GpuMapWidget</code> 必须继承 <code>QOpenGLWidget</code>（它本身是 <code>QWidget</code>），
+                    再加一层 widget 基类就是菱形继承；而且继承会给每个对象一份状态副本，与“两个渲染器共享同一份视图”正好相反。</p>
+            </blockquote>
+            <p>上下文菜单、拖拽选区和缩放都由共享对象处理，两个渲染器的事件处理因此完全对称。</p>
+            <p><strong>缩放级别：</strong> 快捷键 <code>Ctrl+滚轮</code> 缩放，范围 <code>cfg::MINIMUM_SCALE_LEVEL</code> ~
+                <code>cfg::MAXIMUM_SCALE_LEVEL</code></p>
+            <p><strong>用户交互：</strong> 由共享的 <code>MapInteraction</code> 实现，两个渲染器转发同一套事件：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>操作</th>
+                        <th>功能</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>鼠标拖动</td>
+                        <td>平移地图</td>
+                    </tr>
+                    <tr>
+                        <td>滚轮</td>
+                        <td>缩放地图</td>
+                    </tr>
+                    <tr>
+                        <td>中键拖动</td>
+                        <td>创建选区</td>
+                    </tr>
+                    <tr>
+                        <td>右键</td>
+                        <td>上下文菜单（复制信息、跳转等）</td>
+                    </tr>
+                    <tr>
+                        <td>双击区块</td>
+                        <td>打开区块编辑器</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>渲染选项 (RenderOption)：</strong></p>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">cpp</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>struct RenderOption {
+    enum LayerType { Biome, Terrain, Height };   // 图层类型
+    enum DimType  { OverWorld, Nether, TheEnd }; // 维度类型
+    enum OtherType { Grid, Coords, SlimeChunk, Actors, Village, HSA }; // 覆盖层
+    DimType dim;
+    LayerType layer;
+    std::array&lt;bool, 6&gt; others;  // 各覆盖层开关
+};</code></pre>
+            </div>
+            <p><strong>坐标变换</strong>（都在共享的 <code>MapView</code> 上，两个渲染器读同一份）：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>方法</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>blockPosToViewPos(bp)</code></td>
+                        <td>方块坐标 → 视图坐标</td>
+                    </tr>
+                    <tr>
+                        <td><code>chunkPosToViewPos(cp)</code></td>
+                        <td>区块坐标 → 视图坐标</td>
+                    </tr>
+                    <tr>
+                        <td><code>viewPosToChunkPos(vp)</code></td>
+                        <td>视图坐标 → 区块坐标</td>
+                    </tr>
+                    <tr>
+                        <td><code>viewPosToBlockPos(vp)</code></td>
+                        <td>视图坐标 → 方块坐标</td>
+                    </tr>
+                    <tr>
+                        <td><code>scaleLevel()</code></td>
+                        <td>当前缩放级别下区块的像素宽度</td>
+                    </tr>
+                    <tr>
+                        <td><code>chunkPosAt(pos, viewport)</code></td>
+                        <td>用指定视口解析坐标（渲染器尺寸可能不同）</td>
+                    </tr>
+                    <tr>
+                        <td><code>transformForViewport(size)</code></td>
+                        <td>按指定视口大小重建变换</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>CPU 渲染管线：</strong></p>
+            <ol>
+                <li><code>paintEvent()</code> 入口，先 <code>view_-&gt;setViewportSize(size())</code> 与
+                    <code>syncScaleLimits()</code></li>
+                <li>根据 <code>RenderOption.layer</code> 调用 <code>drawTerrain()</code> / <code>drawBiome()</code></li>
+                <li>调用 <code>foreachRegionInCamera()</code> 遍历可见区域</li>
+                <li>对每个区域从 <code>AsyncLevelLoader</code> 获取缓存的渲染图像</li>
+                <li>调用 <code>drawImageInRegion()</code> 绘制图像</li>
+                <li>调用共享的 <code>MapOverlays</code> 绘制覆盖层：网格、坐标、史莱姆区块、实体、村庄、HSA、选区等</li>
+            </ol>
+            <p><code>GpuMapWidget</code> 走同一条数据来源，但把每区块一个像素的颜色/高度上传进图集，由 <code>res/shaders/map2d.frag</code> 逐屏幕像素着色。
+            </p>
+            <p><strong>选区系统 (SelectionRegion)：</strong></p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>模式</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Replace</code></td>
+                        <td>替换选区</td>
+                    </tr>
+                    <tr>
+                        <td><code>Add</code></td>
+                        <td>追加到选区</td>
+                    </tr>
+                    <tr>
+                        <td><code>Subtract</code></td>
+                        <td>从选区移除</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>选区用于删除区块操作。通过浮动工具栏的按钮切换模式。选区状态存在 <code>MapView</code> 上，改动统一经 <code>MapView::beginSelectionDrag()</code>
+                / <code>finishSelectionDrag()</code> 等方法，因此所有渲染器都会同步重绘。</p>
+            <h5 id="5251-maphost-地图共享状态与编辑操作">5.2.5.1 <code>MapHost</code> — 地图共享状态与编辑操作</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: src/maphost.cpp / include/ui/maphost.h</code></pre>
+            </div>
+            <p>不是 widget。地图的<strong>共享状态</strong>和<strong>关卡编辑操作</strong>都在这里，因此切换渲染器不会丢状态，两个渲染器也不可能对不上：</p>
+            <ul>
+                <li>共享对象：<code>MapView</code>（变换/相机/维度/RenderOption/选区/缩放上下限）、<code>MapOverlays</code>（全部覆盖层）、<code>ImportOverlay</code>（导入/粘贴的放置预览）
+                </li>
+                <li>编辑操作：右键菜单（<code>ContextMenuBuilder</code> 直接作用于 <code>MapHost</code>，没有中间接口）、截图、导出、删除/清空选区、3D
+                    预览、区块编辑器入口都在这里，所以这些动作只有一份实现</li>
+                <li>状态变更统一经过 <code>MapView</code>，由它发出 <code>viewChanged()</code>，<strong>每个</strong>渲染器都会重绘</li>
+            </ul>
+            <h5 id="526-floatingtoolbar-浮动工具栏">5.2.6 <code>FloatingToolBar</code> — 浮动工具栏</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: src/floatingtoolbar.cpp / include/floatingtoolbar.h</code></pre>
+            </div>
+            <p>自定义浮动工具栏组件，叠加在 <code>CpuMapWidget</code> 之上。</p>
+            <p>功能：</p>
+            <ul>
+                <li>支持按钮分组（独占模式/切换模式）</li>
+                <li>支持分隔符</li>
+                <li>可设置位置锚点（左上角/顶部居中等）</li>
+                <li>自动适应父窗口大小变化</li>
+                <li>发出 <code>buttonToggled(group, button, checked)</code> 信号</li>
+            </ul>
+            <h5 id="527-asynclevelloader-异步加载器">5.2.7 <code>AsyncLevelLoader</code> — 异步加载器</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: src/asynclevelloader.cpp / include/asynclevelloader.h</code></pre>
+            </div>
+            <p>核心数据加载和管理层，桥接 GUI 和 bedrock-level 库。</p>
+            <p><strong>缓存系统：</strong></p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>缓存</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>region_cache_</code></td>
+                        <td><code>QCache&lt;region_pos, ChunkRegion&gt;</code></td>
+                        <td>区域渲染图像缓存</td>
+                    </tr>
+                    <tr>
+                        <td><code>invalid_cache_</code></td>
+                        <td><code>QCache&lt;region_pos, char&gt;</code></td>
+                        <td>空区域缓存</td>
+                    </tr>
+                    <tr>
+                        <td><code>slime_chunk_cache_</code></td>
+                        <td><code>QCache&lt;region_pos, QImage&gt;</code></td>
+                        <td>史莱姆区块缓存</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>异步任务：</strong></p>
+            <ul>
+                <li><code>LoadRegionTask</code>：加载并渲染 8×8 区块区域（通过 <code>QThreadPool</code> 执行）</li>
+                <li><code>TaskBuffer&lt;T&gt;</code>：防止同一区域重复加载</li>
+            </ul>
+            <p><strong>数据修改方法：</strong></p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>方法</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>dropChunk(min, max)</code></td>
+                        <td>删除区块范围</td>
+                    </tr>
+                    <tr>
+                        <td><code>modifyDBGlobal(modifies)</code></td>
+                        <td>批量修改全局数据</td>
+                    </tr>
+                    <tr>
+                        <td><code>modifyLeveldat(nbt)</code></td>
+                        <td>修改 level.dat</td>
+                    </tr>
+                    <tr>
+                        <td><code>modifyChunkBlockEntities(cp, raw)</code></td>
+                        <td>修改区块方块实体</td>
+                    </tr>
+                    <tr>
+                        <td><code>modifyChunkPendingTicks(cp, raw)</code></td>
+                        <td>修改计划刻</td>
+                    </tr>
+                    <tr>
+                        <td><code>modifyChunkActors(cp, v, actors)</code></td>
+                        <td>修改区块实体</td>
+                    </tr>
+                    <tr>
+                        <td><code>getChunk(p)</code></td>
+                        <td>直接获取区块（不缓存）</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5 id="529-chunkregion-loadregiontask-区域渲染">5.2.9 <code>ChunkRegion</code> / <code>LoadRegionTask</code> —
+                区域渲染</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: src/include/chunk_task.h</code></pre>
+            </div>
+            <p>一个 <code>ChunkRegion</code> 表示 8×8 个区块（由 <code>cfg::RW = 8</code> 定义）的渲染结果。</p>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">cpp</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>struct ChunkRegion {
+    BlockTipsInfo tips_info_[128][128];         // 每个方块的信息
+    std::bitset&lt;64&gt; chunk_bit_map_;             // 区块存在性位图
+    QImage terrain_bake_image_;                 // 地形渲染图像
+    QImage biome_bake_image_;                   // 群系渲染图像
+    QImage height_bake_image_;                  // 高度渲染图像
+    bool valid;
+    std::unordered_map&lt;QImage*, vector&lt;vec3&gt;&gt; actors_;          // 实体位置（图标模式）
+    std::map&lt;chunk_pos, map&lt;QImage*, ActorCount&gt;&gt; actors_counts_; // 实体位置（计数模式）
+    std::vector&lt;hardcoded_spawn_area&gt; HSAs_;
+};</code></pre>
+            </div>
+            <p><code>LoadRegionTask::run()</code> 流程：</p>
+            <ol>
+                <li>遍历 8×8 区块网格，调用
+                    <code>level_-&gt;get_chunk(pos, bl::chunk_load_policy::Terrain | bl::chunk_load_policy::Actor | bl::chunk_load_policy::Others)</code>
+                    加载区块
+                </li>
+                <li>对每个有效区块，调用 <code>filter_-&gt;renderImages(chunk, ...)</code> 渲染</li>
+                <li>调用 <code>filter_-&gt;bakeChunkActors(chunk, ...)</code> 收集实体信息</li>
+                <li>通过信号 <code>finish()</code> 将结果返回主线程</li>
+            </ol>
+            <h5 id="5210-mapfilter-渲染过滤器">5.2.10 <code>MapFilter</code> — 渲染过滤器</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: src/include/renderfilterdialog.h</code></pre>
+            </div>
+            <p>控制地图渲染的过滤条件：</p>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">cpp</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>struct MapFilter {
+    unordered_set&lt;int&gt; biomes_list_;             // 过滤的群系列表
+    unordered_set&lt;string&gt; blocks_list_;          // 过滤的方块列表
+    unordered_set&lt;string&gt; actors_list_;          // 过滤的实体系列
+    int layer{64};                               // 固定 Y 层
+    bool enable_layer_{false};                   // 是否启用固定层模式
+    bool biome_black_mode_{true};                // true=黑名单，false=白名单
+    bool block_black_mode_{true};                // true=黑名单，false=白名单
+    bool actor_black_mode_{true};                // true=黑名单，false=白名单
+};</code></pre>
+            </div>
+            <h5 id="5211-chunkeditorwidget-区块编辑器">5.2.11 <code>ChunkEditorWidget</code> — 区块编辑器</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: src/chunkeditorwidget.cpp / include/chunkeditorwidget.h</code></pre>
+            </div>
+            <p>双击地图上的区块时打开的编辑窗口，显示区块的详细信息：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>功能</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>子区块层级浏览</td>
+                        <td>通过滑块选择 Y 层</td>
+                    </tr>
+                    <tr>
+                        <td>3D 体素预览</td>
+                        <td>使用 <code>VoxelWidget</code> 渲染</td>
+                    </tr>
+                    <tr>
+                        <td>实体 NBT 编辑</td>
+                        <td>查看和修改实体数据</td>
+                    </tr>
+                    <tr>
+                        <td>方块实体 NBT 编辑</td>
+                        <td>查看和修改方块实体数据</td>
+                    </tr>
+                    <tr>
+                        <td>计划刻 NBT 编辑</td>
+                        <td>查看和修改计划刻数据</td>
+                    </tr>
+                    <tr>
+                        <td>区块定位</td>
+                        <td>在地图上定位当前区块</td>
+                    </tr>
+                    <tr>
+                        <td>数据导出</td>
+                        <td>导出区块数据</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5 id="5212-voxelwidget-3d-体素渲染">5.2.12 <code>VoxelWidget</code> — 3D 体素渲染</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: src/voxelwidget.cpp / include/voxelwidget.h</code></pre>
+            </div>
+            <p>基于 OpenGL 3.3 的 3D 体素渲染器，继承 <code>QOpenGLWidget</code>。</p>
+            <p>功能：</p>
+            <ul>
+                <li>从多个区块加载方块数据生成体素网格</li>
+                <li>区分不透明和透明方块，分层渲染</li>
+                <li>支持鼠标拖拽旋转视角</li>
+                <li>支持滚轮缩放</li>
+                <li>支持键盘 WASD 控制</li>
+            </ul>
+            <h5 id="5213-nbtwidget-nbt-树形编辑器">5.2.13 <code>NbtWidget</code> — NBT 树形编辑器</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: src/nbtwidget.cpp / include/nbtwidget.h</code></pre>
+            </div>
+            <p>通用的 NBT 数据浏览器/编辑器，使用 <code>QTreeWidget</code> 展示 NBT 树结构。</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>功能</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>树形浏览</td>
+                        <td>按 Compound/List 层级展开</td>
+                    </tr>
+                    <tr>
+                        <td>值修改</td>
+                        <td>弹窗修改标签值</td>
+                    </tr>
+                    <tr>
+                        <td>添加子标签</td>
+                        <td>支持向 Compound/List 添加新标签</td>
+                    </tr>
+                    <tr>
+                        <td>删除标签</td>
+                        <td>支持删除标签</td>
+                    </tr>
+                    <tr>
+                        <td>数据导入</td>
+                        <td>从二进制/JSON 格式导入 NBT</td>
+                    </tr>
+                    <tr>
+                        <td>右键菜单</td>
+                        <td>复制、修改、添加、删除操作</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5 id="5214-config-配置管理">5.2.14 <code>Config</code> — 配置管理</h5>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>路径: src/config.cpp / include/config.h</code></pre>
+            </div>
+            <p>从 <code>config.ini</code> 读取配置，提供全局静态配置变量。</p>
+            <p>命名空间 <code>cfg</code> 中的关键配置：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>变量</th>
+                        <th>默认值</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>FONT_FAMILY</code></td>
+                        <td>微软雅黑</td>
+                        <td>字体族</td>
+                    </tr>
+                    <tr>
+                        <td><code>FONT_SIZE</code></td>
+                        <td>10</td>
+                        <td>字体大小</td>
+                    </tr>
+                    <tr>
+                        <td><code>GRID_WIDTH</code></td>
+                        <td>1</td>
+                        <td>网格宽度（单位：区块）</td>
+                    </tr>
+                    <tr>
+                        <td><code>SHADOW_LEVEL</code></td>
+                        <td>150</td>
+                        <td>阴影强度 (0-255)</td>
+                    </tr>
+                    <tr>
+                        <td><code>ZOOM_SPEED</code></td>
+                        <td>1.2</td>
+                        <td>缩放速度</td>
+                    </tr>
+                    <tr>
+                        <td><code>MINIMUM_SCALE_LEVEL</code></td>
+                        <td>2</td>
+                        <td>最小缩放级别</td>
+                    </tr>
+                    <tr>
+                        <td><code>MAXIMUM_SCALE_LEVEL</code></td>
+                        <td>1024</td>
+                        <td>最大缩放级别</td>
+                    </tr>
+                    <tr>
+                        <td><code>MAP_RENDER_STYLE</code></td>
+                        <td>1</td>
+                        <td>渲染风格</td>
+                    </tr>
+                    <tr>
+                        <td><code>TRANSPARENT_WATER</code></td>
+                        <td>true</td>
+                        <td>透明水渲染</td>
+                    </tr>
+                    <tr>
+                        <td><code>THREAD_NUM</code></td>
+                        <td>8</td>
+                        <td>线程数</td>
+                    </tr>
+                    <tr>
+                        <td><code>REGION_CACHE_SIZE</code></td>
+                        <td>16384</td>
+                        <td>区域缓存容量（条目数）</td>
+                    </tr>
+                    <tr>
+                        <td><code>OPEN_NBT_EDITOR_ONLY</code></td>
+                        <td>false</td>
+                        <td>仅 NBT 编辑器模式</td>
+                    </tr>
+                    <tr>
+                        <td><code>LANGUAGE</code></td>
+                        <td>zh_CN</td>
+                        <td>语言</td>
+                    </tr>
+                    <tr>
+                        <td><code>LOAD_GLOBAL_DATA</code></td>
+                        <td>true</td>
+                        <td>加载全局数据</td>
+                    </tr>
+                    <tr>
+                        <td><code>RW</code></td>
+                        <td>8</td>
+                        <td>区域大小（区块数）</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+            <h3 id="6-数据模型">6. 数据模型</h3>
+            <h4 id="61-leveldb-键结构">6.1 LevelDB 键结构</h4>
+            <p>Minecraft Bedrock 版使用复合键存储数据，格式为：</p>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre
+                    class="code-body"><code>chunk_key = prefix(1byte) + dim(4bytes) + cx(4bytes) + cz(4bytes) + tag(1byte) [+ y_index(1byte)]</code></pre>
+            </div>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>字段</th>
+                        <th>大小</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>prefix</td>
+                        <td>1 byte</td>
+                        <td>固定为 <code>0x00</code></td>
+                    </tr>
+                    <tr>
+                        <td>dim</td>
+                        <td>4 bytes</td>
+                        <td>维度 ID</td>
+                    </tr>
+                    <tr>
+                        <td>cx, cz</td>
+                        <td>4+4 bytes</td>
+                        <td>区块坐标</td>
+                    </tr>
+                    <tr>
+                        <td>tag</td>
+                        <td>1 byte</td>
+                        <td>数据类型 ID</td>
+                    </tr>
+                    <tr>
+                        <td>y_index</td>
+                        <td>1 byte</td>
+                        <td>仅 SubChunkTerrain 需要</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4 id="62-区块数据结构">6.2 区块数据结构</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>Chunk (16×?×16)
+├── SubChunk (-4\~19 or 0\~15)
+│   ├── Version (uint8)
+│   ├── Y Index (int8)
+│   ├── Layers Count (uint8)
+│   └── Layer
+│       ├── Bits Per Block (uint8)
+│       ├── Palette Type (uint8)
+│       ├── Block Indices (4096 × uint16)
+│       └── Palette (NBT Compound 列表)
+├── Biome3D / HeightMap
+├── Entities (actor 列表)
+├── Block Entities (NBT Compound 列表)
+├── Pending Ticks (NBT Compound 列表)
+└── Hardcoded Spawn Areas</code></pre>
+            </div>
+            <h4 id="63-坐标系">6.3 坐标系</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>世界坐标 (block_pos)
+    ↓ ÷16
+区块坐标 (chunk_pos)  ← 包含维度 (dim=0,1,2)
+    ↓
+子区块 (sub_chunk)   ← Y÷16 索引，16^3 区域
+    ↓
+局部坐标 (rx, ry, rz)  ← 子区块内的 0~15 偏移</code></pre>
+            </div>
+            <hr>
+            <h3 id="7-渲染管线">7. 渲染管线</h3>
+            <h4 id="71-主渲染流程">7.1 主渲染流程</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>paintEvent()
+├── 计算相机范围 (camera_)
+├── 设置世界-视图变换矩阵 (world_to_view_xf_)
+├── 根据图层选择渲染函数
+│   ├── drawTerrain()   → foreachRegionInCamera()
+│   ├── drawBiome()     → foreachRegionInCamera()
+│   └── drawHeight()    → foreachRegionInCamera()
+├── 绘制覆盖层（按 RenderOption.others 控制）
+│   ├── drawGrid()
+│   ├── drawChunkPosText()
+│   ├── drawSlimeChunks()
+│   ├── drawActors()
+│   ├── drawVillages()
+│   ├── drawHSAs()
+│   └── drawSelection()
+├── drawMarkers() (打开区块标记)
+└── drawDebugWindow() (调试信息)</code></pre>
+            </div>
+            <h4 id="72-区域加载流程">7.2 区域加载流程</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>tryGetRegion(region_pos)
+├── 检查 invalid_cache_（空区域缓存命中 → 返回 nullptr）
+├── 检查 region_cache_（渲染缓存命中 → 返回 ChunkRegion*）
+├── 检查 TaskBuffer (processing_) 防止重复提交
+└── 提交 LoadRegionTask 到线程池
+    └── run()
+        ├── 遍历 8×8 区块
+        │   ├── level_-&gt;get_chunk(pos) 加载区块
+        │   └── 跳过无效/空区块
+        ├── MapFilter::renderImages()
+        │   ├── 确定 Y 层（固定层或最高非空方块）
+        │   ├── 遍历 16×16 柱状区域
+        │   │   ├── get_block_with_color() 获取方块（名称+颜色）
+        │   │   ├── 应用方块/群系过滤
+        │   │   └── 设置像素颜色
+        │   └── 生成 terrain/biome/height 三张图像
+        ├── MapFilter::bakeChunkActors()
+        │   ├── 遍历实体
+        │   └── 记录位置到 actor 列表
+        └── emit finish() 通知主线程</code></pre>
+            </div>
+            <h4 id="73-地形渲染风格">7.3 地形渲染风格</h4>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>风格值</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td>无阴影（最快性能）</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>基础阴影（平衡性能和效果）</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>基于光照模型的高级阴影（实验性）</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+            <h3 id="8-编辑功能">8. 编辑功能</h3>
+            <h4 id="81-已实现的编辑功能">8.1 已实现的编辑功能</h4>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>功能</th>
+                        <th>位置</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>删除区块</td>
+                        <td>MapHost (批量)</td>
+                        <td>选中区域后删除区块（使用 <code>AsyncLevelLoader::dropChunk()</code>）</td>
+                    </tr>
+                    <tr>
+                        <td>修改 level.dat</td>
+                        <td>NbtWidget (level.dat)</td>
+                        <td>修改后通过 <code>modifyLeveldat()</code> 保存</td>
+                    </tr>
+                    <tr>
+                        <td>修改玩家 NBT</td>
+                        <td>NbtWidget (players)</td>
+                        <td>通过 <code>modifyDBGlobal()</code> 保存</td>
+                    </tr>
+                    <tr>
+                        <td>修改村庄 NBT</td>
+                        <td>NbtWidget (villages)</td>
+                        <td>通过 <code>modifyDBGlobal()</code> 保存</td>
+                    </tr>
+                    <tr>
+                        <td>修改其他全局 NBT</td>
+                        <td>NbtWidget (other)</td>
+                        <td>通过 <code>modifyDBGlobal()</code> 保存</td>
+                    </tr>
+                    <tr>
+                        <td>修改方块实体</td>
+                        <td>ChunkEditorWidget</td>
+                        <td>通过 <code>modifyChunkBlockEntities()</code> 保存</td>
+                    </tr>
+                    <tr>
+                        <td>修改实体</td>
+                        <td>ChunkEditorWidget</td>
+                        <td>通过 <code>modifyChunkActors()</code> 保存</td>
+                    </tr>
+                    <tr>
+                        <td>修改计划刻</td>
+                        <td>ChunkEditorWidget</td>
+                        <td>通过 <code>modifyChunkPendingTicks()</code> 保存</td>
+                    </tr>
+                    <tr>
+                        <td>地图物品编辑</td>
+                        <td>MapItemEditor</td>
+                        <td>修改地图物品 NBT 和图像数据</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4 id="82-待实现的编辑功能">8.2 待实现的编辑功能</h4>
+            <ul>
+                <li><strong>跨存档区块复制/粘贴/删除</strong>：当前 <code>MapHost::delete_chunks()</code> 仅标记为
+                    TODO，选区已有完整框架，但复制粘贴功能未实现</li>
+                <li><strong>方块编辑</strong>：<code>write_mode_</code> 已定义但未接线到完整编辑流程</li>
+                <li><strong>撤销/重做</strong>：无撤销栈或编辑历史记录</li>
+                <li><strong>NBT Key 修改</strong>：当前不支持修改 NBT 键名</li>
+            </ul>
+            <h4 id="83-写入模式">8.3 写入模式</h4>
+            <p><code>MainWindow</code> 中定义了 <code>write_mode_</code> 标志，可通过 <code>enable_write()</code>
+                查询，但在当前代码中未集成到完整的编辑工作流中。</p>
+            <hr>
+            <h3 id="9-配置文件">9. 配置文件</h3>
+            <p><code>config.ini</code> 运行时配置文件详情见 <a href="../config.ini">配置文件源码</a>。</p>
+            <h4 id="文件位置">文件位置</h4>
+            <p>配置文件与可执行文件位于同一目录。</p>
+            <h4 id="配置项">配置项</h4>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>章节</th>
+                        <th>键</th>
+                        <th>默认值</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>[Gui]</code></td>
+                        <td><code>theme</code></td>
+                        <td><code>light</code></td>
+                        <td>应用主题</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><code>font_family</code></td>
+                        <td>空</td>
+                        <td>自定义字体</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><code>font_size</code></td>
+                        <td><code>-1</code></td>
+                        <td>字体大小</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><code>nbt_editor_mode</code></td>
+                        <td><code>false</code></td>
+                        <td>纯 NBT 编辑器模式启动</td>
+                    </tr>
+                    <tr>
+                        <td><code>[Map]</code></td>
+                        <td><code>render_style</code></td>
+                        <td><code>1</code></td>
+                        <td>渲染风格（0/1/2）</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><code>terrian_shadow_level</code></td>
+                        <td><code>150</code></td>
+                        <td>地形阴影强度</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><code>min_scale_level</code></td>
+                        <td><code>2</code></td>
+                        <td>最小缩放级别（低于它改用区块坐标总览）</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><code>max_scale_level</code></td>
+                        <td><code>1024</code></td>
+                        <td>最大缩放级别</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><code>zoom_speed</code></td>
+                        <td><code>1.2</code></td>
+                        <td>缩放速度</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><code>grid_line_color</code></td>
+                        <td><code>#bbbbbb</code></td>
+                        <td>网格线颜色</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><code>actor_render_style</code></td>
+                        <td><code>0</code></td>
+                        <td>实体渲染风格</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><code>actor_border_width</code></td>
+                        <td><code>2</code></td>
+                        <td>实体边界宽度</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><code>actor_border_color</code></td>
+                        <td><code>#000000</code></td>
+                        <td>实体边界颜色</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><code>void_color</code></td>
+                        <td><code>#dddddd</code></td>
+                        <td>空白区域颜色</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><code>transparent_water</code></td>
+                        <td><code>true</code></td>
+                        <td>透明水渲染</td>
+                    </tr>
+                    <tr>
+                        <td><code>[Cache]</code></td>
+                        <td><code>region_cache_size</code></td>
+                        <td><code>16384</code></td>
+                        <td>区域渲染缓存容量</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><code>empty_cache_size</code></td>
+                        <td><code>65536</code></td>
+                        <td>空区域缓存容量</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><code>max_thread_num</code></td>
+                        <td><code>8</code></td>
+                        <td>最大线程数</td>
+                    </tr>
+                    <tr>
+                        <td><code>[Misc]</code></td>
+                        <td><code>load_global_data</code></td>
+                        <td><code>true</code></td>
+                        <td>加载全局数据</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><code>max_global_data_load_count</code></td>
+                        <td><code>4096</code></td>
+                        <td>全局数据最大加载数量</td>
+                    </tr>
+                    <tr>
+                        <td><code>[Lang]</code></td>
+                        <td><code>lang</code></td>
+                        <td><code>zh_CN</code></td>
+                        <td>语言设置</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+            <h3 id="10-多语言国际化">10. 多语言/国际化</h3>
+            <p>项目使用 Qt 的国际化系统：</p>
+            <ol>
+                <li>翻译源文件位于 <code>translations/</code> 目录</li>
+                <li>支持中文 (<code>zh_CN.ts</code>) 和英文 (<code>en.ts</code>)</li>
+                <li>使用 <code>lupdate</code> 提取可翻译字符串</li>
+                <li>构建时通过 <code>qt6_add_translations()</code> 自动编译 <code>.ts</code> → <code>.qm</code></li>
+                <li>运行时通过 <code>TranslatorMgr</code> 管理翻译器切换</li>
+                <li>字符串从配置文件 <code>[Lang]</code> 章节读取语言设置</li>
+            </ol>
+            <hr>
+            <h3 id="11-todo-与已知问题">11. TODO 与已知问题</h3>
+            <h4 id="新功能规划">新功能规划</h4>
+            <ul>
+                <li>区块定位功能（已实现）</li>
+                <li>坐标标识图标</li>
+                <li>全局 NBT 区域展示传送门结构</li>
+                <li>地图物品查看和编辑</li>
+                <li>玩家位置定位</li>
+                <li>村庄位置定位</li>
+                <li>HSA 编辑功能</li>
+                <li>植物颜色随群系变化</li>
+                <li>半透明方块下方方块渲染（可选项）</li>
+                <li>NBT Key 修改</li>
+                <li>渲染性能优化</li>
+            </ul>
+            <h4 id="已知-bug">已知 Bug</h4>
+            <ul>
+                <li>删除区块会产生幽灵地狱门</li>
+                <li>部分新版本扁平化方块渲染异常</li>
+                <li>玩家实体 NBT 编辑器保存问题（部分已修复）</li>
+            </ul>
+            <hr>
+            <h3 id="附录">附录</h3>
+            <h4 id="a-快捷键">A. 快捷键</h4>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>快捷键</th>
+                        <th>功能</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ctrl+O</td>
+                        <td>打开存档</td>
+                    </tr>
+                    <tr>
+                        <td>Ctrl+W</td>
+                        <td>关闭存档</td>
+                    </tr>
+                    <tr>
+                        <td>Ctrl+滚轮</td>
+                        <td>缩放地图</td>
+                    </tr>
+                    <tr>
+                        <td>鼠标拖动</td>
+                        <td>平移地图</td>
+                    </tr>
+                    <tr>
+                        <td>鼠标中键</td>
+                        <td>选区操作</td>
+                    </tr>
+                    <tr>
+                        <td>G</td>
+                        <td>跳转到坐标</td>
+                    </tr>
+                    <tr>
+                        <td>Ctrl+S</td>
+                        <td>截图保存</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4 id="b-关键常量">B. 关键常量</h4>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>常量名</th>
+                        <th>值</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>cfg::RW</code></td>
+                        <td>8</td>
+                        <td>区域大小（区块数）</td>
+                    </tr>
+                    <tr>
+                        <td>子区块大小</td>
+                        <td>16</td>
+                        <td>16×16×16 方块</td>
+                    </tr>
+                    <tr>
+                        <td>区块大小</td>
+                        <td>16</td>
+                        <td>16×?×16 方块</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4 id="c-第三方依赖">C. 第三方依赖</h4>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>依赖</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Qt6</td>
+                        <td>GUI 框架</td>
+                    </tr>
+                    <tr>
+                        <td>LevelDB (mcpe)</td>
+                        <td>Minecraft Bedrock 定制版</td>
+                    </tr>
+                    <tr>
+                        <td>zstd</td>
+                        <td>压缩库（LevelDB 依赖）</td>
+                    </tr>
+                    <tr>
+                        <td>Google Test</td>
+                        <td>单元测试框架（仅测试需要）</td>
+                    </tr>
+                    <tr>
+                        <td>stb_image</td>
+                        <td>图像读写库（颜色表导出工具需要）</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="complieguide">编译指南</h2>
+            <p class="mods-file-src">来源：<code>complieGuide.md</code></p>
+            <h4 id="1-准备">1. 准备</h4>
+            <p>本项目默认使用的编译器是mingw64 + Qt5.12,其他编译器如msvc理论上可以编译，但是没有经过充分测试，因此推荐使用mingw64。</p>
+            <ul>
+                <li>前往<a href="https://www.mingw-w64.org/" target="_blank"
+                        rel="noopener noreferrer">https://www.mingw-w64.org/</a>下载mingw64,并配置环境变量，具体请自行寻找网络的教程。</li>
+                <li>下载Qt5.12，并配置环境变量，具体请自行寻找网络教程，最好做到小版本也匹配，否则可能无法兼容。</li>
+            </ul>
+            <h4 id="2编译">2.编译</h4>
+            <ol>
+                <li>
+                    <p>下载源码:</p>
+                    <div class="code-card">
+                        <div class="code-head">
+                            <span class="code-lang">shell</span>
+                            <span class="code-actions">
+                                <button type="button" class="code-btn" data-code-copy>复制</button>
+                            </span>
+                        </div>
+                        <pre
+                            class="code-body"><code>git clone --recursive https://github.com/bedrock-dev/BedrockMap.git</code></pre>
+                    </div>
+                </li>
+                <li>
+                    <p>进入bedrock目录后编译bedrock-level</p>
+                    <div class="code-card">
+                        <div class="code-head">
+                            <span class="code-lang">shell</span>
+                            <span class="code-actions">
+                                <button type="button" class="code-btn" data-code-copy>复制</button>
+                            </span>
+                        </div>
+                        <pre class="code-body"><code>cd .\bedrock-level\
+.\build.ps1</code></pre>
+                    </div>
+                </li>
+                <li>
+                    <p>编译并运行BedrockMap</p>
+                    <div class="code-card">
+                        <div class="code-head">
+                            <span class="code-lang">shell</span>
+                            <span class="code-actions">
+                                <button type="button" class="code-btn" data-code-copy>复制</button>
+                            </span>
+                        </div>
+                        <pre class="code-body"><code>.\scripts\build.ps1</code></pre>
+                    </div>
+                </li>
+            </ol>
+            <p>注意默认编译的是开发版本，如果有打包需求请自行修改<code>build.ps1</code>脚本</p>
+
+            <h2 id="newmaprender">2.5D 体素大地图渲染方案文档</h2>
+            <p class="mods-file-src">来源：<code>newMapRender.md</code></p>
+            <h3 id="一方案概述">一、方案概述</h3>
+            <h4 id="11-场景定义">1.1 场景定义</h4>
+            <ul>
+                <li><strong>视角</strong>：平面固定俯视，相机不旋转、不缩放</li>
+                <li><strong>画面</strong>：只能看到体素方块的顶面，看不到侧面</li>
+                <li><strong>地图规模</strong>：最大 4K 平面（3840 × 2160），一个像素一个体素</li>
+                <li><strong>渲染方式</strong>：不构建 Mesh，不使用硬件光追</li>
+            </ul>
+            <h4 id="12-核心思路">1.2 核心思路</h4>
+            <p>本方案将整个体素世界抽象为<strong>两张核心数据图</strong>：</p>
+            <ul>
+                <li><strong>地表图</strong>：每个格子的方块类型</li>
+                <li><strong>高度图</strong>：每个格子的高度值</li>
+            </ul>
+            <p>渲染时，用一张<strong>全屏 Quad</strong> 配合 <strong>Fragment Shader</strong>，根据屏幕坐标反算地图坐标，采样地表图和高度图，合成最终画面。阴影和 AO
+                通过<strong>离线烘焙</strong>写入纹理，运行时零开销。</p>
+            <p><strong>整个场景只有一个 Draw Call。</strong></p>
+            <h4 id="13-为什么不用-mesh">1.3 为什么不用 Mesh</h4>
+            <ul>
+                <li>只能看到顶面 → 没有立体几何需求</li>
+                <li>固定视角 → 不需要动态几何</li>
+                <li>不建 Mesh → 数据更新时无需重建顶点缓冲</li>
+                <li>数据即纹理 → 动态加载和更新极其轻量</li>
+            </ul>
+            <hr>
+            <h3 id="二数据设计">二、数据设计</h3>
+            <h4 id="21-核心数据图">2.1 核心数据图</h4>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>数据</th>
+                        <th>内容</th>
+                        <th>建议格式</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>地表图</td>
+                        <td>方块类型 ID</td>
+                        <td><code>uint8</code> / <code>uint16</code></td>
+                        <td>决定颜色/材质</td>
+                    </tr>
+                    <tr>
+                        <td>高度图</td>
+                        <td>每格高度值</td>
+                        <td><code>uint8</code> / <code>uint16</code></td>
+                        <td>决定遮挡、位移</td>
+                    </tr>
+                    <tr>
+                        <td>AO 图</td>
+                        <td>烘焙环境光遮蔽</td>
+                        <td><code>uint8</code></td>
+                        <td>离线生成</td>
+                    </tr>
+                    <tr>
+                        <td>阴影图</td>
+                        <td>烘焙阴影</td>
+                        <td><code>uint8</code></td>
+                        <td>离线生成</td>
+                    </tr>
+                    <tr>
+                        <td>光照图（可选）</td>
+                        <td>烘焙光照</td>
+                        <td><code>uint8</code> / <code>vec3</code></td>
+                        <td>离线生成</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4 id="22-分辨率与显存估算">2.2 分辨率与显存估算</h4>
+            <p>以 3840 × 2160 为例：</p>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>纹理</th>
+                        <th>格式</th>
+                        <th>大小</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>地表图</td>
+                        <td><code>uint16</code></td>
+                        <td>~16 MB</td>
+                    </tr>
+                    <tr>
+                        <td>高度图</td>
+                        <td><code>uint16</code></td>
+                        <td>~16 MB</td>
+                    </tr>
+                    <tr>
+                        <td>AO 图</td>
+                        <td><code>uint8</code></td>
+                        <td>~8 MB</td>
+                    </tr>
+                    <tr>
+                        <td>阴影图</td>
+                        <td><code>uint8</code></td>
+                        <td>~8 MB</td>
+                    </tr>
+                    <tr>
+                        <td><strong>合计</strong></td>
+                        <td></td>
+                        <td><strong>~48 MB</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>结论</strong>：4K 全图完全可以一次性加载进显存，无需动态加载。</p>
+            <h4 id="23-数据组织可选动态加载">2.3 数据组织（可选动态加载）</h4>
+            <p>如果未来地图更大或显存受限，可按 Chunk 分块：</p>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>世界地图 (4K)
+  └── Region (512×512)
+        └── Chunk (64×64)
+              └── Tile (单格)</code></pre>
+            </div>
+            <p>每个 Chunk 对应纹理图集中的一块区域，可独立加载、卸载、更新。</p>
+            <hr>
+            <h3 id="三渲染管线">三、渲染管线</h3>
+            <h4 id="31-整体流程">3.1 整体流程</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>┌─────────────────────────────────────────┐
+│  1. 全屏 Quad（4 顶点）                  │
+│  2. Fragment Shader：                    │
+│     - 屏幕坐标 → 地图坐标                │
+│     - 采样地表图、高度图、AO、阴影       │
+│     - 高度位移 + 光照合成                │
+│  3. 输出最终颜色                         │
+└─────────────────────────────────────────┘</code></pre>
+            </div>
+            <h4 id="32-全屏-quad">3.2 全屏 Quad</h4>
+            <ul>
+                <li>4 个顶点，覆盖整个视口</li>
+                <li>顶点属性只需位置（<code>vec2</code>）和 UV（<code>vec2</code>）</li>
+                <li>一次 <code>vkCmdDraw</code>，一个 Draw Call</li>
+            </ul>
+            <h4 id="33-fragment-shader-逻辑">3.3 Fragment Shader 逻辑</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">glsl</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>// 伪代码
+vec2 mapCoord = screenToMap(fragUV);       // 屏幕 → 地图坐标
+uint terrain  = sampleTerrain(mapCoord);   // 采样地表图
+float height  = sampleHeight(mapCoord);    // 采样高度图
+float ao      = sampleAO(mapCoord);        // 采样 AO
+float shadow  = sampleShadow(mapCoord);    // 采样阴影
+
+vec3 baseColor = lookupColor(terrain);     // 方块类型 → 颜色
+vec2 offset    = heightToOffset(height);   // 高度 → 屏幕位移（2.5D 立体感）
+vec3 finalColor = baseColor * ao * shadow;</code></pre>
+            </div>
+            <h4 id="34-高度位移25d-立体感">3.4 高度位移（2.5D 立体感）</h4>
+            <p>高度图除了算 AO 和阴影，还能产生视觉位移：</p>
+            <ul>
+                <li>高处格子沿固定方向（如斜上方）偏移若干像素</li>
+                <li>产生轻微的立体感，无需真正的 3D 几何</li>
+                <li>偏移方向由固定光照方向决定</li>
+            </ul>
+            <h4 id="35-坐标映射">3.5 坐标映射</h4>
+            <p>固定俯视下，屏幕坐标到地图坐标是一个简单的线性变换：</p>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>mapX = (screenX - cameraOffsetX) * scale
+mapY = (screenY - cameraOffsetY) * scale</code></pre>
+            </div>
+            <p>无需透视投影，无需矩阵变换。</p>
+            <hr>
+            <h3 id="四ao-烘焙">四、AO 烘焙</h3>
+            <h4 id="41-原理">4.1 原理</h4>
+            <p>2.5D 高度场下，AO 取决于<strong>邻域高度差</strong>：</p>
+            <ul>
+                <li>周围格子比自己高 → 产生遮蔽</li>
+                <li>高度差越大 → AO 越强</li>
+            </ul>
+            <h4 id="42-计算方法">4.2 计算方法</h4>
+            <p>对每个格子，检查周围 8 个邻居：</p>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">cpp</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>float ao = 0.0;
+for (each neighbor in 8 directions) {
+    float diff = neighborHeight - currentHeight;
+    if (diff &gt; 0) {
+        ao += clamp(diff / maxDiff, 0.0, 1.0) * weight;
+    }
+}
+ao = 1.0 - ao * aoStrength;</code></pre>
+            </div>
+            <h4 id="43-输出">4.3 输出</h4>
+            <ul>
+                <li>将 AO 值写入 <code>uint8</code> 纹理</li>
+                <li>运行时直接采样，零计算</li>
+                <li>因视角和光照固定，AO 只需烘焙一次</li>
+            </ul>
+            <hr>
+            <h3 id="五阴影烘焙">五、阴影烘焙</h3>
+            <h4 id="51-原理">5.1 原理</h4>
+            <p>固定方向光下，每个格子的阴影取决于<strong>沿光方向是否被更高的格子挡住</strong>。</p>
+            <h4 id="52-四叉树加速">5.2 四叉树加速</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>1. 将高度图构建为四叉树
+2. 对每个格子，沿光方向投射一条射线
+3. 用四叉树快速跳过不需要检测的区域
+4. 判断是否被遮挡</code></pre>
+            </div>
+            <p>四叉树的作用：</p>
+            <ul>
+                <li>快速跳过远处不可能遮挡的区域</li>
+                <li>快速定位可能遮挡的局部范围</li>
+                <li>把 O(n) 的逐格检测降到接近 O(log n)</li>
+            </ul>
+            <h4 id="53-阴影方向">5.3 阴影方向</h4>
+            <p>固定光照方向下，阴影方向固定：</p>
+            <ul>
+                <li>例如光从左上角来 → 阴影向右下延伸</li>
+                <li>每个格子的阴影只取决于其右上方的格子</li>
+            </ul>
+            <h4 id="54-输出">5.4 输出</h4>
+            <ul>
+                <li>将阴影值写入 <code>uint8</code> 纹理（0 = 全阴影，255 = 无阴影）</li>
+                <li>运行时直接采样</li>
+                <li>只需烘焙一次（静态地图）</li>
+            </ul>
+            <h4 id="55-软阴影可选">5.5 软阴影（可选）</h4>
+            <ul>
+                <li>对阴影边缘做多次采样取平均</li>
+                <li>或多级四叉树采样，产生半影效果</li>
+                <li>烘焙时完成，运行时零开销</li>
+            </ul>
+            <hr>
+            <h3 id="六动态加载可选">六、动态加载（可选）</h3>
+            <h4 id="61-何时需要">6.1 何时需要</h4>
+            <ul>
+                <li>地图超过 4K，或显存受限</li>
+                <li>地形会动态变化</li>
+            </ul>
+            <h4 id="62-核心优势">6.2 核心优势</h4>
+            <p>因为没有 Mesh：</p>
+            <ul>
+                <li>数据更新只需<strong>更新纹理局部区域</strong></li>
+                <li>不需要重建顶点缓冲</li>
+                <li>不需要重新提交绘制命令</li>
+            </ul>
+            <h4 id="63-纹理图集方案">6.3 纹理图集方案</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>+----+----+----+----+
+| C0 | C1 | C2 | C3 |
++----+----+----+----+
+| C4 | C5 | C6 | C7 |
++----+----+----+----+
+| ...                |
++----+----+----+----+</code></pre>
+            </div>
+            <ul>
+                <li>每个 Chunk 占图集中的一块</li>
+                <li>加载 = 往图集写数据</li>
+                <li>卸载 = 标记区域可复用</li>
+            </ul>
+            <h4 id="64-更新流程">6.4 更新流程</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>1. 检测需要加载/卸载的 Chunk
+2. 生成或读取 Chunk 数据
+3. 计算 AO、阴影（仅受影响的 Chunk）
+4. 用 staging buffer 上传到纹理图集
+5. 标记 Chunk 状态</code></pre>
+            </div>
+            <h4 id="65-上传优化">6.5 上传优化</h4>
+            <ul>
+                <li>用 <strong>staging buffer + 异步传输队列</strong></li>
+                <li>分帧上传，避免卡顿</li>
+                <li>预加载相邻一圈 Chunk，避免边缘闪烁</li>
+                <li>单个 64×64 Chunk 的 <code>uint8</code> 数据仅 4KB，开销极小</li>
+            </ul>
+            <hr>
+            <h3 id="七vulkan-qt-实现">七、Vulkan / Qt 实现</h3>
+            <h4 id="71-使用-qvulkanwindow">7.1 使用 QVulkanWindow</h4>
+            <p><code>QVulkanWindow</code> 负责：</p>
+            <ul>
+                <li>窗口管理</li>
+                <li>设备与队列创建</li>
+                <li>交换链管理</li>
+            </ul>
+            <p>渲染逻辑全部自己实现。</p>
+            <h4 id="72-资源清单">7.2 资源清单</h4>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>资源</th>
+                        <th>用途</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>顶点缓冲</td>
+                        <td>全屏 Quad（4 顶点）</td>
+                    </tr>
+                    <tr>
+                        <td>索引缓冲</td>
+                        <td>2 个三角形</td>
+                    </tr>
+                    <tr>
+                        <td>纹理</td>
+                        <td>地表图、高度图、AO、阴影</td>
+                    </tr>
+                    <tr>
+                        <td>采样器</td>
+                        <td>最近邻（保持像素感）</td>
+                    </tr>
+                    <tr>
+                        <td>描述符集</td>
+                        <td>绑定纹理</td>
+                    </tr>
+                    <tr>
+                        <td>管线</td>
+                        <td>一个图形管线</td>
+                    </tr>
+                    <tr>
+                        <td>Uniform</td>
+                        <td>相机偏移、缩放</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4 id="73-渲染循环">7.3 渲染循环</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">代码</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>startNextFrame():
+  1. 更新 Uniform（相机偏移）
+  2. 绑定管线、描述符集
+  3. 绑定顶点/索引缓冲
+  4. vkCmdDrawIndexed(6, 1, 0, 0, 0)
+  5. frameReady()</code></pre>
+            </div>
+            <p><strong>每帧只有一个 Draw Call。</strong></p>
+            <h4 id="74-纹理上传">7.4 纹理上传</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">cpp</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>// 创建 staging buffer
+// 填充数据
+// vkCmdCopyBufferToImage
+// 转换 layout 为 SHADER_READ_ONLY_OPTIMAL</code></pre>
+            </div>
+            <hr>
+            <h3 id="八性能预期">八、性能预期</h3>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>指标</th>
+                        <th>预期值</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Draw Call</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>顶点数</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>三角形数</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>纹理采样</td>
+                        <td>每像素 4~5 次</td>
+                    </tr>
+                    <tr>
+                        <td>显存占用</td>
+                        <td>~50 MB（4K 全图）</td>
+                    </tr>
+                    <tr>
+                        <td>运行时 CPU 开销</td>
+                        <td>极低（仅更新 Uniform）</td>
+                    </tr>
+                    <tr>
+                        <td>帧率</td>
+                        <td>4K 60fps 轻松达成</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>性能瓶颈几乎全在 Fragment Shader 的采样和合成上，现代 GPU 完全无压力。</p>
+            <hr>
+            <h3 id="九方案对比">九、方案对比</h3>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>方案</th>
+                        <th>是否适合</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>建 Mesh + 光栅化</td>
+                        <td>❌ 多余</td>
+                    </tr>
+                    <tr>
+                        <td>硬件光追</td>
+                        <td>❌ 完全不需要</td>
+                    </tr>
+                    <tr>
+                        <td>软件高度场求交（四叉树）</td>
+                        <td>✅ 用于烘焙阴影/AO</td>
+                    </tr>
+                    <tr>
+                        <td>全屏 Quad + 高度图</td>
+                        <td>✅ 最终渲染方式</td>
+                    </tr>
+                    <tr>
+                        <td>离线烘焙 AO + 阴影</td>
+                        <td>✅ 运行时零开销</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+            <h3 id="十实施步骤">十、实施步骤</h3>
+            <ol>
+                <li><strong>准备数据</strong>：地表图 + 高度图</li>
+                <li><strong>烘焙 AO</strong>：按邻域高度差计算，写入纹理</li>
+                <li><strong>烘焙阴影</strong>：四叉树 + 高度场求交，写入纹理</li>
+                <li><strong>搭建渲染</strong>：全屏 Quad + Fragment Shader</li>
+                <li><strong>实现坐标映射</strong>：屏幕 → 地图坐标</li>
+                <li><strong>合成画面</strong>：采样 + 高度位移 + 光照</li>
+                <li><strong>（可选）动态加载</strong>：纹理图集 + 局部更新</li>
+                <li><strong>调优</strong>：采样精度、位移强度、AO/阴影强度</li>
+            </ol>
+            <hr>
+            <h3 id="十一关键注意事项">十一、关键注意事项</h3>
+            <ol>
+                <li><strong>采样器用最近邻</strong>：保持体素像素感，避免模糊</li>
+                <li><strong>纹理格式对齐</strong>：<code>uint8/uint16</code> 注意 Vulkan 格式支持</li>
+                <li><strong>Y 轴方向</strong>：Vulkan 裁剪空间 Y 向下，注意地图坐标方向</li>
+                <li><strong>高度位移方向</strong>：固定光照方向决定偏移方向，保持一致性</li>
+                <li><strong>动态更新</strong>：优先用局部纹理更新，避免整图重传</li>
+                <li><strong>预加载</strong>：相机移动时提前加载相邻 Chunk</li>
+            </ol>
+            <hr>
+
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer"
+                href="https://github.com/bedrock-dev/BedrockMap">GitHub 仓库 »</a>
+            <a class="button is-light" href="../../index.html#mods">« 返回主页的模组专区</a>
+        </div>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页说明书来自模组作者的官方仓库与文档站，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

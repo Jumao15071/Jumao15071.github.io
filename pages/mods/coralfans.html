@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoralFans 珊瑚扇 - 模组专区 - 橘猫的资源站</title>
+    <meta name="description"
+        content="基于 Minecraft BDS with LeviLamina、专为 MCBE 生电服务的模组（CF）：物品补货、自动切换图腾与工具、调整游戏运行速度、村庄机制可视化、HSA 可视化、假人（CFSP）、HUD 信息显示、漏斗计数器等功能，可通过配置文件调整。">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="stylesheet" href="../../assets/css/mods.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white"
+                                href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <div class="article-head">
+            <h1>CoralFans 珊瑚扇</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://github.com/CoralFans-Dev/CoralFans" target="_blank"
+                        rel="noopener noreferrer">CoralFans-Dev</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2026年10月12日</span>
+                <span class="doc-badge" title="模组专区收录">模组</span>
+                <span class="art-sep">·</span>
+                <span class="art-cat">模组专区</span>
+            </div>
+            <p class="doc-source">来源：<a href="https://github.com/CoralFans-Dev/CoralFans" target="_blank"
+                    rel="noopener noreferrer">CoralFans-Dev/CoralFans</a> · 许可 AGPL-3.0 · 版本 26.51.1</p>
+            <p class="doc-note">本页为 CoralFans 官方文档站（CoralFans-doc）全部中文章节的完整呈现，未改动原文内容。</p>
+        </div>
+
+        <div class="mods-card">
+            <div class="mods-card-head">
+                <img class="mods-icon" src="../../assets/img/mods/coralfans.png" alt="CoralFans 珊瑚扇">
+                <div>
+                    <p class="mods-card-title">CoralFans 珊瑚扇</p>
+                    <p class="mods-tags"><span class="mods-tag">生电辅助模组</span><span
+                            class="mods-tag">LeviLamina</span><span class="mods-tag">BDS 服务端 / 客户端</span></p>
+                </div>
+            </div>
+            <p class="mods-summary">基于 Minecraft BDS with LeviLamina、专为 MCBE
+                生电服务的模组（CF）：物品补货、自动切换图腾与工具、调整游戏运行速度、村庄机制可视化、HSA 可视化、假人（CFSP）、HUD 信息显示、漏斗计数器等功能，可通过配置文件调整。</p>
+            <p class="mods-links">
+                <a class="button is-danger has-text-white" href="https://github.com/CoralFans-Dev/CoralFans"
+                    target="_blank" rel="noopener noreferrer">GitHub 仓库 »</a>
+                <a class="button is-danger is-outlined" href="https://coralfans-dev.github.io/CoralFans-doc/#/README"
+                    target="_blank" rel="noopener noreferrer">官方文档站 »</a>
+                <a class="button is-danger is-outlined" href="https://github.com/CoralFans-Dev/CoralFans/releases"
+                    target="_blank" rel="noopener noreferrer">Release 下载页 »</a>
+                <a class="button is-danger is-outlined" href="https://levilamina.liteldev.com/zh/install/"
+                    target="_blank" rel="noopener noreferrer">LeviLamina 中文安装教程 »</a>
+            </p>
+        </div>
+
+        <nav class="mods-toc" aria-label="本页目录">
+            <p class="mods-toc-title">本页目录（9 个章节，说明书原文 57 节）</p>
+            <div class="mods-toc-list">
+                <div class="mods-toc-group">
+                    <a class="mods-toc-item is-chapter" href="#readme" title="来自 README.md">CoralFans-doc</a>
+                    <div class="mods-toc-subs">
+                        <a class="mods-toc-item is-sub" href="#这是什么" title="来自 README.md">这是什么</a>
+                        <a class="mods-toc-item is-sub" href="#插件特色" title="来自 README.md">插件特色</a>
+                        <a class="mods-toc-item is-sub" href="#你可能关心的" title="来自 README.md">你可能关心的</a>
+                    </div>
+                </div>
+                <div class="mods-toc-group">
+                    <a class="mods-toc-item is-chapter" href="#installdoc" title="来自 InstallDoc.md">CoralFans安装</a>
+                    <div class="mods-toc-subs">
+                        <a class="mods-toc-item is-sub" href="#0阅读并同意免责声明" title="来自 InstallDoc.md">0.阅读并同意免责声明</a>
+                        <a class="mods-toc-item is-sub" href="#1安装levilamina"
+                            title="来自 InstallDoc.md">1.安装LeviLamina</a>
+                        <a class="mods-toc-item is-sub" href="#2下载并安装前置" title="来自 InstallDoc.md">2.下载并安装前置</a>
+                        <a class="mods-toc-item is-sub" href="#3下载并安装插件本体" title="来自 InstallDoc.md">3.下载并安装插件本体</a>
+                        <a class="mods-toc-item is-sub" href="#4配置配置文件" title="来自 InstallDoc.md">4.配置配置文件</a>
+                        <a class="mods-toc-item is-sub" href="#5开服" title="来自 InstallDoc.md">5.开服</a>
+                    </div>
+                </div>
+                <div class="mods-toc-group">
+                    <a class="mods-toc-item is-chapter" href="#maindoc" title="来自 MainDoc.md">CoralFans</a>
+                    <div class="mods-toc-subs">
+                        <a class="mods-toc-item is-sub" href="#coralfans" title="来自 MainDoc.md">coralfans</a>
+                        <a class="mods-toc-item is-sub" href="#calculate" title="来自 MainDoc.md">calculate</a>
+                        <a class="mods-toc-item is-sub" href="#cfhud" title="来自 MainDoc.md">cfhud</a>
+                        <a class="mods-toc-item is-sub" href="#counter" title="来自 MainDoc.md">counter</a>
+                        <a class="mods-toc-item is-sub" href="#data" title="来自 MainDoc.md">data</a>
+                        <a class="mods-toc-item is-sub" href="#func" title="来自 MainDoc.md">func</a>
+                        <a class="mods-toc-item is-sub" href="#freecamera" title="来自 MainDoc.md">freecamera</a>
+                        <a class="mods-toc-item is-sub" href="#hsa" title="来自 MainDoc.md">hsa</a>
+                        <a class="mods-toc-item is-sub" href="#locate" title="来自 MainDoc.md">locate</a>
+                        <a class="mods-toc-item is-sub" href="#log" title="来自 MainDoc.md">log</a>
+                        <a class="mods-toc-item is-sub" href="#minerule" title="来自 MainDoc.md">minerule</a>
+                        <a class="mods-toc-item is-sub" href="#noclip" title="来自 MainDoc.md">noclip</a>
+                        <a class="mods-toc-item is-sub" href="#prof" title="来自 MainDoc.md">prof</a>
+                        <a class="mods-toc-item is-sub" href="#rotate" title="来自 MainDoc.md">rotate</a>
+                        <a class="mods-toc-item is-sub" href="#self" title="来自 MainDoc.md">self</a>
+                        <a class="mods-toc-item is-sub" href="#slime" title="来自 MainDoc.md">slime</a>
+                        <a class="mods-toc-item is-sub" href="#sp" title="来自 MainDoc.md">sp</a>
+                        <a class="mods-toc-item is-sub" href="#tick" title="来自 MainDoc.md">tick</a>
+                        <a class="mods-toc-item is-sub" href="#village" title="来自 MainDoc.md">village</a>
+                    </div>
+                </div>
+                <div class="mods-toc-group">
+                    <a class="mods-toc-item is-chapter" href="#configdoc" title="来自 ConfigDoc.md">配置文件</a>
+                    <div class="mods-toc-subs">
+                        <a class="mods-toc-item is-sub" href="#version" title="来自 ConfigDoc.md">version</a>
+                        <a class="mods-toc-item is-sub" href="#locatename" title="来自 ConfigDoc.md">locateName</a>
+                        <a class="mods-toc-item is-sub" href="#command" title="来自 ConfigDoc.md">command</a>
+                        <a class="mods-toc-item is-sub" href="#functions" title="来自 ConfigDoc.md">functions</a>
+                        <a class="mods-toc-item is-sub" href="#shortcut" title="来自 ConfigDoc.md">shortcut</a>
+                    </div>
+                </div>
+                <div class="mods-toc-group">
+                    <a class="mods-toc-item is-chapter" href="#shortcutsdoc" title="来自 ShortcutsDoc.md">Shortcuts</a>
+                    <div class="mods-toc-subs">
+                        <a class="mods-toc-item is-sub" href="#举例" title="来自 ShortcutsDoc.md">举例</a>
+                    </div>
+                </div>
+                <div class="mods-toc-group">
+                    <a class="mods-toc-item is-chapter" href="#cfspcommanddoc" title="来自 CFSPCommandDoc.md">CoralFans
+                        SimulatedPlayer (CFSP)</a>
+                    <div class="mods-toc-subs">
+                        <a class="mods-toc-item is-sub" href="#tips" title="来自 CFSPCommandDoc.md">Tips</a>
+                        <a class="mods-toc-item is-sub" href="#指令系统" title="来自 CFSPCommandDoc.md">指令系统</a>
+                    </div>
+                </div>
+                <div class="mods-toc-group">
+                    <a class="mods-toc-item is-chapter" href="#cfspconfigdoc" title="来自 CFSPConfigDoc.md">CFSP配置文件</a>
+                    <div class="mods-toc-subs">
+                        <a class="mods-toc-item is-sub" href="#configjson" title="来自 CFSPConfigDoc.md">Config.json</a>
+                        <a class="mods-toc-item is-sub" href="#permissionconfigjson"
+                            title="来自 CFSPConfigDoc.md">PermissionConfig.json</a>
+                    </div>
+                </div>
+                <div class="mods-toc-group">
+                    <a class="mods-toc-item is-chapter" href="#cfspapidoc" title="来自 CFSPApiDoc.md">CFSP DLL API DOC</a>
+                    <div class="mods-toc-subs">
+                        <a class="mods-toc-item is-sub" href="#dllapi" title="来自 CFSPApiDoc.md">DLLAPI</a>
+                    </div>
+                </div>
+                <div class="mods-toc-group">
+                    <a class="mods-toc-item is-chapter" href="#qa" title="来自 QA.md">Q&amp;amp;A</a>
+                    <div class="mods-toc-subs">
+                        <a class="mods-toc-item is-sub" href="#linuxandroidmacios能用吗"
+                            title="来自 QA.md">Linux/Android/Mac/IOS能用吗</a>
+                        <a class="mods-toc-item is-sub" href="#手机能用吗" title="来自 QA.md">手机能用吗</a>
+                        <a class="mods-toc-item is-sub" href="#realms领域服能用吗" title="来自 QA.md">Realms领域服能用吗</a>
+                        <a class="mods-toc-item is-sub" href="#我用的某可能是公益面板服务器提供商能用吗"
+                            title="来自 QA.md">我用的某（可能是公益/面板）服务器提供商，能用吗</a>
+                        <a class="mods-toc-item is-sub" href="#看不懂教程怎么办" title="来自 QA.md">看不懂教程怎么办</a>
+                        <a class="mods-toc-item is-sub" href="#我的可视化不显示怎么办" title="来自 QA.md">我的可视化不显示怎么办</a>
+                        <a class="mods-toc-item is-sub" href="#1xxxx版本能用吗" title="来自 QA.md">1.xx.xx版本能用吗</a>
+                        <a class="mods-toc-item is-sub" href="#客户端非服务器能用吗" title="来自 QA.md">客户端（非服务器）能用吗</a>
+                        <a class="mods-toc-item is-sub" href="#会适配新版吗" title="来自 QA.md">会适配新版吗</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="opus" data-content-kind="mod">
+            <h2 id="readme">CoralFans-doc</h2>
+            <p class="mods-file-src">来源：<code>README.md</code></p>
+            <ul>
+                <li>点击目录栏 <code>MainDoc</code> 开始阅读<ul>
+                        <li><code>InstallDoc</code> 安装文档</li>
+                        <li><code>MainDoc</code> 主要功能介绍</li>
+                        <li><code>ConfigDoc</code> 配置文件文档</li>
+                        <li><code>ShortcutsDoc</code> Shortcuts文档</li>
+                        <li><code>CFSPDoc</code> 假人文档</li>
+                        <li><code>QA</code> Q&amp;A</li>
+                    </ul>
+                </li>
+                <li>欢迎参与文档站建设</li>
+            </ul>
+            <h3 id="这是什么">这是什么</h3>
+            <p>CoralFans珊瑚扇（简称CF）是一个基于Minecraft BDS with
+                LeviLamina的、专为MCBE生电服务的MOD。CF提供了诸多可以方便生电玩家的功能（包括一些在普通生存中看上去“非法”的功能），如物品补货、自动切换图腾、自动切换工具、调整游戏运行速度、村庄机制可视化、HSA可视化、假人、HUD信息显示、漏斗计数器等功能。更多功能还在持续增加中。
+            </p>
+            <p>你可以把CF当作LL2 Trapdoor插件的新版本移植。不过CF目前还有一些功能没有做到，如刷怪分析。</p>
+            <h3 id="插件特色">插件特色</h3>
+            <ul>
+                <li>尊重原版游戏特性，不会在不告知玩家的情况下进行修改</li>
+                <li>支持多人游戏</li>
+                <li>可通过配置文件进行功能配置</li>
+            </ul>
+            <h3 id="你可能关心的">你可能关心的</h3>
+            <h4 id="关于贡献者">关于贡献者</h4>
+            <ul>
+                <li><a href="https://github.com/kuangby" target="_blank" rel="noopener noreferrer">8848yyds</a> 插件主要开发者
+                </li>
+                <li><a href="https://github.com/odorajbotoj" target="_blank" rel="noopener noreferrer">odorajbotoj</a>
+                    插件前开发者</li>
+                <li><a href="https://github.com/hhhxiao" target="_blank" rel="noopener noreferrer">hhhxiao</a>
+                    Trapdoor-ll的主要开发者</li>
+                <li><a href="https://github.com/OEOTYAN" target="_blank" rel="noopener noreferrer">OEOTYAN</a>
+                    前置Mod开发，部分源码提供</li>
+                <li><a href="https://github.com/glibcxx" target="_blank" rel="noopener noreferrer">glibcxx</a> 部分源代码提供
+                </li>
+                <li><a href="https://github.com/JiaLe1135" target="_blank" rel="noopener noreferrer">JiaLe1135</a> 文档贡献
+                </li>
+                <li>Tokong Server 提供服务器测试环境</li>
+            </ul>
+
+            <h2 id="installdoc">CoralFans安装</h2>
+            <p class="mods-file-src">来源：<code>InstallDoc.md</code></p>
+            <h3 id="0阅读并同意免责声明">0.阅读并同意免责声明</h3>
+            <p>作为用户首先需要明确: 使用CoralFans带来的功能就意味着承担第三方软件带来​​的风险.为了不给开发者带来不必要的麻烦,请阅读以下的免责声明,如果您使用了CoralFans就意味着您自动同意了该声明.
+            </p>
+            <blockquote>
+                <h4 id="免责声明">免责声明</h4>
+                <p>CoralFans(以下简称cf)是一个基于LeviLamina开发的我的世界基岩版辅助插件,它提供了令人惊叹的方便玩家的功能,给生电玩家创造了便利.另外,cf本身是开源免费的,内部没有任何恶意代码,原则上也不会对存档造成任何损害.
+                </p>
+                <p>但考虑到此类软件的特殊性,开发者无法完全保证对用户的存档不造成任何破坏,万一发生意外情况,开发者不会也没有能力对用户造成的损失负责.</p>
+                <p>如果您继续使用cf插件,那么就代表您同意了该声明(或者说叫用户协议),如果您不想承担此类风险,请停止使用cf插件.</p>
+            </blockquote>
+            <h3 id="1安装levilamina">1.安装LeviLamina</h3>
+            <p>CoralFans插件依赖于LeviLamina加载器,所以在使用本插件前,你需要安装LeviLamina。</p>
+            <ul>
+                <li>Windows安装参考<a href="https://levilamina.liteldev.com/zh/install/" target="_blank"
+                        rel="noopener noreferrer">LeviLamina中文安装教程</a></li>
+            </ul>
+            <h4 id="补充">补充</h4>
+            <ul>
+                <li><strong>不建议中文路径</strong>
+                    <ul>
+                        <li>这可能会导致意料之外的行为,不建议中文路径</li>
+                    </ul>
+                </li>
+                <li><strong>关闭cmd快速编辑</strong>
+                    <ul>
+                        <li>windows默认cmd窗口启用快速编辑模式,这大概率会导致你的BDS程序阻塞,右键窗口选择<strong>属性</strong>,将<strong>快速编辑模式</strong>关闭即可
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <h3 id="2下载并安装前置">2.下载并安装前置</h3>
+            <ol>
+                <li>使用lip进行安装: <code>lip install github.com/OEOTYAN/BedrockServerClientInterface</code> .</li>
+            </ol>
+            <h3 id="3下载并安装插件本体">3.下载并安装插件本体</h3>
+            <ul>
+                <li>使用lip进行安装: <code>lip install github.com/CoralFans-Dev/CoralFans</code> .</li>
+                <li>也可以手动安装<ol>
+                        <li>前往<a href="https://github.com/CoralFans-Dev/CoralFans/releases" target="_blank"
+                                rel="noopener noreferrer">CoralFans的下载页面</a>下载发布的release文件</li>
+                        <li>将解压后的插件放入服务端根目录下的 <code>plugins</code> 文件夹</li>
+                    </ol>
+                </li>
+            </ul>
+            <h4 id="客户端版">客户端版</h4>
+            <ul>
+                <li>自26.10起，CoralFans同时提供客户端版本，可配合客户端版LeviLamina使用</li>
+                <li>使用leviLauncher安装：在leviLauncher的Bedrinth界面中找到CoralFans进行安装</li>
+                <li>使用lip进行安装: <code>lip install github.com/CoralFans-Dev/CoralFans#client</code></li>
+                <li>手动安装时，将客户端版压缩包解压后放入客户端 <code>mods</code> 文件夹</li>
+            </ul>
+            <h3 id="4配置配置文件">4.配置配置文件</h3>
+            <p>你可能需要根据需求关闭部分功能(如 <code>tick</code> ，漏斗计数器等)</p>
+            <h3 id="5开服">5.开服</h3>
+            <p>本地服务器<strong>ip</strong>一栏填写 <code>127.0.0.1</code> 或者 <code>localhost</code></p>
+            <p>云服务器<strong>ip</strong>一栏填写其公网ip(不知道的问服务商),端口按照服务器配置文件里面改，默认 <code>19132</code></p>
+
+            <h2 id="maindoc">CoralFans</h2>
+            <p class="mods-file-src">来源：<code>MainDoc.md</code></p>
+            <hr>
+            <h3 id="coralfans">coralfans</h3>
+            <ul>
+                <li>关于 CoralFans Mod</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/coralfans version</code></pre>
+            </div>
+            <ul>
+                <li><code>coralfans version</code> 打印当前版本信息</li>
+            </ul>
+            <h3 id="calculate">calculate</h3>
+            <ul>
+                <li>统计游戏数据</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/calculate pt
+/calculate pt2</code></pre>
+            </div>
+            <ul>
+                <li><code>calculate pt</code> 统计区块内计划刻数据</li>
+                <li><code>calculate pt2</code> 统计区块内计划刻数据，额外统计已被移除（removed）的计划刻</li>
+            </ul>
+            <h3 id="cfhud">cfhud</h3>
+            <ul>
+                <li>HUD信息显示</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/cfhud show &lt;isopen: Boolean&gt;
+/cfhud &lt;add|remove&gt; &lt;mspt|base|redstone|village|hopper|block|container&gt;
+/cfhud removeall</code></pre>
+            </div>
+            <ul>
+                <li><code>cfhud show</code> 配置是否显示信息</li>
+                <li><code>cfhud add</code> 增加一条显示项</li>
+                <li><code>cfhud remove</code> 删除一条显示项</li>
+                <li><code>cfhud removeall</code> 删除所有显示项<ul>
+                        <li><code>mspt</code> - mspt与tps信息</li>
+                        <li><code>base</code> - 基本信息，如当前坐标、区块、群系等</li>
+                        <li><code>redstone</code> - 红石信息，等同于执行 <code>data redstone info</code></li>
+                        <li><code>village</code> - 村民信息，等同于执行 <code>village dweller</code></li>
+                        <li><code>hopper</code> - 漏斗计数器信息，等同于执行 <code>counter print</code></li>
+                        <li><code>block</code> - 方块信息，等同于执行 <code>data block</code></li>
+                        <li><code>container</code> - 容器信息，等同于执行 <code>containerreader</code>（指向容器的内容预览）</li>
+                    </ul>
+                </li>
+            </ul>
+            <h3 id="counter">counter</h3>
+            <ul>
+                <li>漏斗计数器</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/counter print [channel: int]
+/counter reset [channel: int]</code></pre>
+            </div>
+            <ul>
+                <li>在使用 <code>func hoppercounter true</code>
+                    开启漏斗计数器后，所有对准混凝土的漏斗都将变成无尽的漏斗，所有流向该漏斗的物品都会消失，但是这些数据会被插件记录下来，你可以使用 <code>/counter</code>
+                    命令查看这些数据。16种混凝土每一种对应一个频道（根据特殊值）。<ul>
+                        <li><code>/counter print [channel: int]</code> 打印频道channel的数据</li>
+                        <li><code>/counter reset [channel: int]</code> 清除频道channel的数据</li>
+                        <li>不指定频道时，插件会获取指向的漏斗或混凝土对应频道的数据</li>
+                    </ul>
+                </li>
+                <li>注意：从使用 <code>func hoppercounter true</code> 这一刻开始漏斗计数器就开始计时了，而不是其他时间。数据在服务器关闭时不会保存。</li>
+            </ul>
+            <h3 id="data">data</h3>
+            <ul>
+                <li>获取方块或实体等的信息</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/data block [blockPos: x y z]
+/data block nbt [path: string]
+/data block &lt;blockPos: x y z&gt; nbt [path: string]
+/data blockentity nbt [path: string]
+/data blockentity &lt;blockPos: x y z&gt; nbt [path: string]
+/data blockentity highlight [radius: int] [time: int]
+/data entity
+/data entity nbt [path: string]
+/data redstone &lt;signal|info|chunk|conn&gt; [blockPos: x y z]
+/data item nbt [path: string]
+/data player &lt;player: Player&gt; uuid</code></pre>
+            </div>
+            <ul>
+                <li><code>data block</code> 获取方块信息（包括RuntimeID）</li>
+                <li><code>data blockentity</code> 获取方块实体信息</li>
+                <li><code>data entity</code> 获取实体信息</li>
+                <li><code>data item</code> 获取手持物品信息<ul>
+                        <li><code>nbt</code> 用于指定获取nbt信息</li>
+                        <li><code>path</code> 是可选参数，用于访问特定的Nbt Tag。如 <code>a.b[1].c</code> 指向根标签下a标签下b数组的第二个元素的c标签。</li>
+                    </ul>
+                </li>
+                <li><code>data redstone</code> 获取红石原件信息<ul>
+                        <li><code>chunk</code> 标记所在区块的所有红石原件</li>
+                        <li><code>signal</code> 打印信号相关信息</li>
+                        <li><code>info</code> 打印红石基本信息</li>
+                        <li><code>conn</code> 标记指定原件（绿色）、子原件（黄色）、父原件（红色）</li>
+                    </ul>
+                </li>
+                <li><code>data player</code> 获取指定玩家的UUID</li>
+            </ul>
+            <h3 id="func">func</h3>
+            <ul>
+                <li>拥有调整全局功能配置的能力</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/func forceopen &lt;IsOpen: Boolean&gt;
+/func forceplace &lt;all|entity|normal&gt;
+/func droppernocost &lt;IsOpen: Boolean&gt;
+/func safeexplode &lt;IsOpen: Boolean&gt;
+/func autotool &lt;IsOpen: Boolean&gt;
+/func autoweapon &lt;IsOpen: Boolean&gt;
+/func hoppercounter &lt;IsOpen: Boolean&gt;
+/func containerreader &lt;IsOpen: Boolean&gt;
+/func autototem &lt;IsOpen: Boolean&gt;
+/func autoitem &lt;IsOpen: Boolean&gt;
+/func fastdrop &lt;IsOpen: Boolean&gt;
+/func nopickup &lt;IsOpen: Boolean&gt;
+/func portaldisabled &lt;IsOpen: Boolean&gt;</code></pre>
+            </div>
+            <ul>
+                <li>
+                    <p><code>func forceopen</code> 强制开启容器</p>
+                </li>
+                <li>
+                    <p><code>func forceplace</code> 方块强制放置</p>
+                    <ul>
+                        <li><code>all</code> 表示无视所有限制, <code>entity</code> 表示无视实体, <code>normal</code>表示正常模式</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><code>func droppernocost</code> 投掷器不消耗物品</p>
+                </li>
+                <li>
+                    <p><code>func safeexplode</code> 爆炸不破坏地形</p>
+                </li>
+                <li>
+                    <p><code>func autotool</code> 自动切换工具</p>
+                </li>
+                <li>
+                    <p><code>func autoweapon</code> 自动切换武器</p>
+                </li>
+                <li>
+                    <p><code>func hoppercounter</code> 漏斗计数器</p>
+                </li>
+                <li>
+                    <p><code>func containerreader</code> 容器预览</p>
+                </li>
+                <li>
+                    <p><code>func autototem</code> 自动补充图腾</p>
+                </li>
+                <li>
+                    <p><code>func autoitem</code> 物品自动补货</p>
+                </li>
+                <li>
+                    <p><code>func fastdrop</code> 快速扔出背包所有同类物品</p>
+                </li>
+                <li>
+                    <p><code>func nopickup</code> 禁止拾取物品</p>
+                </li>
+                <li>
+                    <p><code>func portaldisabled</code> 玩家禁用传送门</p>
+                </li>
+                <li>
+                    <p>func可以开启或者关闭部分功能的全局开关。功能分为两类，全局功能和个人功能。对于个人功能，需要使用func和self同时开启该功能才会生效；对于全局功能，只需要使用func指令开启，该功能则会令全服务器的所有玩家生效。
+                    </p>
+                </li>
+            </ul>
+            <h3 id="freecamera">freecamera</h3>
+            <ul>
+                <li>自由视角</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/freecamera</code></pre>
+            </div>
+            <ul>
+                <li><code>freecamera</code> 开启或关闭自由视角模式。再次执行即可关闭</li>
+            </ul>
+            <h3 id="hsa">hsa</h3>
+            <ul>
+                <li>拥有在游戏内可视化结构生成区域(HSA)的能力</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/hsa show [IsOpen: Boolean]
+/hsa structure show [IsOpen: Boolean]
+/hsa list
+/hsa structure list</code></pre>
+            </div>
+            <ul>
+                <li><code>hsa show</code>
+                    开启或者关闭HSA显示。开启后插件会在游戏内有HSA的地方使用粒子画出结构的刷怪点起始位置（需要前置Mod与对应材质包），默认黑色，如若hsa点位重合，则会出现多种色彩叠加的情况。不指定参数时会在开/关之间切换
+                </li>
+                <li><code>hsa structure show</code> 开启或者关闭结构包围盒显示，画出结构的空间范围。不指定参数时会在开/关之间切换</li>
+                <li><code>hsa list</code> 列出当前区块内所有HSA起始点坐标</li>
+                <li><code>hsa structure list</code> 列出当前区块内所有结构的包围盒范围</li>
+            </ul>
+            <h3 id="locate">locate</h3>
+            <ul>
+                <li>定位可回溯（可复制）的自然生成地物，并进行可视化</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre
+                    class="code-body"><code>/cflocate duplicatable &lt;netherite|nether_spring|nether_fire|glow_stone|mushroom|nether_gold|nether_quartz|nether_magma|nether_gravel|blackstone|soul_sand|end_island|chorus_flower|end_gateway&gt; [IsOpen: Boolean]</code></pre>
+            </div>
+            <ul>
+                <li><code>cflocate duplicatable</code> 开启或关闭指定类型的可回溯地物显示（在配置文件中未启用的类型不可用）。不指定 <code>IsOpen</code>
+                    时会在开/关之间切换<ul>
+                        <li>可回溯地物类型包括：远古残骸(netherite)、下界熔岩泉(nether_spring)、下界火焰(nether_fire)、萤石(glow_stone)、蘑菇(mushroom)、下界金矿(nether_gold)、下界石英矿(nether_quartz)、岩浆块(nether_magma)、下界沙砾(nether_gravel)、黑石(blackstone)、灵魂沙(soul_sand)、末地浮岛(end_island)、紫颂花(chorus_flower)、末地折跃门(end_gateway)
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <h3 id="log">log</h3>
+            <ul>
+                <li>打印一些信息</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/log levelseed
+/log pt
+/log rpt</code></pre>
+            </div>
+            <ul>
+                <li><code>log levelseed</code> 打印存档种子</li>
+                <li><code>log pt</code> 打印玩家所在区块的计划刻信息</li>
+                <li><code>log rpt</code> 打印玩家所在区块的随机计划刻信息</li>
+            </ul>
+            <h3 id="minerule">minerule</h3>
+            <ul>
+                <li>用于修改游戏规则</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/minerule fuck_bedrock_no_drop &lt;IsOpen: Boolean&gt;
+/minerule fuck_movingBlock_no_drop &lt;IsOpen: Boolean&gt;
+/minerule restore_portal_sand_farm &lt;IsOpen: Boolean&gt;
+/minerule remove_portal_pigzombie_cd &lt;IsOpen: Boolean&gt;
+/minerule restore_ancillary_broken &lt;IsOpen: Boolean&gt;
+/minerule fuck_population_cap &lt;IsOpen: Boolean&gt;
+/minerule fuck_population_cap global &lt;count: int&gt;
+/minerule fuck_population_cap global reset
+/minerule fuck_population_cap &lt;dimension: Dimension&gt; &lt;animal|monster|water_animal|villager|ambient|cat|pillager&gt; &lt;surface|underground&gt; &lt;count: float&gt;
+/minerule fuck_population_cap &lt;dimension: Dimension&gt; reset
+/minerule fuck_piston_reset_velocity &lt;IsOpen: Boolean&gt;
+/minerule set_max_pt_consume_per_chunk &lt;maxpt: int&gt;
+/minerule mining_72k &lt;IsOpen: Boolean&gt;</code></pre>
+            </div>
+            <ul>
+                <li><code>minerule fuck_bedrock_no_drop</code> 还原旧版本基岩可掉落</li>
+                <li><code>minerule fuck_movingBlock_no_drop</code> 修复movingBlock破坏时不掉落的bug</li>
+                <li><code>minerule restore_portal_sand_farm</code> 还原旧版本折跃门刷沙机</li>
+                <li><code>minerule remove_portal_pigzombie_cd</code> 移除猪人15s传送cd</li>
+                <li><code>minerule restore_ancillary_broken</code> 还原活塞破坏双格方块（如门）时另一半方块的掉落</li>
+                <li><code>minerule fuck_population_cap</code> 解除种群上限限制<ul>
+                        <li><code>fuck_population_cap &lt;IsOpen: Boolean&gt;</code> 开启或关闭种群上限修改</li>
+                        <li><code>fuck_population_cap global &lt;count: int&gt;</code> 设置全局种群上限， <code>reset</code>
+                            可重置为默认值(200)</li>
+                        <li><code>fuck_population_cap &lt;dimension&gt; &lt;mobtype&gt; &lt;type&gt; &lt;count&gt;</code>
+                            设置指定维度、指定生物类别、指定地表/地下种群上限</li>
+                        <li><code>fuck_population_cap &lt;dimension&gt; reset</code> 重置指定维度的种群上限</li>
+                        <li><code>mobtype</code>
+                            生物类别：animal(动物)、monster(怪物)、water_animal(水生动物)、villager(村民)、ambient(环境生物)、cat(猫)、pillager(掠夺者)
+                        </li>
+                    </ul>
+                </li>
+                <li><code>minerule fuck_piston_reset_velocity</code> 修复活塞推动实体时速度被重置的bug</li>
+                <li><code>minerule set_max_pt_consume_per_chunk</code> 设置每个区块每gt最多执行的计划刻数量</li>
+                <li><code>minerule mining_72k</code> 修复极速挖掘（72k挖掘）时服务端挖掘进度被重置导致无法连续破坏方块的问题</li>
+            </ul>
+            <h3 id="noclip">noclip</h3>
+            <ul>
+                <li>创造模式无碰撞箱</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/noclip</code></pre>
+            </div>
+            <ul>
+                <li><code>noclip</code> 创造模式无碰撞箱</li>
+            </ul>
+            <h3 id="prof">prof</h3>
+            <ul>
+                <li>拥有检查服务器健康程度以及定位卡顿源头的能力</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/prof [normal|entity|chunk|pt|mspt] [numberOfTick: int]</code></pre>
+            </div>
+            <ul>
+                <li><code>prof normal</code> 进行普通的profile,会列出游戏多个条目的执行时间</li>
+                <li><code>prof entity</code> 对实体更新进行profile</li>
+                <li><code>prof chunk</code> 对区块更新进profile（列出的坐标为区块坐标）</li>
+                <li><code>prof pt</code> 对计划刻进行profile</li>
+                <li><code>prof mspt</code> 对MSPT进行统计（最大/最小/阈值等）</li>
+                <li><code>numberOfTick</code> 是选填参数，指定prof需要执行的gt数，不填时默认为100gt</li>
+            </ul>
+            <h3 id="rotate">rotate</h3>
+            <ul>
+                <li>旋转方块</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/rotate</code></pre>
+            </div>
+            <ul>
+                <li><code>rotate</code> 可以旋转指向的方块</li>
+            </ul>
+            <h3 id="self">self</h3>
+            <ul>
+                <li>拥有调整个人功能配置的能力</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/self autotool &lt;IsOpen: Boolean&gt;
+/self autotool mindamage &lt;mindamage: int&gt;
+/self autoweapon &lt;IsOpen: Boolean&gt;
+/self autoweapon mindamage &lt;mindamage: int&gt;
+/self containerreader &lt;IsOpen: Boolean&gt;
+/self autototem &lt;IsOpen: Boolean&gt;
+/self autoitem &lt;IsOpen: Boolean&gt;
+/self fastdrop &lt;IsOpen: Boolean&gt;
+/self nopickup &lt;IsOpen: Boolean&gt;
+/self portaldisabled &lt;IsOpen: Boolean&gt;</code></pre>
+            </div>
+            <ul>
+                <li><code>self autotool</code> 自动切换工具<ul>
+                        <li><code>self autotool mindamage</code> 可以设置工具最小耐久值。低于耐久值的工具不会被自动选择</li>
+                    </ul>
+                </li>
+                <li><code>self autoweapon</code> 自动切换武器<ul>
+                        <li><code>self autoweapon mindamage</code> 可以设置武器最小耐久值。低于耐久值的武器不会被自动选择</li>
+                    </ul>
+                </li>
+                <li><code>self containerreader</code> 容器预览</li>
+                <li><code>self autototem</code> 自动补充图腾</li>
+                <li><code>self autoitem</code> 物品自动补货</li>
+                <li><code>self fastdrop</code> 快速扔出背包所有同类物品</li>
+                <li><code>self nopickup</code> 禁止拾取物品</li>
+                <li><code>self portaldisabled</code> 玩家禁用传送门</li>
+                <li>当对应的功能没有在 <code>func</code> 指令中全局开启时， <code>self</code> 指令会一直将其配置为 <code>false</code></li>
+            </ul>
+            <h3 id="slime">slime</h3>
+            <ul>
+                <li>拥有可视化史莱姆区块的能力</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/slime check
+/slime show [IsOpen: Boolean]</code></pre>
+            </div>
+            <ul>
+                <li><code>slime check</code> 检测当前区块是否为史莱姆区块</li>
+                <li><code>slime show</code> 开启或关闭史莱姆区块可视化。不指定参数时会在开/关之间切换</li>
+            </ul>
+            <h3 id="sp">sp</h3>
+            <ul>
+                <li>假人</li>
+                <li>在CoralFans 2.0.0版本中，我们移除了假人系统，并将其做成了独立插件CFSP</li>
+                <li>参见<a href="#cfspcommanddoc">CFSPCommandDoc</a></li>
+            </ul>
+            <h3 id="tick">tick</h3>
+            <ul>
+                <li>拥有改变世界运行速度的能力</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/tick query [times: int]
+/tick &lt;freeze|reset&gt;
+/tick rate &lt;rate: float&gt;
+/tick sync [enable: Boolean]
+/tick step &lt;step: int&gt;</code></pre>
+            </div>
+            <ul>
+                <li><code>tick query</code> 查询MSPT<ul>
+                        <li>可选参数 <code>times</code> 指定连续查询的gt数，不填时默认查询一次</li>
+                    </ul>
+                </li>
+                <li><code>tick freeze</code> 暂停tick执行</li>
+                <li><code>tick reset</code> 重置游戏速率至正常</li>
+                <li><code>tick rate</code> 设置游戏速率，原版为20tps</li>
+                <li><code>tick sync</code> 将客户端的游戏速度与服务器同步（并补偿飞行速度），使客户端动画与实际tick速率一致。不指定参数时会在开/关之间切换</li>
+                <li><code>tick step</code> 加速步进指定数量的tick，并在步进结束后暂停游戏运行</li>
+            </ul>
+            <h3 id="village">village</h3>
+            <ul>
+                <li>拥有显示村庄信息的能力</li>
+            </ul>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/village show &lt;bounds|raid|spawn|center|poi|bind&gt; [IsOpen: Boolean]
+/village list
+/village tickinglist
+/village info &lt;id: int&gt;
+/village dweller</code></pre>
+            </div>
+            <ul>
+                <li><code>village show &lt;bounds|raid|spawn|center|poi|bind&gt; [IsOpen: Boolean]</code>
+                    用于开关村庄相关的可视化。不指定 <code>IsOpen</code> 时会在开/关之间切换：<ul>
+                        <li><code>bind</code> 村民绑定信息可视化</li>
+                        <li><code>bounds</code> 村庄范围可视化</li>
+                        <li><code>center</code> 村庄中心可视化</li>
+                        <li><code>poi</code> POI的查询范围可视化</li>
+                        <li><code>raid</code> 劫掠刷新边界可视化</li>
+                        <li><code>spawn</code> 铁傀儡刷新范围可视化</li>
+                    </ul>
+                </li>
+                <li><code>village list</code> 列出所有正在加载的村庄</li>
+                <li><code>village tickinglist</code> 列出所有正在tick的村庄</li>
+                <li><code>village info &lt;id: int&gt;</code> 显示指定VID的村庄的信息</li>
+                <li><code>village dweller</code> 获取指向实体（村民）的信息</li>
+            </ul>
+
+            <h2 id="configdoc">配置文件</h2>
+            <p class="mods-file-src">来源：<code>ConfigDoc.md</code></p>
+            <h3 id="version">version</h3>
+            <ul>
+                <li>配置文件的版本。当前版本（<code>26.51.x</code>）CoralFans为 <code>7</code></li>
+            </ul>
+            <h3 id="locatename">locateName</h3>
+            <ul>
+                <li>插件语言。支持 <code>zh_CN</code> 与 <code>en_US</code></li>
+            </ul>
+            <h3 id="command">command</h3>
+            <ul>
+                <li>指令配置。其中每一项均包含 <code>enabled</code>（是否启用该指令）、<code>permission</code>（执行所需权限）与
+                    <code>command</code>（指令名称）三个字段</li>
+                <li>可配置的指令包括：</li>
+            </ul>
+            <table class="table is-bordered is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>指令</th>
+                        <th>默认名称</th>
+                        <th>默认权限</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>tick</td>
+                        <td><code>tick</code></td>
+                        <td>GameDirectors</td>
+                    </tr>
+                    <tr>
+                        <td>func</td>
+                        <td><code>func</code></td>
+                        <td>GameDirectors</td>
+                    </tr>
+                    <tr>
+                        <td>self</td>
+                        <td><code>self</code></td>
+                        <td>Any</td>
+                    </tr>
+                    <tr>
+                        <td>hsa</td>
+                        <td><code>hsa</code></td>
+                        <td>Any</td>
+                    </tr>
+                    <tr>
+                        <td>counter</td>
+                        <td><code>counter</code></td>
+                        <td>GameDirectors</td>
+                    </tr>
+                    <tr>
+                        <td>prof</td>
+                        <td><code>prof</code></td>
+                        <td>Any</td>
+                    </tr>
+                    <tr>
+                        <td>slime</td>
+                        <td><code>slime</code></td>
+                        <td>Any</td>
+                    </tr>
+                    <tr>
+                        <td>village</td>
+                        <td><code>village</code></td>
+                        <td>Any</td>
+                    </tr>
+                    <tr>
+                        <td>rotate</td>
+                        <td><code>rotate</code></td>
+                        <td>Any</td>
+                    </tr>
+                    <tr>
+                        <td>data</td>
+                        <td><code>data</code></td>
+                        <td>Any</td>
+                    </tr>
+                    <tr>
+                        <td>cfhud</td>
+                        <td><code>cfhud</code></td>
+                        <td>Any</td>
+                    </tr>
+                    <tr>
+                        <td>log</td>
+                        <td><code>log</code></td>
+                        <td>Any</td>
+                    </tr>
+                    <tr>
+                        <td>calculate</td>
+                        <td><code>calculate</code></td>
+                        <td>Any</td>
+                    </tr>
+                    <tr>
+                        <td>minerule</td>
+                        <td><code>minerule</code></td>
+                        <td>GameDirectors</td>
+                    </tr>
+                    <tr>
+                        <td>freecamera</td>
+                        <td><code>freecamera</code></td>
+                        <td>Any</td>
+                    </tr>
+                    <tr>
+                        <td>noclip</td>
+                        <td><code>noclip</code></td>
+                        <td>Any</td>
+                    </tr>
+                    <tr>
+                        <td>locate</td>
+                        <td><code>cflocate</code></td>
+                        <td>Any</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4 id="permission">permission</h4>
+            <ul>
+                <li>执行所需权限</li>
+                <li>可选值如下（从小到大排序）<ul>
+                        <li><code>Any</code> - 任意玩家</li>
+                        <li><code>GameDirectors</code> - 默认的管理员权限</li>
+                        <li><code>Admin</code></li>
+                        <li><code>Host</code></li>
+                        <li><code>Owner</code></li>
+                        <li><code>Internal</code></li>
+                    </ul>
+                </li>
+            </ul>
+            <h3 id="functions">functions</h3>
+            <h4 id="functionshud">functions.hud</h4>
+            <h5 id="refreshinterval">refreshInterval</h5>
+            <ul>
+                <li>cfhud信息显示的刷新时间。单位：Tick，默认 <code>20</code></li>
+            </ul>
+            <h4 id="functionshsa">functions.hsa</h4>
+            <ul>
+                <li>HSA可视化相关配置<ul>
+                        <li><code>drawInterval</code> 绘制间隔（Tick），默认 <code>60</code></li>
+                        <li><code>runtimeRemoveScale</code> 运行时绘制的移除倍率，默认 <code>20</code></li>
+                        <li><code>drawRadius</code> 绘制半径（区块），默认 <code>6</code></li>
+                        <li><code>hsaNorthWestColor</code> HSA区块西北角颜色，默认 <code>#FFFFFF</code></li>
+                        <li><code>hsaColor</code> HSA起始点颜色，默认 <code>#29ADFF</code></li>
+                        <li><code>structureColor</code> 结构包围盒颜色，默认 <code>#10E436</code></li>
+                    </ul>
+                </li>
+            </ul>
+            <h4 id="functionslocateduplicatable">functions.locate.duplicatable</h4>
+            <ul>
+                <li>可回溯地物定位可视化相关配置<ul>
+                        <li><code>drawInterval</code> 绘制间隔（Tick），默认 <code>60</code></li>
+                        <li><code>runtimeRemoveScale</code> 运行时绘制的移除倍率，默认 <code>20</code></li>
+                        <li><code>cacheRemoveScale</code> 缓存数据的移除倍率，默认 <code>100</code></li>
+                        <li><code>drawRadius</code> 绘制半径（区块），默认 <code>6</code></li>
+                    </ul>
+                </li>
+                <li>每一种可回溯地物类型（netherite、netherSpring、netherFire、glowStone、mushroom、netherGold、netherQuartz、netherMagma、netherGravel、netherBlackstone、netherSoulSand、endIsland、chorusFlower、endGateway）均包含以下字段：
+                    <ul>
+                        <li><code>enable</code> 是否在 <code>cflocate</code> 指令中启用该类型</li>
+                        <li><code>originPosColor</code> / <code>posColor</code> / <code>boundColor</code>
+                            起始点/位置/边界绘制颜色（不同类型使用的字段略有差异），默认 <code>#10E436</code> / <code>#FFFFFF</code></li>
+                        <li><code>textColor</code> 文本颜色，默认 <code>#FFFFFF</code></li>
+                        <li><code>arrowColor</code> 箭头颜色，默认 <code>#FFFFFF</code></li>
+                    </ul>
+                </li>
+            </ul>
+            <h4 id="functionsslime">functions.slime</h4>
+            <ul>
+                <li>史莱姆区块可视化相关配置<ul>
+                        <li><code>drawInterval</code> 绘制间隔（Tick），默认 <code>60</code></li>
+                        <li><code>runtimeRemoveScale</code> 运行时绘制的移除倍率，默认 <code>20</code></li>
+                        <li><code>cacheRemoveScale</code> 缓存数据的移除倍率，默认 <code>100</code></li>
+                        <li><code>drawRadius</code> 绘制半径（区块），默认 <code>8</code></li>
+                        <li><code>slimeChunkColor</code> 史莱姆区块颜色，默认 <code>#10E436</code></li>
+                    </ul>
+                </li>
+            </ul>
+            <h4 id="functionsvillage">functions.village</h4>
+            <ul>
+                <li>村庄可视化相关配置<ul>
+                        <li><code>drawInterval</code> 绘制间隔（Tick），默认 <code>10</code></li>
+                        <li><code>boundsColor</code> 村庄范围颜色，默认 <code>#FFFFFF</code></li>
+                        <li><code>raidBoundsColor</code> 劫掠刷新边界颜色，默认 <code>#10E436</code></li>
+                        <li><code>ironSpawnBoundsColor</code> 铁傀儡刷新范围颜色，默认 <code>#3003D9</code></li>
+                        <li><code>centerColor</code> 村庄中心颜色，默认 <code>#FF0040</code></li>
+                        <li><code>poiBoundsColor</code> POI查询范围颜色，默认 <code>#FFA214</code></li>
+                        <li><code>bedBindColor</code> 床绑定颜色，默认 <code>#DB3FFD</code></li>
+                        <li><code>ringBindColor</code> 钟绑定颜色，默认 <code>#FFEC27</code></li>
+                        <li><code>workBindColor</code> 工作方块绑定颜色，默认 <code>#5AC54F</code></li>
+                    </ul>
+                </li>
+            </ul>
+            <h3 id="shortcut">shortcut</h3>
+            <ul>
+                <li>自定义快捷指令</li>
+                <li>参见<a href="#shortcutsdoc">ShortcutsDoc</a></li>
+            </ul>
+
+            <h2 id="shortcutsdoc">Shortcuts</h2>
+            <p class="mods-file-src">来源：<code>ShortcutsDoc.md</code></p>
+            <blockquote>
+                <p><code>shortcut</code> 是一项非常强大的配置功能。仙人掌扳手、仙人掌点击混凝土打印漏斗计数器信息皆依赖此功能。</p>
+            </blockquote>
+            <ul>
+                <li>快捷指令分为五类，分别对应配置文件中的五个数组：<ul>
+                        <li><code>useons</code> 玩家对着方块使用物品</li>
+                        <li><code>uses</code> 玩家使用物品</li>
+                        <li><code>destroys</code> 玩家使用物品破坏任意方块</li>
+                        <li><code>commands</code> 自定义命令</li>
+                        <li><code>keyBoards</code> 键盘按键（仅客户端版可用）</li>
+                    </ul>
+                </li>
+                <li>通用字段<ul>
+                        <li><code>enable</code> 是否开启</li>
+                        <li><code>actions</code> 要执行的指令序列。您可以在其中使用一些内建变量，他们会在执行时被替换</li>
+                        <li><code>intercept</code> 是否拦截原有事件触发</li>
+                    </ul>
+                </li>
+                <li><code>useons</code> 字段<ul>
+                        <li><code>item</code> 玩家手持物品</li>
+                        <li><code>block</code> 玩家点击的方块</li>
+                    </ul>
+                </li>
+                <li><code>uses</code> 字段<ul>
+                        <li><code>item</code> 玩家使用的物品</li>
+                    </ul>
+                </li>
+                <li><code>destroys</code> 字段<ul>
+                        <li><code>item</code> 玩家破坏方块时手持的物品</li>
+                    </ul>
+                </li>
+                <li><code>commands</code> 字段<ul>
+                        <li><code>command</code> 自定义的短命令</li>
+                        <li><code>description</code> 自定义短命令的描述</li>
+                        <li><code>permission</code> 自定义短命令的权限。可选值同<a href="#configdoc">config - permission</a></li>
+                    </ul>
+                </li>
+                <li><code>keyBoards</code> 字段（仅客户端版可用）<ul>
+                        <li><code>keyCode</code> 按键的键值（如 <code>F</code> <code>R</code> <code>N</code>）</li>
+                        <li><code>isDown</code> 是按下触发（<code>true</code>）还是松开触发（<code>false</code>）</li>
+                    </ul>
+                </li>
+                <li>内建变量<ul>
+                        <li><code>{selfname}</code> 执行者真名（所有类型有效）</li>
+                        <li><code>{selfx}</code> 执行者x坐标（所有类型有效）</li>
+                        <li><code>{selfy}</code> 执行者y坐标（所有类型有效）</li>
+                        <li><code>{selfz}</code> 执行者z坐标（所有类型有效）</li>
+                        <li><code>{itemname}</code> 使用的物品的名称（对 <code>useons</code> <code>uses</code>
+                            <code>destroys</code> 有效）</li>
+                        <li><code>{itemaux}</code> 使用的物品的特殊值（对 <code>useons</code> <code>uses</code>
+                            <code>destroys</code> 有效）</li>
+                        <li><code>{blockname}</code> 对准方块的名称（对 <code>useons</code> 有效）</li>
+                        <li><code>{blockvariant}</code> 对准方块的特殊值（对 <code>useons</code> 有效）</li>
+                        <li><code>{blockx}</code> 对准方块的x坐标（对 <code>useons</code> 有效）</li>
+                        <li><code>{blocky}</code> 对准方块的y坐标（对 <code>useons</code> 有效）</li>
+                        <li><code>{blockz}</code> 对准方块的z坐标（对 <code>useons</code> 有效）</li>
+                    </ul>
+                </li>
+            </ul>
+            <h3 id="举例">举例</h3>
+            <h4 id="打印漏斗计数器信息">打印漏斗计数器信息</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">json</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>&quot;useons&quot;: [
+    {
+        &quot;enable&quot;: true,
+        &quot;item&quot;: &quot;cactus&quot;,
+        &quot;block&quot;: &quot;black_concrete&quot;,
+        &quot;intercept&quot;: false,
+        &quot;actions&quot;: [
+            &quot;counter print&quot;
+        ]
+    }
+]</code></pre>
+            </div>
+            <ul>
+                <li>上述配置代表：当对准黑色混凝土使用仙人掌时，执行 <code>counter print</code> 指令。此快捷方式不拦截原有事件被触发，且是开启的。</li>
+            </ul>
+            <h4 id="快捷切换创造">快捷切换创造</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">json</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>&quot;commands&quot;: [
+    {
+        &quot;enable&quot;: false,
+        &quot;command&quot;: &quot;c&quot;,
+        &quot;description&quot;: &quot;creative&quot;,
+        &quot;permission&quot;: &quot;GameDirectors&quot;,
+        &quot;actions&quot;: [
+            &quot;gamemode creative&quot;
+        ]
+    }
+]</code></pre>
+            </div>
+            <ul>
+                <li>上述配置代表：当玩家执行 <code>/c</code> 命令时，等效于执行 <code>gamemode creative</code> 。 <code>/c</code> 命令的描述为
+                    <code>creative</code> ，需要权限 <code>GameDirectors</code> 。此快捷方式是关闭的。</li>
+            </ul>
+            <h4 id="键盘按键触发仅客户端版可用">键盘按键触发（仅客户端版可用）</h4>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">json</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>&quot;keyBoards&quot;: [
+    {
+        &quot;enable&quot;: true,
+        &quot;keyCode&quot;: &quot;F&quot;,
+        &quot;isDown&quot;: false,
+        &quot;intercept&quot;: false,
+        &quot;actions&quot;: [
+            &quot;freecamera&quot;
+        ]
+    }
+]</code></pre>
+            </div>
+            <ul>
+                <li>上述配置代表：当玩家松开 <code>F</code> 键时，执行 <code>freecamera</code> 指令以切换自由视角。此快捷方式不拦截按键事件，且是开启的。</li>
+            </ul>
+
+            <h2 id="cfspcommanddoc">CoralFans SimulatedPlayer (CFSP)</h2>
+            <p class="mods-file-src">来源：<code>CFSPCommandDoc.md</code></p>
+            <blockquote>
+                <h3 id="tips">Tips</h3>
+                <p>CFSP假人的XUID是固定的，等于
+                    <code>&quot;-&quot; + std::to_string(std::hash&lt;std::string&gt;()(spname))</code></p>
+                <p>使用非 <code>stop</code> 指令执行的关服操作可能会造成数据丢失。插件不为此负责。</p>
+            </blockquote>
+            <h3 id="指令系统">指令系统</h3>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">text</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre class="code-body"><code>/sp version
+/sp c &lt;autojoin|autorespawn|autodespawn&gt; &lt;isopen: bool&gt;
+/sp &lt;addmanager|rmmanager&gt; &lt;player: Player&gt;
+/sp
+/sp p
+/sp g
+/sp list p [online|offline]
+/sp list g
+/sp p create &lt;name: string&gt; [pos: Vec3] [dim: Dimension] [lockUniqueId: bool]
+/sp p spawn &lt;name: cfspOfflineSp&gt;
+/sp p respawn &lt;name: cfspDeadSp&gt;
+/sp p delete &lt;name: cfspSplist&gt; [force: bool]
+/sp p &lt;despawn|stop|swap|info|invinfo&gt; &lt;name: cfspOnlineSp&gt;
+/sp p select &lt;name: cfspOnlineSp&gt; &lt;item: Item&gt;
+/sp p &lt;sneaking|swimming|flying|sprinting&gt; &lt;name: cfspOnlineSp&gt; [enabled: bool]
+/sp p &lt;attack|build|interact|jump|drop|dropinv&gt; &lt;name: cfspOnlineSp&gt; [times: int] [interval: int]
+/sp p &lt;use|destroy&gt; &lt;name: cfspOnlineSp&gt; [long: int] [times: int] [interval: int]
+/sp p &lt;chat|runcmd&gt; &lt;name: cfspOnlineSp&gt; &lt;message: string&gt;
+/sp p lookat &lt;name: cfspOnlineSp&gt; [pos: Vec3]
+/sp p lookat &lt;name: cfspOnlineSp&gt; &lt;facing: north|south|west|east|up|down&gt;
+/sp p &lt;moveto|navto&gt; &lt;name: cfspOnlineSp&gt; [pos: Vec3] [speed: float]
+/sp p tp &lt;name: cfspOnlineSp&gt; [pos: Vec3] [dim: Dimension]
+/sp p perm &lt;name: cfspSplist&gt; &lt;permType: cfspSpPermType&gt; &lt;player: player&gt; &lt;enable: bool&gt;
+/sp p permpublic &lt;name: cfspSplist&gt; &lt;permType: cfspSpPermType&gt; &lt;enable: bool&gt;
+/sp g create &lt;gname: string&gt;
+/sp g &lt;addsp|rmsp&gt; &lt;gname: cfspGroup&gt; &lt;spname: cfspSplist&gt;
+/sp g &lt;delete|spawn|despawn|respawn|stop|info|invinfo&gt; &lt;gname: cfspGroup&gt;
+/sp g deletesp &lt;gname: cfspGroup&gt; [force: bool]
+/sp g &lt;sneaking|swimming|flying|sprinting&gt; &lt;gname: cfspGroup&gt; [enabled: bool]
+/sp g &lt;attack|build|interact|jump|drop|dropinv&gt; &lt;gname: cfspGroup&gt; [times: int] [interval: int]
+/sp g &lt;use|destroy&gt; &lt;gname: cfspGroup&gt; [long: int] [times: int] [interval: int]
+/sp g &lt;chat|runcmd&gt; &lt;gname: cfspGroup&gt; &lt;message: string&gt;
+/sp g lookat &lt;gname: cfspGroup&gt; [pos: Vec3]
+/sp g lookat &lt;gname: cfspGroup&gt; &lt;facing: north|south|west|east|up|down&gt;
+/sp g &lt;moveto|navto&gt; &lt;gname: cfspGroup&gt; [pos: Vec3] [speed: float]
+/sp g tp &lt;gname: cfspGroup&gt; [pos: Vec3] [dim: Dimension]
+/sp g select &lt;gname: cfspGroup&gt; &lt;item: Item&gt;
+/sp g perm &lt;gname: cfspGroup&gt; &lt;permType: cfspGroupPermType&gt; &lt;player: player&gt; &lt;enable: bool&gt;
+/sp g permpublic &lt;gname: cfspGroup&gt; &lt;permType: cfspGroupPermType&gt; &lt;enable: bool&gt;</code></pre>
+            </div>
+            <h4 id="基本指令">基本指令</h4>
+            <ul>
+                <li><code>sp version</code> 用于打印插件版本信息</li>
+                <li><code>sp c</code> 用于进行假人系统配置。仅假人管理员可执行<ul>
+                        <li><code>sp c autojoin</code> 关服时在线假人在开服时自动加入游戏</li>
+                        <li><code>sp c autorespawn</code> 假人死亡自动重生</li>
+                        <li><code>sp c autodespawn</code> 假人频繁死亡时自动下线</li>
+                    </ul>
+                </li>
+                <li><code>sp list</code> 用于列出相关信息<ul>
+                        <li><code>sp list p [online|offline]</code> 列出所有/在线/离线假人信息</li>
+                        <li><code>sp list g</code> 列出所有组信息</li>
+                    </ul>
+                </li>
+            </ul>
+            <h4 id="gui指令">gui指令</h4>
+            <ul>
+                <li><code>sp</code> 打开gui界面</li>
+                <li><code>sp p</code> 打开假人gui界面</li>
+                <li><code>sp g</code> 打开假人组gui界面</li>
+            </ul>
+            <h4 id="假人操作">假人操作</h4>
+            <h5 id="基础操作">基础操作</h5>
+            <ul>
+                <li><code>sp p create &lt;name: string&gt; [pos: Vec3] [dim: Dimension] [lockUniqueId: bool]</code> 创建假人
+                    <ul>
+                        <li><code>name</code> 假人名称</li>
+                        <li><code>pos</code> 假人创建坐标,当玩家视线范围内有方块时，默认玩家看向的位置，否则默认玩家当前位置</li>
+                        <li><code>dim</code> 假人创建维度，默认玩家当前维度</li>
+                        <li><code>lockUniqueId</code> 是否锁定假人uniqueId，如果锁定则假人上下线后不会与三叉戟失去联系，如果不锁定则可以通过上下线假人反复开启试炼宝库</li>
+                        <li>创建假人时，假人的游戏模式将与创建者保持一致</li>
+                    </ul>
+                </li>
+                <li><code>sp p spawn &lt;name: cfspOfflineSp&gt;</code> 上线假人</li>
+                <li><code>sp p despawn &lt;name: cfspOnlineSp&gt;</code> 下线假人</li>
+                <li><code>sp p respawn &lt;name: cfspDeadSp&gt;</code> 假人重生</li>
+                <li><code>sp p delete &lt;name: cfspSplist&gt; [force: bool]</code> 删除假人<ul>
+                        <li><code>force</code> 是否强制删除假人。当此参数为true时，可以强制删除背包不为空的假人</li>
+                    </ul>
+                </li>
+                <li><code>sp p info &lt;name: cfspOnlineSp&gt;</code> 打印假人信息</li>
+            </ul>
+            <h5 id="背包操作">背包操作</h5>
+            <ul>
+                <li><code>sp p invinfo &lt;name: cfspOnlineSp&gt;</code> 假人背包信息</li>
+                <li><code>sp p drop &lt;name: cfspOnlineSp&gt; [times: int] [interval: int]</code> 假人丢弃手持物品</li>
+                <li><code>sp p dropinv &lt;name: cfspOnlineSp&gt; [times: int] [interval: int]</code> 假人丢弃物品栏内全部物品</li>
+                <li><code>sp p swap &lt;name: cfspOnlineSp&gt;</code> 与假人交换背包（包括装备与末影箱）</li>
+                <li><code>sp p select &lt;name: cfspOnlineSp&gt; &lt;item: Item&gt;</code> 假人在背包中搜索物品并与手持物品切换</li>
+            </ul>
+            <h5 id="状态操作">状态操作</h5>
+            <ul>
+                <li><code>sp p sneaking &lt;name: cfspOnlineSp&gt; [enabled: bool]</code> 假人潜行</li>
+                <li><code>sp p swimming &lt;name: cfspOnlineSp&gt; [enabled: bool]</code> 假人游泳</li>
+                <li><code>sp p flying &lt;name: cfspOnlineSp&gt; [enabled: bool]</code> 假人飞行</li>
+                <li><code>sp p sprinting &lt;name: cfspOnlineSp&gt; [enabled: bool]</code> 假人疾跑</li>
+            </ul>
+            <h5 id="假人执行操作">假人执行操作</h5>
+            <ul>
+                <li>参数含义<ul>
+                        <li><code>times</code> 动作重复次数</li>
+                        <li><code>interval</code> 操作间隔</li>
+                        <li><code>long</code> 操作时长</li>
+                    </ul>
+                </li>
+            </ul>
+            <h6 id="短操作">短操作</h6>
+            <ul>
+                <li><code>sp p attack &lt;name: cfspOnlineSp&gt; [times: int] [interval: int]</code> 假人攻击</li>
+                <li><code>sp p build &lt;name: cfspOnlineSp&gt; [times: int] [interval: int]</code> 假人放置方块</li>
+                <li><code>sp p interact &lt;name: cfspOnlineSp&gt; [times: int] [interval: int]</code> 假人交互</li>
+                <li><code>sp p jump &lt;name: cfspOnlineSp&gt; [times: int] [interval: int]</code> 假人跳跃</li>
+            </ul>
+            <h6 id="长操作">长操作</h6>
+            <ul>
+                <li><code>sp p use &lt;name: cfspOnlineSp&gt; [long: int] [times: int] [interval: int]</code> 假人使用物品
+                </li>
+                <li><code>sp p destroy &lt;name: cfspOnlineSp&gt; [long: int] [times: int] [interval: int]</code> 假人挖掘
+                </li>
+            </ul>
+            <h5 id="看向操作">看向操作</h5>
+            <ul>
+                <li><code>sp p lookat &lt;name: cfspOnlineSp&gt; [pos: Vec3]</code> 假人看向操作<ul>
+                        <li><code>pos</code> 假人看向的坐标，当玩家视线范围内有方块时，默认玩家看向的位置，否则默认玩家当前位置</li>
+                    </ul>
+                </li>
+                <li><code>sp p lookat &lt;name: cfspOnlineSp&gt; &lt;facing: north|south|west|east|up|down&gt;</code>
+                    假人看向指定方向</li>
+            </ul>
+            <h5 id="消息操作">消息操作</h5>
+            <ul>
+                <li><code>sp p chat &lt;name: cfspOnlineSp&gt; &lt;message: string&gt;</code> 假人发送消息</li>
+                <li><code>sp p runcmd &lt;name: cfspOnlineSp&gt; &lt;message: string&gt;</code> 假人执行指令<ul>
+                        <li><code>message</code> 信息内容</li>
+                    </ul>
+                </li>
+            </ul>
+            <h5 id="移动操作">移动操作</h5>
+            <ul>
+                <li>
+                    <p>参数含义</p>
+                    <ul>
+                        <li><code>pos</code> 目标坐标，当玩家视线范围内有方块时，默认玩家看向的位置，否则默认玩家当前位置</li>
+                        <li><code>speed</code> 假人移动速度</li>
+                        <li><code>dim</code> 目标维度，默认玩家当前位置</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><code>sp p moveto &lt;name: cfspOnlineSp&gt; [pos: Vec3] [speed: float]</code> 假人移动操作</p>
+                </li>
+                <li>
+                    <p><code>sp p navto &lt;name: cfspOnlineSp&gt; [pos: Vec3] [speed: float]</code> 假人寻路操作</p>
+                </li>
+                <li>
+                    <p><code>sp p tp &lt;name: cfspOnlineSp&gt; [pos: Vec3] [dim: Dimension]</code> 假人传送操作</p>
+                </li>
+            </ul>
+            <h5 id="停止操作">停止操作</h5>
+            <ul>
+                <li><code>sp p stop &lt;name: cfspOnlineSp&gt;</code> 假人停止操作</li>
+            </ul>
+            <h5 id="权限管理">权限管理</h5>
+            <ul>
+                <li>
+                    <p>参数含义</p>
+                    <ul>
+                        <li><code>permType</code>
+                            权限类别，可选值：<code>all</code>(全部权限)、<code>Spawn</code>、<code>Despawn</code>、<code>Respawn</code>、<code>Delete</code>、<code>Stop</code>、<code>Drop</code>、<code>DropInv</code>、<code>Swap</code>、<code>Sneaking</code>、<code>Swimming</code>、<code>Flying</code>、<code>Sprinting</code>、<code>Attack</code>、<code>Build</code>、<code>Interact</code>、<code>Jump</code>、<code>Use</code>、<code>Destroy</code>、<code>Chat</code>、<code>RunCmd</code>、<code>Select</code>、<code>LookAt</code>、<code>MoveTo</code>、<code>NavTo</code>、<code>Tp</code>、<code>BeAddedToGroup</code>(允许被添加到假人组)
+                        </li>
+                        <li><code>player</code> 目标玩家</li>
+                        <li><code>enable</code> 是否允许</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><code>sp p perm &lt;name: cfspSplist&gt; &lt;permType: cfspSpPermType&gt; &lt;player: player&gt; &lt;enable: bool&gt;</code>
+                        把假人的某一权限授权给其他玩家</p>
+                </li>
+                <li>
+                    <p><code>sp p permpublic &lt;name: cfspSplist&gt; &lt;permType: cfspSpPermType&gt; &lt;enable: bool&gt;</code>
+                        设置假人公共权限</p>
+                </li>
+            </ul>
+            <h4 id="假人组操作">假人组操作</h4>
+            <h5 id="基础操作-2">基础操作</h5>
+            <ul>
+                <li><code>sp g create &lt;gname: string&gt;</code> 创建假人组</li>
+                <li><code>sp g addsp &lt;gname: cfspGroup&gt; &lt;spname: cfspSplist&gt;</code> 向假人组中添加假人</li>
+                <li><code>sp g rmsp &lt;gname: cfspGroup&gt; &lt;spname: cfspSplist&gt;</code> 移除假人组中的假人</li>
+                <li><code>sp g delete &lt;gname: cfspGroup&gt;</code> 删除假人组</li>
+                <li><code>sp g deletesp &lt;gname: cfspGroup&gt; [force: bool]</code> 删除组内假人<ul>
+                        <li><code>force</code> 是否强制删除假人。当此参数为true时，可以强制删除背包不为空的假人</li>
+                    </ul>
+                </li>
+            </ul>
+            <h5 id="批操作">批操作</h5>
+            <ul>
+                <li>此部分用于批量控制假人，功能等同于对组内全部假人执行对应假人指令</li>
+                <li><code>sp g &lt;spawn|despawn|respawn&gt; &lt;gname: cfspGroup&gt;</code></li>
+                <li><code>sp g info &lt;gname: cfspGroup&gt;</code></li>
+                <li><code>sp g stop &lt;gname: cfspGroup&gt;</code></li>
+                <li><code>sp g &lt;drop|dropinv|invinfo&gt; &lt;gname: cfspGroup&gt;</code>（<code>drop</code>与<code>dropinv</code>支持
+                    <code>[times: int] [interval: int]</code> 参数）</li>
+                <li><code>sp g select &lt;gname: cfspGroup&gt; &lt;item: Item&gt;</code></li>
+                <li><code>sp g &lt;sneaking|swimming|flying|sprinting&gt; &lt;gname: cfspGroup&gt; [enabled: bool]</code>
+                </li>
+                <li><code>sp g &lt;attack|build|interact|jump&gt; &lt;gname: cfspGroup&gt; [times: int] [interval: int]</code>
+                </li>
+                <li><code>sp g &lt;use|destroy&gt; &lt;gname: cfspGroup&gt; [long: int] [times: int] [interval: int]</code>
+                </li>
+                <li><code>sp g &lt;chat|runcmd&gt; &lt;gname: cfspGroup&gt; &lt;message: string&gt;</code></li>
+                <li><code>sp g lookat &lt;gname: cfspGroup&gt; [pos: Vec3]</code></li>
+                <li><code>sp g lookat &lt;gname: cfspGroup&gt; &lt;facing: north|south|west|east|up|down&gt;</code></li>
+                <li><code>sp g &lt;moveto|navto&gt; &lt;gname: cfspGroup&gt; [pos: Vec3] [speed: float]</code></li>
+                <li><code>sp g tp &lt;gname: cfspGroup&gt; [pos: Vec3] [dim: Dimension]</code></li>
+            </ul>
+            <h5 id="权限管理-2">权限管理</h5>
+            <ul>
+                <li>
+                    <p>参数含义</p>
+                    <ul>
+                        <li><code>permType</code>
+                            权限类别，可选值：<code>all</code>(全部权限)、<code>AddSp</code>、<code>RmSp</code>、<code>Delete</code>、<code>Spawn</code>、<code>Despawn</code>、<code>Respawn</code>、<code>DeleteSp</code>、<code>Stop</code>、<code>Drop</code>、<code>DropInv</code>、<code>Sneaking</code>、<code>Swimming</code>、<code>Flying</code>、<code>Sprinting</code>、<code>Attack</code>、<code>Build</code>、<code>Interact</code>、<code>Jump</code>、<code>Use</code>、<code>Destroy</code>、<code>Chat</code>、<code>RunCmd</code>、<code>LookAt</code>、<code>MoveTo</code>、<code>NavTo</code>、<code>Tp</code>、<code>Select</code>
+                        </li>
+                        <li><code>player</code> 目标玩家</li>
+                        <li><code>enable</code> 是否允许</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><code>sp g perm &lt;gname: cfspGroup&gt; &lt;permType: cfspGroupPermType&gt; &lt;player: player&gt; &lt;enable: bool&gt;</code>
+                        把假人组的某一权限授权给其他玩家</p>
+                </li>
+                <li>
+                    <p><code>sp g permpublic &lt;gname: cfspGroup&gt; &lt;permType: cfspGroupPermType&gt; &lt;enable: bool&gt;</code>
+                        设置假人组公共权限</p>
+                </li>
+            </ul>
+
+            <h2 id="cfspconfigdoc">CFSP配置文件</h2>
+            <p class="mods-file-src">来源：<code>CFSPConfigDoc.md</code></p>
+            <h3 id="configjson">Config.json</h3>
+            <h4 id="version-2">version</h4>
+            <ul>
+                <li>Config.json配置文件的版本。当前版本（<code>26.51.x</code>）CFSP为 <code>3</code></li>
+            </ul>
+            <h4 id="enabled">enabled</h4>
+            <ul>
+                <li>是否启用假人系统</li>
+            </ul>
+            <h4 id="permission-2">permission</h4>
+            <ul>
+                <li>假人指令基础权限等级</li>
+            </ul>
+            <h4 id="nameprefix">namePrefix</h4>
+            <ul>
+                <li>假人名称前缀</li>
+            </ul>
+            <h4 id="namepostfix">namePostfix</h4>
+            <ul>
+                <li>假人名称后缀</li>
+            </ul>
+            <h4 id="autorespawn">autoRespawn</h4>
+            <ul>
+                <li>假人死亡自动重生</li>
+            </ul>
+            <h4 id="autojoin">autojoin</h4>
+            <ul>
+                <li>关服时在线假人在开服时自动加入游戏</li>
+            </ul>
+            <h4 id="autodespawn">autoDespawn</h4>
+            <ul>
+                <li>假人频繁死亡时自动下线</li>
+            </ul>
+            <h4 id="maxonline">maxOnline</h4>
+            <ul>
+                <li>最大假人同时在线数</li>
+            </ul>
+            <h4 id="maxown">maxOwn</h4>
+            <ul>
+                <li>单人最多拥有假人数</li>
+            </ul>
+            <h4 id="maxonlineperplayer">maxOnlinePerPlayer</h4>
+            <ul>
+                <li>单人最大同时在线假人数</li>
+            </ul>
+            <h4 id="maxgroup">maxGroup</h4>
+            <ul>
+                <li>单人最多拥有组个数</li>
+            </ul>
+            <h4 id="autodespawncount-amp-autodespawninterval">autoDespawnCount &amp; autoDespawninterval</h4>
+            <ul>
+                <li>开启autoDespawn时，当autoDespawninterval gt内死亡autoDespawnCount次，假人下线</li>
+            </ul>
+            <h4 id="adminpermission">adminPermission</h4>
+            <ul>
+                <li>假人管理员所需权限</li>
+                <li>可选值如下（从小到大排序）<ul>
+                        <li><code>Any</code> - 任意玩家</li>
+                        <li><code>GameDirectors</code> - 默认的管理员权限</li>
+                        <li><code>Admin</code></li>
+                        <li><code>Host</code></li>
+                        <li><code>Owner</code></li>
+                        <li><code>Internal</code></li>
+                    </ul>
+                </li>
+            </ul>
+            <h4 id="listtype">listType</h4>
+            <ul>
+                <li>名单类型，针对下文的list</li>
+                <li>可选值如下<ul>
+                        <li><code>disabled</code> - 禁用此功能</li>
+                        <li><code>blacklist</code> - 名单为黑名单</li>
+                        <li><code>whitelist</code> - 名单为白名单</li>
+                    </ul>
+                </li>
+            </ul>
+            <h4 id="list">list</h4>
+            <ul>
+                <li>名单</li>
+                <li>字符串数组，值应为玩家UUID</li>
+            </ul>
+            <h4 id="supermanagerlist">superManagerList</h4>
+            <ul>
+                <li>管理员名单</li>
+            </ul>
+            <h4 id="luapreload">luaPreload</h4>
+            <ul>
+                <li>lua预加载脚本内容</li>
+                <li>该段内容的执行时机为加载库之后、加载内置变量与脚本文件之前</li>
+                <li>可以用于禁用部分库，以创造安全的执行环境</li>
+            </ul>
+            <h3 id="permissionconfigjson">PermissionConfig.json</h3>
+            <h4 id="version-3">version</h4>
+            <ul>
+                <li>PermissionConfig.json配置文件的版本。当前版本CFSP为 <code>1</code></li>
+            </ul>
+            <h4 id="功能项">功能项</h4>
+            <ul>
+                <li>每一个功能项对应假人的一个操作（如
+                    <code>spCreate</code>、<code>spSpawn</code>、<code>spLookAt</code>、<code>groupCreate</code>
+                    等），均包含以下字段：</li>
+            </ul>
+            <h5 id="enabled-2">enabled</h5>
+            <ul>
+                <li>是否启用该指令/操作</li>
+            </ul>
+            <h5 id="permission-3">permission</h5>
+            <ul>
+                <li>执行所需权限，可选值同<a href="#adminpermission">adminpermission</a></li>
+            </ul>
+
+            <h2 id="cfspapidoc">CFSP DLL API DOC</h2>
+            <p class="mods-file-src">来源：<code>CFSPApiDoc.md</code></p>
+            <h3 id="dllapi">DLLAPI</h3>
+            <h4 id="xmake配置">xmake配置</h4>
+            <ol>
+                <li>按顺序导入相关库</li>
+                <li>在target内添加依赖</li>
+                <li>引入头文件即可使用</li>
+            </ol>
+            <p>以下是导入相关库的例子</p>
+            <div class="code-card">
+                <div class="code-head">
+                    <span class="code-lang">lua</span>
+                    <span class="code-actions">
+                        <button type="button" class="code-btn" data-code-copy>复制</button>
+                    </span>
+                </div>
+                <pre
+                    class="code-body"><code>add_requires(&quot;levilamina&quot;, &quot;timewheel&quot;, &quot;CFSP&quot;)</code></pre>
+            </div>
+            <h4 id="头文件">头文件</h4>
+            <ul>
+                <li>您需要使用 <code>cfsp/core/simPlayer/SimPlayer.h</code> 。其他头文件定义的函数/数据并没有通过dllexport导出。</li>
+                <li>所有导出的函数都由 <code>CFSP_API</code> 标记。您可以查阅<a
+                        href="https://github.com/CoralFans-Dev/CFSP/blob/develop/src/cfsp/core/simPlayer/SimPlayer.h"
+                        target="_blank" rel="noopener noreferrer">src/cfsp/core/simPlayer/SimPlayer.h</a>来查看您可以调用哪些函数。
+                </li>
+                <li>大部分函数的定义都是比较易懂的。你可以看指令系统是如何调用的来理解这些函数的意义。</li>
+                <li>额外地，我们提供了一些接口以获取 <code>SimPlayer</code> 以及相关信息。</li>
+                <li><code>SimPlayer</code> 的部分成员函数在自身指向游戏中假人的指针为空时会抛出错误。</li>
+                <li>函数的返回值大多为 <code>base::OperateResult</code> 类型，其枚举值见<a
+                        href="https://github.com/CoralFans-Dev/CFSP/blob/develop/src/cfsp/base/OperateResult.h"
+                        target="_blank" rel="noopener noreferrer">src/cfsp/base/OperateResult.h</a>。</li>
+            </ul>
+
+            <h2 id="qa">Q&amp;A</h2>
+            <p class="mods-file-src">来源：<code>QA.md</code></p>
+            <h3 id="linuxandroidmacios能用吗">Linux/Android/Mac/IOS能用吗</h3>
+            <p>不直接能。目前LeviLamina和CF都没有直接支持Linux/Android/Mac/IOS系统。你可能需要 <code>wine</code> 等工具模拟Windows环境来运行。</p>
+            <h3 id="手机能用吗">手机能用吗</h3>
+            <p>不直接能。CF只支持windows，不过你可以开一个本地服务器来运行，然后单人/用手机加入服务器。</p>
+            <h3 id="realms领域服能用吗">Realms领域服能用吗</h3>
+            <p>不能。Realms没有插件加载器</p>
+            <h3 id="我用的某可能是公益面板服务器提供商能用吗">我用的某（可能是公益/面板）服务器提供商，能用吗</h3>
+            <p>不一定能。这取决于它是否提供BDS with LeviLamina服务器。如果没有LeviLamina此插件无法运行。建议：使用VPS自行搭建服务器。</p>
+            <h3 id="看不懂教程怎么办">看不懂教程怎么办</h3>
+            <p>如果是教程有表达不清楚的地方，欢迎提Issue/PR。</p>
+            <h3 id="我的可视化不显示怎么办">我的可视化不显示怎么办</h3>
+            <p>检查前置资源包是否加载并全局启用。</p>
+            <h3 id="1xxxx版本能用吗">1.xx.xx版本能用吗</h3>
+            <p>CF目前基于LL 26.51.x，BDS版本为1.26.51。CoralFans与LeviLamina版本号从26.51起与BDS小版本号保持一致，请以插件发布页面对应的版本为准。</p>
+            <h3 id="客户端非服务器能用吗">客户端（非服务器）能用吗</h3>
+            <p>Windows可以，其他不行。自26.10起，CF适配了客户端版LeviLamina，可作为客户端Mod安装（放置于 <code>mods/</code> 目录），此时键盘快捷键等功能可用。</p>
+            <h3 id="会适配新版吗">会适配新版吗</h3>
+            <p>取决于加载器能不能更新</p>
+
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer"
+                href="https://github.com/CoralFans-Dev/CoralFans">GitHub 仓库 »</a>
+            <a class="button is-light" href="../../index.html#mods">« 返回主页的模组专区</a>
+        </div>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页说明书来自模组作者的官方仓库与文档站，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

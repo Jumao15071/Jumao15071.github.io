@@ -1,0 +1,225 @@
+/* ==========================================================================
+   模组专区（pages/mods/*.html）
+   - .mods-card  模组信息卡（图标 / 标签 / 简介 / 按钮）
+   - .mods-toc   本页目录（说明书章节锚点）
+   - .opus h3~h6 说明书原文的各级标题（.opus 里原本只定义了 h2）
+   ========================================================================== */
+
+/* ---------- 模组信息卡 ---------- */
+.mods-card {
+    margin: 0 0.5rem 1.5rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid rgba(128, 128, 128, 0.25);
+    border-radius: 0.6rem;
+    background-color: rgba(128, 128, 128, 0.05);
+}
+
+.mods-card-head {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-bottom: 0.7rem;
+}
+
+.mods-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 0.7rem;
+    flex: 0 0 auto;
+    object-fit: contain;
+}
+
+.mods-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2b2b2b;
+    margin: 0 0 0.25rem;
+}
+
+.mods-tags {
+    margin: 0;
+}
+
+.mods-tag {
+    display: inline-block;
+    margin: 0 0.35rem 0.2rem 0;
+    padding: 0.05rem 0.5rem;
+    border-radius: 0.9rem;
+    background-color: rgba(235, 74, 106, 0.12);
+    color: #c8395a;
+    font-size: 0.78rem;
+}
+
+.mods-summary {
+    margin-bottom: 0.9rem;
+    color: #444;
+    line-height: 1.8;
+}
+
+.mods-links .button {
+    margin: 0 0.4rem 0.35rem 0;
+}
+
+/* ---------- 本页目录 ---------- */
+.mods-toc {
+    margin: 0 0.5rem 1.6rem;
+    padding: 0.9rem 1.1rem;
+    border-left: 4px solid #eb4a6a;
+    border-radius: 0.4rem;
+    background-color: rgba(235, 74, 106, 0.06);
+}
+
+.mods-toc-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #2b2b2b;
+    margin-bottom: 0.6rem;
+}
+
+.mods-toc-list {
+    max-height: 18rem;
+    overflow-y: auto;
+}
+
+.mods-toc-group {
+    margin-bottom: 0.6rem;
+}
+
+.mods-toc-group:last-child {
+    margin-bottom: 0;
+}
+
+.mods-toc-subs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.45rem;
+    margin: 0.35rem 0 0 0.7rem;
+}
+
+.mods-toc-item {
+    font-size: 0.86rem;
+    color: #c8395a;
+    padding: 0.1rem 0.45rem;
+    border-radius: 0.35rem;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(235, 74, 106, 0.25);
+    line-height: 1.6;
+    word-break: break-word;
+}
+
+.mods-toc-item.is-chapter {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.mods-toc-item.is-sub {
+    font-size: 0.8rem;
+    color: #8a5a66;
+    background-color: transparent;
+    border-color: rgba(128, 128, 128, 0.25);
+}
+
+.mods-toc-file {
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: #9d9d9d;
+}
+
+.mods-toc-item:hover {
+    background-color: #eb4a6a;
+    color: #fff;
+    border-color: #eb4a6a;
+}
+
+/* 章节标题下的来源文件标注（一页里拼了多篇原始文档） */
+.opus .mods-file-src {
+    margin: -0.5rem 0 1rem;
+    font-size: 0.82rem;
+    color: #9d9d9d;
+}
+
+.opus .mods-file-src code {
+    font-size: 0.82rem;
+    padding: 0.05rem 0.35rem;
+    color: #8a5a66;
+    background-color: rgba(128, 128, 128, 0.12);
+}
+
+/* ---------- 说明书原文的标题层级（h2 由 articles.css 定义） ---------- */
+.opus h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.55;
+    color: #2b2b2b;
+    margin: 1.7rem 0 0.8rem;
+}
+
+.opus h4 {
+    font-size: 1.03rem;
+    font-weight: 700;
+    line-height: 1.55;
+    color: #333;
+    margin: 1.35rem 0 0.6rem;
+}
+
+.opus h5,
+.opus h6 {
+    font-size: 0.97rem;
+    font-weight: 700;
+    line-height: 1.55;
+    color: #444;
+    margin: 1.1rem 0 0.5rem;
+}
+
+/* 顶到标题下方时不留过大空隙 */
+.opus a.anchor,
+.opus :is(h2, h3, h4, h5, h6) + p {
+    margin-top: 0;
+}
+
+/* ---------- 引用块（免责声明等原文引用） ---------- */
+.opus blockquote {
+    margin: 1rem 0;
+    padding: 0.7rem 1rem;
+    border-left: 4px solid rgba(128, 128, 128, 0.45);
+    background-color: rgba(128, 128, 128, 0.07);
+    border-radius: 0.3rem;
+    color: #4a4a4a;
+}
+
+.opus blockquote > :last-child {
+    margin-bottom: 0;
+}
+
+.opus blockquote h3 {
+    font-size: 1rem;
+    margin: 0.4rem 0 0.5rem;
+}
+
+/* ---------- 行内代码（代码块已转成 .code-card 深色卡片） ---------- */
+.opus code {
+    padding: 0.1rem 0.35rem;
+    border-radius: 0.25rem;
+    background-color: rgba(128, 128, 128, 0.14);
+    color: #c8395a;
+    font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+    font-size: 0.88em;
+}
+
+.opus .code-body code {
+    padding: 0;
+    background: none;
+    color: #e6e9ef;
+}
+
+/* 目录里的长标题在窄屏不挤压 */
+@media screen and (max-width: 768px) {
+    .mods-toc-list {
+        max-height: 12rem;
+    }
+
+    .mods-card {
+        margin: 0 0.25rem 1.2rem;
+    }
+}
