@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raid Mechanics in Bedrock Edition - 橘猫的资源站</title>
+    <meta name="description" content="Minecraft's raid mechanics have changed a lot since 1.16, but the underlying architecture is much the same. This article collects ">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/lib/katex/katex.min.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>All Articles</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>Home</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv53471290.webp" alt="Raid Mechanics in Bedrock Edition">
+        </figure>
+        <div class="article-head">
+            <h1>Raid Mechanics in Bedrock Edition</h1>
+            <div class="article-sub">
+                <span class="art-author">Author: <a href="https://space.bilibili.com/37691488" target="_blank" rel="noopener noreferrer">橘猫sama</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2026-10-17 00:35</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1259843431282245635" target="_blank" rel="noopener noreferrer" title="View the original post on bilibili">cv53471290</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">Entity Mechanics</span>
+                <a class="lang-btn" href="cv53471290.html" title="阅读中文版">中文</a>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="previous / next">
+            <a class="pager-item is-prev" href="cv53412179.en.html" title="« Previous: Static Flicker-Door Zombified Piglin Farm: How It Really Works" aria-label="« Previous: Static Flicker-Door Zombified Piglin Farm: How It Really Works">
+                <span class="pager-dir">« Previous</span>
+                <span class="pager-title">Static Flicker-Door Zombified Piglin Farm: How It Really Works</span>
+            </a>
+            <a class="pager-item is-next" href="cv5581369.html" title="Next »: 一份比较详细的 MCBE 村庄机制解析" aria-label="Next »: 一份比较详细的 MCBE 村庄机制解析">
+                <span class="pager-dir">Next »</span>
+                <span class="pager-title">一份比较详细的 MCBE 村庄机制解析</span>
+            </a>
+        </nav>
+
+        <div class="opus is-bilingual" data-content-kind="para">
+        <p>Minecraft's raid mechanics have picked up a lot of visible new behaviour since 1.16, but the underlying architecture is largely unchanged. This article collects and summarises the latest code digging and test results, and I hope it helps you understand how raids really work.</p>
+        <hr class="opus-pagebreak">
+        <h2>Triggering a Raid</h2>
+        <p>The raid system is tightly tied to villages, so it helps to read this article first for the basic village terminology:</p>
+        <p><a href="cv7841838.html">Village mechanics, lim×2</a></p>
+        <p>A raid is an ominous event that spawns many waves of raiders to attack a village. Because of a quirk of Microsoft's translation it is also called “pillage” in Chinese.</p>
+        <p>When the player drinks an Ominous Bottle they get Bad Omen. If the difficulty is not Peaceful and the village is not already under raid, then once the player enters the village AABB the Bad Omen becomes a 30 s Raid Omen effect. When that buff expires the player is given a raid trigger (triggers belong to the component system); adding it refreshes the player's components, which fires the raid event, and the raid trigger system then searches for a village at the previously stored raid coordinates and creates the raid.</p>
+        <p>That component system is full of bugs. Some actions — changing the village centre, for instance — make the bar fill the moment you finish the potion; in reality the 30 s wind-up simply becomes a wind-down, and the total duration is unchanged.</p>
+        <hr class="opus-pagebreak">
+        <h2>Raid Spawning</h2>
+        <p>In a raid, the total number of waves is decided by the game difficulty: 3 on Easy, 5 on Normal and 7 on Hard. In Bedrock Edition the wave count has nothing to do with the Raid Omen's amplifier, and no extra waves are generated.</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/13d39995053c.webp" width="556" height="276" alt="The wiki's description of mob counts" loading="lazy">
+        <figcaption class="fig-caption">The wiki's description of mob counts</figcaption>
+    </figure>
+        <h3><strong>Background</strong></h3>
+        <p>Once the boss bar has filled, the game attempts to spawn the raid: over 6 gt it tries six different spawn areas in turn, looking for a spawn point. If all six attempts fail, the raid ends immediately. The spawn point must be within 128 blocks of the player.</p>
+        <h3><strong>Spawn Areas</strong></h3>
+        <p>(This part borrows from SAC's older article. It was written for 1.16, where the village AABB was different — I have not changed the figures' data, but expanded the descriptions and fixed the errors.)</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/4715b49ef1a7.webp" width="1920" height="1920" alt="A manual village's AABB (65×25×65)" loading="lazy">
+        <figcaption class="fig-caption">A manual village's AABB (65×25×65)</figcaption>
+    </figure>
+        <p>The figure is a top-down view of a manual village — literally one bed plus one villager. Because the village has not been expanded (POIs can grow a village), the village centre sits at the very centre of the head of the bed. The orange village AABB is 65×25×65 blocks (before 1.18.30 it was 64×24×64, from the south-west of the bed head to the north-west of the foot). The white dot is the village centre. The small pink dot is the player: blue is the raid spawn area, green is the range where the base point forms, and raiders can spawn inside the green area as well.</p>
+        <p>For clarity the colours in the figures below are not shaded: they only show presence, not actual probability density — the probabilities do differ in reality.</p>
+        <h3><strong>Attempt 1</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/6bf7c2509f1a.webp" width="1920" height="1920" alt="Raid spawn area 1" loading="lazy">
+        <figcaption class="fig-caption">Raid spawn area 1</figcaption>
+    </figure>
+        <p>The first spawn area looks like the figure above. The game first picks a uniformly random point on the village AABB boundary whose Y distance from the village centre is ≤8, then extends 16 blocks outwards from the village centre through that point; this repeats up to 10 times until a base point is found. Once the base point is chosen, the game picks random points inside a 17×17×17 box around it, outside the village, and tests whether they can spawn, 10 times.</p>
+        <h3><strong>Attempt 2</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/2f0a5300ffdd.webp" width="1920" height="1920" alt="Raid spawn area 2" loading="lazy">
+        <figcaption class="fig-caption">Raid spawn area 2</figcaption>
+    </figure>
+        <p>The second spawn area looks like the figure above. When the player is inside the village, or within 16 blocks of the village AABB boundary, the game draws a random radius <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>∈</mo><mo stretchy="false">[</mo><mn>32</mn><mo separator="true">,</mo><mn>48</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">R \in [32, 48]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7224em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">32</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">48</span><span class="mclose">]</span></span></span></span>, then on the semicircular arc centred on the player with that radius, facing outwards along the line from the village centre to the player, picks a uniformly random point whose Y distance from the village centre is ≤8; this repeats up to 10 times until a base point is found. Once the base point is chosen, the game picks random points inside a 17×17×17 box around it and tests them, 10 times.</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/888f57367908.gif" width="512" height="512" alt="Shape of area 2 as the player's direction relative to the centre changes" loading="lazy">
+        <figcaption class="fig-caption">Shape of area 2 as the player's direction relative to the centre changes</figcaption>
+    </figure>
+        <h3><strong>Attempt 3</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/94b8f9552b5c.webp" width="1920" height="1920" alt="Raid spawn area 3" loading="lazy">
+        <figcaption class="fig-caption">Raid spawn area 3</figcaption>
+    </figure>
+        <p>The third spawn area looks like the figure above. The game first picks a uniformly random point on the village AABB boundary whose Y distance from the village centre is ≤8; this repeats up to 10 times until a base point is found. Once the base point is chosen, the game picks random points inside a 17×17×17 box around it, outside the village, and tests them, 10 times.</p>
+        <h3><strong>Attempt 4</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/524e7a56d491.webp" width="1920" height="1920" alt="Raid spawn area 4" loading="lazy">
+        <figcaption class="fig-caption">Raid spawn area 4</figcaption>
+    </figure>
+        <p>The fourth spawn area looks like the figure above. The game first picks a uniformly random point on a circle of radius 0.5 centred on the village centre whose Y distance from the village centre is ≤8; this repeats up to 10 times until a base point is found. Once the base point is chosen, the game picks random points inside a 17×17×17 box around it, inside the village, and tests them, 10 times.</p>
+        <h3><strong>Attempt 5</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/5144b01df34d.webp" width="1920" height="1920" alt="Raid spawn area 5" loading="lazy">
+        <figcaption class="fig-caption">Raid spawn area 5</figcaption>
+    </figure>
+        <p>The fifth spawn area looks like the figure above. The game first picks a uniformly random point on a circle of radius 8 centred on the village centre whose Y distance from the village centre is ≤8; this repeats up to 10 times until a base point is found. Once the base point is chosen, the game picks random points inside a 17×17×17 box around it, inside the village, and tests them, 10 times.</p>
+        <h3><strong>Attempt 6</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/875e90c41539.webp" width="1920" height="1920" alt="figure" loading="lazy">
+        
+    </figure>
+        <p>The sixth spawn area looks like the figure above. The game first picks a uniformly random point on a circle of radius 8 centred on the village centre; the base point must be a block with a collision box that is not open to the sky (leaves and glass do not qualify, but a block covered by leaves does). This repeats up to 10 times until a base point is found. Once the base point is chosen, the game takes the highest solid block at that position on the Y axis and tests whether it can spawn, 10 times.</p>
+        <hr class="opus-pagebreak">
+        <h3><strong>Raider Spawn Checks</strong></h3>
+        <p>Overall, the first five attempts look for a base point within ±8 of the village centre's Y coordinate, while the sixth searches downwards from the world's highest point, and then looks for a block to spawn on inside a 17×17×17 box around that base point. All six attempts first pick a base point (up to 10 tries); once a base point is found they pick a spawn point (also up to 10 tries). If all 10 base-point tries fail the game moves to the next wave — unless all six attempts fail.</p>
+        <p>The spawn-point block checks for raiders are as follows:</p>
+        <p>The spawn point P under the raider must be a supporting block with a collision box — as long as they can stand on it, it qualifies; fence gates, walls, even piston arms are fine, but leaves are not;</p>
+        <p>the two blocks above must not be blocked by a collision box, and P+1 must not be leaves while P+2 must not be leaves, lava or water;</p>
+        <p>P+3 must not be a full solid block;</p>
+        <p>if a base point was chosen but every spawn-point attempt fails, the boss bar ends straight away.</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/cb9b18f22746.webp" width="1936" height="939" alt="Raiders spawn at the north-west corner of the block" loading="lazy">
+        <figcaption class="fig-caption">Raiders spawn at the north-west corner of the block</figcaption>
+    </figure>
+        <p>Base-point selection uses the same checks as spawn points, except for the sixth attempt: the sixth uses the heightmap, which reports the highest point at an XZ coordinate, so open-air leaves and glass are skipped entirely, and covering the base point with leaves or glass still passes the selection attempt. (In practice, since glass also counts as a spawn point, we normally only use the cover-with-blocks-plus-leaves trick to pin the base point, then build a small spawn platform.)</p>
+        <p><a href="https://www.bilibili.com/video/BV1Bj411t76u" target="_blank" rel="noopener noreferrer">Minecraft: a beginner-friendly instant-kill emerald farm (NetEase compatible, 1.18.30+)</a></p>
+        <p>P+3 does not need to be checked, either: the rule that the third block above the spawn point must be a full solid block looks like a game bug — the real code was not designed that way. Respect to Mojang's programmers. Because the base point does not need that check but the spawn point does, a 2-block-high pocket very often makes raider spawning fail, which ends the raid.</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/31498d1c8721.webp" width="1530" height="740" alt="The bottom stone layer is usually picked as the base point, but since p+3 is a log block the spawn fails outright" loading="lazy">
+        <figcaption class="fig-caption">The bottom stone layer is usually picked as the base point, but since p+3 is a log block the spawn fails outright</figcaption>
+    </figure>
+        <p>One more thing to note: although the code draws base points with uniform probability, spawn points are then picked randomly within <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><msup><mn>7</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">17^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">7</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span> of the base point, so the closer a spot is to the village centre, the more likely it is to be chosen as a spawn point.</p>
+        <hr class="opus-pagebreak">
+        <h2>The Boss Bar</h2>
+        <p>The raid boss bar tracks the total health of the raiders in this wave. Raiders that join later are added to the boss bar's total health as long as they are inside the village AABB, but mobs outside the village AABB are not counted even if they join the raid — most likely a bug.</p>
+        <p>After each wave ends, the boss bar takes a 2 s break; the bar then fills from left to right to show when the next wave arrives, and that arrival cooldown is 15 s. Once the raid resolves as a victory the boss bar shows “Raid — Victory” for 30 s; drinking an Ominous Bottle during that time does nothing; and if the block above a villager's head is unobstructed, they set off fireworks.</p>
+        <p>If no raider can be spawned, the raid terminates immediately and the boss bar disappears.</p>
+        <p>The raid timer runs for 48,000 gt (40 minutes). If it has not finished by 48,001 gt the raid is aborted as a draw: the boss bar disappears and a message reads “A raid has expired”.</p>
+        <hr class="opus-pagebreak">
+        <h3><strong>Raid Loading Range</strong></h3>
+        <p>Note that if no player is inside the village loading range, the village does not tick, so the raid is not loaded and the raid timer stops. That means a player AFK outside the village loading range, farming emeralds from pillagers joining the raid at an outpost, will never trigger the draw.</p>
+        <p>The raid loading range is the village loading range: only inside it do the boss bar and spawning run normally. The village loading range equals the village AABB expanded on every side by simulation distance × 8 blocks, i.e. overall:</p>
+        <p>Village loading range = village AABB + (simulation distance × 8) × 2</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/c6e93cd1b9e4.webp" width="267" height="215" alt="Village loading range floor plan, by 莵道三室戸" loading="lazy">
+        <figcaption class="fig-caption">Village loading range floor plan, by 莵道三室戸</figcaption>
+    </figure>
+        <p>The boss-bar display range equals the village AABB expanded by 32 blocks on every side. Note that the centre of that range is normally the village centre, but if the village centre changes after the raid starts, the boss bar's centre does not move.</p>
+        <p>At simulation distance = 4, the boss-bar display range is exactly the same as the raid loading range.</p>
+        <hr class="opus-pagebreak">
+        <h3><strong>Raid Migration</strong></h3>
+        <p>Once a raid has spawned, raiders follow the “join the nearest village” rule.</p>
+        <p>When a raider spawned through village A but is closer to the centre of village B, and it leaves village A's raid-migration check range, it migrates out of village A and the boss bar updates its progress.</p>
+        <p>The raid-migration check range equals the village AABB expanded by d = 10 blocks on every side. While a raider is inside it, it cannot migrate to another village.</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/6ee60e4cd25d.webp" width="2542" height="1324" alt="Stacked-village instant kill" loading="lazy">
+        <figcaption class="fig-caption">Stacked-village instant kill</figcaption>
+    </figure>
+        <p>The mechanism above is usually exploited for stacked-village instant kills, but in practice there is also a single-village instant kill.</p>
+        <p>Raiders count as hostile “residents” of the village, so the lost-village mechanic applies to them too. A raider that stays outside the raid lost range for more than 20 minutes is removed from the village and skips the boss bar's progress as well.</p>
+        <p>The raid lost range equals the village lost range; a raider that stays beyond it continuously for 20 minutes gets lost and is cleared from the raid. The village lost range equals the village AABB expanded by 48 blocks on every side.</p>
+        <p>Note that if raiders spawn outside the lost range to begin with — for example using the sixth spawn area to put raiders 61 blocks from the village centre (13+48) — the boss bar is emptied instantly and the wave completes: an instant kill. Most likely a code bug…</p>
+        <p>Incidentally, three pillagers sadly fell to their deaths in the process: Vyacheslav Barannikov, Anton Yudintsev and Nikita Buyanov…</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/217a99ee4b89.webp" width="2550" height="1123" alt="Single-village instant kill" loading="lazy">
+        <figcaption class="fig-caption">Single-village instant kill</figcaption>
+    </figure>
+        <p>Also, only after a save has been open for more than 20 minutes can raiders spawned more than 48 blocks from the village AABB wipe the boss bar instantly. If those pillagers spawn at any point during the first 20 minutes, they are not instantly killed.</p>
+        <p>At the 20-minute mark, if those raiders have never entered the raid lost range they are cleared from the boss bar at once; otherwise they stay on the bar. (This is probably because raiders beyond the lost range are never registered by the village, so they are simply treated as raiders lost from this wave.)</p>
+        <p>Mobs killed by a single-village instant kill behave like naturally spawned mobs: beyond R &gt; 32 blocks they are cleared with a delay, and beyond R &gt; 128 blocks immediately.</p>
+        <hr class="opus-pagebreak">
+        <h3><strong>Joining a Raid</strong></h3>
+        <p>Raids support mid-raid joining: raiders not already part of the current wave (all illagers, witches and ravagers) can join in.</p>
+        <p>When the collision box of a would-be joiner is within ≤16 blocks (Chebyshev distance) of the collision box of a raider already in the wave, and that raider is inside the village that triggered the raid, the joiner is added to the current wave.</p>
+        <p>If the joiner is inside the village AABB the boss bar's total health updates; if it is outside, it can still join the raid but is not counted by the boss bar.</p>
+        <p>If the player is not inside the village loading range, joining still happens normally and does not consume the 40-minute raid timer.</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/ad551d0d698f.webp" width="1522" height="854" alt="A raider joining mid-raid" loading="lazy">
+        <figcaption class="fig-caption">A raider joining mid-raid</figcaption>
+    </figure>
+        <hr class="opus-pagebreak">
+        <h3><strong>Pillager Outposts</strong></h3>
+        <p>Pillagers spawn naturally at pillager outposts.</p>
+        <p>Besides the pillagers that spawn with the outpost itself, pillagers in the large watchtower spawn in 1, 2 or 4 special pillar-shaped Hard-Coded Spawn Areas (HSAs).</p>
+        <p>From 1.21.10.24 on, the official change to the HSA internals (turning the bug into a mechanic with a toggle) introduced a bug that lets HSAs also appear in sub-structures outside the watchtower, such as the iron golem cage, the allay cage and the wool tent. The HSA spawn positions in the wood pile and the scarecrow were squashed away because they are too low.</p>
+        <p>The number of HSA spawn points in a watchtower depends on the structure's generation direction (which you can also tell from how many chunks it spans); the count changes with the direction. The exact positions are:</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/18a95c180e45.webp" width="1080" height="1080" alt="Top stair facing south: 1 spawn point (25% chance)" loading="lazy">
+        <figcaption class="fig-caption">Top stair facing south: 1 spawn point (25% chance)</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/f54b84a53ece.webp" width="2160" height="2160" alt="figure" loading="lazy">
+        
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/2d46c2bb681c.webp" width="1080" height="1080" alt="Top stair facing east/west: 2 spawn points (50% chance)" loading="lazy">
+        <figcaption class="fig-caption">Top stair facing east/west: 2 spawn points (50% chance)</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/020b4ab62feb.webp" width="1080" height="1080" alt="Top stair facing north: 4 spawn points (25% chance)" loading="lazy">
+        <figcaption class="fig-caption">Top stair facing north: 4 spawn points (25% chance)</figcaption>
+    </figure>
+        <p>The figures above show the hard-coded pillager spawn positions: gold blocks mark spawn points, blue lines mark chunk borders.</p>
+        <p>An HSA is a pillar: starting from the floor at the bottom entrance it rises 18 blocks, and pillagers can spawn anywhere inside this column (the top three blocks that plugins like coralfans report cannot actually spawn — those three blocks are additionally chopped off in the code).</p>
+        <p>Besides the large watchtower, pillagers also spawn in the wooden cage and the wool tent. Just like the watchtower, the spawn points depend on how the sub-structure straddles chunks, giving 1, 2 or 4 of them.</p>
+        <p>The HSA actually sits at the centre of the sub-structure's position; if the sub-structure is cut by a chunk border, the HSA becomes 2 or 4 HSAs (depending on how many chunks it spans), each at the centre of the part of the structure in its own chunk.</p>
+        <p>I won't go into the HSA positions of each sub-structure; if you're interested, read:</p>
+        <p>Once you have the right height, you can also trap a pillager with glass panes to find the position.</p>
+        <p>Because structure generation attempts in Bedrock derive from cluster generation attempts, you must make sure the chunk the structure is in is not pure void, and that not all blocks eligible for generation attempts are covered by lower slabs. Try to keep one layer of generation-attempt-eligible blocks in the chunk. Cluster generation attempts can also spawn mobs outside the hard-coded spawn areas.</p>
+        <hr class="opus-pagebreak">
+        <h3><strong>Pillager Natural Spawning</strong></h3>
+        <p>Apart from illager patrols, pillagers only spawn at pillager outposts.</p>
+        <p>Pillagers spawn at the north-west corner of the highest spawnable position inside the HSA column. There is no light-level restriction, and the spawnable position needs at least a 2×2×2 space; any full solid block inside that space suppresses the spawn, while blocks such as leaves and glass do not, and at least one air-type block must exist inside the HSA range to satisfy the spawn condition (including continues-air types).</p>
+        <p>Normal pillagers and pillager captains spawn with equal (1:1) probability.</p>
+        <p>Pillager spawning is really one big pile of bugs. Pillager captains have a 50% spawn chance, yet the single-dimension farms we usually see do not have that many captains. The reason: the pillager mob cap is supposed to be 8, separate from monster, animal and aquatic caps, but the effective cap is 7 (normal pillagers) + 1 (pillager captain).</p>
+        <blockquote><p>The mob cap limits mob density. When a mob spawns, the 9×9 chunk area centred on the mob's current chunk must not exceed the mob cap; this area is called the chunk density check range.</p></blockquote>
+        <p>The funniest part: normal pillagers and pillager captains steal each other's cap! If the first pillager spawned is a captain, at most 6 more normal pillagers can spawn; if the first is a normal pillager, no pillager captain will ever spawn.</p>
+        <p>At the same time, pillagers spawned by a raid also consume the cap for naturally spawned outpost pillagers. That is why some raid farms never produce a pillager captain at the bottom.</p>
+        <p>So if a single normal pillager escapes around your outpost, you will never get a pillager captain from that farm~</p>
+        <p>When building a raid-joining emerald farm, also be careful not to capture normal pillagers to recruit the raid, otherwise no pillager captain will spawn either.</p>
+        <p>One bug is a bug; a pile of bugs is “working as intended” — that is our studio, Bugjump.</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/d9c54b0f4095.webp" width="1589" height="544" alt="Doo doo doo doo, doo doo doo doo, doo doo doo doo, doo↑doo↓doo←doo→" loading="lazy">
+        <figcaption class="fig-caption">Doo doo doo doo, doo doo doo doo, doo doo doo doo, doo↑doo↓doo←doo→</figcaption>
+    </figure>
+        <hr class="opus-pagebreak">
+        <p>Finally, my deepest thanks to the people who contributed to this article:</p>
+        <p>@藏青茶壶 — theory guidance and some conclusions</p>
+        <p>@苏望安 — test verification and some conclusions</p>
+        <p>@8848yyds — source code support</p>
+        <p>@离殇之枫 @曲奇 — spawn-point block data</p>
+        <p>@_hhhxiao @莵道三室戸 @OEOTYAN — earlier in-depth work on raid mechanics</p>
+        <p>I hope this article helps you!</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1259843431282245635">Original post »</a>
+            <a class="button is-light" href="../articles.html">« Back to article list</a>
+        </div>
+
+        <nav class="article-pager" aria-label="previous / next">
+            <a class="pager-item is-prev" href="cv53412179.en.html" title="« Previous: Static Flicker-Door Zombified Piglin Farm: How It Really Works" aria-label="« Previous: Static Flicker-Door Zombified Piglin Farm: How It Really Works">
+                <span class="pager-dir">« Previous</span>
+                <span class="pager-title">Static Flicker-Door Zombified Piglin Farm: How It Really Works</span>
+            </a>
+            <a class="pager-item is-next" href="cv5581369.html" title="Next »: 一份比较详细的 MCBE 村庄机制解析" aria-label="Next »: 一份比较详细的 MCBE 村庄机制解析">
+                <span class="pager-dir">Next »</span>
+                <span class="pager-title">一份比较详细的 MCBE 村庄机制解析</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

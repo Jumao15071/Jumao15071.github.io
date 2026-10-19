@@ -778,6 +778,53 @@
     line-height: 1.6;
 }
 
+/* ---------- 三级标题（仅中英双语文章）：B 站原稿的 level-2 标题 ──────────
+   Bulma 的重置把 h3 压成 16px/400，与正文完全同款，层级看不出来；
+   这里给双语文章补一点字号/字重/间距，中英两版观感一致。 */
+.opus.is-bilingual h3 {
+    font-size: 1.08rem;
+    font-weight: 700;
+    line-height: 1.6;
+    margin: 1.3rem 0 0.6rem;
+    color: #2b2b2b;
+}
+
+/* ---------- 中英切换按钮（副标题最右侧） ---------- */
+.lang-btn {
+    display: inline-block;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    padding: 0.05rem 0.6rem;
+    border-radius: 0.35rem;
+    background-color: #fff;
+    border: 1px solid #eb4a6a;
+    color: #eb4a6a !important;
+    text-decoration: none;
+}
+
+.lang-btn:hover {
+    background-color: #eb4a6a;
+    color: #fff !important;
+    text-decoration: none;
+}
+
+/* ---------- 公式（构建时用 KaTeX 预渲染成静态 HTML） ---------- */
+.opus .math-block {
+    margin: 1.2rem 0;
+    text-align: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.2rem 0;
+}
+
+.opus .math-block .katex-display {
+    margin: 0;
+}
+
+.opus .katex {
+    font-size: 1.02em;
+}
+
 /* PDF 原页面：整页图（可点击看原尺寸） */
 .opus-fig.is-fullpage {
     margin: 1.1rem 0;

@@ -112,6 +112,12 @@ https://www.bilibili.com/opus/815949494795370534
 MCBE 部分掉落物及抢夺计算相关机制
 https://www.bilibili.com/opus/1020090531360800784
 
+静态闪门猪人塔核心原理详解
+https://www.bilibili.com/opus/1258535854280802322
+
+袭击机制详解
+https://www.bilibili.com/opus/1259843431282245635
+
 一份比较详细的 MCBE 村庄机制解析
 https://www.bilibili.com/opus/377332397582403217
 

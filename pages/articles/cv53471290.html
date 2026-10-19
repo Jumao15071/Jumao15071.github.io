@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>袭击机制详解 - 橘猫的资源站</title>
+    <meta name="description" content="目前 Minecraft 的袭击机制相比于 1.16 有了许多明显的新变化，但是底层架构是基本一致的。这篇文章归纳并总结了最新的代码挖掘和测试结果，希望能帮助大家理解袭击的底层机制。 袭击触发 袭击系统与村庄密切相关，可以先阅读文章了解村庄的基本知识名词： 村">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/lib/katex/katex.min.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv53471290.webp" alt="袭击机制详解">
+        </figure>
+        <div class="article-head">
+            <h1>袭击机制详解</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/37691488" target="_blank" rel="noopener noreferrer">橘猫sama</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">2026年10月17日 00:35</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1259843431282245635" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv53471290</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">实体机制</span>
+                <a class="lang-btn" href="cv53471290.en.html" title="Read this article in English">English</a>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="previous / next">
+            <a class="pager-item is-prev" href="cv53412179.html" title="« 上一篇：静态闪门猪人塔核心原理详解" aria-label="« 上一篇：静态闪门猪人塔核心原理详解">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">静态闪门猪人塔核心原理详解</span>
+            </a>
+            <a class="pager-item is-next" href="cv5581369.html" title="下一篇 »：一份比较详细的 MCBE 村庄机制解析" aria-label="下一篇 »：一份比较详细的 MCBE 村庄机制解析">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">一份比较详细的 MCBE 村庄机制解析</span>
+            </a>
+        </nav>
+
+        <div class="opus is-bilingual" data-content-kind="para">
+        <p>目前 Minecraft 的袭击机制相比于 1.16 有了许多明显的新变化，但是底层架构是基本一致的。这篇文章归纳并总结了最新的代码挖掘和测试结果，希望能帮助大家理解袭击的底层机制。</p>
+        <hr class="opus-pagebreak">
+        <h2><strong>袭击触发</strong></h2>
+        <p>袭击系统与村庄密切相关，可以先阅读文章了解村庄的基本知识名词：</p>
+        <p><a href="https://www.bilibili.com/opus/442488370020676060" target="_blank" rel="noopener noreferrer">村庄机制limx2</a></p>
+        <p><strong>袭击（Raid）</strong>是一种生成多波次大量袭击者攻击村庄的不祥事件。由于微软翻译问题，也被称作劫掠。</p>
+        <p>当玩家喝下不祥之瓶产生<strong>不祥之兆</strong>，若难度不为和平，且村庄没有进行袭击，则当玩家进入 <strong>村庄范围 AABB </strong>时，不祥之兆转化为 30s 的<strong>袭击之兆</strong>效果，并在buff结束后给玩家挂上袭击触发器（触发器属于组件 component 系统），添加后玩家将刷新自身组件触发袭击事件，并由袭击触发系统在原本保存的袭击坐标处搜索村庄并创建袭击。</p>
+        <p>他这个组件系统 bug 很多，某些操作比如改变村庄中心会导致喝完药就立刻开始读条，但实际上只是 30s 的读条前摇只是变成了后摇罢了，总时长不变。</p>
+        <hr class="opus-pagebreak">
+        <h2><strong>袭击生成</strong></h2>
+        <p>在袭击事件中，袭击的总波数由游戏难度决定，简单难度下为 3 波，普通为 5 波，困难为 7 波。基岩版的袭击总波数与袭击之兆的效果等级无关，同时也不会生成额外波次。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/13d39995053c.webp" width="556" height="276" alt="wiki中关于生物数量的描述" loading="lazy">
+        <figcaption class="fig-caption">wiki中关于生物数量的描述</figcaption>
+    </figure>
+        <h3><strong>前情提要</strong></h3>
+        <p><a href="https://www.bilibili.com/opus/543630176913139199" target="_blank" rel="noopener noreferrer">MCBE 袭击（Raid）事件生成区域解析</a></p>
+        <p>Boss栏读条完成后，会进行袭击生成尝试。在 <strong>6gt</strong> 内依次尝试在 <strong>6 种不同的生成区域</strong>内寻找生成点。若生成点 6 次尝试全都找不到，袭击<strong>直接结束</strong>。生成点必须距离玩家 128 格内。</p>
+        <h3><strong>生成区域</strong></h3>
+        <p>（此处借鉴SAC的老文章。文章是1.16写的，村庄范围不一样，图的数据我就不改了，丰富了内容描述并修改了错误）</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/4715b49ef1a7.webp" width="1920" height="1920" alt="人工村庄范围（65×25×65）" loading="lazy">
+        <figcaption class="fig-caption">人工村庄范围（65×25×65）</figcaption>
+    </figure>
+        <p>图中是一张人工村庄俯视图，其实就是一张床加一只村民。由于未经扩村（POI能扩大村庄），村庄中心在床头正中央，橙色的 <strong>村庄范围 AABB </strong>是 <strong>65×25×65格</strong><em>（</em><u><em>1.18.30 以前的旧版位于床头西南床尾西北 64×24×64</em></u><em>）</em>，白点为村庄中心。粉色小点为玩家位置，蓝色表示袭击生成区域，绿色表示基准点形成范围，绿色区域内也能生成袭击者。</p>
+        <p>为了方便表示，下图内的颜色没有深浅之分，仅代表是否存在，而不是实际的概率密度，实际上有概率差异的。</p>
+        <h3><strong>第1次尝试</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/6bf7c2509f1a.webp" width="1920" height="1920" alt="袭击区域1" loading="lazy">
+        <figcaption class="fig-caption">袭击区域1</figcaption>
+    </figure>
+        <p>第一种生成区域的形状如上图，首先游戏会在<strong>村庄范围的边界</strong>以相等的概率随机选取一 Y 轴距离村庄中心 ≤8 格的点，然后沿着村庄中心到此点的连线向外延伸 16 格；此过程循环 10 次，找到基准点为止。<strong>基准点</strong>选中后，再以此点为中心，在周围 <strong>17×17×17</strong> 的区域内随机选取村庄外一点判定是否可以生成 10 次。</p>
+        <h3><strong>第2次尝试</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/2f0a5300ffdd.webp" width="1920" height="1920" alt="袭击区域2" loading="lazy">
+        <figcaption class="fig-caption">袭击区域2</figcaption>
+    </figure>
+        <p>第二种生成区域的形状如上图，当玩家在村庄内或玩家距离<strong>村庄范围的边界</strong>小于 16 格时，游戏会生成一个 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>∈</mo><mo stretchy="false">[</mo><mn>32</mn><mo separator="true">,</mo><mn>48</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">R\in [32, 48]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7224em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">32</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">48</span><span class="mclose">]</span></span></span></span> 的随机半径，然后<strong>以玩家位置为圆心</strong>，R 为半径，朝向村庄中心与玩家位置连线向外的半圆弧上随机选取一 Y 轴距离村庄中心 ≤8 格的点；此过程循环 10 次，找到基准点为止。<strong>基准点</strong>选中后，再以此点为中心，在周围 <strong>17×17×17</strong> 的区域内随机选取一点判定是否可以生成 10 次。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/888f57367908.gif" width="512" height="512" alt="玩家相对中心处于不同方向时区域2的形状" loading="lazy">
+        <figcaption class="fig-caption">玩家相对中心处于不同方向时区域2的形状</figcaption>
+    </figure>
+        <h3><strong>第3次尝试</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/94b8f9552b5c.webp" width="1920" height="1920" alt="袭击区域3" loading="lazy">
+        <figcaption class="fig-caption">袭击区域3</figcaption>
+    </figure>
+        <p>第三种生成区域的形状如上图，首先游戏会在<strong>村庄范围的边界</strong>以相等的概率随机选取一 Y 轴距离村庄中心 ≤8 格的点；此过程循环 10 次，找到基准点为止。<strong>基准点</strong>选中后，再以此点为中心，在周围 <strong>17×17×17</strong> 的区域内随机选取村庄外一点判定是否可以生成 10 次。</p>
+        <h3><strong>第4次尝试</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/524e7a56d491.webp" width="1920" height="1920" alt="袭击区域4" loading="lazy">
+        <figcaption class="fig-caption">袭击区域4</figcaption>
+    </figure>
+        <p>第四种生成区域的形状如上图，首先游戏会在以<strong>村庄中心</strong>为圆心，半径 0.5 的<strong>圆上</strong>以相等的概率随机选取一 Y 轴距离村庄中心 ≤8 格的点；此过程循环 10 次，找到基准点为止。<strong>基准点</strong>选中后，再以此点为中心，在周围 <strong>17×17×17</strong> 的区域内随机选取村庄内一点判定是否可以生成 10 次。</p>
+        <h3><strong>第5次尝试</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/5144b01df34d.webp" width="1920" height="1920" alt="袭击区域5" loading="lazy">
+        <figcaption class="fig-caption">袭击区域5</figcaption>
+    </figure>
+        <p>第五种生成区域的形状如上图，首先游戏会在以<strong>村庄中心</strong>为圆心，半径 8 的<strong>圆上</strong>以相等的概率随机选取一 Y 轴距离村庄中心 ≤8 格的点；此过程循环 10 次，找到基准点为止。<strong>基准点</strong>选中后，再以此点为中心，在周围 <strong>17×17×17</strong> 的区域内随机选取村庄内一点判定是否可以生成 10 次。</p>
+        <h3><strong>第6次尝试</strong></h3>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/875e90c41539.webp" width="1920" height="1920" alt="文章配图" loading="lazy">
+    </figure>
+        <p>第六种生成区域的形状如上图，首先游戏会在以<strong>村庄中心</strong>为圆心，半径 8 的<strong>圆上</strong>以相等的概率随机选取一点，基准点必须是具有碰撞箱的非露天方块（树叶和玻璃不行，但被树叶覆盖的方块可以）；此过程循环 10 次，找到基准点为止。<strong>基准点</strong>选中后，再在此点选取 Y 轴最高处的固体方块判定是否可以生成 10 次。</p>
+        <hr class="opus-pagebreak">
+        <h3><strong>袭击者生成检测机制</strong></h3>
+        <p>总的来说，前 5 种尝试在<strong>村庄中心 </strong>Y 坐标 ±8格范围内寻找基准点，第 6 种尝试会从世界最高点向下寻找基准点，再以基准点为中心 <strong>17×17×17</strong> 范围内寻找方块生成。六种生成尝试都是先选择<strong>基准点</strong>，进行 10 次尝试；找到基准点就选择<strong>生成点</strong>，也尝试 10 次。10 次找基准点都失败了就跳到下一波次，除非六种都失败。</p>
+        <p>袭击者的<strong>生成点</strong>方块检测如下：</p>
+        <p>袭击者脚下的生成点<strong> P </strong>必须是有碰撞箱的可支撑方块，能立足就符合条件，栅栏门、墙甚至活塞臂什么的都行，但不能是树叶；</p>
+        <p>上边两格不能有碰撞箱阻碍，另外<strong> P+1 格</strong>不能是树叶， <strong>P+2 格</strong>不能是树叶、熔岩或水；</p>
+        <p><strong>P+3 格</strong>不能是完整固体方块；</p>
+        <p>如果基准点选中了，但所有生成点尝试都不成立，就直接结束袭击进度条。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/cb9b18f22746.webp" width="1936" height="939" alt="袭击生物位于方块西北角" loading="lazy">
+        <figcaption class="fig-caption">袭击生物位于方块西北角</figcaption>
+    </figure>
+        <p><a href="https://www.bilibili.com/opus/1007601359184199685" target="_blank" rel="noopener noreferrer">MCBE 劫掠生成类方块检测机制</a></p>
+        <p>选取<strong>基准点</strong>套用和生成点一样的检测，除了第六次尝试：第六次使用 heightmap 检测的是某 XZ 坐标下的最高点，所以露天的树叶和玻璃都会直接跳过，并且基准点上边盖树叶和玻璃也能通过选点尝试。<em>（但实际应用中，由于玻璃也是生成点，我们一般只用方块盖树叶的技巧锚定基准点，再做一个小型生成平台。）</em></p>
+        <p><a href="https://www.bilibili.com/video/BV1Bj411t76u" target="_blank" rel="noopener noreferrer">我的世界：萌新也能做秒杀式绿宝石农场？(兼容网易，1.18.30+)</a></p>
+        <p><strong>P+3 格</strong>也不需要判断，因为生成点头顶第三格要求是完整固体方块这个规则，疑似是游戏bug，实际代码不是这么设计的，真佩服mojang的程序员。因为基准点不需要判断但生成点需要，所以高度为 2 格的夹层有很大概率会导致袭击者生成失败，进而袭击结束。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/31498d1c8721.webp" width="1530" height="740" alt="最下方的石头层大概率被选为基准点，但由于p+3为树干方块直接生成失败" loading="lazy">
+        <figcaption class="fig-caption">最下方的石头层大概率被选为基准点，但由于p+3为树干方块直接生成失败</figcaption>
+    </figure>
+        <p>另外需要注意的是，代码中虽然是随机相等概率抽取基准点，但由于生成点会在基准点 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><msup><mn>7</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">17^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">7</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span> 范围内再随机抽取，导致越接近村庄中心，被选中为生成点的概率就越高。</p>
+        <hr class="opus-pagebreak">
+        <h2><strong>Boss栏</strong></h2>
+        <p>袭击的 Boss 栏进度条记录了这波袭击生物的总血量，后来加入的袭击生物只要在 <strong>村庄范围 AABB </strong>内，也会被记录进 Boss 栏总血量中，但村庄范围外的生物哪怕加入了袭击也不会被记录在 Boss 栏中，大概率是 bug。</p>
+        <p>每一轮袭击结束后， Boss 栏会进入 2s 的换波时间；随后进度条从左往右加载，显示下一波袭击抵达时间，这个抵达冷却时间是 15s。袭击事件结算为胜利后，Boss 栏会显示 袭击-胜利 总共 30s；此时喝不祥之瓶不会产生任何效果；如果村民头顶一格没有遮挡的方块，他们则会燃放烟花。</p>
+        <p>如果无法生成袭击者，则袭击会直接终止，Boss 栏直接消失。</p>
+        <p><strong>袭击计时</strong>会持续进行 48000 gt（40分钟），如果 48001 gt 仍未结束，则袭击会直接中止，以平局告终。此时，Boss 栏也会直接消失，并且出现一条消息： “一次劫掠已过期”。</p>
+        <hr class="opus-pagebreak">
+        <h3><strong>袭击加载范围</strong></h3>
+        <p>值得注意的是，如果没有玩家处于<strong>村庄加载范围</strong>内，村庄不会更新，此时袭击不加载，<strong>袭击计时</strong>也会停止。这意味着如果玩家卡在村庄加载范围外挂机，利用前哨站的掠夺者加入袭击产出绿宝石就不会触发平局。</p>
+        <p><strong>袭击加载范围就等于村庄加载范围</strong>，在这个范围内，袭击才会正常地读条和生成。<strong>村庄加载范围</strong>等于村庄范围 AABB 每个方向往外扩展 <strong>模拟距离×8</strong> <strong>格</strong>，整体上就是：</p>
+        <p>村庄加载范围 = 村庄范围AABB + (模拟距离 ×8) ×2</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/c6e93cd1b9e4.webp" width="267" height="215" alt="村庄加载范围平面图 by莵道三室戸" loading="lazy">
+        <figcaption class="fig-caption">村庄加载范围平面图 by莵道三室戸</figcaption>
+    </figure>
+        <p><strong>Boss 栏显示范围</strong>等于村庄范围 AABB 每个方向往外扩展<strong> 32格</strong>。注意，此处的 Boss 栏显示范围中心一般就是村庄中心，但如果袭击开始后改变村庄中心，Boss 栏中心不会变。</p>
+        <p>在<strong>模拟距离 = 4 </strong>时，Boss 栏显示范围恰好等于袭击加载范围。</p>
+        <hr class="opus-pagebreak">
+        <h3><strong>袭击迁移</strong></h3>
+        <p>袭击生成后，袭击者遵循<strong>就近加入原则</strong>。</p>
+        <p>当袭击者通过 A 村庄生成，但离 B 村庄的村庄中心更近，且袭击者脱离 A 村庄的<strong>袭击迁移检测范围</strong>时，袭击者会迁出 A 村庄，Boss 栏则会更新进度。</p>
+        <p><strong>袭击迁移检测范围</strong>等于村庄范围 AABB 每个方向往外拓展 <strong>d = 10 格</strong>。袭击者处于此范围内则无法迁移至其他村庄。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/6ee60e4cd25d.webp" width="2542" height="1324" alt="堆村秒杀" loading="lazy">
+        <figcaption class="fig-caption">堆村秒杀</figcaption>
+    </figure>
+        <p>上述机制往往被用于<strong>堆村秒杀</strong>，但是，我们在实际应用中还会遇到一种<strong>单村秒杀</strong>的情况。</p>
+        <p>袭击者也算一种村庄中敌对的“居民”，因此也存在着迷失机制。袭击者在<strong>袭击迷失范围</strong>外超过 20 分钟，则会直接移除出村庄，同时跳过 Boss 栏的袭击进度条。</p>
+        <p><strong>袭击迷失范围就等于村庄迷失范围</strong>，袭击者连续超出这个范围 20 分钟则会迷失并被清除出袭击。<strong>村庄迷失范围</strong>等于村庄范围 AABB 每个方向往外扩展<strong> 48 格</strong>。</p>
+        <p>值得注意的是，如果袭击生成时他们本身就位于迷失范围外，比如利用第六种生成在村庄中心 61 格以外（13+48）生成袭击者，则 Boss 栏直接清空并完成这一波，实现秒杀。<s><em>这大概率是代码bug……</em></s></p>
+        <p><s><em>值得注意的是，有三名掠夺者因此不幸摔落，他们分别是维亚切斯拉夫·巴兰尼科夫、安东·尤丁采夫和尼基塔·布亚诺夫……</em></s></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/217a99ee4b89.webp" width="2550" height="1123" alt="单村秒杀" loading="lazy">
+        <figcaption class="fig-caption">单村秒杀</figcaption>
+    </figure>
+        <p>另外，一个存档开启超过20分钟后才会出现村庄范围 48 格外生成的袭击者被瞬间清空 Boss 栏进度条的情况。如果这些掠夺者在一开始的20分钟内任意时间生成，不会立刻被秒杀。</p>
+        <p>到20分钟时，如果这些袭击者从未进入过袭击迷失范围内，他们就会被立即清出 Boss 栏，反之则被保留在进度条中。<em>（这可能是因为超出迷失范围的袭击者没有被村庄记录，所以直接当做这一波袭击者迷失而处理掉了）</em></p>
+        <p>被单村秒杀的生物和自然生成的生物一样，会存在 R＞32 格延迟清除和 R＞128 格立即清除的机制。</p>
+        <hr class="opus-pagebreak">
+        <h3><strong>加入袭击</strong></h3>
+        <p>袭击存在中途加入机制，不处于本波次袭击的袭击者（所有灾厄村民、女巫和劫掠兽）都可以中途加入袭击。</p>
+        <p>当试图加入的袭击者碰撞箱与某个已加入的袭击者碰撞箱 ≤16 格（切比雪夫距离），且已加入的袭击者位于触发袭击的村庄范围内时，试图加入的袭击者会加入本波次袭击。</p>
+        <p>如果试图加入的袭击者位于村庄范围内，则更新 Boss 栏总血量；若不处于村庄范围内，依旧可加入袭击，但不会被 Boss 栏统计到。</p>
+        <p>若玩家不在村庄加载范围内，加入袭击依然可以正常发生，且不会消耗 40min 的袭击计时。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/ad551d0d698f.webp" width="1522" height="854" alt="中途加入的袭击者" loading="lazy">
+        <figcaption class="fig-caption">中途加入的袭击者</figcaption>
+    </figure>
+        <hr class="opus-pagebreak">
+        <h3><strong>掠夺者前哨站</strong></h3>
+        <p>掠夺者会在掠夺者前哨站自然生成。</p>
+        <p>除伴随前哨站一同生成的掠夺者外，生成在大瞭望塔的掠夺者会在 1 个、2 个或 4 个特殊的柱状硬编码生成区域（Hard-Coded Spawn Area，HSA）生成。</p>
+        <p>在 1.21.10.24 以后，因为官方修改了 HSA底层结构（把 bug 做成机制并加入开关），导致了 HSA 也可出现于瞭望塔之外子结构的 bug，如铁傀儡笼子，悦灵笼子和羊毛帐篷。木头堆和稻草人的 HSA 生成点位因为太矮被压没了。</p>
+        <p>瞭望塔 HSA 生成点的数量取决于结构生成的方向（也可以通过跨多少区块判断），其数量根据结构的方向而变化。具体位置如下：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/18a95c180e45.webp" width="1080" height="1080" alt="当顶层向上的楼梯朝南时，生成点有1个（25%概率）" loading="lazy">
+        <figcaption class="fig-caption">当顶层向上的楼梯朝南时，生成点有1个（25%概率）</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/f54b84a53ece.webp" width="2160" height="2160" alt="文章配图" loading="lazy">
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/2d46c2bb681c.webp" width="1080" height="1080" alt="当顶层向上的楼梯朝东/朝西时，生成点有2个（50%概率）" loading="lazy">
+        <figcaption class="fig-caption">当顶层向上的楼梯朝东/朝西时，生成点有2个（50%概率）</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/020b4ab62feb.webp" width="1080" height="1080" alt="当顶层向上的楼梯朝北时，生成点有4个（25%概率）" loading="lazy">
+        <figcaption class="fig-caption">当顶层向上的楼梯朝北时，生成点有4个（25%概率）</figcaption>
+    </figure>
+        <p>上图展示了掠夺者硬编码生成位置，金块代表生成点，蓝线代表区块边界。</p>
+        <p>HSA 是柱状的，从底层入口处地板开始，垂直向上 18 格方块，掠夺者可以在这条生成柱内生成<em>（coralfans 等插件看到的 hsa 顶上三格实际上不能生成，这三格在代码中被额外阉割掉了）</em>。</p>
+        <p>除大瞭望塔之外，掠夺者还会生成在木笼子以及羊毛帐篷中。同大瞭望塔一致，生成点与子结构跨区块有关，有 1 个、2 个或者 4 个。</p>
+        <p>HSA 其实就位于这个子结构的位置中心，如果子结构被区块切割，那么 HSA 会变成 2 个或者 4 个（取决于跨几个区块），几个 HSA 则位于各自被区块切割后的几个结构的位置中心。</p>
+        <p>具体子结构的 HSA 位置我就不介绍了，感兴趣的可以去看：</p>
+        <p><a href="https://www.bilibili.com/opus/945125605259608066" target="_blank" rel="noopener noreferrer">MCBE 1.21.10.24哨塔子结构及hsa介绍</a></p>
+        <p>找对高度以后，用玻璃板卡住掠夺者找位置也是可行的。</p>
+        <p>由于基岩版的结构生成尝试源于集群生成尝试，因此需要保证结构所在的区块不能是纯虚空，或出现所有可进行生成尝试的方块均被下层台阶所覆盖的情况。尽可能要保证区块内留有一层可进行生成尝试的方块。集群生成尝试也可能导致硬编码生成区域以外的其他位置刷出生物。</p>
+        <hr class="opus-pagebreak">
+        <h3><strong>掠夺者自然生成机制</strong></h3>
+        <p>除了灾厄巡逻队，掠夺者只会在掠夺者前哨站生成。</p>
+        <p>掠夺者会在 HSA 生成柱范围内最高可生成位置的西北角处生成，无亮度限制，可生成位置需要至少 2×2×2 的空间，该空间内任何实心固体方块都会抑制生成，树叶、玻璃等方块则不会阻碍生成，在hsa生成范围内至少需要一个空气类型的方块以满足生成条件（包括延续空气类）。</p>
+        <p>普通掠夺者和掠夺者队长的生成概率为 1:1。</p>
+        <p>掠夺者的生成其实全是 bug，虽然掠夺者队长有 50% 概率生成，但我们平常看到的单维度刷怪塔里队长没那么多。这是因为，掠夺者的种群控制上限本来是8，独立于怪物、动物、水生生物之外，但是实际的上限为 7（普通掠夺者）+1（掠夺者队长）。</p>
+        <blockquote><p>种群控制上限限定了生物的密度。生物生成时，生物当前区块为中心的 9×9 区块范围内不能超过种群控制上限，该范围被称作区块密度检测范围。</p></blockquote>
+        <p>而最难绷的是，普通掠夺者和掠夺者队长会互相抢上限！如果第 1 个刷的是掠夺者队长，后面最多再刷出 6 个普通掠夺者；如果第 1 个刷的是普通掠夺者，后面则不会刷新任何掠夺者队长！</p>
+        <p>与此同时，袭击生成的掠夺者同样会占用自然生成在掠夺者前哨站的掠夺者的上限。这也是为什么有些袭击塔下方永远刷不出掠夺者队长。</p>
+        <p>所以只要在前哨站周围漏掉一个普通掠夺者，你这辈子都别想在这个塔里刷出掠夺者队长了~</p>
+        <p>做加入袭击式绿宝石农场时也要注意，别抓普通的掠夺者用来招募袭击，否则也会导致刷不出掠夺者队长出来。</p>
+        <p>一个 bug 是 bug ，一堆 bug 能 work ，这就是我们的 bugjump工作室。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53471290/d9c54b0f4095.webp" width="1589" height="544" alt="嘟嘟嘟嘟，嘟嘟嘟嘟，嘟嘟嘟嘟，嘟↑嘟↓嘟←嘟→" loading="lazy">
+        <figcaption class="fig-caption">嘟嘟嘟嘟，嘟嘟嘟嘟，嘟嘟嘟嘟，嘟↑嘟↓嘟←嘟→</figcaption>
+    </figure>
+        <hr class="opus-pagebreak">
+        <p>最后，我十分感谢对文章做出贡献的大佬：</p>
+        <p><strong>@藏青茶壶 </strong>理论指导与部分结论</p>
+        <p><strong>@苏望安 </strong>测试验证内容与部分结论</p>
+        <p><strong>@8848yyds</strong> 提供了源码支持</p>
+        <p><strong>@离殇之枫  @曲奇</strong>  提供了生成点方块数据</p>
+        <p><strong>@_hhhxiao  @莵道三室戸 @OEOTYAN </strong> 前人对袭击机制的积极探索</p>
+        <p>希望这篇文章对大家有所帮助！</p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1259843431282245635">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="previous / next">
+            <a class="pager-item is-prev" href="cv53412179.html" title="« 上一篇：静态闪门猪人塔核心原理详解" aria-label="« 上一篇：静态闪门猪人塔核心原理详解">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">静态闪门猪人塔核心原理详解</span>
+            </a>
+            <a class="pager-item is-next" href="cv5581369.html" title="下一篇 »：一份比较详细的 MCBE 村庄机制解析" aria-label="下一篇 »：一份比较详细的 MCBE 村庄机制解析">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">一份比较详细的 MCBE 村庄机制解析</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

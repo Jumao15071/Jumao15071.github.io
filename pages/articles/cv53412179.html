@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>静态闪门猪人塔核心原理详解 - 橘猫的资源站</title>
+    <meta name="description" content="僵尸猪灵，旧称僵尸猪人（简称猪人），是 Minecraft 游戏中猪灵的僵尸化变种。 在这篇文章里，我们将简单地介绍僵尸猪灵的相关生物机制，并详细阐述通过快速点燃下界传送门驱动的猪人塔究竟原理为何，而现在的设计又是如何使其高效又稳定的。 生成 我们简单了解一下">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/lib/katex/katex.min.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/x-icon">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>返回主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="article-page mt-4rem">
+        <figure class="article-cover">
+            <img src="../../assets/articles/covers/cv53412179.webp" alt="静态闪门猪人塔核心原理详解">
+        </figure>
+        <div class="article-head">
+            <h1>静态闪门猪人塔核心原理详解</h1>
+            <div class="article-sub">
+                <span class="art-author">作者：<a href="https://space.bilibili.com/37691488" target="_blank" rel="noopener noreferrer">橘猫sama</a></span>
+                <span class="art-sep">·</span>
+                <span class="art-date">编辑于 2026年10月18日 11:33</span>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1258535854280802322" target="_blank" rel="noopener noreferrer" title="在 B 站查看原专栏">cv53412179</a>
+                <span class="art-sep">·</span>
+                <span class="art-cat">实体机制</span>
+                <a class="lang-btn" href="cv53412179.en.html" title="Read this article in English">English</a>
+            </div>
+        </div>
+
+        <nav class="article-pager is-top" aria-label="previous / next">
+            <a class="pager-item is-prev" href="cv40350407.html" title="« 上一篇：MCBE 部分掉落物及抢夺计算相关机制" aria-label="« 上一篇：MCBE 部分掉落物及抢夺计算相关机制">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 部分掉落物及抢夺计算相关机制</span>
+            </a>
+            <a class="pager-item is-next" href="cv53471290.html" title="下一篇 »：袭击机制详解" aria-label="下一篇 »：袭击机制详解">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">袭击机制详解</span>
+            </a>
+        </nav>
+
+        <div class="opus is-bilingual" data-content-kind="para">
+        <p>僵尸猪灵，旧称僵尸猪人（简称猪人），是 Minecraft 游戏中猪灵的僵尸化变种。</p>
+        <p>在这篇文章里，我们将简单地介绍僵尸猪灵的相关生物机制，并详细阐述通过快速点燃下界传送门驱动的猪人塔究竟原理为何，而现在的设计又是如何使其高效又稳定的。</p>
+        <hr class="opus-pagebreak">
+        <h2><strong>生成</strong></h2>
+        <p>我们简单了解一下僵尸猪灵的生成机制：</p>
+        <p>每只僵尸猪灵在自然生成时有5%的概率生成为幼年僵尸猪灵。大部分僵尸猪灵生成时都手持金剑，有5%的概率手持金矛。</p>
+        <p>僵尸猪灵以2-4只为一组，在下界荒地和绯红森林生物群系中亮度等级不高于11的地方自然生成，但不能生成在下界疣块或菌光体上。</p>
+        <p>自然生成的僵尸猪灵不太好做刷怪塔。然而，下界传送门也可以生成僵尸猪灵 ，并且效率更高。</p>
+        <p>每个下界传送门方块在每个随机刻中，有极小的概率生成僵尸猪灵：</p>
+        <p>简单难度  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mn>2000</mn></mfrac></mrow><annotation encoding="application/x-tex">\frac{1}{2000}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2000</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
+        <p>普通难度  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>2</mn><mn>2000</mn></mfrac></mrow><annotation encoding="application/x-tex">\frac{2}{2000}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2000</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
+        <p>困难难度  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>3</mn><mn>2000</mn></mfrac></mrow><annotation encoding="application/x-tex">\frac{3}{2000}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2000</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
+        <p>它们会在传送门的东面或南面（取决于传送门面朝哪个方向），比传送门最下方黑曜石高一格的位置生成，并且无法用方块阻碍其生成。</p>
+        <p>而在基岩版中，点燃下界传送门瞬间，每个下界传送门方块也会<strong>有一次同样概率的生成尝试</strong>，通过反复激活和破坏下界传送门可以大量生成僵尸猪灵。</p>
+        <p>但这样生成的僵尸猪灵会占用生物上限，且由此生成的僵尸猪灵在15s内不能被传送门转移到下界。</p>
+        <p>由于bug，僵尸猪灵不能在低于Y=0的下界传送门中生成。（MCPE-149718）</p>
+        <p>另外，26.0+的版本有0.75%概率生成一种<strong>不能上矿车</strong>的特殊僵尸猪灵变种。（MCPE-236034）</p>
+        <hr class="opus-pagebreak">
+        <h2><strong>下界传送门</strong></h2>
+        <p>我们直接贴合视频实战讲解背后的主要原理。现在，最常用且稳定高效的猪人塔就是这个了：</p>
+        <p><a href="https://www.bilibili.com/video/BV1f3eqzuEQR" target="_blank" rel="noopener noreferrer">【简易抗卸载静态闪门猪人塔】TK我的世界</a></p>
+        <p>为什么这个猪人塔要看方向？为什么传送门要均匀跨2个区块，并做成22*22大小？为什么要做一个22*21的门？传送门的引火架为什么长成这样？为什么发射器喷射细雪桶的频率是2.5Hz（0.4s/次）？且听我细细道来。</p>
+        <h3><strong>为什么猪人塔要看方向？</strong></h3>
+        <p>因为传送门是靠熔岩在可蔓延方块上产生火焰引燃的，而火焰蔓延的检查方向顺序是：</p>
+        <p>东＞西＞上＞下＞南＞北</p>
+        <p>所以视频开头要确定建设方向，以此最大程度保证引燃成功率。<em>（其实剩下五个方向都用方块挡住以后影响也不大）</em></p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53412179/b72cbb1cebdf.webp" width="2560" height="1440" alt="门的朝向决定了点火架效率" loading="lazy">
+        <figcaption class="fig-caption">门的朝向决定了点火架效率</figcaption>
+    </figure>
+        <h3><strong>为什么传送门要均匀跨2个区块？</strong></h3>
+        <p>视频中的传送门为什么要正好跨区块呢？左右两边多一些少一些不行吗？跨3个区块可不可以呢？</p>
+        <p>这就牵扯到本文的重点：<strong>计划刻</strong>。</p>
+        <p>生成传送门时，每个下界传送门方块都会产生一个<strong>计划刻</strong>（Pending Tick，简称pt，Java版又称为Scheduled Tick）。一个区块内，每游戏刻（0.05s）共有100次的计划刻处理上限。</p>
+        <p>计划刻执行时调用的是函数A<em>（见文章末尾）</em><em>，</em>这个函数最后两行就是尝试生成猪人，每个计划刻都会调用这个函数。</p>
+        <p>在此之前，我们需要了解一下发射器的性质：发射器完成一次细雪桶的【喷出/收回】，总共需要 0.4s 的时间：</p>
+        <p>0.1s <strong>喷出</strong>，0.2s <strong>冷却</strong>，0.3s <strong>收回</strong>，0.4s <strong>冷却</strong></p>
+        <p>那么已知细雪桶破门器的运行频率为 2.5Hz（即单次工作周期<em> T </em>= 0.4s），单个游戏刻时长 <em>t</em> = 0.05s / gt，且单游戏刻最大计划刻吞吐量为 <em>N </em>= 100（计划刻/ gt），则一个破门周期内总计划刻数 <em>C</em> 的计算如下：</p>
+        <div class="math-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>C</mi><mo>=</mo><mfrac><mi>T</mi><mi>t</mi></mfrac><mo>×</mo><mi>N</mi><mo>=</mo><mfrac><mrow><mn>0.4</mn><mtext>s</mtext></mrow><mrow><mn>0.05</mn><mtext>s</mtext></mrow></mfrac><mo>×</mo><mn>100</mn><mo>=</mo><mn>800</mn><mtext>（计划刻）</mtext></mrow><annotation encoding="application/x-tex">C = \frac{T}{t} \times N = \frac{0.4\text{s}}{0.05\text{s}} \times 100 = 800 \text{（计划刻）}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0463em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">t</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0.05</span><span class="mord text"><span class="mord">s</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0.4</span><span class="mord text"><span class="mord">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">100</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">800</span><span class="mord text"><span class="mord cjk_fallback">（计划刻）</span></span></span></span></span></span></div>
+        <p>结论：每个区块0.4秒破门工作周期内，总共可以处理800个计划刻。</p>
+        <p>我们能做的，就是尽量让下界传送门占满这800个计划刻，<strong>吃满计划刻不就能达到僵尸猪灵生成效率最大化了吗？</strong></p>
+        <p><a href="https://www.bilibili.com/video/BV1Je411g72y" target="_blank" rel="noopener noreferrer">[MinecraftBE]猪人塔太慢？太卡？如何解决？拿数据说话！</a></p>
+        <p>以视频为例，假设有两个横跨三区块（3/16/2）的下界传送门，高21格，那么点一次门，中间的区块总计产生有 672个计划刻。如果发射器也是 2.5Hz 工作，那么就是 0.2s开门，0.2s关门，在此期间消耗 400个计划刻，还剩的 272个计划刻由于传送门关闭，不符合僵尸猪灵生成条件，就浪费在关门期间了。</p>
+        <p>如果你疯狂堆叠了大量传送门，因为<strong>区块每gt消耗的计划刻是有限的</strong>，而开关一次传送门后，计划刻又没有消耗完，那就会造成<strong>PT堆积</strong>。常见的情景就是你开了一会儿猪人塔，哪怕已经关机了，打开的下界传送门还在源源不断地刷僵尸猪灵。遇到这种情况你可得小心了：<u><strong>pt堆的太多，会对存档造成不可挽回的损害！</strong></u></p>
+        <p>所以直接说结论：传送门不是堆的越多越好，一个区块内能处理的计划刻和僵尸猪灵生成量是有限的。为了最大限度地压榨僵尸猪灵生成效率，我们就要均分下界传送门，同时控制每扇门在 22*22 的大小上（400个传送门方块），这当然是为了精准地控制计划刻。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53412179/5a756adb9c89.webp" width="2560" height="1440" alt="每扇门被均匀切割，两边各有200个传送门与计划刻" loading="lazy">
+        <figcaption class="fig-caption">每扇门被均匀切割，两边各有200个传送门与计划刻</figcaption>
+    </figure>
+        <p>可你别忘了，咱们上边的猪人塔也是 2.5Hz 的啊？为什么她就不会浪费计划刻呢？</p>
+        <p>答案就是：<strong>侦测器</strong>、<strong>发射器</strong>、<strong>投掷器</strong>这些也都属于<strong>受计划刻影响</strong>的元件！甚至熔岩其实也受计划刻影响！</p>
+        <p>那就意味着，巧妙的短时间pt堆积，可以让发射器执行的时间变化，<strong>在同一秒内完成细雪桶的喷出、收回以及熔岩点火</strong>！</p>
+        <p>700及以上个传送门方块的计划刻提供了完美堆积的pt，而这样的破门器会保持传送门会一直亮着！僵尸猪灵的生成也完全不会被浪费！</p>
+        <p>但你还得小心，毕竟发射器这东西也消耗pt，所以你需要在破门器的区块里减少一列传送门，在给熔岩预留 门数/2（向上取整）*3 个pt外，还需要给发射器预留 门数*2 个pt，这个区块也千万不要造其他的东西避免影响到pt。</p>
+        <p>4门需要预留出来的pt数量是：4*2（发射器）+ 2*3（引火架）</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53412179/b71c9457d868.webp" width="2560" height="1440" alt="在细雪桶破门器的区块减小一列传送门面积" loading="lazy">
+        <figcaption class="fig-caption">在细雪桶破门器的区块减小一列传送门面积</figcaption>
+    </figure>
+        <hr class="opus-pagebreak">
+        <h2><strong>引火架</strong></h2>
+        <p>那么，我们清楚了下界传送门和破门器的原理，还剩一个问题：引火架。</p>
+        <p>虽然用燧石和铁锭在合成器内合成打火石，再用发射器点燃传送门也是可行的，但毕竟消耗了材料。什么东西不消耗材料就能自动实现传送门点火呢？那就是<strong>熔岩</strong>。</p>
+        <p>在基岩版中，熔岩每次触发时，会检查自己正上方一格是否为空气或可燃方块，否则不会点火。之后在以熔岩为中心的 3×3×3 立方体内随机取 10 个方块（每次独立均匀随机，可重复），一旦取到可燃方块，就按 +X、−X、+Y、−Y、+Z、−Z 的顺序检查它的 6 个正交相邻方块，遇到第一个空气就在那里生成火并立即结束。因此火焰最远可以出现在距熔岩水平 2 格处（5×5 的四个角除外），或竖直 2 格处（此时水平不超过 3×3）；而可燃方块本身必须落在 3×3×3 内。火焰生成不检查下方支撑或合法位置，所以可以悬空。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53412179/30f5fc13cc62.webp" width="161" height="162" alt="橙色羊毛表示易燃方块，
+橙色染色玻璃表示火可生成在易燃方块周围6个相邻空气中，灰色染色玻璃为其外毗邻示意，最外圈木板为安全区域。" loading="lazy">
+        <figcaption class="fig-caption">橙色羊毛表示易燃方块，
+橙色染色玻璃表示火可生成在易燃方块周围6个相邻空气中，灰色染色玻璃为其外毗邻示意，最外圈木板为安全区域。</figcaption>
+    </figure>
+        <p>像工作台、活板门这一类方块，可以蔓延火焰，但其本身不会被烧毁。</p>
+        <p>虽说如此，但是自然状态下的熔岩蔓延火焰速度很慢，怎么能让速度快一点呢？那就是——熔岩活化。</p>
+        <p>你可能听说过，高频红石元件的<strong>nc更新</strong>可以让熔岩流动速度变快，刷石机苔藓机经常用得到这个特性。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53412179/7ef83fc10437.webp" width="2560" height="1440" alt="高频红石充能活板门，活板门活化熔岩" loading="lazy">
+        <figcaption class="fig-caption">高频红石充能活板门，活板门活化熔岩</figcaption>
+    </figure>
+        <p>1.21.70前，流体分为静态流体与动态流体。静态流体受到<strong>nc更新</strong>后会变成动态流体，同时产生 2pt。动态流体受到<strong>pt更新</strong>后会变回静态流体。</p>
+        <blockquote><p>刷石机中流体的活化其实是：流体的两个pt之间，插入了第三方的pt。
+大致时序是这样：
+0gt：静态流体受到nc更新，添加2个 ngt后执行的pt，同时变成动态流体；
+ngt：第一个动态流体的pt执行，动态流体变成静态流体，并尝试流动（熔岩会额外尝试点火）；来自第三方的pt执行，产生nc更新，静态流体添加2个 ngt后执行的pt，同时变为动态流体；第二个动态流体的pt执行，动态流体变成静态流体，并尝试流动与引火。这套流程过后，流体依旧是静态流体，但会多出两个 ngt后执行的pt。在 ngt时间内，如果流体受到nc更新，此时会同时出现4个pt，也就是流体在一个周期内可以两次流动，这种情况重复多次就是流体的活化。动态流体受到nc更新不产生pt。</p></blockquote>
+        <p>1.21.70前的熔岩需要隔开单间，因为静态流体和动态流体之间的转化也会产生nc更新，具体来说设计是这样的：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53412179/e3d6486d3b45.webp" width="2560" height="1440" alt="熔岩隔开单间" loading="lazy">
+        <figcaption class="fig-caption">熔岩隔开单间</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53412179/92a2bee3ebb6.webp" width="2560" height="1440" alt="侧面的活板门也提供了nc更新（全版本可用）" loading="lazy">
+        <figcaption class="fig-caption">侧面的活板门也提供了nc更新（全版本可用）</figcaption>
+    </figure>
+        <p>这样的架构1.21.70以前<strong>需要叠四层并且设置延迟</strong>，因为熔岩的pt在30gt后，2.5hz每层之间延迟8gt，3.33hz每层之间延迟6gt，总的时钟分别是32gt与30gt，1.21.70以后按图中来就行了。</p>
+        <p>三个岩浆点亮两个门的概率是：</p>
+        <div class="math-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mn>1</mn><mo>−</mo><mrow><mo fence="true">(</mo><msup><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo fence="true">)</mo></mrow><mn>30</mn></msup><mo>+</mo><mrow><mo fence="true">(</mo><mn>1</mn><mo>−</mo><msup><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo fence="true">)</mo></mrow><mn>10</mn></msup><mo fence="true">)</mo></mrow><msup><mrow><mo fence="true">(</mo><mfrac><mn>2</mn><mn>3</mn></mfrac><mo fence="true">)</mo></mrow><mn>20</mn></msup><mo>+</mo><msup><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo fence="true">)</mo></mrow><mn>10</mn></msup><mrow><mo fence="true">(</mo><mn>1</mn><mo>−</mo><msup><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo fence="true">)</mo></mrow><mn>10</mn></msup><mo fence="true">)</mo></mrow><msup><mrow><mo fence="true">(</mo><mfrac><mn>2</mn><mn>3</mn></mfrac><mo fence="true">)</mo></mrow><mn>10</mn></msup><mo>+</mo><msup><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo fence="true">)</mo></mrow><mn>20</mn></msup><mrow><mo fence="true">(</mo><mn>1</mn><mo>−</mo><msup><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo fence="true">)</mo></mrow><mn>10</mn></msup><mo fence="true">)</mo></mrow><mo fence="true">)</mo></mrow><mo>=</mo><mn>99.970</mn><mtext>%</mtext></mrow><annotation encoding="application/x-tex">1-\left(\left(\frac{1}{3}\right)^{30}+\left(1-\left(\frac{1}{3}\right)^{10}\right)\left(\frac{2}{3}\right)^{20}+\left(\frac{1}{3}\right)^{10}\left(1-\left(\frac{1}{3}\right)^{10}\right)\left(\frac{2}{3}\right)^{10}+\left(\frac{1}{3}\right)^{20}\left(1-\left(\frac{1}{3}\right)^{10}\right)\right)=99.970\text{\%}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:3em;vertical-align:-1.25em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">(</span></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.654em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">30</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">(</span></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.654em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size4">)</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.654em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">20</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.654em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">(</span></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.654em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size4">)</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.654em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.654em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">20</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">(</span></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.654em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size4">)</span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size4">)</span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8056em;vertical-align:-0.0556em;"></span><span class="mord">99.970</span><span class="mord text"><span class="mord">%</span></span></span></span></span></span></div>
+        <p>1.21.70后，流体不再区分静态流体与动态流体。只要受到nc更新，就会添加1个 ngt后执行的pt。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53412179/8f083ed7f034.webp" width="2560" height="1440" alt="需要的结构更小了" loading="lazy">
+        <figcaption class="fig-caption">需要的结构更小了</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53412179/8a8bf85fc734.webp" width="2560" height="1440" alt="仅适用于1.21.70-26.0" loading="lazy">
+        <figcaption class="fig-caption">仅适用于1.21.70-26.0</figcaption>
+    </figure>
+        <p>1.26.10后，同一gt内，同一坐标，流体只能添加一个pt。你可以做1.21.70之前的版本，或是干脆把结构连起来：</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53412179/693dfc9760e3.webp" width="2560" height="1440" alt="没有静态动态流体的区分，可以把熔岩连起来" loading="lazy">
+        <figcaption class="fig-caption">没有静态动态流体的区分，可以把熔岩连起来</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53412179/8c87921487ab.webp" width="2560" height="1440" alt="适用于26.10+的版本" loading="lazy">
+        <figcaption class="fig-caption">适用于26.10+的版本</figcaption>
+    </figure>
+        <hr class="opus-pagebreak">
+        <h2><strong>高频信号</strong></h2>
+        <p>红石信号高频没什么好说的，破门器 2.5Hz就是每 8gt破门/点门一次。发射器需要每8gt激活两次也就是每4gt激活一次，所以发射器是每 4gt输入 2gt的基岩版频率最快的高频。引火架需要每 8gt活动一次，也就是每 16gt输出 8gt脉冲。注意这里千万别用侦测器高频，因为侦测器也属于受pt影响的元件，此处高频的侦测器仅用于提供初始的短脉冲。</p>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53412179/de5e76264f6d.webp" width="2560" height="1440" alt="短脉冲循环" loading="lazy">
+        <figcaption class="fig-caption">短脉冲循环</figcaption>
+    </figure>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53412179/ba8bf6881519.webp" width="2560" height="1440" alt="另外注意，由于僵尸猪灵没办法阻挡生成，其实这些生物会从引火架底部和破门器所在的方块里生成并掉下去，如果僵尸猪灵生成在红石线上就像图中这样抬高一格红石线路即可。" loading="lazy">
+        <figcaption class="fig-caption">另外注意，由于僵尸猪灵没办法阻挡生成，其实这些生物会从引火架底部和破门器所在的方块里生成并掉下去，如果僵尸猪灵生成在红石线上就像图中这样抬高一格红石线路即可。</figcaption>
+    </figure>
+        <p>最后做个总结，通过巧妙设计传送门门实现pt堆积，在同一gt内让发射器完成细雪桶的喷出、收回，以及熔岩的引火，我们就完成了<strong>静态闪门猪人塔</strong>的制作。</p>
+        <p>顺带提醒，26.0+版本存在一种上不了矿车的僵尸猪灵，使用矿车聚集处死时需要用细雪或海龟蛋作为处死的补充。</p>
+        <hr class="opus-pagebreak">
+        <p>最后，我十分感谢为这篇文章做出巨大贡献的大佬：</p>
+        <p><strong>@8848yyds</strong>  提供了代码支持和文章指导</p>
+        <p>希望这篇文章对大家有所帮助！</p>
+        <hr class="opus-pagebreak">
+        <h2><strong>源码分析</strong></h2>
+        <p>A. 传送门方块每次随机 tick 时发生什么：</p>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">C++</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>void PortalBlock::tick (
+    ::BlockSource&amp;    region,
+    ::BlockPos const&amp; pos,
+    ::Random&amp;         random
+){
+    auto&amp; block       = region.getBlock(pos);
+    auto  portalAxis  = block.getState&lt;TorchFacing&gt;(VanillaStates::PortalAxis());
+    auto  portalShape = PortalShape(region, pos, portalAxis);
+    auto&amp; dim         = region.getDimension();
+    if (portalShape.isValid() &amp;&amp; portalShape.isFilled()) {
+        auto  portalRecord = portalShape.createRecord();
+        auto&amp; poralForcer  = region.getLevel().getPortalForcer();
+        auto  dimId        = region.getDimensionId();
+        if (!poralForcer.portalRecordExists(dimId, portalRecord)) {
+            poralForcer.addPortalRecord(dimId, portalRecord);
+        }
+    }
+    if (SpawnChecks::canSpawnPigZombieFromPortal(dim, random)) {
+        PortalBlock::trySpawnPigZombie(region, pos, portalAxis);
+    }
+}</code></pre>
+</div>
+        <p>B. 生成概率与难度的关系：</p>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">C++</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>static bool PortalBlock::canSpawnPigZombieFromPortal(::Dimension const&amp; dimension, ::IRandom&amp; random) {
+    auto&amp; level     = dimension.getLevel();
+    auto&amp; gameRules = level.getGameRules();
+    if ((*gameRules.mGameRules)[static_cast&lt;int&gt;(GameRules::GameRulesIndex::DoMobSpawning)].mValue-&gt;boolVal) {
+        int randomValue     = random.nextIntInclusive(0, 1999);
+        int difficultyValue = static_cast&lt;int&gt;(level.getDifficulty());
+        return randomValue &lt; difficultyValue;
+    }
+    return false;
+}</code></pre>
+</div>
+        <p>C. 寻找生成位置并生成：</p>
+        <div class="code-card">
+    <div class="code-head">
+        <span class="code-lang">C++</span>
+        <span class="code-actions">
+            <button type="button" class="code-btn" data-code-copy>复制</button>
+        </span>
+    </div>
+    <pre class="code-body"><code>void PortalBlock::trySpawnPigZombie(
+    ::BlockSource&amp;    region,
+    ::BlockPos const&amp; pos,
+    ::PortalAxis      axis
+){
+Vec3 _pos = pos;
+    while (_pos.y-- &gt; 1) {
+        if (region.canProvideSupport(_pos, 1, ::BlockSupportType::Any)
+            // &amp;&amp; !region.isSolidBlockingBlock(_pos.x, _pos.y + 1, pos.z)
+            // 源码中的判定条件，但是据我所知没有任何一个固体方块不给上方提供支持，所以源码中这条判定完全是多余的
+        ) {
+            if (axis == PortalAxis::Z) {
+                _pos.x += 1.5f;
+                _pos.z += 0.5f;
+            } else if (axis == PortalAxis::X) {
+                _pos.x += 0.5f;
+                _pos.z += 1.5f;
+            }
+            _pos.y += 1.1f;
+            ll::service::getLevel()-&gt;getSpawner().spawnMob(
+                region,
+                ActorDefinitionIdentifier("minecraft:zombie_pigman"),
+                nullptr,
+                _pos,
+                false,
+                true,
+                false
+            );
+            return;
+        }
+    }
+}</code></pre>
+</div>
+        <hr class="opus-pagebreak">
+        <h2><strong>猪人塔时序表</strong></h2>
+        <figure class="opus-fig">
+        <img src="../../assets/articles/cv53412179/2719088d6d44.webp" width="903" height="1215" alt="作者：@8848yyds" loading="lazy">
+        <figcaption class="fig-caption">作者：@8848yyds</figcaption>
+    </figure>
+        <p>这张表展示了猪人塔每gt的准确事件。当 8gt结束时，再从 1gt开始循环，以此往复。</p>
+        <hr class="opus-pagebreak">
+        <h2><strong>猪人上车修复</strong></h2>
+        <p>这是一个修复猪人无法上车的行为包，也是 <strong>@8848yyds</strong> 提供的哦~</p>
+        <p><a href="https://pan.baidu.com/s/1KJfuuUSXahqycpZWGnUxZQ?pwd=jumo" target="_blank" rel="noopener noreferrer">https://pan.baidu.com/s/1KJfuuUSXahqycpZWGnUxZQ?pwd=jumo</a></p>
+        </div>
+
+        <div class="article-foot">
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1258535854280802322">原专栏链接 »</a>
+            <a class="button is-light" href="../articles.html">« 返回文章列表</a>
+        </div>
+
+        <nav class="article-pager" aria-label="previous / next">
+            <a class="pager-item is-prev" href="cv40350407.html" title="« 上一篇：MCBE 部分掉落物及抢夺计算相关机制" aria-label="« 上一篇：MCBE 部分掉落物及抢夺计算相关机制">
+                <span class="pager-dir">« 上一篇</span>
+                <span class="pager-title">MCBE 部分掉落物及抢夺计算相关机制</span>
+            </a>
+            <a class="pager-item is-next" href="cv53471290.html" title="下一篇 »：袭击机制详解" aria-label="下一篇 »：袭击机制详解">
+                <span class="pager-dir">下一篇 »</span>
+                <span class="pager-title">袭击机制详解</span>
+            </a>
+        </nav>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>
