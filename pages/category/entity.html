@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实体机制 - 图文专栏 - 橘猫的资源站</title>
+    <meta name="description" content="实体机制栏目下的全部 29 篇 Minecraft 基岩版技术图文：生物生成与空间检测、寻路、袭击与村庄、刷怪塔与实体评估。">
+    <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+    <link rel="stylesheet" href="../../assets/css/articles.css">
+    <link rel="shortcut icon" href="../../assets/img/JumaoTNT.png" type="image/png">
+    <link rel="apple-touch-icon" href="../../assets/img/JumaoTNT.png">
+</head>
+
+<body class="container">
+    <nav class="navbar is-fixed-top pl-2 pr-2">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../../index.html">
+                <img class="ml-1" src="../../assets/img/JumaoTNT.png" alt="">
+                <b>橘猫的资源站</b>
+                <b class="has-background-danger has-text-white pl-2 pr-2 has-radius-rounded">v0.3</b>
+            </a>
+            <div class="navbar-burger js-burger" data-target="articleListNav">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div id="articleListNav" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="../articles.html"><b>全部文章</b></a>
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>主页</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="mt-4rem pt-6">
+        <div class="pl-3 pt-3 pb-3">
+            <p class="title is-3 page-title">
+                <img class="page-icon" src="../../assets/img/JumaoTNT.png" alt="2233 图标">
+                实体机制
+            </p>
+            <p class="subtitle is-6">
+                本栏目共 <b>29</b> 篇技术性图文。生物生成与空间检测、寻路、袭击与村庄、刷怪塔与实体评估。点击任意一篇即可阅读全文，配图均已本地化保存。
+            </p>
+        </div>
+
+        <div class="pl-3 pb-4">
+            <div class="buttons are-small">
+                <a class="button is-small is-light" href="redstone.html">红石机制</a>
+                <a class="button is-small is-danger has-text-white" href="entity.html">实体机制</a>
+                <a class="button is-small is-light" href="tree-farm.html">树场</a>
+                <a class="button is-small is-light" href="storage.html">储电</a>
+                <a class="button is-small is-light" href="block.html">方块性质</a>
+                <a class="button is-small is-light" href="chunk.html">区块机制</a>
+                <a class="button is-small is-light" href="glitch.html">游戏漏洞</a>
+                <a class="button is-small is-light" href="tech.html">绿萌科技</a>
+                <a class="button is-small is-light" href="save-data.html">存档操作教程</a>
+                <a class="button is-small is-light" href="shader.html">光影安装教程</a>
+                <a class="button is-small is-light" href="history.html">科技史</a>
+            </div>
+        </div>
+
+        <div class="ml-2 mr-2 mb-6">
+        <div class="article-cat" id="cat-1">
+            <div class="article-cat-list">
+            <a class="article-row" href="../articles/cv12809481.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv12809481.webp" alt="MCBE 生成机制讲解（1.16.40）" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 生成机制讲解（1.16.40）</p>
+                    <p class="art-meta">作者：<b>orange_31</b> · 2021年08月22日 21:11 · cv12809481</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv34565354.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv34565354.webp" alt="MCBE 生物生成机制经验总结" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 生物生成机制经验总结</p>
+                    <p class="art-meta">作者：<b>橘猫sama</b> · 2024年05月16日 21:40 · cv34565354</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv36693249.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv36693249.webp" alt="MCBE 生物寻路的一些机制" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 生物寻路的一些机制</p>
+                    <p class="art-meta">作者：<b>橘猫sama</b> · 2024年08月04日 21:50 · cv36693249</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv15138547.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv15138547.webp" alt="MCBE 主世界常规怪物的空间检测机制" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 主世界常规怪物的空间检测机制</p>
+                    <p class="art-meta">作者：<b>VFTion</b> · 编辑于 2024年04月13日 23:50 · cv15138547</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv24876101.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv24876101.webp" alt="MCBE 结构生成与自然生成的空气检测范围差别" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 结构生成与自然生成的空气检测范围差别</p>
+                    <p class="art-meta">作者：<b>离殇之枫</b> · 2023年07月08日 19:40 · cv24876101</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv40350407.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv40350407.webp" alt="MCBE 部分掉落物及抢夺计算相关机制" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 部分掉落物及抢夺计算相关机制</p>
+                    <p class="art-meta">作者：<b>离殇之枫</b> · 2025年01月08日 22:32 · cv40350407</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv53412179.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv53412179.webp" alt="静态闪门猪人塔核心原理详解" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">静态闪门猪人塔核心原理详解</p>
+                    <p class="art-meta">作者：<b>橘猫sama</b> · 编辑于 2026年10月18日 11:33 · cv53412179</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv53471290.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv53471290.webp" alt="袭击机制详解" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">袭击机制详解</p>
+                    <p class="art-meta">作者：<b>橘猫sama</b> · 2026年10月17日 00:35 · cv53471290</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv5581369.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv5581369.webp" alt="一份比较详细的 MCBE 村庄机制解析" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">一份比较详细的 MCBE 村庄机制解析</p>
+                    <p class="art-meta">作者：<b>SAC_Official</b> · 2020年04月12日 20:02 · cv5581369</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv7841838.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv7841838.webp" alt="村庄机制limx2" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">村庄机制limx2</p>
+                    <p class="art-meta">作者：<b>莵道三室戸</b> · 2020年10月05日 10:00 · cv7841838</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv12005990.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv12005990.webp" alt="MCBE 袭击（Raid）事件生成区域解析" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 袭击（Raid）事件生成区域解析</p>
+                    <p class="art-meta">作者：<b>SAC_Official</b> · 2021年07月04日 23:22 · cv12005990</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv35662767.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv35662767.webp" alt="MCBE 1.21.10.24哨塔子结构及hsa介绍" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 1.21.10.24哨塔子结构及hsa介绍</p>
+                    <p class="art-meta">作者：<b>离殇之枫</b> · 2024年06月20日 22:10 · cv35662767</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv40011525.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv40011525.webp" alt="MCBE 劫掠生成类方块检测机制" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 劫掠生成类方块检测机制</p>
+                    <p class="art-meta">作者：<b>Cookie_531</b> · 2024年12月06日 06:47 · cv40011525</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv39759209.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv39759209.webp" alt="MCBE 恼鬼与尖牙的生成机制" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 恼鬼与尖牙的生成机制</p>
+                    <p class="art-meta">作者：<b>离殇之枫</b> · 2024年11月10日 22:36 · cv39759209</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv19007056.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv19007056.webp" alt="MCBE 守卫者生成的空间检测机制" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 守卫者生成的空间检测机制</p>
+                    <p class="art-meta">作者：<b>离殇之枫</b> · 2022年10月10日 07:37 · cv19007056</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv36068660.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv36068660.webp" alt="MCBE 守卫者的两种生成机制" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 守卫者的两种生成机制</p>
+                    <p class="art-meta">作者：<b>离殇之枫</b> · 2024年07月12日 20:27 · cv36068660</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv19417088.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv19417088.webp" alt="MCBE 岩浆怪和史莱姆的空间检测机制1.19.60-" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 岩浆怪和史莱姆的空间检测机制1.19.60-</p>
+                    <p class="art-meta">作者：<b>离殇之枫</b> · 2022年10月30日 18:13 · cv19417088</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv20546105.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv20546105.webp" alt="MCBE 岩浆怪和史莱姆的空间检测机制1.19.60+" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 岩浆怪和史莱姆的空间检测机制1.19.60+</p>
+                    <p class="art-meta">作者：<b>离殇之枫</b> · 2022年12月16日 21:41 · cv20546105</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv22211378.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv22211378.webp" alt="MCBE 堡垒刷怪塔全解" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 堡垒刷怪塔全解</p>
+                    <p class="art-meta">作者：<b>离殇之枫</b> · 2023年03月05日 18:44 · cv22211378</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv40432640.html">
+                <div class="row-thumb is-placeholder"><img src="../../assets/articles/2233.png" alt="MCBE 抖矿车的目的地" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 抖矿车的目的地</p>
+                    <p class="art-meta">作者：<b>Meteor_Firefly</b> · 编辑于 2026年01月02日 22:25 · cv40432640</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv39793138.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv39793138.webp" alt="MCBE 幻翼相关机制的再探索与农场架构" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 幻翼相关机制的再探索与农场架构</p>
+                    <p class="art-meta">作者：<b>Cookie_531</b> · 2024年11月14日 04:17 · cv39793138</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv40839260.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv40839260.webp" alt="MCBE 嘎枝生成机制与相关探索" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 嘎枝生成机制与相关探索</p>
+                    <p class="art-meta">作者：<b>Cookie_531</b> · 2025年02月27日 13:29 · cv40839260</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv21467056.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv21467056.webp" alt="MCBE 实体评估---发光鱿鱼篇" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 实体评估---发光鱿鱼篇</p>
+                    <p class="art-meta">作者：<b>Cookie_531</b> · 2023年01月29日 10:10 · cv21467056</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv17966733.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv17966733.webp" alt="MCBE 关于伪空气类方块的评估" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 关于伪空气类方块的评估</p>
+                    <p class="art-meta">作者：<b>离殇之枫</b> · 2022年08月06日 22:26 · cv17966733</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv21359851.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv21359851.webp" alt="MCBE 修改之后的篝火性质" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 修改之后的篝火性质</p>
+                    <p class="art-meta">作者：<b>离殇之枫</b> · 2023年01月22日 15:56 · cv21359851</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv21421845.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv21421845.webp" alt="MCBE 部分生物的特殊方块性质判定" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 部分生物的特殊方块性质判定</p>
+                    <p class="art-meta">作者：<b>离殇之枫</b> · 2023年01月26日 19:37 · cv21421845</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv24284987.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv24284987.webp" alt="MCBE 完全不阻碍与部分不阻碍方块汇总及空气类方块简述" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 完全不阻碍与部分不阻碍方块汇总及空气类方块简述</p>
+                    <p class="art-meta">作者：<b>离殇之枫</b> · 2023年06月11日 22:22 · cv24284987</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv24370307.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv24370307.webp" alt="MCBE 限制类方块原理与三种方块分类方式" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 限制类方块原理与三种方块分类方式</p>
+                    <p class="art-meta">作者：<b>离殇之枫</b> · 2023年06月15日 14:47 · cv24370307</p>
+                </div>
+            </a>
+            <a class="article-row" href="../articles/cv32523832.html">
+                <div class="row-thumb"><img src="../../assets/articles/covers/cv32523832.webp" alt="MCBE 两种含雪方块部分性质" loading="lazy"></div>
+                <div class="row-body">
+                    <p class="art-title">MCBE 两种含雪方块部分性质</p>
+                    <p class="art-meta">作者：<b>离殇之枫</b> · 2024年03月04日 21:37 · cv32523832</p>
+                </div>
+            </a>
+            </div>
+        </div>
+        </div>
+
+        <div class="article-foot ml-2 mr-2">
+            <a class="button is-danger has-text-white" href="../articles.html">« 全部栏目</a>
+            <a class="button is-light" href="redstone.html">« 上一栏目：红石机制</a>
+            <a class="button is-light" href="tree-farm.html">下一栏目：树场 »</a>
+            <a class="button is-light" href="../../index.html">返回主页</a>
+        </div>
+    </section>
+
+    <footer class="footer pt-6 mb-1">
+        <div class="content has-text-centered pt-6">
+            <img src="../../assets/img/JumaoTNT.png" width="56" height="56" alt="">
+            <br><br>
+            <p>© 2025 - 至今，橘猫的资源站</p>
+            <p>本页文章移植自 B 站专栏，版权归原作者所有</p>
+            <p>网页使用了<a target="_blank" href="https://bulma.io/"> Bulma </a>开源项目</p>
+            <br>
+            <p>!! 别叫我橘猫姐姐 !!</p>
+        </div>
+    </footer>
+    <script src="../../assets/js/public.js"></script>
+</body>
+
+</html>

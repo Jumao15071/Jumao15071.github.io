@@ -340,6 +340,18 @@
     font-size: 0.82rem;
 }
 
+/* 分类标签本身就是进入栏目页的链接 */
+.article-sub a.art-cat {
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.article-sub a.art-cat:hover,
+.article-sub a.art-cat:focus {
+    color: #fff;
+    background-color: #eb4a6a;
+}
+
 /* ---------- 分类分组与折叠 ---------- */
 .article-cat {
     margin-bottom: 2.75rem;
@@ -371,6 +383,11 @@
 }
 
 .cat-toggle {
+    margin-top: 0.9rem;
+}
+
+/* 列表页「查看全部文章」跳转按钮 */
+.cat-more {
     margin-top: 0.9rem;
 }
 
