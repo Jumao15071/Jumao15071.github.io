@@ -51,8 +51,8 @@
             </p>
         </div>
 
-        <div class="pl-3 pb-4">
-            <div class="buttons are-small">
+        <div class="pl-3 pb-5">
+            <div class="cat-chips">
                 <a class="button is-small is-light" href="redstone.html">红石机制</a>
                 <a class="button is-small is-danger has-text-white" href="entity.html">实体机制</a>
                 <a class="button is-small is-light" href="tree-farm.html">树场</a>
@@ -277,10 +277,10 @@
         </div>
         </div>
 
-        <div class="article-foot ml-2 mr-2">
+        <div class="article-foot cat-foot ml-2 mr-2">
             <a class="button is-danger has-text-white" href="../articles.html">« 全部栏目</a>
-            <a class="button is-light" href="redstone.html">« 上一栏目：红石机制</a>
-            <a class="button is-light" href="tree-farm.html">下一栏目：树场 »</a>
+            <a class="button is-light" href="redstone.html" title="上一栏目：红石机制">« 红石机制</a>
+            <a class="button is-light" href="tree-farm.html" title="下一栏目：树场">树场 »</a>
             <a class="button is-light" href="../../index.html">返回主页</a>
         </div>
     </section>
@@ -297,6 +297,17 @@
         </div>
     </footer>
     <script src="../../assets/js/public.js"></script>
+    <script>
+        /* 栏目切换条：窄屏时横向滚动，并把当前栏目滚到中间 */
+        (function () {
+            var cur = document.querySelector('.cat-chips .button.is-danger');
+            if (!cur || !cur.parentElement) return;
+            var box = cur.parentElement;
+            if (box.scrollWidth > box.clientWidth) {
+                box.scrollLeft = cur.offsetLeft - (box.clientWidth - cur.offsetWidth) / 2;
+            }
+        })();
+    </script>
 </body>
 
 </html>

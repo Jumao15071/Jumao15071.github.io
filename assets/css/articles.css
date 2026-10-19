@@ -234,6 +234,17 @@
 .opus a {
     color: #eb4a6a;
     word-break: break-all;
+    transition: color 0.15s ease;
+}
+
+/* 正文里的行内链接（无 class 的普通 <a>）：hover / 键盘聚焦时出下划线并加深颜色。
+   带 class 的 <a>（jump-card、code-btn、fig-link 等组件）不套用这套状态。 */
+.opus a:not([class]):hover,
+.opus a:not([class]):focus-visible {
+    color: #c92b4b;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.16em;
 }
 
 .opus ul,
@@ -288,6 +299,17 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
+    align-items: flex-start;
+}
+
+/* 底部按钮统一尺寸与间距：
+   Bulma 给非末位按钮留了 0.5rem 下外边距，而 theme.css 在 ≤768px 把 .button 改成
+   height:auto；两者叠加后 flex 的默认 stretch 会把「没有下外边距的最后一个按钮」拉高，
+   视觉上就是它比别的按钮高一点点。这里把外边距归零、固定高度，间距只交给 gap。 */
+.article-foot .button {
+    height: 2.5rem;
+    margin-bottom: 0;
+    white-space: nowrap;
 }
 
 /* 区块标题（与首页其它区块保持一致） */
@@ -388,7 +410,46 @@
 
 /* 列表页「查看全部文章」跳转按钮 */
 .cat-more {
-    margin-top: 0.9rem;
+    margin-top: 1.5rem;
+}
+
+/* ---------- 栏目页顶部：栏目切换条 ---------- */
+/* 不换行 + 横向滚动：窄窗口下按钮不会掉到第二行显得"往下偏移" */
+.cat-chips {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.45rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.1rem 0 0.4rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(128, 128, 128, 0.45) transparent;
+    -webkit-overflow-scrolling: touch;
+}
+
+.cat-chips::-webkit-scrollbar {
+    height: 6px;
+}
+
+.cat-chips::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.cat-chips::-webkit-scrollbar-thumb {
+    background-color: rgba(128, 128, 128, 0.45);
+    border-radius: 3px;
+}
+
+.cat-chips .button {
+    flex: 0 0 auto;
+    margin: 0;
+    white-space: nowrap;
+}
+
+/* 栏目页底部的「全部栏目 / 上一栏目 / 下一栏目 / 返回主页」 */
+.cat-foot {
+    row-gap: 0.5rem;
 }
 
 /* ---------- 正文表格 ---------- */
