@@ -22,7 +22,8 @@
 
 /* 浅色模式 - 起始*/
 .btn-pink{
-    background-color: #fb7299 !important;
+    /* 折叠按钮统一珊瑚粉（原 #fb7299 偏品红），与 weblist.css 保持一致 */
+    background-color: #ff6685 !important;
     border: none;
 }
 

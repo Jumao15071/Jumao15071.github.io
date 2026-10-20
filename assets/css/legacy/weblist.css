@@ -6,7 +6,8 @@
 }
 
 .btn-pink{
-    background-color: #f069ac !important;
+    /* 与 aboutme 页一致：折叠按钮用珊瑚粉，不再用偏紫的 #f069ac */
+    background-color: #ff6685 !important;
     border: none;
 }
 

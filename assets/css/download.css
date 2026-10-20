@@ -69,4 +69,18 @@
     .version-card .version-meta {
         color: #b5b5b5;
     }
+
+    /*「最新」标签在夜间模式别用亮粉底（深色页面里像一块白），
+       改成半透明粉底 + 亮粉字，语义不变 */
+    .tag.is-latest {
+        background-color: rgba(235, 74, 106, 0.18);
+        color: #ff9db1;
+    }
+
+    /* Bulma 的 is-light / is-white 标签夜间仍是白底，字几乎看不见 */
+    .tag.is-light,
+    .tag.is-white {
+        background-color: hsl(var(--bulma-scheme-h, 221), var(--bulma-scheme-s, 14%), 22%);
+        color: #e8eaee;
+    }
 }

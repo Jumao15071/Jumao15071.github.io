@@ -23,27 +23,28 @@
     animation-duration: 0.4s;
 }
 
+/* 汉堡图标 / 下拉箭头：hotpink 色相偏品红（发紫），统一成站点的珊瑚粉 */
 .navbar-burger span {
-    background-color: hotpink;
+    background-color: #ff6685;
 }
 
 .navbar-link:not(.is-arrowless)::after {
-    border-color: hotpink;
+    border-color: #ff6685;
 }
 
 .btn-pink {
-    background-color: hotpink;
+    background-color: #ff6685;
     border: none;
     color: white;
 }
 
 .btn-pink:hover {
-    background-color: #c1387b;
+    background-color: #f04d70;
     border: none;
 }
 
 .btn-pink:active {
-    background-color: #8c2945;
+    background-color: #d63a5c;
     border: none;
 }
 
@@ -86,8 +87,86 @@
     .message-body-text {
         color: white !important;
     }
+
+    /* 首页「加入 QQ 群」等 message 面板：Bulma 在夜间只把底色压暗了一点，
+       这里原来补的是半透明亮粉（#ff4b6f8d），整块面板在深色页面里是一大片
+       荧光粉，看着像没适配。夜间改成「深色面板 + 浅色文字 + 红色左边条」，
+       与其它卡片同一套质感；亮色模式完全不受影响。 */
+    .message {
+        background-color: hsl(var(--bulma-scheme-h, 221), var(--bulma-scheme-s, 14%), 13%);
+        border-radius: 0.5rem;
+        box-shadow: none;
+    }
+
+    .message.is-danger {
+        background-color: hsl(348, 45%, 14%);
+        border: 1px solid rgba(255, 107, 138, 0.3);
+    }
+
+    .message.is-info {
+        background-color: hsl(207, 45%, 14%);
+        border: 1px solid rgba(0, 174, 236, 0.3);
+    }
+
     .message-body {
-        background-color: #ff4b6f8d;
+        background-color: transparent;
+        border: none;
+        color: hsl(var(--bulma-scheme-h, 221), 8%, 88%);
+    }
+
+    /* 标题条：Bulma 夜间给的是 70% 亮度的浅粉，白字压上去只有 2.8:1，
+       换成更深一档的红，白字可读且不再整块发亮。 */
+    .message.is-danger > .message-header {
+        background-color: #b32847;
+        color: #ffffff;
+    }
+
+    .message.is-info > .message-header {
+        background-color: #0b6b8f;
+        color: #ffffff;
+    }
+
+    /* Bulma 的 is-light / is-white 按钮在夜间模式下仍是白底（#f3f4f6），
+       在深色页面里就是一块刺眼的白。夜间改成深底浅字，尺寸/间距不变。 */
+    .button.is-light,
+    .button.is-white {
+        background-color: hsl(var(--bulma-scheme-h, 221), var(--bulma-scheme-s, 14%), 17%);
+        border-color: hsl(var(--bulma-scheme-h, 221), var(--bulma-scheme-s, 14%), 26%);
+        color: #f1f3f6;
+    }
+
+    .button.is-light:hover,
+    .button.is-white:hover,
+    .button.is-light.is-hovered,
+    .button.is-white.is-hovered {
+        background-color: hsl(var(--bulma-scheme-h, 221), var(--bulma-scheme-s, 14%), 23%);
+        color: #ffffff;
+    }
+
+    /* 玫红色按钮（首页「了解详情 / 下载」、专栏底部按钮、导航「返回主页」）：
+       Bulma 夜间把 danger 提亮到 70%（#ff6685），一整排白字粉底在深色页面上
+       像没做暗色，白字对比度也只有 2.8:1。夜间换成深玫红底 + 白字，
+       观感与其它深色卡片统一，对比度达标；outlined 描边版保持原样。 */
+    .button.is-danger:not(.is-outlined),
+    .button.has-background-danger {
+        background-color: #c22a4a;
+        border-color: #c22a4a;
+        color: #ffffff;
+    }
+
+    .button.is-danger:not(.is-outlined):hover,
+    .button.is-danger:not(.is-outlined).is-hovered,
+    .button.has-background-danger:hover,
+    .button.has-background-danger.is-hovered {
+        background-color: #d63a5c;
+        border-color: #d63a5c;
+        color: #ffffff;
+    }
+
+    /* v0.3 之类的纯色徽标（非按钮，没有 hover 态） */
+    .has-background-danger {
+        background-color: #c22a4a !important;
+        color: #ffffff !important;
     }
 }
 

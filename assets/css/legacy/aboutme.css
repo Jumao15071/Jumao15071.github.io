@@ -11,7 +11,9 @@
 }
 
 .btn-pink{
-    background-color: #f069ac !important;
+    /* 窄屏右上角的折叠按钮：原来用 #f069ac，色相偏品红（看着发紫），
+       改成与导航「主页」按钮一致的珊瑚粉 #ff6685 */
+    background-color: #ff6685 !important;
     border: none;
 }
 

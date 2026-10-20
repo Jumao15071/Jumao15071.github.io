@@ -1,22 +1,133 @@
-@media (prefers-color-scheme: dark){
+/* 关于橘猫（pages/aboutme.html）深色模式
+   本页是 Bootstrap 5 + 少量自定义样式，没有 Bulma，所以这里：
+   1) 把 Bootstrap 5.3 的暗色主题变量在 prefers-color-scheme: dark 下启用；
+   2) 补上本页自己写死的黑字 / 白底 / 粉按钮在暗色下的取值。
+   亮色模式不受任何影响（全部规则都在 media query 内）。 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+        --bs-body-color: #d5d9e0;
+        --bs-body-color-rgb: 213, 217, 224;
+        --bs-body-bg: #14161a;
+        --bs-body-bg-rgb: 20, 22, 26;
+        --bs-emphasis-color: #f2f4f7;
+        --bs-emphasis-color-rgb: 242, 244, 247;
+        --bs-secondary-color: rgba(213, 217, 224, 0.72);
+        --bs-secondary-color-rgb: 213, 217, 224;
+        --bs-secondary-bg: #1d2126;
+        --bs-secondary-bg-rgb: 29, 33, 38;
+        --bs-tertiary-color: rgba(213, 217, 224, 0.55);
+        --bs-tertiary-color-rgb: 213, 217, 224;
+        --bs-tertiary-bg: #23272d;
+        --bs-tertiary-bg-rgb: 35, 39, 45;
+        --bs-border-color: rgba(255, 255, 255, 0.14);
+        --bs-border-color-translucent: rgba(255, 255, 255, 0.14);
+        --bs-link-color: #ff6b8a;
+        --bs-link-hover-color: #ff8ea4;
+        --bs-link-color-rgb: 255, 107, 138;
+        --bs-link-hover-color-rgb: 255, 142, 164;
+    }
+
     body {
-        background-color: #1c1c1c;
+        background-color: #14161a;
+        color: #d5d9e0;
     }
+
+    /* 顶部导航条 */
     #top-bar {
-        color: white !important;
-        background-color: rgba(48, 48, 48, 0.55);
-        backdrop-filter: blur(40px) saturate(200%);
-        border-top-left-radius: 0 !important;
-        border-top-right-radius: 0 !important;
-        border-color: #4d5154;
+        color: #f2f4f7 !important;
+        background-color: rgba(24, 27, 32, 0.72);
+        backdrop-filter: blur(30px) saturate(160%);
+        border-color: rgba(255, 255, 255, 0.12) !important;
     }
+
     #navbar-title {
-        color: white !important;
+        color: #f2f4f7 !important;
     }
-    #jumaosama-name,#introduce,#ZhuiQiu,#ZhuiQiu-2,#mettle,#mettle-2,#favorite-sentence,#favorite-sentence-2,#favorite-sentence-3,#others-want-to-say {
-        color: white !important;
+
+    /* 本页写死的黑字（Bootstrap 的 .text-black / .text-black-50 带 !important） */
+    #jumaosama-name,
+    #favorite-sentence {
+        color: #f2f4f7 !important;
     }
+
+    #introduce,
+    #favorite-sentence-2,
+    #favorite-sentence-3 {
+        color: #a3abb5 !important;
+    }
+
+    .text-black {
+        color: #f2f4f7 !important;
+    }
+
+    .text-black-50 {
+        color: #a3abb5 !important;
+    }
+
+    /* 卡片阴影在深底上没有意义，去掉（边框已随 --bs-border-color 变浅） */
+    .rounded.shadow-sm,
+    .row.g-0.border,
+    .border.rounded-4 {
+        box-shadow: none !important;
+    }
+
+    /* 导航右上角「主页」按钮 + 页面里的玫红按钮：
+       原色是 70% 亮度的亮粉（#ff6685），夜间白字压上去只有 2.8:1，
+       换成深玫红，与专栏/首页夜间按钮一致。 */
+    .button.is-danger,
+    .button.has-background-danger,
+    .has-background-danger {
+        --bulma-button-h: 348deg;
+        --bulma-button-s: 72%;
+        --bulma-button-l: 46%;
+        --bulma-button-background-l: 46%;
+        --bulma-button-border-l: 46%;
+        background-color: #c22a4a !important;
+        border-color: #c22a4a !important;
+        color: #ffffff !important;
+    }
+
+    .button.is-danger:hover,
+    .button.has-background-danger:hover,
+    .has-background-danger:hover {
+        background-color: #d63a5c !important;
+        border-color: #d63a5c !important;
+        color: #ffffff !important;
+    }
+
+    /* 描边按钮：暗色下用亮一点的粉字，避免在深底上发闷 */
+    .button.is-outlined {
+        --bulma-button-s: 90%;
+        --bulma-button-l: 66%;
+        background-color: transparent !important;
+        color: #ff8299 !important;
+        border-color: #ff8299 !important;
+    }
+
+    /* 顶栏里的 = 折叠按钮 */
+    .btn-pink {
+        background-color: #c22a4a !important;
+        color: #ffffff !important;
+        border: none;
+    }
+
     #footer {
-        color: white;
+        color: #9ba3ad;
+    }
+
+    /* 两块彩色渐变卡（「你好！欢迎访问」与「特长」）在夜间是全页最亮的地方，
+       白字压在上面只有 2.2～2.6:1。夜间把渐变压成暗色一档，白字保持可读。 */
+    #what-can-i-do {
+        background: linear-gradient(120deg, #8a2f3a 0, #7d5a49 140%) !important;
+    }
+
+    #pdtp [style*="linear-gradient"] {
+        background: linear-gradient(120deg, #8a2f52 0, #6b4a5b 110%) !important;
+    }
+
+    /* 页面里那些 hotpink 之类的点缀色在深底上偏亮，收一档 */
+    .text-pink {
+        color: #ff7d9c !important;
     }
 }

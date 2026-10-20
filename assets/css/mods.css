@@ -223,3 +223,85 @@
         margin: 0 0.25rem 1.2rem;
     }
 }
+
+/* ==========================================================================
+   夜间模式
+   本文件原本把标题/正文/标签都写成了深色（#2b2b2b、#444、#c8395a），
+   Bulma 换成深色页面后这些字就"消失"了；这里统一改成浅色一套。
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+    .mods-card {
+        background-color: rgba(255, 255, 255, 0.035);
+        border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .mods-card-title,
+    .mods-toc-title,
+    .opus h3,
+    .opus h4,
+    .opus h5,
+    .opus h6 {
+        color: #f2f4f7;
+    }
+
+    .mods-summary {
+        color: #c6ccd6;
+    }
+
+    .mods-tag {
+        background-color: rgba(255, 107, 138, 0.16);
+        color: #ff9db1;
+    }
+
+    .mods-toc {
+        background-color: rgba(255, 107, 138, 0.08);
+        border-left-color: #ff6b8a;
+    }
+
+    .mods-toc-item {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 107, 138, 0.3);
+        color: #ff9db1;
+    }
+
+    .mods-toc-item.is-sub {
+        background-color: transparent;
+        border-color: rgba(255, 255, 255, 0.14);
+        color: #c9a9b3;
+    }
+
+    .mods-toc-file {
+        color: #9aa1ab;
+    }
+
+    .mods-toc-item:hover {
+        background-color: #ff6b8a;
+        border-color: #ff6b8a;
+        color: #1a1c21;
+    }
+
+    .opus .mods-file-src {
+        color: #9aa1ab;
+    }
+
+    .opus .mods-file-src code {
+        color: #ff9db1;
+        background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .opus blockquote {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-left-color: rgba(255, 255, 255, 0.32);
+        color: #c6ccd6;
+    }
+
+    .opus code {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #ff9db1;
+    }
+
+    .opus .code-body code {
+        background: none;
+        color: #e6e9ef;
+    }
+}

@@ -1,4 +1,58 @@
 /* ==========================================================================
+   主题色变量
+   - 默认值 = 本文件原先各处硬编码的颜色（亮色模式外观不变）
+   - 文件末尾的 prefers-color-scheme: dark 块给出夜间模式取值
+   - 新增/修改配色时请走变量，不要再写死颜色，否则夜间模式又会露白
+   ========================================================================== */
+:root {
+    /* 强调色（站点主色：玫红） */
+    --art-accent: #eb4a6a;
+    --art-accent-strong: #c92b4b;
+    --art-accent-soft: rgba(235, 74, 106, 0.12);
+    --art-pink-2: #ff8fb1;
+
+    /* 卡片 / 列表条目 */
+    --art-card-bg: #ffffff;
+    --art-card-border: rgba(128, 128, 128, 0.5);
+    --art-card-border-weak: rgba(128, 128, 128, 0.3);
+    --art-rule: rgba(128, 128, 128, 0.35);
+    --art-thumb-bg: #f3f3f3;
+    --art-thumb-placeholder: #f2f7fb;
+    --art-title: #363636;
+    --art-meta: #9a9a9a;
+    --art-caption: #9d9d9d;
+    --art-meta-dim: #a0a0a0;
+    --art-desc: #7a7a7a;
+    --art-sub: #8a8a8a;
+    --art-sep: #cfcfcf;
+
+    /* 正文 */
+    --art-body-text: #333333;
+    --art-heading: #2b2b2b;
+    --art-strong: #222222;
+
+    /* 淡色板块（上一页/下一页、文档提示） */
+    --art-soft-bg: rgba(235, 74, 106, 0.05);
+    --art-note-bg: rgba(235, 74, 106, 0.07);
+    --art-note-color: #6a6a6a;
+
+    /* 跳转卡片 / 提及（B 站蓝） */
+    --art-panel-bg: #f7fbfd;
+    --art-panel-cover: #eef3f7;
+    --art-panel-border: rgba(0, 174, 236, 0.35);
+    --art-panel-ink: #0077a3;
+    --art-mention: #00aeec;
+
+    /* 行内公式 */
+    --art-math-bg: rgba(0, 174, 236, 0.09);
+    --art-math-fg: #1a5fb4;
+
+    /* 按钮 / 图片边框 */
+    --art-btn-bg: #ffffff;
+    --art-img-border: rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================================================
    文章（专栏移植）样式
    - 首页/列表页卡片：A4 纸比例（1 : 1.414），上 1:1 头图，下标题
    - 文章列表页条目：横向，左 1:1 头图，右标题
@@ -11,10 +65,10 @@
     flex-direction: column;
     /* A4 纸长宽比 */
     aspect-ratio: 1 / 1.4142;
-    border: 1px solid rgba(128, 128, 128, 0.5);
+    border: 1px solid var(--art-card-border);
     border-radius: 0.6rem;
     overflow: hidden;
-    background-color: #fff;
+    background-color: var(--art-card-bg);
     color: inherit;
     text-decoration: none;
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
@@ -22,12 +76,12 @@
 
 .article-card:hover {
     transform: translateY(-3px);
-    border-color: #eb4a6a;
+    border-color: var(--art-accent);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
 }
 
 .article-card:hover .art-title {
-    color: #eb4a6a;
+    color: var(--art-accent);
 }
 
 /* 上边：1:1 头图 */
@@ -36,7 +90,7 @@
     aspect-ratio: 1 / 1;
     flex: 0 0 auto;
     overflow: hidden;
-    background-color: #f3f3f3;
+    background-color: var(--art-thumb-bg);
 }
 
 .article-card .art-thumb img {
@@ -51,7 +105,7 @@
     flex: 1 1 auto;
     min-height: 0;
     padding: 0.7rem 0.85rem 0.8rem;
-    border-top: 1px solid rgba(128, 128, 128, 0.3);
+    border-top: 1px solid var(--art-card-border-weak);
     display: flex;
     flex-direction: column;
 }
@@ -60,7 +114,7 @@
     font-weight: 700;
     font-size: 1rem;
     line-height: 1.4;
-    color: #363636;
+    color: var(--art-title);
     /* 最多 3 行，超出省略 */
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -72,7 +126,7 @@
     margin-top: auto;
     padding-top: 0.4rem;
     font-size: 0.78rem;
-    color: #9a9a9a;
+    color: var(--art-meta);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -84,9 +138,9 @@
     align-items: stretch;
     gap: 1rem;
     padding: 0.75rem;
-    border: 1px solid rgba(128, 128, 128, 0.5);
+    border: 1px solid var(--art-card-border);
     border-radius: 0.6rem;
-    background-color: #fff;
+    background-color: var(--art-card-bg);
     color: inherit;
     text-decoration: none;
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
@@ -98,12 +152,12 @@
 
 .article-row:hover {
     transform: translateX(3px);
-    border-color: #eb4a6a;
+    border-color: var(--art-accent);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .article-row:hover .art-title {
-    color: #eb4a6a;
+    color: var(--art-accent);
 }
 
 .article-row .row-thumb {
@@ -114,7 +168,7 @@
     aspect-ratio: 1 / 1;
     border-radius: 0.5rem;
     overflow: hidden;
-    background-color: #f3f3f3;
+    background-color: var(--art-thumb-bg);
 }
 
 .article-row .row-thumb img {
@@ -137,18 +191,18 @@
     font-weight: 700;
     font-size: 1.25rem;
     line-height: 1.4;
-    color: #363636;
+    color: var(--art-title);
 }
 
 .article-row .art-desc {
     font-size: 0.9rem;
-    color: #7a7a7a;
+    color: var(--art-desc);
     line-height: 1.6;
 }
 
 .article-row .art-meta {
     font-size: 0.8rem;
-    color: #a0a0a0;
+    color: var(--art-meta-dim);
 }
 
 @media (max-width: 640px) {
@@ -184,7 +238,7 @@
 
 .article-page .article-head {
     padding: 1.5rem 0 1rem;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.35);
+    border-bottom: 1px solid var(--art-rule);
     margin-bottom: 1.5rem;
 }
 
@@ -197,13 +251,13 @@
 .article-page .article-head .article-sub {
     margin-top: 0.6rem;
     font-size: 0.9rem;
-    color: #8a8a8a;
+    color: var(--art-sub);
 }
 
 .opus {
     font-size: 1rem;
     line-height: 1.9;
-    color: #333;
+    color: var(--art-body-text);
     word-wrap: break-word;
     overflow-wrap: anywhere;
 }
@@ -218,8 +272,8 @@
     line-height: 1.5;
     margin: 2rem 0 1rem;
     padding-left: 0.7rem;
-    border-left: 4px solid #eb4a6a;
-    color: #2b2b2b;
+    border-left: 4px solid var(--art-accent);
+    color: var(--art-heading);
 }
 
 .opus h2:first-child {
@@ -228,11 +282,11 @@
 
 .opus strong {
     font-weight: 700;
-    color: #222;
+    color: var(--art-strong);
 }
 
 .opus a {
-    color: #eb4a6a;
+    color: var(--art-accent);
     word-break: break-all;
     transition: color 0.15s ease;
 }
@@ -241,7 +295,7 @@
    带 class 的 <a>（jump-card、code-btn、fig-link 等组件）不套用这套状态。 */
 .opus a:not([class]):hover,
 .opus a:not([class]):focus-visible {
-    color: #c92b4b;
+    color: var(--art-accent-strong);
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.16em;
@@ -277,7 +331,7 @@
     max-width: 100%;
     height: auto;
     border-radius: 0.5rem;
-    border: 1px solid rgba(128, 128, 128, 0.35);
+    border: 1px solid var(--art-rule);
     /* block + auto 居中：inline-block 会在图片底下留出行框基线空隙（约 10px），
        让图片与下方图注显得离得远 */
     display: block;
@@ -287,7 +341,7 @@
 /* 图注（B 站专栏里图片下方的灰色小字） */
 .opus .fig-caption {
     text-align: center;
-    color: #9d9d9d;
+    color: var(--art-caption);
     font-size: 0.88rem;
     margin: -0.8rem 0 1.4rem;
 }
@@ -295,7 +349,7 @@
 .article-foot {
     margin: 2.5rem 0 3rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(128, 128, 128, 0.35);
+    border-top: 1px solid var(--art-rule);
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
@@ -329,7 +383,7 @@
     max-width: 100%;
     height: auto;
     border-radius: 0.75rem;
-    border: 1px solid rgba(128, 128, 128, 0.35);
+    border: 1px solid var(--art-rule);
 }
 
 /* ---------- 副标题：作者 / 时间 / 分类 ---------- */
@@ -342,7 +396,7 @@
 }
 
 .article-sub .art-author a {
-    color: #eb4a6a;
+    color: var(--art-accent);
     font-weight: 700;
 }
 
@@ -351,12 +405,12 @@
 }
 
 .art-sep {
-    color: #cfcfcf;
+    color: var(--art-sep);
 }
 
 .article-sub .art-cat {
-    color: #eb4a6a;
-    background-color: rgba(235, 74, 106, 0.12);
+    color: var(--art-accent);
+    background-color: var(--art-accent-soft);
     border-radius: 1rem;
     padding: 0.05rem 0.6rem;
     font-size: 0.82rem;
@@ -371,7 +425,7 @@
 .article-sub a.art-cat:hover,
 .article-sub a.art-cat:focus {
     color: #fff;
-    background-color: #eb4a6a;
+    background-color: var(--art-accent);
 }
 
 /* ---------- 分类分组与折叠 ---------- */
@@ -385,17 +439,17 @@
     gap: 0.6rem;
     font-size: 1.4rem;
     font-weight: 700;
-    color: #2b2b2b;
+    color: var(--art-heading);
     margin: 0 0 1rem;
     padding-left: 0.7rem;
-    border-left: 4px solid #eb4a6a;
+    border-left: 4px solid var(--art-accent);
 }
 
 .article-cat-count {
     font-size: 0.78rem;
     font-weight: 400;
     color: #fff;
-    background-color: #eb4a6a;
+    background-color: var(--art-accent);
     border-radius: 1rem;
     padding: 0.1rem 0.6rem;
 }
@@ -492,10 +546,10 @@
     position: relative;
     margin: 1.5rem auto;
     max-width: 100%;
-    border: 1px solid rgba(0, 174, 236, 0.35);
+    border: 1px solid var(--art-panel-border);
     border-radius: 0.6rem;
     overflow: hidden;
-    background-color: #f7fbfd;
+    background-color: var(--art-panel-bg);
     text-decoration: none;
     transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
@@ -529,7 +583,7 @@
 .jump-card-fallback {
     display: block;
     padding: 1rem 1.2rem;
-    color: #0077a3;
+    color: var(--art-panel-ink);
     font-weight: 700;
 }
 
@@ -547,7 +601,7 @@
     height: 4.6rem;
     border-radius: 0.45rem;
     overflow: hidden;
-    background-color: #eef3f7;
+    background-color: var(--art-panel-cover);
 }
 
 .opus .jump-card.is-text .jump-card-cover img {
@@ -568,16 +622,16 @@
     font-weight: 700;
     font-size: 1rem;
     line-height: 1.45;
-    color: #2b2b2b;
+    color: var(--art-heading);
 }
 
 .opus .jump-card.is-text:hover .jump-card-title {
-    color: #0077a3;
+    color: var(--art-panel-ink);
 }
 
 .opus .jump-card-meta {
     font-size: 0.82rem;
-    color: #9a9a9a;
+    color: var(--art-meta);
 }
 
 .opus .jump-card.is-text .jump-card-badge {
@@ -604,7 +658,7 @@
 
 /* @提及 */
 .opus .opus-mention {
-    color: #00aeec;
+    color: var(--art-mention);
     font-weight: 700;
 }
 
@@ -678,8 +732,8 @@
 .opus .inline-math {
     padding: 0 0.28rem;
     border-radius: 0.2rem;
-    background-color: rgba(0, 174, 236, 0.09);
-    color: #1a5fb4;
+    background-color: var(--art-math-bg);
+    color: var(--art-math-fg);
     font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
     font-size: 0.92em;
     white-space: nowrap;
@@ -703,15 +757,15 @@
 }
 
 .opus .color-pink-03 {
-    color: #eb4a6a;
+    color: var(--art-accent);
 }
 
 .opus .color-pink-02 {
-    color: #ff8fb1;
+    color: var(--art-pink-2);
 }
 
 .opus .color-blue-03 {
-    color: #00aeec;
+    color: var(--art-mention);
 }
 
 /* ---------- 正文图与图注 ---------- */
@@ -739,7 +793,7 @@
 
 .row-thumb.is-placeholder,
 .art-thumb.is-placeholder {
-    background-color: #f2f7fb;
+    background-color: var(--art-thumb-placeholder);
 }
 
 .row-thumb.is-placeholder img,
@@ -768,9 +822,9 @@
     gap: 0.3rem;
     min-width: 0;
     padding: 0.7rem 0.9rem;
-    border: 1px solid rgba(128, 128, 128, 0.35);
+    border: 1px solid var(--art-rule);
     border-radius: 0.6rem;
-    background-color: rgba(235, 74, 106, 0.05);
+    background-color: var(--art-soft-bg);
     color: inherit;
     text-decoration: none;
     transition: border-color 0.15s, background-color 0.15s;
@@ -783,14 +837,14 @@
 
 .article-pager .pager-item:hover,
 .article-pager .pager-item:focus-visible {
-    border-color: #eb4a6a;
-    background-color: rgba(235, 74, 106, 0.12);
+    border-color: var(--art-accent);
+    background-color: var(--art-accent-soft);
 }
 
 .article-pager .pager-dir {
     font-size: 0.8rem;
     font-weight: 700;
-    color: #eb4a6a;
+    color: var(--art-accent);
 }
 
 /* 标题预览：最多两行，超出省略 */
@@ -812,7 +866,7 @@
 }
 
 .article-pager .pager-item.is-disabled .pager-dir {
-    color: #8a8a8a;
+    color: var(--art-sub);
 }
 
 @media screen and (max-width: 640px) {
@@ -831,8 +885,8 @@
     display: inline-block;
     padding: 0.05rem 0.55rem;
     border-radius: 999px;
-    background-color: rgba(235, 74, 106, 0.12);
-    color: #eb4a6a;
+    background-color: var(--art-accent-soft);
+    color: var(--art-accent);
     font-size: 0.78rem;
     font-weight: 700;
     line-height: 1.5;
@@ -840,7 +894,7 @@
 
 .doc-source {
     margin: 0.45rem 0 0;
-    color: #8a8a8a;
+    color: var(--art-sub);
     font-size: 0.85rem;
     word-break: break-word;
 }
@@ -848,10 +902,10 @@
 .doc-note {
     margin: 0.35rem 0 0;
     padding: 0.5rem 0.8rem;
-    border-left: 3px solid #eb4a6a;
+    border-left: 3px solid var(--art-accent);
     border-radius: 0 0.3rem 0.3rem 0;
-    background-color: rgba(235, 74, 106, 0.07);
-    color: #6a6a6a;
+    background-color: var(--art-note-bg);
+    color: var(--art-note-color);
     font-size: 0.85rem;
     line-height: 1.6;
 }
@@ -864,7 +918,7 @@
     font-weight: 700;
     line-height: 1.6;
     margin: 1.3rem 0 0.6rem;
-    color: #2b2b2b;
+    color: var(--art-heading);
 }
 
 /* ---------- 中英切换按钮（副标题最右侧） ---------- */
@@ -874,14 +928,14 @@
     line-height: 1.55;
     padding: 0.05rem 0.6rem;
     border-radius: 0.35rem;
-    background-color: #fff;
-    border: 1px solid #eb4a6a;
-    color: #eb4a6a !important;
+    background-color: var(--art-btn-bg);
+    border: 1px solid var(--art-accent);
+    color: var(--art-accent) !important;
     text-decoration: none;
 }
 
 .lang-btn:hover {
-    background-color: #eb4a6a;
+    background-color: var(--art-accent);
     color: #fff !important;
     text-decoration: none;
 }
@@ -914,9 +968,111 @@
 }
 
 .opus-fig.is-fullpage img {
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--art-img-border);
     border-radius: 0.35rem;
     box-shadow: 0 1px 6px rgba(26, 29, 32, 0.16);
 }
 
 
+
+
+/* ==========================================================================
+   夜间模式（跟随系统 prefers-color-scheme）
+   Bulma 在夜间模式下会把页面底色换成深色，本文件的卡片/正文/跳转卡片
+   必须一起换，否则会出现「深色页面上浮着白色块、正文 #333 看不清」。
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* 强调色在深底上提亮一档，保证可读 */
+        --art-accent: #ff6b8a;
+        --art-accent-strong: #ff8ea4;
+        --art-accent-soft: rgba(255, 107, 138, 0.16);
+        --art-pink-2: #ffb3c9;
+
+        /* 卡片：比页面底色(hsl 221 14% 9%)略亮一档，靠边框分层 */
+        --art-card-bg: hsl(var(--bulma-scheme-h, 221), var(--bulma-scheme-s, 14%), 12%);
+        --art-card-border: rgba(255, 255, 255, 0.15);
+        --art-card-border-weak: rgba(255, 255, 255, 0.1);
+        --art-rule: rgba(255, 255, 255, 0.14);
+        --art-thumb-bg: hsl(var(--bulma-scheme-h, 221), var(--bulma-scheme-s, 14%), 16%);
+        --art-thumb-placeholder: hsl(200, 25%, 15%);
+        --art-title: #f1f3f6;
+        --art-meta: #9aa1ab;
+        --art-caption: #9aa1ab;
+        --art-meta-dim: #98a0aa;
+        --art-desc: #aeb5bf;
+        --art-sub: #9ba3ad;
+        --art-sep: #5b626c;
+
+        /* 正文：深灰底上用浅灰，不再用 #333 */
+        --art-body-text: #d5d9e0;
+        --art-heading: #f2f4f7;
+        --art-strong: #ffffff;
+
+        --art-soft-bg: rgba(255, 107, 138, 0.08);
+        --art-note-bg: rgba(255, 107, 138, 0.1);
+        --art-note-color: #b9c0c9;
+
+        --art-panel-bg: hsl(200, 40%, 13%);
+        --art-panel-cover: hsl(200, 28%, 18%);
+        --art-panel-border: rgba(0, 174, 236, 0.45);
+        --art-panel-ink: #7cc9f0;
+        --art-mention: #7cc9f0;
+
+        --art-math-bg: rgba(0, 174, 236, 0.18);
+        --art-math-fg: #9ed2ff;
+
+        --art-btn-bg: transparent;
+        --art-img-border: rgba(255, 255, 255, 0.16);
+    }
+
+    /* 夜间模式下图片描边过黑会糊在底上，换成浅色细边 */
+    .opus figure img,
+    .article-cover img,
+    .opus-fig.is-fullpage img {
+        border-color: var(--art-img-border);
+    }
+
+    .opus-fig.is-fullpage img {
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    /* 由 docx/doc 转换来的站内文档，正文里带着原文档的内联颜色
+       （style="color:#222" / #244061 / #0b0080 等深色），变量管不到，
+       夜间模式下在深底上几乎看不见。这里整体提亮：
+       深色被抬到可读区间，原本就是红色的强调文字（#ff0000）保持红色。
+       优先给「含内联色文字的段落」上一层滤镜（几百个 span 各建图层太重），
+       不支持 :has() 的旧浏览器退回逐元素提亮。 */
+    @supports selector(:has(*)) {
+        .opus p:has([style*="color"]),
+        .opus li:has([style*="color"]),
+        .opus h2:has([style*="color"]),
+        .opus h3:has([style*="color"]),
+        .opus h4:has([style*="color"]),
+        .opus td:has([style*="color"]),
+        .opus th:has([style*="color"]),
+        .opus blockquote:has([style*="color"]) {
+            filter: brightness(3) saturate(1.15);
+        }
+    }
+
+    @supports not selector(:has(*)) {
+        .opus [style*="color"] {
+            filter: brightness(3) saturate(1.15);
+        }
+    }
+
+    /* 副标题里的 cv 原地址按钮 / 跳转卡片角标：B 站蓝（#00aeec）配白字在夜间
+       只有 2.5:1，且蓝块本身很亮。夜间压深一档，白字对比升到 4.5 以上。 */
+    .cv-btn {
+        background-color: #0b7fa8;
+    }
+
+    .cv-btn:hover {
+        background-color: #0e93c2;
+    }
+
+    .jump-card-badge {
+        background-color: rgba(11, 127, 168, 0.95);
+    }
+}
