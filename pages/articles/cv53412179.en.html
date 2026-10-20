@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How It Works: Static 0-Tick Flickering Portal Zombified Piglin Farm - 橘猫的资源站</title>
-    <meta name="description" content="Zombified Piglins — long known as Zombie Pigmen — are the zombified variant of Piglins. This article covers their mob mechanics an">
+    <meta name="description"
+        content="Zombified Piglins — long known as Zombie Pigmen — are the zombified variant of Piglins. This article covers their mob mechanics an">
     <link rel="stylesheet" href="../../assets/lib/bulma/css/bulma.css">
     <link rel="stylesheet" href="../../assets/lib/katex/katex.min.css">
     <link rel="stylesheet" href="../../assets/css/index.css">
@@ -32,7 +33,8 @@
                 <div class="navbar-item">
                     <div class="field is-grouped">
                         <p class="control">
-                            <a class="button has-background-danger has-text-white" href="../../index.html"><span>Home</span></a>
+                            <a class="button has-background-danger has-text-white"
+                                href="../../index.html"><span>Home</span></a>
                         </p>
                     </div>
                 </div>
@@ -42,161 +44,859 @@
 
     <section class="article-page mt-4rem">
         <figure class="article-cover">
-            <img src="../../assets/articles/covers/cv53412179.webp" alt="How It Works: Static 0-Tick Flickering Portal Zombified Piglin Farm">
+            <img src="../../assets/articles/covers/cv53412179.webp"
+                alt="How It Works: Static 0-Tick Flickering Portal Zombified Piglin Farm">
         </figure>
         <div class="article-head">
             <h1>How It Works: Static 0-Tick Flickering Portal Zombified Piglin Farm</h1>
             <div class="article-sub">
-                <span class="art-author">Author: <a href="https://space.bilibili.com/37691488" target="_blank" rel="noopener noreferrer">橘猫sama</a></span>
+                <span class="art-author">Author: <a href="https://space.bilibili.com/37691488" target="_blank"
+                        rel="noopener noreferrer">橘猫sama</a></span>
                 <span class="art-sep">·</span>
                 <span class="art-date">Updated 2026-10-18 11:33</span>
-                <a class="cv-btn" href="https://www.bilibili.com/opus/1258535854280802322" target="_blank" rel="noopener noreferrer" title="View the original post on bilibili">cv53412179</a>
+                <a class="cv-btn" href="https://www.bilibili.com/opus/1258535854280802322" target="_blank"
+                    rel="noopener noreferrer" title="View the original post on bilibili">cv53412179</a>
                 <span class="art-sep">·</span>
-                <a class="art-cat" href="../category/entity.html" title="View all posts in Entity Mechanics">Entity Mechanics</a>
+                <a class="art-cat" href="../category/entity.html" title="View all posts in Entity Mechanics">Entity
+                    Mechanics</a>
                 <a class="lang-btn" href="cv53412179.html" title="阅读中文版">中文</a>
             </div>
         </div>
 
         <nav class="article-pager is-top" aria-label="previous / next">
-            <a class="pager-item is-prev" href="cv40350407.html" title="« Previous: MCBE 部分掉落物及抢夺计算相关机制" aria-label="« Previous: MCBE 部分掉落物及抢夺计算相关机制">
+            <a class="pager-item is-prev" href="cv40350407.html" title="« Previous: MCBE 部分掉落物及抢夺计算相关机制"
+                aria-label="« Previous: MCBE 部分掉落物及抢夺计算相关机制">
                 <span class="pager-dir">« Previous</span>
                 <span class="pager-title">MCBE 部分掉落物及抢夺计算相关机制</span>
             </a>
-            <a class="pager-item is-next" href="cv53471290.en.html" title="Next »: How Raids Work in Bedrock Edition" aria-label="Next »: How Raids Work in Bedrock Edition">
+            <a class="pager-item is-next" href="cv53471290.en.html" title="Next »: How Raids Work in Bedrock Edition"
+                aria-label="Next »: How Raids Work in Bedrock Edition">
                 <span class="pager-dir">Next »</span>
                 <span class="pager-title">How Raids Work in Bedrock Edition</span>
             </a>
         </nav>
 
         <div class="opus is-bilingual" data-content-kind="para">
-        <p>Zombified Piglins, long known as Zombie Pigmen (or pigmen for short), are the zombified variant of Piglins.</p>
-        <p>This article gives a quick overview of their mob mechanics, then explains why a farm driven by rapidly relit Nether portals works, and how modern designs keep it fast and stable.</p>
-        <hr class="opus-pagebreak">
-        <h2>Spawning</h2>
-        <p>First, a quick summary of how Zombified Piglins spawn:</p>
-        <p>Every naturally spawned Zombified Piglin has a 5% chance to be a baby. Most spawn holding a golden sword, and 5% spawn with a golden spear.</p>
-        <p>They spawn in groups of 2–4 in the Nether Wastes and Crimson Forest at light level 11 or below, but never on Nether Wart Blocks or Shroomlights.</p>
-        <p>Natural spawns make a poor farm. Nether portals can spawn them as well, and much faster.</p>
-        <p>Every random tick, each Nether portal block has a small chance to spawn one:</p>
-        <p>Easy difficulty <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mn>2000</mn></mfrac></mrow><annotation encoding="application/x-tex"> \frac{1}{2000}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2000</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
-        <p>Normal difficulty <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>2</mn><mn>2000</mn></mfrac></mrow><annotation encoding="application/x-tex"> \frac{2}{2000}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2000</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
-        <p>Hard difficulty <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>3</mn><mn>2000</mn></mfrac></mrow><annotation encoding="application/x-tex"> \frac{3}{2000}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2000</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
-        <p>They appear on the east or south side of the portal, depending on which way it faces, one block above the portal's lowest obsidian. No block can obstruct this spawn.</p>
-        <p>In Bedrock Edition, every portal block also makes one spawn attempt the instant the portal is lit, at the same chance. Relighting and breaking portals therefore mass-produces Zombified Piglins.</p>
-        <p>Piglins spawned this way count against the mob cap, and the portal cannot send them to the Nether for the first 15 s.</p>
-        <p>A bug prevents them from spawning in portals below Y=0. (MCPE-149718)</p>
-        <p>In addition, 26.0+ has a 0.75% chance to spawn a special variant that cannot ride minecarts. (MCPE-236034)</p>
-        <hr class="opus-pagebreak">
-        <h2>Nether portals</h2>
-        <p>Let's walk through the farm in the video and the principles behind it. The most common, stable and efficient design today is this one:</p>
-        <p><a href="https://www.bilibili.com/video/BV1f3eqzuEQR" target="_blank" rel="noopener noreferrer">Simple unload-resistant static flickering portal pigman farm, by TK Minecraft</a></p>
-        <p>Why does the facing matter? Why must the portals straddle exactly two chunks and measure 22×22? Why is the portal 22×21? Why does the igniter rig look the way it does? Why does the dispenser throw powder snow buckets at 2.5 Hz (one cycle every 0.4 s)? Read on.</p>
-        <h3><strong>Why does the facing matter?</strong></h3>
-        <p>Portals are lit by fire spreading from lava onto a flammable block, and fire checks its neighbours in this order:</p>
-        <p>East &gt; West &gt; Up &gt; Down &gt; South &gt; North</p>
-        <p>That is why the video settles the build direction first, to keep ignition as reliable as possible. (Once the other five directions are walled off, the difference is small anyway.)</p>
-        <figure class="opus-fig">
-        <img src="../../assets/articles/cv53412179/b72cbb1cebdf.webp" width="2560" height="1440" alt="The portal's facing sets how efficient the igniter rig is" loading="lazy">
-        <figcaption class="fig-caption">The portal's facing sets how efficient the igniter rig is</figcaption>
-    </figure>
-        <h3><strong>Why exactly two chunks?</strong></h3>
-        <p>Why exactly two chunks? Would slightly more or less on either side not work? What about three chunks?</p>
-        <p>That comes down to the core of this article: pending ticks.</p>
-        <p>When a portal is built, each portal block schedules a pending tick (pt; Java Edition calls it a scheduled tick). A single chunk can process at most 100 pending ticks per game tick (0.05 s).</p>
-        <p>Running a pending tick calls function A (listed at the end of the article). Its last two lines are the spawn attempt itself, so every pending tick gets a roll.</p>
-        <p>Before that, we need to know how a dispenser behaves. One full eject/retract cycle with a powder snow bucket takes 0.4 s:</p>
-        <p>0.1 s to eject, 0.2 s cooldown, 0.3 s to retract, 0.4 s cooldown</p>
-        <p>With the flicker portal running at 2.5 Hz (cycle T = 0.4 s), a game tick of t = 0.05 s, and a ceiling of N = 100 pending ticks per tick, the number of pending ticks per cycle is:</p>
-        <div class="math-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>C</mi><mo>=</mo><mfrac><mi>T</mi><mi>t</mi></mfrac><mo>×</mo><mi>N</mi><mo>=</mo><mfrac><mrow><mn>0.4</mn><mtext>s</mtext></mrow><mrow><mn>0.05</mn><mtext>s</mtext></mrow></mfrac><mo>×</mo><mn>100</mn><mo>=</mo><mn>800</mn><mtext> (pending ticks)</mtext></mrow><annotation encoding="application/x-tex">C = \frac{T}{t} \times N = \frac{0.4\text{s}}{0.05\text{s}} \times 100 = 800 \text{ (pending ticks)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0463em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">t</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0.05</span><span class="mord text"><span class="mord">s</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0.4</span><span class="mord text"><span class="mord">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">100</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">800</span><span class="mord text"><span class="mord"> (pending ticks)</span></span></span></span></span></span></div>
-        <p>So each chunk can process 800 pending ticks in one 0.4 s cycle.</p>
-        <p>The goal is to keep those 800 slots filled with portal blocks: saturating pending ticks is how you maximise the spawn rate.</p>
-        <p>[MinecraftBE] Pigman farm too slow? Too laggy? Here are the numbers](https://www.bilibili.com/video/BV1Je411g72y)</p>
-        <p>Take the farm in the video: two portals, each spanning three chunks (3/16/2) and 21 blocks tall. Lighting one portal produces 672 pending ticks in the middle chunk. With the dispenser running at 2.5 Hz as well, the portal is open for 0.2 s and closed for 0.2 s. The 400 pending ticks are spent while it is open, and the remaining 272 are wasted while it is closed, because a closed portal cannot spawn anything.</p>
-        <p>Stack enough portals and you run into the per-tick limit: a cycle that cannot spend all of its pending ticks leaves a pt backlog. The usual symptom is that you shut the farm down and the portals you left lit keep producing Zombified Piglins. Be careful here — a large backlog can permanently damage your world.</p>
-        <p>So, to state the conclusion plainly: more portals is not better. The pending ticks and the spawn output a chunk can handle are both finite. To get the most out of the spawn rate, split the portals evenly and keep each one at 22×22 (400 portal blocks), precisely to control pending ticks.</p>
-        <figure class="opus-fig">
-        <img src="../../assets/articles/cv53412179/5a756adb9c89.webp" width="2560" height="1440" alt="Each portal is split evenly: 200 portal blocks and 200 pending ticks per side" loading="lazy">
-        <figcaption class="fig-caption">Each portal is split evenly: 200 portal blocks and 200 pending ticks per side</figcaption>
-    </figure>
-        <p>But the farm above also runs at 2.5 Hz, so why doesn't it waste pending ticks?</p>
-        <p>Because observers, dispensers, droppers and even lava all react to pending ticks.</p>
-        <p>A short, well-timed pt backlog shifts when the dispenser fires, so it can eject the bucket, retract it and let the lava ignite within the same second.</p>
-        <p>700 or more portal blocks deliver the ideal backlog, which keeps the portal lit the whole time: not a single spawn is wasted.</p>
-        <p>Mind the budget, though. The dispenser consumes pt as well, so remove one column of portals in the portal's chunk, reserve (portals/2, rounded up) × 3 pt for the lava plus portals × 2 pt for the dispensers, and build nothing else in that chunk.</p>
-        <p>For four portals, reserve 4×2 pt (dispensers) + 2×3 pt (igniter).</p>
-        <figure class="opus-fig">
-        <img src="../../assets/articles/cv53412179/b71c9457d868.webp" width="2560" height="1440" alt="Remove one column of portal blocks in the powder-snow door's chunk" loading="lazy">
-        <figcaption class="fig-caption">Remove one column of portal blocks in the powder-snow portal's chunk</figcaption>
-    </figure>
-        <hr class="opus-pagebreak">
-        <h2>The igniter rig</h2>
-        <p>With the portal and the breaker covered, one part remains: the igniter rig.</p>
-        <p>You can craft flint and steel in a crafter and have a dispenser use it, but that burns materials. Lava lights portals for free.</p>
-        <p>In Bedrock Edition, every time lava ticks it first checks whether the block directly above it is air or a flammable block; if neither, nothing ignites. It then draws 10 random blocks from the 3×3×3 cube centred on the lava, independent uniform draws with repeats allowed. As soon as a flammable block comes up, it checks that block's six orthogonal neighbours in the order +X, −X, +Y, −Y, +Z, −Z and places fire on the first air block it finds, then stops. Fire can therefore appear up to 2 blocks horizontally from the lava, except for the four corners of the 5×5, or up to 2 blocks vertically, in which case the horizontal range shrinks to 3×3. The flammable block itself must sit inside the 3×3×3 cube. Fire placement checks neither support nor a valid fire location, so fire can float in mid-air.</p>
-        <figure class="opus-fig">
-        <img src="../../assets/articles/cv53412179/30f5fc13cc62.webp" width="161" height="162" alt="Orange wool marks flammable blocks. Orange stained glass marks the six adjacent air blocks where fire can appear, grey stained glass the ring around them, and t" loading="lazy">
-        <figcaption class="fig-caption">Orange wool marks flammable blocks. Orange stained glass marks the six adjacent air blocks where fire can appear, grey stained glass the ring around them, and the outer planks the safe zone.</figcaption>
-    </figure>
-        <p>Blocks such as crafting tables and trapdoors carry fire but do not burn away.</p>
-        <p>Natural spread is still slow. The fix is to activate the lava.</p>
-        <p>You may have heard that high-frequency redstone makes fluids flow faster. Cobblestone generators and moss farms rely on this.</p>
-        <figure class="opus-fig">
-        <img src="../../assets/articles/cv53412179/7ef83fc10437.webp" width="2560" height="1440" alt="High-frequency redstone charges a trapdoor, and the trapdoor activates the lava" loading="lazy">
-        <figcaption class="fig-caption">High-frequency redstone charges a trapdoor, and the trapdoor activates the lava</figcaption>
-    </figure>
-        <p>Before 1.21.70, fluids came in two kinds: static and dynamic. An nc update turns a static fluid dynamic and schedules 2 pt. When the pt fires, the fluid turns static again.</p>
-        <blockquote><p>Fluid activation in a cobblestone generator really means inserting a third party's pt between the fluid's two pt.<br>The rough timeline runs:<br>0gt: the static fluid takes an nc update, schedules 2 pt to fire after n gt, and becomes dynamic.<br>ngt: the first dynamic pt fires; the fluid turns static and tries to flow, and lava additionally tries to ignite. The third party's pt fires, producing an nc update, so the fluid schedules another 2 pt after n gt and turns dynamic again. The second dynamic pt fires, and the fluid turns static and tries to flow and ignite. The fluid ends up static again, but with two extra pt queued n gt out. If it takes another nc update within that window it ends up with 4 pt and can flow twice per cycle; repeat that and the fluid is activated. A dynamic fluid taking an nc update produces no pt.</p></blockquote>
-        <p>Before 1.21.70 the lava had to be isolated in single cells, because switching between static and dynamic also fires nc updates. The design looked like this:</p>
-        <figure class="opus-fig">
-        <img src="../../assets/articles/cv53412179/e3d6486d3b45.webp" width="2560" height="1440" alt="Lava isolated in single cells" loading="lazy">
-        <figcaption class="fig-caption">Lava isolated in single cells</figcaption>
-    </figure>
-        <figure class="opus-fig">
-        <img src="../../assets/articles/cv53412179/92a2bee3ebb6.webp" width="2560" height="1440" alt="The side trapdoors supply nc updates too (works in every version)" loading="lazy">
-        <figcaption class="fig-caption">The side trapdoors supply nc updates too (works in every version)</figcaption>
-    </figure>
-        <p>Before 1.21.70 this had to be stacked four layers deep with delays: lava's pt fires after 30 gt, and each layer adds 8 gt at 2.5 Hz or 6 gt at 3.33 Hz, giving totals of 32 gt and 30 gt. Since 1.21.70, just copy the picture.</p>
-        <p>The chance that three lava sources light both portals is:</p>
-        <div class="math-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mn>1</mn><mo>−</mo><mrow><mo fence="true">(</mo><msup><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo fence="true">)</mo></mrow><mn>30</mn></msup><mo>+</mo><mrow><mo fence="true">(</mo><mn>1</mn><mo>−</mo><msup><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo fence="true">)</mo></mrow><mn>10</mn></msup><mo fence="true">)</mo></mrow><msup><mrow><mo fence="true">(</mo><mfrac><mn>2</mn><mn>3</mn></mfrac><mo fence="true">)</mo></mrow><mn>20</mn></msup><mo>+</mo><msup><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo fence="true">)</mo></mrow><mn>10</mn></msup><mrow><mo fence="true">(</mo><mn>1</mn><mo>−</mo><msup><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo fence="true">)</mo></mrow><mn>10</mn></msup><mo fence="true">)</mo></mrow><msup><mrow><mo fence="true">(</mo><mfrac><mn>2</mn><mn>3</mn></mfrac><mo fence="true">)</mo></mrow><mn>10</mn></msup><mo>+</mo><msup><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo fence="true">)</mo></mrow><mn>20</mn></msup><mrow><mo fence="true">(</mo><mn>1</mn><mo>−</mo><msup><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo fence="true">)</mo></mrow><mn>10</mn></msup><mo fence="true">)</mo></mrow><mo fence="true">)</mo></mrow><mo>=</mo><mn>99.970</mn><mtext>%</mtext></mrow><annotation encoding="application/x-tex">1-\left(\left(\frac{1}{3}\right)^{30}+\left(1-\left(\frac{1}{3}\right)^{10}\right)\left(\frac{2}{3}\right)^{20}+\left(\frac{1}{3}\right)^{10}\left(1-\left(\frac{1}{3}\right)^{10}\right)\left(\frac{2}{3}\right)^{10}+\left(\frac{1}{3}\right)^{20}\left(1-\left(\frac{1}{3}\right)^{10}\right)\right)=99.970\text{\%}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:3em;vertical-align:-1.25em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">(</span></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.654em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">30</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">(</span></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.654em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size4">)</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.654em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">20</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.654em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">(</span></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.654em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size4">)</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.654em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.654em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">20</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">(</span></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.654em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size4">)</span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size4">)</span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8056em;vertical-align:-0.0556em;"></span><span class="mord">99.970</span><span class="mord text"><span class="mord">%</span></span></span></span></span></span></div>
-        <p>Since 1.21.70 there is no static/dynamic split. An nc update simply schedules one pt to fire n gt later.</p>
-        <figure class="opus-fig">
-        <img src="../../assets/articles/cv53412179/8f083ed7f034.webp" width="2560" height="1440" alt="The build is smaller" loading="lazy">
-        <figcaption class="fig-caption">The build is smaller</figcaption>
-    </figure>
-        <figure class="opus-fig">
-        <img src="../../assets/articles/cv53412179/8a8bf85fc734.webp" width="2560" height="1440" alt="For 1.21.70–26.0 only" loading="lazy">
-        <figcaption class="fig-caption">For 1.21.70–26.0 only</figcaption>
-    </figure>
-        <p>Since 1.26.10 a fluid can schedule only one pt per tick at the same position. Either build the pre-1.21.70 version, or join the cells together:</p>
-        <figure class="opus-fig">
-        <img src="../../assets/articles/cv53412179/693dfc9760e3.webp" width="2560" height="1440" alt="No static/dynamic split, so the lava cells can be joined" loading="lazy">
-        <figcaption class="fig-caption">No static/dynamic split, so the lava cells can be joined</figcaption>
-    </figure>
-        <figure class="opus-fig">
-        <img src="../../assets/articles/cv53412179/8c87921487ab.webp" width="2560" height="1440" alt="For 26.10+" loading="lazy">
-        <figcaption class="fig-caption">For 26.10+</figcaption>
-    </figure>
-        <hr class="opus-pagebreak">
-        <h2>High-frequency clocks</h2>
-        <p>The redstone itself is straightforward. A 2.5 Hz breaker opens and lights the portal once every 8 gt. The dispensers must fire twice every 8 gt, so once every 4 gt: a 2 gt pulse every 4 gt, the fastest clock Bedrock allows. The igniter fires once every 8 gt, an 8 gt pulse every 16 gt. Do not use an observer clock here, because observers also react to pt; the observer loop only supplies the initial short pulse.</p>
-        <figure class="opus-fig">
-        <img src="../../assets/articles/cv53412179/de5e76264f6d.webp" width="2560" height="1440" alt="Short-pulse loop" loading="lazy">
-        <figcaption class="fig-caption">Short-pulse loop</figcaption>
-    </figure>
-        <figure class="opus-fig">
-        <img src="../../assets/articles/cv53412179/ba8bf6881519.webp" width="2560" height="1440" alt="Note that Zombified Piglin spawns cannot be blocked, so they do spawn inside the igniter's blocks and the door's blocks and fall out. If one spawns on a redston" loading="lazy">
-        <figcaption class="fig-caption">Note that Zombified Piglin spawns cannot be blocked, so they do spawn inside the igniter's blocks and the door's blocks and fall out. If one spawns on a redstone line, raise that line by one block as shown.</figcaption>
-    </figure>
-        <p>To sum up: design the portals so that a pt backlog builds up, then let the dispensers eject and retract the bucket while the lava ignites within the same game tick. That is all a static flickering portal pigman farm is.</p>
-        <p>One more note: 26.0+ includes a Zombified Piglin that cannot ride minecarts. If you gather and kill with minecarts, add powder snow or turtle eggs as a backup kill method.</p>
-        <hr class="opus-pagebreak">
-        <p>Finally, my thanks to everyone who made this article possible:</p>
-        <p>@8848yyds — code support and editorial guidance</p>
-        <p>I hope this article helps.</p>
-        <hr class="opus-pagebreak">
-        <h2>Source code</h2>
-        <p>A. What happens on every random tick of a portal block:</p>
-        <div class="code-card"><div class="code-head"><span class="code-lang">C++</span><button class="code-btn" type="button">复制</button></div><pre><code>void PortalBlock::tick (
+            <p>Zombified Piglins, long known as Zombie Pigmen (or pigmen for short), are the zombified variant of
+                Piglins.</p>
+            <p>This article gives a quick overview of their mob mechanics, then explains why a farm driven by rapidly
+                relit Nether portals works, and how modern designs keep it fast and stable.</p>
+            <hr class="opus-pagebreak">
+            <h2>Spawning</h2>
+            <p>First, a quick summary of how Zombified Piglins spawn:</p>
+            <p>Every naturally spawned Zombified Piglin has a 5% chance to be a baby. Most spawn holding a golden sword,
+                and 5% spawn with a golden spear.</p>
+            <p>They spawn in groups of 2–4 in the Nether Wastes and Crimson Forest at light level 11 or below, but never
+                on Nether Wart Blocks or Shroomlights.</p>
+            <p>Natural spawns make a poor farm. Nether portals can spawn them as well, and much faster.</p>
+            <p>Every random tick, each Nether portal block has a small chance to spawn one:</p>
+            <p>Easy difficulty <span class="katex"><span class="katex-mathml"><math
+                            xmlns="http://www.w3.org/1998/Math/MathML">
+                            <semantics>
+                                <mrow>
+                                    <mfrac>
+                                        <mn>1</mn>
+                                        <mn>2000</mn>
+                                    </mfrac>
+                                </mrow>
+                                <annotation encoding="application/x-tex"> \frac{1}{2000}</annotation>
+                            </semantics>
+                        </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut"
+                                style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span
+                                    class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                        class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+                                                style="height:0.8451em;"><span style="top:-2.655em;"><span
+                                                        class="pstrut" style="height:3em;"></span><span
+                                                        class="sizing reset-size6 size3 mtight"><span
+                                                            class="mord mtight"><span
+                                                                class="mord mtight">2000</span></span></span></span><span
+                                                    style="top:-3.23em;"><span class="pstrut"
+                                                        style="height:3em;"></span><span class="frac-line"
+                                                        style="border-bottom-width:0.04em;"></span></span><span
+                                                    style="top:-3.394em;"><span class="pstrut"
+                                                        style="height:3em;"></span><span
+                                                        class="sizing reset-size6 size3 mtight"><span
+                                                            class="mord mtight"><span
+                                                                class="mord mtight">1</span></span></span></span></span><span
+                                                class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist"
+                                                style="height:0.345em;"><span></span></span></span></span></span><span
+                                    class="mclose nulldelimiter"></span></span></span></span></span></p>
+            <p>Normal difficulty <span class="katex"><span class="katex-mathml"><math
+                            xmlns="http://www.w3.org/1998/Math/MathML">
+                            <semantics>
+                                <mrow>
+                                    <mfrac>
+                                        <mn>2</mn>
+                                        <mn>2000</mn>
+                                    </mfrac>
+                                </mrow>
+                                <annotation encoding="application/x-tex"> \frac{2}{2000}</annotation>
+                            </semantics>
+                        </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut"
+                                style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span
+                                    class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                        class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+                                                style="height:0.8451em;"><span style="top:-2.655em;"><span
+                                                        class="pstrut" style="height:3em;"></span><span
+                                                        class="sizing reset-size6 size3 mtight"><span
+                                                            class="mord mtight"><span
+                                                                class="mord mtight">2000</span></span></span></span><span
+                                                    style="top:-3.23em;"><span class="pstrut"
+                                                        style="height:3em;"></span><span class="frac-line"
+                                                        style="border-bottom-width:0.04em;"></span></span><span
+                                                    style="top:-3.394em;"><span class="pstrut"
+                                                        style="height:3em;"></span><span
+                                                        class="sizing reset-size6 size3 mtight"><span
+                                                            class="mord mtight"><span
+                                                                class="mord mtight">2</span></span></span></span></span><span
+                                                class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist"
+                                                style="height:0.345em;"><span></span></span></span></span></span><span
+                                    class="mclose nulldelimiter"></span></span></span></span></span></p>
+            <p>Hard difficulty <span class="katex"><span class="katex-mathml"><math
+                            xmlns="http://www.w3.org/1998/Math/MathML">
+                            <semantics>
+                                <mrow>
+                                    <mfrac>
+                                        <mn>3</mn>
+                                        <mn>2000</mn>
+                                    </mfrac>
+                                </mrow>
+                                <annotation encoding="application/x-tex"> \frac{3}{2000}</annotation>
+                            </semantics>
+                        </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut"
+                                style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span
+                                    class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                        class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+                                                style="height:0.8451em;"><span style="top:-2.655em;"><span
+                                                        class="pstrut" style="height:3em;"></span><span
+                                                        class="sizing reset-size6 size3 mtight"><span
+                                                            class="mord mtight"><span
+                                                                class="mord mtight">2000</span></span></span></span><span
+                                                    style="top:-3.23em;"><span class="pstrut"
+                                                        style="height:3em;"></span><span class="frac-line"
+                                                        style="border-bottom-width:0.04em;"></span></span><span
+                                                    style="top:-3.394em;"><span class="pstrut"
+                                                        style="height:3em;"></span><span
+                                                        class="sizing reset-size6 size3 mtight"><span
+                                                            class="mord mtight"><span
+                                                                class="mord mtight">3</span></span></span></span></span><span
+                                                class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist"
+                                                style="height:0.345em;"><span></span></span></span></span></span><span
+                                    class="mclose nulldelimiter"></span></span></span></span></span></p>
+            <p>They appear on the east or south side of the portal, depending on which way it faces, one block above the
+                portal's lowest obsidian. No block can obstruct this spawn.</p>
+            <p>In Bedrock Edition, every portal block also makes one spawn attempt the instant the portal is lit, at the
+                same chance. Relighting and breaking portals therefore mass-produces Zombified Piglins.</p>
+            <p>Piglins spawned this way count against the mob cap, and the portal cannot send them to the Nether for the
+                first 15 s.</p>
+            <p>A bug prevents them from spawning in portals below Y=0. (MCPE-149718)</p>
+            <p>In addition, 26.0+ has a 0.75% chance to spawn a special variant that cannot ride minecarts.
+                (MCPE-236034)</p>
+            <hr class="opus-pagebreak">
+            <h2>Nether portals</h2>
+            <p>Let's walk through the farm in the video and the principles behind it. The most common, stable and
+                efficient design today is this one:</p>
+            <p><a href="https://www.bilibili.com/video/BV1f3eqzuEQR" target="_blank" rel="noopener noreferrer">Simple
+                    unload-resistant static flickering portal pigman farm, by TK Minecraft</a></p>
+            <p>Why does the facing matter? Why must the portals straddle exactly two chunks and measure 22×22? Why we
+                need a special 22×21 portal? Why does the igniter rig look like that? Why does the dispenser throw
+                powder snow buckets at 2.5 Hz (one cycle every 0.4 s)? Read on.</p>
+            <h3><strong>Why does the facing matter?</strong></h3>
+            <p>Portals are lit by fire spreading from lava onto a flammable block, and fire checks its neighbours in
+                this order:</p>
+            <p>East &gt; West &gt; Up &gt; Down &gt; South &gt; North</p>
+            <p>That is why the video settles the build direction first, to keep ignition as reliable as possible. (Once
+                the other five directions are walled off, the difference is small anyway.)</p>
+            <figure class="opus-fig">
+                <img src="../../assets/articles/cv53412179/b72cbb1cebdf.webp" width="2560" height="1440"
+                    alt="The portal's facing sets how efficient the igniter rig is" loading="lazy">
+                <figcaption class="fig-caption">The portal's facing sets how efficient the igniter rig is</figcaption>
+            </figure>
+            <h3><strong>Why exactly two chunks?</strong></h3>
+            <p>Why exactly two chunks? Would slightly more or less on either side not work? What about three chunks?</p>
+            <p>That comes down to the core of this article: pending ticks.</p>
+            <p>When a portal is built, each portal block schedules a pending tick (pt; Java Edition calls it a scheduled
+                tick). A single chunk can process at most 100 pending ticks per game tick (0.05 s).</p>
+            <p>Running a pending tick calls function A (listed at the end of the article). Its last two lines are the
+                spawn attempt itself, so every pending tick gets a roll.</p>
+            <p>Before that, we need to know how a dispenser behaves. One full eject/retract cycle with a powder snow
+                bucket takes 0.4 s:</p>
+            <p>0.1 s to eject, 0.2 s cooldown, 0.3 s to retract, 0.4 s cooldown</p>
+            <p>With the flicker portal running at 2.5 Hz (cycle T = 0.4 s), a game tick of t = 0.05 s, and a ceiling of
+                N = 100 pending ticks per tick, the number of pending ticks per cycle is:</p>
+            <div class="math-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math
+                                xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                                <semantics>
+                                    <mrow>
+                                        <mi>C</mi>
+                                        <mo>=</mo>
+                                        <mfrac>
+                                            <mi>T</mi>
+                                            <mi>t</mi>
+                                        </mfrac>
+                                        <mo>×</mo>
+                                        <mi>N</mi>
+                                        <mo>=</mo>
+                                        <mfrac>
+                                            <mrow>
+                                                <mn>0.4</mn>
+                                                <mtext>s</mtext>
+                                            </mrow>
+                                            <mrow>
+                                                <mn>0.05</mn>
+                                                <mtext>s</mtext>
+                                            </mrow>
+                                        </mfrac>
+                                        <mo>×</mo>
+                                        <mn>100</mn>
+                                        <mo>=</mo>
+                                        <mn>800</mn>
+                                        <mtext> (pending ticks)</mtext>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">C = \frac{T}{t} \times N =
+                                        \frac{0.4\text{s}}{0.05\text{s}} \times 100 = 800 \text{ (pending ticks)}
+                                    </annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span
+                                    class="strut" style="height:0.6833em;"></span><span class="mord mathnormal"
+                                    style="margin-right:0.07153em;">C</span><span class="mspace"
+                                    style="margin-right:0.2778em;"></span><span class="mrel">=</span><span
+                                    class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span
+                                    class="strut" style="height:2.0463em;vertical-align:-0.686em;"></span><span
+                                    class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                            class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+                                                    style="height:1.3603em;"><span style="top:-2.314em;"><span
+                                                            class="pstrut" style="height:3em;"></span><span
+                                                            class="mord"><span
+                                                                class="mord mathnormal">t</span></span></span><span
+                                                        style="top:-3.23em;"><span class="pstrut"
+                                                            style="height:3em;"></span><span class="frac-line"
+                                                            style="border-bottom-width:0.04em;"></span></span><span
+                                                        style="top:-3.677em;"><span class="pstrut"
+                                                            style="height:3em;"></span><span class="mord"><span
+                                                                class="mord mathnormal"
+                                                                style="margin-right:0.13889em;">T</span></span></span></span><span
+                                                    class="vlist-s">​</span></span><span class="vlist-r"><span
+                                                    class="vlist"
+                                                    style="height:0.686em;"><span></span></span></span></span></span><span
+                                        class="mclose nulldelimiter"></span></span><span class="mspace"
+                                    style="margin-right:0.2222em;"></span><span class="mbin">×</span><span
+                                    class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span
+                                    class="strut" style="height:0.6833em;"></span><span class="mord mathnormal"
+                                    style="margin-right:0.10903em;">N</span><span class="mspace"
+                                    style="margin-right:0.2778em;"></span><span class="mrel">=</span><span
+                                    class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span
+                                    class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span
+                                    class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                            class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+                                                    style="height:1.3214em;"><span style="top:-2.314em;"><span
+                                                            class="pstrut" style="height:3em;"></span><span
+                                                            class="mord"><span class="mord">0.05</span><span
+                                                                class="mord text"><span
+                                                                    class="mord">s</span></span></span></span><span
+                                                        style="top:-3.23em;"><span class="pstrut"
+                                                            style="height:3em;"></span><span class="frac-line"
+                                                            style="border-bottom-width:0.04em;"></span></span><span
+                                                        style="top:-3.677em;"><span class="pstrut"
+                                                            style="height:3em;"></span><span class="mord"><span
+                                                                class="mord">0.4</span><span class="mord text"><span
+                                                                    class="mord">s</span></span></span></span></span><span
+                                                    class="vlist-s">​</span></span><span class="vlist-r"><span
+                                                    class="vlist"
+                                                    style="height:0.686em;"><span></span></span></span></span></span><span
+                                        class="mclose nulldelimiter"></span></span><span class="mspace"
+                                    style="margin-right:0.2222em;"></span><span class="mbin">×</span><span
+                                    class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span
+                                    class="strut" style="height:0.6444em;"></span><span class="mord">100</span><span
+                                    class="mspace" style="margin-right:0.2778em;"></span><span
+                                    class="mrel">=</span><span class="mspace"
+                                    style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut"
+                                    style="height:1em;vertical-align:-0.25em;"></span><span class="mord">800</span><span
+                                    class="mord text"><span
+                                        class="mord"> (pending ticks)</span></span></span></span></span></span></div>
+            <p>So each chunk can process 800 pending ticks in one 0.4 s cycle.</p>
+            <p>The goal is to keep those 800 slots filled with portal blocks: saturating pending ticks is how you
+                maximise the spawn rate.</p>
+            <p><a href="https://www.bilibili.com/video/BV1Je411g72y" target="_blank"
+                    rel="noopener noreferrer">[MinecraftBE] Pigman farm too slow? Too laggy? Here's the data</a>
+            </p>
+            <p>Take the farm in the video: two portals, each spanning three chunks (3/16/2) and 21 blocks tall. Lighting
+                one portal produces 672 pending ticks in the middle chunk. With the dispenser running at 2.5 Hz as well,
+                the portal is open for 0.2 s and closed for 0.2 s. The 400 pending ticks are spent while it is open, and
+                the remaining 272 are wasted while it is closed, because a closed portal cannot spawn anything.</p>
+            <p>Stack enough portals and you run into the per-tick limit: a cycle that cannot spend all of its pending
+                ticks leaves a pt backlog. The usual symptom is that you shut the farm down and the portals you left lit
+                keep producing Zombified Piglins. Be careful here — a large backlog can permanently damage your world.
+            </p>
+            <p>So, to state the conclusion plainly: more portals is not better. The pending ticks and the spawn output a
+                chunk can handle are both finite. To get the most out of the spawn rate, split the portals evenly and
+                keep each one at 22×22 (400 portal blocks), precisely to control pending ticks.</p>
+            <figure class="opus-fig">
+                <img src="../../assets/articles/cv53412179/5a756adb9c89.webp" width="2560" height="1440"
+                    alt="Each portal is split evenly: 200 portal blocks and 200 pending ticks per side" loading="lazy">
+                <figcaption class="fig-caption">Each portal is split evenly: 200 portal blocks and 200 pending ticks per
+                    side</figcaption>
+            </figure>
+            <p>But the farm above also runs at 2.5 Hz, so why doesn't it waste pending ticks?</p>
+            <p>Because observers, dispensers, droppers and even lava all react to pending ticks.</p>
+            <p>A short, well-timed pt backlog shifts when the dispenser fires, so it can eject the bucket, retract it
+                and let the lava ignite within zero gametick.</p>
+            <p>700 or more portal blocks deliver the ideal backlog, which keeps the portal lit the whole time: not a
+                single spawn is wasted.</p>
+            <p>Mind the budget, though. The dispenser consumes pt as well, so remove one column of portals in the
+                portal's chunk, reserve (portals/2, rounded up) × 3 pt for the lava plus portals × 2 pt for the
+                dispensers, and build nothing else in that chunk.</p>
+            <p>For four portals, reserve 4×2 pt (dispensers) + 2×3 pt (igniter).</p>
+            <figure class="opus-fig">
+                <img src="../../assets/articles/cv53412179/b71c9457d868.webp" width="2560" height="1440"
+                    alt="Remove one column of portal blocks in the powder-snow door's chunk" loading="lazy">
+                <figcaption class="fig-caption">Remove one column of portal blocks in the powder-snow portal's chunk
+                </figcaption>
+            </figure>
+            <hr class="opus-pagebreak">
+            <h2>The igniter rig</h2>
+            <p>With the portal and the breaker covered, one part remains: the igniter rig.</p>
+            <p>You can craft flint and steel in a crafter and have a dispenser use it, but that burns materials. Lava
+                lights portals for free.</p>
+            <p>In Bedrock Edition, every time lava ticks it first checks whether the block directly above it is air or a
+                flammable block; if neither, nothing ignites. It then draws 10 random blocks from the 3×3×3 cube centred
+                on the lava, independent uniform draws with repeats allowed. As soon as a flammable block comes up, it
+                checks that block's six orthogonal neighbours in the order +X, −X, +Y, −Y, +Z, −Z and places fire on the
+                first air block it finds, then stops. Fire can therefore appear up to 2 blocks horizontally from the
+                lava, except for the four corners of the 5×5, or up to 2 blocks vertically, in which case the horizontal
+                range shrinks to 3×3. The flammable block itself must sit inside the 3×3×3 cube. Fire placement checks
+                neither support nor a valid fire location, so fire can float in mid-air.</p>
+            <figure class="opus-fig">
+                <img src="../../assets/articles/cv53412179/30f5fc13cc62.webp" width="161" height="162"
+                    alt="Orange wool marks flammable blocks. Orange stained glass marks the six adjacent air blocks where fire can appear, grey stained glass the ring around them, and t"
+                    loading="lazy">
+                <figcaption class="fig-caption">Orange wool marks flammable blocks. Orange stained glass marks the six
+                    adjacent air blocks where fire can appear, grey stained glass the ring around them, and the outer
+                    planks the safe zone.</figcaption>
+            </figure>
+            <p>Blocks such as crafting tables and trapdoors carry fire but do not burn away.</p>
+            <p>Natural spread is still slow. The fix is to activate the lava.</p>
+            <p>You may have heard that high-frequency redstone makes fluids flow faster. Cobblestone generators and moss
+                farms rely on this.</p>
+            <figure class="opus-fig">
+                <img src="../../assets/articles/cv53412179/7ef83fc10437.webp" width="2560" height="1440"
+                    alt="High-frequency redstone charges a trapdoor, and the trapdoor activates the lava"
+                    loading="lazy">
+                <figcaption class="fig-caption">High-frequency redstone charges a trapdoor, and the trapdoor activates
+                    the lava</figcaption>
+            </figure>
+            <p>Before 1.21.70, fluids came in two kinds: static and dynamic. An nc update turns a static fluid dynamic
+                and schedules 2 pt. When the pt fires, the fluid turns static again.</p>
+            <blockquote>
+                <p>Fluid activation in a cobblestone generator really means inserting a third party's pt between the
+                    fluid's two pt.<br>The rough timeline runs:<br>0gt: the static fluid takes an nc update, schedules 2
+                    pt to fire after n gt, and becomes dynamic.<br>ngt: the first dynamic pt fires; the fluid turns
+                    static and tries to flow, and lava additionally tries to ignite. The third party's pt fires,
+                    producing an nc update, so the fluid schedules another 2 pt after n gt and turns dynamic again. The
+                    second dynamic pt fires, and the fluid turns static and tries to flow and ignite. The fluid ends up
+                    static again, but with two extra pt queued n gt out. If it takes another nc update within that
+                    window it ends up with 4 pt and can flow twice per cycle; repeat that and the fluid is activated. A
+                    dynamic fluid taking an nc update produces no pt.</p>
+            </blockquote>
+            <p>Before 1.21.70 the lava had to be isolated in single cells, because switching between static and dynamic
+                also fires nc updates. The design looked like this:</p>
+            <figure class="opus-fig">
+                <img src="../../assets/articles/cv53412179/e3d6486d3b45.webp" width="2560" height="1440"
+                    alt="Lava isolated in single cells" loading="lazy">
+                <figcaption class="fig-caption">Lava isolated in single cells</figcaption>
+            </figure>
+            <figure class="opus-fig">
+                <img src="../../assets/articles/cv53412179/92a2bee3ebb6.webp" width="2560" height="1440"
+                    alt="The side trapdoors supply nc updates too (works in every version)" loading="lazy">
+                <figcaption class="fig-caption">The side trapdoors supply nc updates too (works in every version)
+                </figcaption>
+            </figure>
+            <p>Before 1.21.70 this had to be stacked four layers deep with delays: lava's pt fires after 30 gt, and each
+                layer adds 8 gt at 2.5 Hz or 6 gt at 3.33 Hz, giving totals of 32 gt and 30 gt. Since 1.21.70, just copy
+                the picture.</p>
+            <p>The chance that three lava sources light both portals is:</p>
+            <div class="math-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math
+                                xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                                <semantics>
+                                    <mrow>
+                                        <mn>1</mn>
+                                        <mo>−</mo>
+                                        <mrow>
+                                            <mo fence="true">(</mo>
+                                            <msup>
+                                                <mrow>
+                                                    <mo fence="true">(</mo>
+                                                    <mfrac>
+                                                        <mn>1</mn>
+                                                        <mn>3</mn>
+                                                    </mfrac>
+                                                    <mo fence="true">)</mo>
+                                                </mrow>
+                                                <mn>30</mn>
+                                            </msup>
+                                            <mo>+</mo>
+                                            <mrow>
+                                                <mo fence="true">(</mo>
+                                                <mn>1</mn>
+                                                <mo>−</mo>
+                                                <msup>
+                                                    <mrow>
+                                                        <mo fence="true">(</mo>
+                                                        <mfrac>
+                                                            <mn>1</mn>
+                                                            <mn>3</mn>
+                                                        </mfrac>
+                                                        <mo fence="true">)</mo>
+                                                    </mrow>
+                                                    <mn>10</mn>
+                                                </msup>
+                                                <mo fence="true">)</mo>
+                                            </mrow>
+                                            <msup>
+                                                <mrow>
+                                                    <mo fence="true">(</mo>
+                                                    <mfrac>
+                                                        <mn>2</mn>
+                                                        <mn>3</mn>
+                                                    </mfrac>
+                                                    <mo fence="true">)</mo>
+                                                </mrow>
+                                                <mn>20</mn>
+                                            </msup>
+                                            <mo>+</mo>
+                                            <msup>
+                                                <mrow>
+                                                    <mo fence="true">(</mo>
+                                                    <mfrac>
+                                                        <mn>1</mn>
+                                                        <mn>3</mn>
+                                                    </mfrac>
+                                                    <mo fence="true">)</mo>
+                                                </mrow>
+                                                <mn>10</mn>
+                                            </msup>
+                                            <mrow>
+                                                <mo fence="true">(</mo>
+                                                <mn>1</mn>
+                                                <mo>−</mo>
+                                                <msup>
+                                                    <mrow>
+                                                        <mo fence="true">(</mo>
+                                                        <mfrac>
+                                                            <mn>1</mn>
+                                                            <mn>3</mn>
+                                                        </mfrac>
+                                                        <mo fence="true">)</mo>
+                                                    </mrow>
+                                                    <mn>10</mn>
+                                                </msup>
+                                                <mo fence="true">)</mo>
+                                            </mrow>
+                                            <msup>
+                                                <mrow>
+                                                    <mo fence="true">(</mo>
+                                                    <mfrac>
+                                                        <mn>2</mn>
+                                                        <mn>3</mn>
+                                                    </mfrac>
+                                                    <mo fence="true">)</mo>
+                                                </mrow>
+                                                <mn>10</mn>
+                                            </msup>
+                                            <mo>+</mo>
+                                            <msup>
+                                                <mrow>
+                                                    <mo fence="true">(</mo>
+                                                    <mfrac>
+                                                        <mn>1</mn>
+                                                        <mn>3</mn>
+                                                    </mfrac>
+                                                    <mo fence="true">)</mo>
+                                                </mrow>
+                                                <mn>20</mn>
+                                            </msup>
+                                            <mrow>
+                                                <mo fence="true">(</mo>
+                                                <mn>1</mn>
+                                                <mo>−</mo>
+                                                <msup>
+                                                    <mrow>
+                                                        <mo fence="true">(</mo>
+                                                        <mfrac>
+                                                            <mn>1</mn>
+                                                            <mn>3</mn>
+                                                        </mfrac>
+                                                        <mo fence="true">)</mo>
+                                                    </mrow>
+                                                    <mn>10</mn>
+                                                </msup>
+                                                <mo fence="true">)</mo>
+                                            </mrow>
+                                            <mo fence="true">)</mo>
+                                        </mrow>
+                                        <mo>=</mo>
+                                        <mn>99.970</mn>
+                                        <mtext>%</mtext>
+                                    </mrow>
+                                    <annotation encoding="application/x-tex">
+                                        1-\left(\left(\frac{1}{3}\right)^{30}+\left(1-\left(\frac{1}{3}\right)^{10}\right)\left(\frac{2}{3}\right)^{20}+\left(\frac{1}{3}\right)^{10}\left(1-\left(\frac{1}{3}\right)^{10}\right)\left(\frac{2}{3}\right)^{10}+\left(\frac{1}{3}\right)^{20}\left(1-\left(\frac{1}{3}\right)^{10}\right)\right)=99.970\text{\%}
+                                    </annotation>
+                                </semantics>
+                            </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span
+                                    class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span
+                                    class="mord">1</span><span class="mspace"
+                                    style="margin-right:0.2222em;"></span><span class="mbin">−</span><span
+                                    class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span
+                                    class="strut" style="height:3em;vertical-align:-1.25em;"></span><span
+                                    class="minner"><span class="mopen delimcenter" style="top:0em;"><span
+                                            class="delimsizing size4">(</span></span><span class="minner"><span
+                                            class="minner"><span class="mopen delimcenter" style="top:0em;"><span
+                                                    class="delimsizing size3">(</span></span><span class="mord"><span
+                                                    class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                                        class="vlist-t vlist-t2"><span class="vlist-r"><span
+                                                                class="vlist" style="height:1.3214em;"><span
+                                                                    style="top:-2.314em;"><span class="pstrut"
+                                                                        style="height:3em;"></span><span
+                                                                        class="mord"><span
+                                                                            class="mord">3</span></span></span><span
+                                                                    style="top:-3.23em;"><span class="pstrut"
+                                                                        style="height:3em;"></span><span
+                                                                        class="frac-line"
+                                                                        style="border-bottom-width:0.04em;"></span></span><span
+                                                                    style="top:-3.677em;"><span class="pstrut"
+                                                                        style="height:3em;"></span><span
+                                                                        class="mord"><span
+                                                                            class="mord">1</span></span></span></span><span
+                                                                class="vlist-s">​</span></span><span
+                                                            class="vlist-r"><span class="vlist"
+                                                                style="height:0.686em;"><span></span></span></span></span></span><span
+                                                    class="mclose nulldelimiter"></span></span><span
+                                                class="mclose delimcenter" style="top:0em;"><span
+                                                    class="delimsizing size3">)</span></span></span><span
+                                            class="msupsub"><span class="vlist-t"><span class="vlist-r"><span
+                                                        class="vlist" style="height:1.654em;"><span
+                                                            style="top:-3.9029em;margin-right:0.05em;"><span
+                                                                class="pstrut" style="height:2.7em;"></span><span
+                                                                class="sizing reset-size6 size3 mtight"><span
+                                                                    class="mord mtight"><span
+                                                                        class="mord mtight">30</span></span></span></span></span></span></span></span></span><span
+                                        class="mspace" style="margin-right:0.2222em;"></span><span
+                                        class="mbin">+</span><span class="mspace"
+                                        style="margin-right:0.2222em;"></span><span class="minner"><span
+                                            class="mopen delimcenter" style="top:0em;"><span
+                                                class="delimsizing size4">(</span></span><span
+                                            class="mord">1</span><span class="mspace"
+                                            style="margin-right:0.2222em;"></span><span class="mbin">−</span><span
+                                            class="mspace" style="margin-right:0.2222em;"></span><span
+                                            class="minner"><span class="minner"><span class="mopen delimcenter"
+                                                    style="top:0em;"><span
+                                                        class="delimsizing size3">(</span></span><span
+                                                    class="mord"><span class="mopen nulldelimiter"></span><span
+                                                        class="mfrac"><span class="vlist-t vlist-t2"><span
+                                                                class="vlist-r"><span class="vlist"
+                                                                    style="height:1.3214em;"><span
+                                                                        style="top:-2.314em;"><span class="pstrut"
+                                                                            style="height:3em;"></span><span
+                                                                            class="mord"><span
+                                                                                class="mord">3</span></span></span><span
+                                                                        style="top:-3.23em;"><span class="pstrut"
+                                                                            style="height:3em;"></span><span
+                                                                            class="frac-line"
+                                                                            style="border-bottom-width:0.04em;"></span></span><span
+                                                                        style="top:-3.677em;"><span class="pstrut"
+                                                                            style="height:3em;"></span><span
+                                                                            class="mord"><span
+                                                                                class="mord">1</span></span></span></span><span
+                                                                    class="vlist-s">​</span></span><span
+                                                                class="vlist-r"><span class="vlist"
+                                                                    style="height:0.686em;"><span></span></span></span></span></span><span
+                                                        class="mclose nulldelimiter"></span></span><span
+                                                    class="mclose delimcenter" style="top:0em;"><span
+                                                        class="delimsizing size3">)</span></span></span><span
+                                                class="msupsub"><span class="vlist-t"><span class="vlist-r"><span
+                                                            class="vlist" style="height:1.654em;"><span
+                                                                style="top:-3.9029em;margin-right:0.05em;"><span
+                                                                    class="pstrut" style="height:2.7em;"></span><span
+                                                                    class="sizing reset-size6 size3 mtight"><span
+                                                                        class="mord mtight"><span
+                                                                            class="mord mtight">10</span></span></span></span></span></span></span></span></span><span
+                                            class="mclose delimcenter" style="top:0em;"><span
+                                                class="delimsizing size4">)</span></span></span><span class="mspace"
+                                        style="margin-right:0.1667em;"></span><span class="minner"><span
+                                            class="minner"><span class="mopen delimcenter" style="top:0em;"><span
+                                                    class="delimsizing size3">(</span></span><span class="mord"><span
+                                                    class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                                        class="vlist-t vlist-t2"><span class="vlist-r"><span
+                                                                class="vlist" style="height:1.3214em;"><span
+                                                                    style="top:-2.314em;"><span class="pstrut"
+                                                                        style="height:3em;"></span><span
+                                                                        class="mord"><span
+                                                                            class="mord">3</span></span></span><span
+                                                                    style="top:-3.23em;"><span class="pstrut"
+                                                                        style="height:3em;"></span><span
+                                                                        class="frac-line"
+                                                                        style="border-bottom-width:0.04em;"></span></span><span
+                                                                    style="top:-3.677em;"><span class="pstrut"
+                                                                        style="height:3em;"></span><span
+                                                                        class="mord"><span
+                                                                            class="mord">2</span></span></span></span><span
+                                                                class="vlist-s">​</span></span><span
+                                                            class="vlist-r"><span class="vlist"
+                                                                style="height:0.686em;"><span></span></span></span></span></span><span
+                                                    class="mclose nulldelimiter"></span></span><span
+                                                class="mclose delimcenter" style="top:0em;"><span
+                                                    class="delimsizing size3">)</span></span></span><span
+                                            class="msupsub"><span class="vlist-t"><span class="vlist-r"><span
+                                                        class="vlist" style="height:1.654em;"><span
+                                                            style="top:-3.9029em;margin-right:0.05em;"><span
+                                                                class="pstrut" style="height:2.7em;"></span><span
+                                                                class="sizing reset-size6 size3 mtight"><span
+                                                                    class="mord mtight"><span
+                                                                        class="mord mtight">20</span></span></span></span></span></span></span></span></span><span
+                                        class="mspace" style="margin-right:0.2222em;"></span><span
+                                        class="mbin">+</span><span class="mspace"
+                                        style="margin-right:0.2222em;"></span><span class="minner"><span
+                                            class="minner"><span class="mopen delimcenter" style="top:0em;"><span
+                                                    class="delimsizing size3">(</span></span><span class="mord"><span
+                                                    class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                                        class="vlist-t vlist-t2"><span class="vlist-r"><span
+                                                                class="vlist" style="height:1.3214em;"><span
+                                                                    style="top:-2.314em;"><span class="pstrut"
+                                                                        style="height:3em;"></span><span
+                                                                        class="mord"><span
+                                                                            class="mord">3</span></span></span><span
+                                                                    style="top:-3.23em;"><span class="pstrut"
+                                                                        style="height:3em;"></span><span
+                                                                        class="frac-line"
+                                                                        style="border-bottom-width:0.04em;"></span></span><span
+                                                                    style="top:-3.677em;"><span class="pstrut"
+                                                                        style="height:3em;"></span><span
+                                                                        class="mord"><span
+                                                                            class="mord">1</span></span></span></span><span
+                                                                class="vlist-s">​</span></span><span
+                                                            class="vlist-r"><span class="vlist"
+                                                                style="height:0.686em;"><span></span></span></span></span></span><span
+                                                    class="mclose nulldelimiter"></span></span><span
+                                                class="mclose delimcenter" style="top:0em;"><span
+                                                    class="delimsizing size3">)</span></span></span><span
+                                            class="msupsub"><span class="vlist-t"><span class="vlist-r"><span
+                                                        class="vlist" style="height:1.654em;"><span
+                                                            style="top:-3.9029em;margin-right:0.05em;"><span
+                                                                class="pstrut" style="height:2.7em;"></span><span
+                                                                class="sizing reset-size6 size3 mtight"><span
+                                                                    class="mord mtight"><span
+                                                                        class="mord mtight">10</span></span></span></span></span></span></span></span></span><span
+                                        class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span
+                                            class="mopen delimcenter" style="top:0em;"><span
+                                                class="delimsizing size4">(</span></span><span
+                                            class="mord">1</span><span class="mspace"
+                                            style="margin-right:0.2222em;"></span><span class="mbin">−</span><span
+                                            class="mspace" style="margin-right:0.2222em;"></span><span
+                                            class="minner"><span class="minner"><span class="mopen delimcenter"
+                                                    style="top:0em;"><span
+                                                        class="delimsizing size3">(</span></span><span
+                                                    class="mord"><span class="mopen nulldelimiter"></span><span
+                                                        class="mfrac"><span class="vlist-t vlist-t2"><span
+                                                                class="vlist-r"><span class="vlist"
+                                                                    style="height:1.3214em;"><span
+                                                                        style="top:-2.314em;"><span class="pstrut"
+                                                                            style="height:3em;"></span><span
+                                                                            class="mord"><span
+                                                                                class="mord">3</span></span></span><span
+                                                                        style="top:-3.23em;"><span class="pstrut"
+                                                                            style="height:3em;"></span><span
+                                                                            class="frac-line"
+                                                                            style="border-bottom-width:0.04em;"></span></span><span
+                                                                        style="top:-3.677em;"><span class="pstrut"
+                                                                            style="height:3em;"></span><span
+                                                                            class="mord"><span
+                                                                                class="mord">1</span></span></span></span><span
+                                                                    class="vlist-s">​</span></span><span
+                                                                class="vlist-r"><span class="vlist"
+                                                                    style="height:0.686em;"><span></span></span></span></span></span><span
+                                                        class="mclose nulldelimiter"></span></span><span
+                                                    class="mclose delimcenter" style="top:0em;"><span
+                                                        class="delimsizing size3">)</span></span></span><span
+                                                class="msupsub"><span class="vlist-t"><span class="vlist-r"><span
+                                                            class="vlist" style="height:1.654em;"><span
+                                                                style="top:-3.9029em;margin-right:0.05em;"><span
+                                                                    class="pstrut" style="height:2.7em;"></span><span
+                                                                    class="sizing reset-size6 size3 mtight"><span
+                                                                        class="mord mtight"><span
+                                                                            class="mord mtight">10</span></span></span></span></span></span></span></span></span><span
+                                            class="mclose delimcenter" style="top:0em;"><span
+                                                class="delimsizing size4">)</span></span></span><span class="mspace"
+                                        style="margin-right:0.1667em;"></span><span class="minner"><span
+                                            class="minner"><span class="mopen delimcenter" style="top:0em;"><span
+                                                    class="delimsizing size3">(</span></span><span class="mord"><span
+                                                    class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                                        class="vlist-t vlist-t2"><span class="vlist-r"><span
+                                                                class="vlist" style="height:1.3214em;"><span
+                                                                    style="top:-2.314em;"><span class="pstrut"
+                                                                        style="height:3em;"></span><span
+                                                                        class="mord"><span
+                                                                            class="mord">3</span></span></span><span
+                                                                    style="top:-3.23em;"><span class="pstrut"
+                                                                        style="height:3em;"></span><span
+                                                                        class="frac-line"
+                                                                        style="border-bottom-width:0.04em;"></span></span><span
+                                                                    style="top:-3.677em;"><span class="pstrut"
+                                                                        style="height:3em;"></span><span
+                                                                        class="mord"><span
+                                                                            class="mord">2</span></span></span></span><span
+                                                                class="vlist-s">​</span></span><span
+                                                            class="vlist-r"><span class="vlist"
+                                                                style="height:0.686em;"><span></span></span></span></span></span><span
+                                                    class="mclose nulldelimiter"></span></span><span
+                                                class="mclose delimcenter" style="top:0em;"><span
+                                                    class="delimsizing size3">)</span></span></span><span
+                                            class="msupsub"><span class="vlist-t"><span class="vlist-r"><span
+                                                        class="vlist" style="height:1.654em;"><span
+                                                            style="top:-3.9029em;margin-right:0.05em;"><span
+                                                                class="pstrut" style="height:2.7em;"></span><span
+                                                                class="sizing reset-size6 size3 mtight"><span
+                                                                    class="mord mtight"><span
+                                                                        class="mord mtight">10</span></span></span></span></span></span></span></span></span><span
+                                        class="mspace" style="margin-right:0.2222em;"></span><span
+                                        class="mbin">+</span><span class="mspace"
+                                        style="margin-right:0.2222em;"></span><span class="minner"><span
+                                            class="minner"><span class="mopen delimcenter" style="top:0em;"><span
+                                                    class="delimsizing size3">(</span></span><span class="mord"><span
+                                                    class="mopen nulldelimiter"></span><span class="mfrac"><span
+                                                        class="vlist-t vlist-t2"><span class="vlist-r"><span
+                                                                class="vlist" style="height:1.3214em;"><span
+                                                                    style="top:-2.314em;"><span class="pstrut"
+                                                                        style="height:3em;"></span><span
+                                                                        class="mord"><span
+                                                                            class="mord">3</span></span></span><span
+                                                                    style="top:-3.23em;"><span class="pstrut"
+                                                                        style="height:3em;"></span><span
+                                                                        class="frac-line"
+                                                                        style="border-bottom-width:0.04em;"></span></span><span
+                                                                    style="top:-3.677em;"><span class="pstrut"
+                                                                        style="height:3em;"></span><span
+                                                                        class="mord"><span
+                                                                            class="mord">1</span></span></span></span><span
+                                                                class="vlist-s">​</span></span><span
+                                                            class="vlist-r"><span class="vlist"
+                                                                style="height:0.686em;"><span></span></span></span></span></span><span
+                                                    class="mclose nulldelimiter"></span></span><span
+                                                class="mclose delimcenter" style="top:0em;"><span
+                                                    class="delimsizing size3">)</span></span></span><span
+                                            class="msupsub"><span class="vlist-t"><span class="vlist-r"><span
+                                                        class="vlist" style="height:1.654em;"><span
+                                                            style="top:-3.9029em;margin-right:0.05em;"><span
+                                                                class="pstrut" style="height:2.7em;"></span><span
+                                                                class="sizing reset-size6 size3 mtight"><span
+                                                                    class="mord mtight"><span
+                                                                        class="mord mtight">20</span></span></span></span></span></span></span></span></span><span
+                                        class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span
+                                            class="mopen delimcenter" style="top:0em;"><span
+                                                class="delimsizing size4">(</span></span><span
+                                            class="mord">1</span><span class="mspace"
+                                            style="margin-right:0.2222em;"></span><span class="mbin">−</span><span
+                                            class="mspace" style="margin-right:0.2222em;"></span><span
+                                            class="minner"><span class="minner"><span class="mopen delimcenter"
+                                                    style="top:0em;"><span
+                                                        class="delimsizing size3">(</span></span><span
+                                                    class="mord"><span class="mopen nulldelimiter"></span><span
+                                                        class="mfrac"><span class="vlist-t vlist-t2"><span
+                                                                class="vlist-r"><span class="vlist"
+                                                                    style="height:1.3214em;"><span
+                                                                        style="top:-2.314em;"><span class="pstrut"
+                                                                            style="height:3em;"></span><span
+                                                                            class="mord"><span
+                                                                                class="mord">3</span></span></span><span
+                                                                        style="top:-3.23em;"><span class="pstrut"
+                                                                            style="height:3em;"></span><span
+                                                                            class="frac-line"
+                                                                            style="border-bottom-width:0.04em;"></span></span><span
+                                                                        style="top:-3.677em;"><span class="pstrut"
+                                                                            style="height:3em;"></span><span
+                                                                            class="mord"><span
+                                                                                class="mord">1</span></span></span></span><span
+                                                                    class="vlist-s">​</span></span><span
+                                                                class="vlist-r"><span class="vlist"
+                                                                    style="height:0.686em;"><span></span></span></span></span></span><span
+                                                        class="mclose nulldelimiter"></span></span><span
+                                                    class="mclose delimcenter" style="top:0em;"><span
+                                                        class="delimsizing size3">)</span></span></span><span
+                                                class="msupsub"><span class="vlist-t"><span class="vlist-r"><span
+                                                            class="vlist" style="height:1.654em;"><span
+                                                                style="top:-3.9029em;margin-right:0.05em;"><span
+                                                                    class="pstrut" style="height:2.7em;"></span><span
+                                                                    class="sizing reset-size6 size3 mtight"><span
+                                                                        class="mord mtight"><span
+                                                                            class="mord mtight">10</span></span></span></span></span></span></span></span></span><span
+                                            class="mclose delimcenter" style="top:0em;"><span
+                                                class="delimsizing size4">)</span></span></span><span
+                                        class="mclose delimcenter" style="top:0em;"><span
+                                            class="delimsizing size4">)</span></span></span><span class="mspace"
+                                    style="margin-right:0.2778em;"></span><span class="mrel">=</span><span
+                                    class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span
+                                    class="strut" style="height:0.8056em;vertical-align:-0.0556em;"></span><span
+                                    class="mord">99.970</span><span class="mord text"><span
+                                        class="mord">%</span></span></span></span></span></span></div>
+            <p>Since 1.21.70 there is no static/dynamic split. An nc update simply schedules one pt to fire n gt later.
+            </p>
+            <figure class="opus-fig">
+                <img src="../../assets/articles/cv53412179/8f083ed7f034.webp" width="2560" height="1440"
+                    alt="The build is smaller" loading="lazy">
+                <figcaption class="fig-caption">The build is smaller</figcaption>
+            </figure>
+            <figure class="opus-fig">
+                <img src="../../assets/articles/cv53412179/8a8bf85fc734.webp" width="2560" height="1440"
+                    alt="For 1.21.70–26.0 only" loading="lazy">
+                <figcaption class="fig-caption">For 1.21.70–26.0 only</figcaption>
+            </figure>
+            <p>Since 1.26.10 a fluid can schedule only one pt per tick at the same position. Either build the
+                pre-1.21.70 version, or join the cells together:</p>
+            <figure class="opus-fig">
+                <img src="../../assets/articles/cv53412179/693dfc9760e3.webp" width="2560" height="1440"
+                    alt="No static/dynamic split, so the lava cells can be joined" loading="lazy">
+                <figcaption class="fig-caption">No static/dynamic split, so the lava cells can be joined</figcaption>
+            </figure>
+            <figure class="opus-fig">
+                <img src="../../assets/articles/cv53412179/8c87921487ab.webp" width="2560" height="1440"
+                    alt="For 26.10+" loading="lazy">
+                <figcaption class="fig-caption">For 26.10+</figcaption>
+            </figure>
+            <hr class="opus-pagebreak">
+            <h2>High-frequency clocks</h2>
+            <p>The redstone itself is straightforward. A 2.5 Hz portal breaker opens and lights the portal once every 8 gt. The
+                dispensers must fire twice every 8 gt, so once every 4 gt: a 2 gt pulse every 4 gt, the fastest clock
+                Bedrock allows. The igniter fires once every 8 gt, an 8 gt pulse every 16 gt. Do not use an observer
+                clock here, because observers also react to pt; the observer loop only supplies the initial short pulse.
+            </p>
+            <figure class="opus-fig">
+                <img src="../../assets/articles/cv53412179/de5e76264f6d.webp" width="2560" height="1440"
+                    alt="Short-pulse loop" loading="lazy">
+                <figcaption class="fig-caption">Short-pulse loop</figcaption>
+            </figure>
+            <figure class="opus-fig">
+                <img src="../../assets/articles/cv53412179/ba8bf6881519.webp" width="2560" height="1440"
+                    alt="Note that Zombified Piglin spawns cannot be blocked, so they do spawn inside the igniter's blocks and the door's blocks and fall out. If one spawns on a redston"
+                    loading="lazy">
+                <figcaption class="fig-caption">Note that Zombified Piglin spawns cannot be blocked, so they do spawn
+                    inside the igniter's blocks and the door's blocks and fall out. If one spawns on a redstone line,
+                    raise that line by one block as shown.</figcaption>
+            </figure>
+            <p>To sum up: design the portals so that a pt backlog builds up, then let the dispensers eject and retract
+                the bucket while the lava ignites within the same game tick. That is all a static flickering portal
+                pigman farm is.</p>
+            <p>One more note: 26.0+ includes a Zombified Piglin that cannot ride minecarts. If you gather and kill with
+                minecarts, add powder snow or turtle eggs as a backup kill method.</p>
+            <hr class="opus-pagebreak">
+            <p>Finally, my thanks to everyone who made this article possible:</p>
+            <p>@8848yyds — code support and editorial guidance</p>
+            <p>I hope this article helps.</p>
+            <hr class="opus-pagebreak">
+            <h2>Source code</h2>
+            <p>A. What happens on every random tick of a portal block:</p>
+            <div class="code-card">
+                <div class="code-head"><span class="code-lang">C++</span><button class="code-btn"
+                        type="button">复制</button></div>
+                <pre><code>void PortalBlock::tick (
     ::BlockSource&amp;    region,
     ::BlockPos const&amp; pos,
     ::Random&amp;         random
@@ -216,9 +916,13 @@
     if (SpawnChecks::canSpawnPigZombieFromPortal(dim, random)) {
         PortalBlock::trySpawnPigZombie(region, pos, portalAxis);
     }
-}</code></pre></div>
-        <p>B. Spawn chance versus difficulty:</p>
-        <div class="code-card"><div class="code-head"><span class="code-lang">C++</span><button class="code-btn" type="button">复制</button></div><pre><code>static bool PortalBlock::canSpawnPigZombieFromPortal(::Dimension const&amp; dimension, ::IRandom&amp; random) {
+}</code></pre>
+            </div>
+            <p>B. Spawn chance versus difficulty:</p>
+            <div class="code-card">
+                <div class="code-head"><span class="code-lang">C++</span><button class="code-btn"
+                        type="button">复制</button></div>
+                <pre><code>static bool PortalBlock::canSpawnPigZombieFromPortal(::Dimension const&amp; dimension, ::IRandom&amp; random) {
     auto&amp; level     = dimension.getLevel();
     auto&amp; gameRules = level.getGameRules();
     if ((*gameRules.mGameRules)[static_cast&lt;int&gt;(GameRules::GameRulesIndex::DoMobSpawning)].mValue-&gt;boolVal) {
@@ -227,9 +931,13 @@
         return randomValue &lt; difficultyValue;
     }
     return false;
-}</code></pre></div>
-        <p>C. Finding the spawn position and spawning:</p>
-        <div class="code-card"><div class="code-head"><span class="code-lang">C++</span><button class="code-btn" type="button">复制</button></div><pre><code>void PortalBlock::trySpawnPigZombie(
+}</code></pre>
+            </div>
+            <p>C. Finding the spawn position and spawning:</p>
+            <div class="code-card">
+                <div class="code-head"><span class="code-lang">C++</span><button class="code-btn"
+                        type="button">复制</button></div>
+                <pre><code>void PortalBlock::trySpawnPigZombie(
     ::BlockSource&amp;    region,
     ::BlockPos const&amp; pos,
     ::PortalAxis      axis
@@ -261,32 +969,39 @@ Vec3 _pos = pos;
             return;
         }
     }
-}</code></pre></div>
-        <hr class="opus-pagebreak">
-        <h2>Tick-by-tick timing</h2>
-        <figure class="opus-fig">
-        <img src="../../assets/articles/cv53412179/2719088d6d44.webp" width="903" height="1215" alt="By @8848yyds" loading="lazy">
-        <figcaption class="fig-caption">By @8848yyds</figcaption>
-    </figure>
-        <p>The table lists exactly what the farm does on each game tick. After tick 8 the cycle restarts at tick 1.</p>
-        <hr class="opus-pagebreak">
-        <h2>Minecart fix</h2>
-        <p>This behavior pack fixes pigmen being unable to enter minecarts. It is also from @8848yyds.</p>
-        <p><a href="https://pan.baidu.com/s/1KJfuuUSXahqycpZWGnUxZQ?pwd=jumo" target="_blank" rel="noopener noreferrer">https://pan.baidu.com/s/1KJfuuUSXahqycpZWGnUxZQ?pwd=jumo</a></p>
+}</code></pre>
+            </div>
+            <hr class="opus-pagebreak">
+            <h2>Tick-by-tick timing</h2>
+            <figure class="opus-fig">
+                <img src="../../assets/articles/cv53412179/2719088d6d44.webp" width="903" height="1215"
+                    alt="By @8848yyds" loading="lazy">
+                <figcaption class="fig-caption">By @8848yyds</figcaption>
+            </figure>
+            <p>The table lists exactly what the farm does on each game tick. After tick 8 the cycle restarts at tick 1.
+            </p>
+            <hr class="opus-pagebreak">
+            <h2>Minecart fix</h2>
+            <p>This behavior pack fixes pigmen being unable to enter minecarts. It is also from @8848yyds.</p>
+            <p><a href="https://pan.baidu.com/s/1KJfuuUSXahqycpZWGnUxZQ?pwd=jumo" target="_blank"
+                    rel="noopener noreferrer">https://pan.baidu.com/s/1KJfuuUSXahqycpZWGnUxZQ?pwd=jumo</a></p>
         </div>
 
         <div class="article-foot">
-            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/opus/1258535854280802322">Original post »</a>
+            <a class="button is-danger has-text-white" target="_blank" rel="noopener noreferrer"
+                href="https://www.bilibili.com/opus/1258535854280802322">Original post »</a>
             <a class="button is-danger is-outlined" href="../category/entity.html">« Back to Entity Mechanics</a>
             <a class="button is-light" href="../articles.html">« Back to article list</a>
         </div>
 
         <nav class="article-pager" aria-label="previous / next">
-            <a class="pager-item is-prev" href="cv40350407.html" title="« Previous: MCBE 部分掉落物及抢夺计算相关机制" aria-label="« Previous: MCBE 部分掉落物及抢夺计算相关机制">
+            <a class="pager-item is-prev" href="cv40350407.html" title="« Previous: MCBE 部分掉落物及抢夺计算相关机制"
+                aria-label="« Previous: MCBE 部分掉落物及抢夺计算相关机制">
                 <span class="pager-dir">« Previous</span>
                 <span class="pager-title">MCBE 部分掉落物及抢夺计算相关机制</span>
             </a>
-            <a class="pager-item is-next" href="cv53471290.en.html" title="Next »: How Raids Work in Bedrock Edition" aria-label="Next »: How Raids Work in Bedrock Edition">
+            <a class="pager-item is-next" href="cv53471290.en.html" title="Next »: How Raids Work in Bedrock Edition"
+                aria-label="Next »: How Raids Work in Bedrock Edition">
                 <span class="pager-dir">Next »</span>
                 <span class="pager-title">How Raids Work in Bedrock Edition</span>
             </a>
